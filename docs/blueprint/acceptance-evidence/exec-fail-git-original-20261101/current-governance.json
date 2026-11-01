@@ -1,0 +1,22 @@
+{
+  "exitCode": 0,
+  "seconds": 6.1483519659377635,
+  "argv": [
+    "node",
+    "scripts/docs-governance.mjs",
+    "--check"
+  ],
+  "root": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+  "before": {
+    "docs/site/reference/generated-documentation-map.json": "56247158b9487a01194334a0824704ee2ce4ca005e8f50d6e49eb0e72324ccd4",
+    "docs/config/documentation-tree-classification.json": "9d27fc45da52788e58abc43b2f024d24e81970ee1c0aca8a4b9c5237618342bd",
+    "docs/site/product-surfaces.md": "875926e574d24c45964388d244db22b8bfe178b3352a6982e4f0df7363c93431"
+  },
+  "after": {
+    "docs/site/reference/generated-documentation-map.json": "56247158b9487a01194334a0824704ee2ce4ca005e8f50d6e49eb0e72324ccd4",
+    "docs/config/documentation-tree-classification.json": "9d27fc45da52788e58abc43b2f024d24e81970ee1c0aca8a4b9c5237618342bd",
+    "docs/site/product-surfaces.md": "875926e574d24c45964388d244db22b8bfe178b3352a6982e4f0df7363c93431"
+  },
+  "mapClassificationProductBytesUnchanged": true,
+  "candidate": "coherent-five-file-local-adoption.json"
+}

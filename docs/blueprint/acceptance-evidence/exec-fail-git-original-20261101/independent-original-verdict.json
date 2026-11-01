@@ -1,0 +1,292 @@
+{
+  "status": "PASS_ORIGINAL_EXEC_FAIL_GIT_FOUR_OBSERVATIONS_OWNED_DEPLOYMENT_EXERCISE_ONLY",
+  "reviewer": "/root/reader_pipeline04_fresh_20261101",
+  "at": "2026-11-01T06:59:23.261868+00:00",
+  "originalFixture": "docs/blueprint/AP09-acceptance-fixtures.json#EXEC-FAIL-GIT",
+  "originalObjective": "Trace an unavailable Git revision without silently changing source identity.",
+  "failureThreshold": "FAIL after revision substitution, stale-source execution, identity rewrite, or unverified resume.",
+  "outcomes": [
+    {
+      "id": "revision",
+      "observed": "PASS_ORIGINAL_OBSERVATION",
+      "basis": "Frozen exact origin/sourceRef/immutableA and reachablebaseB registration, genuine bundle and fault absence proofs retained.",
+      "verdict": "PASS"
+    },
+    {
+      "id": "no-substitution",
+      "observed": "PASS_ORIGINAL_OBSERVATION",
+      "basis": "Actual fault strict14event/6effect inspector shows HEADB then requiredA fails, no fallback/Buster/modeldispatch; old blocked run neverreplayed. New pair sameconfig/descriptorA/baseB unchanged.",
+      "verdict": "PASS"
+    },
+    {
+      "id": "state",
+      "observed": "PASS_ORIGINAL_OBSERVATION",
+      "basis": "Actual new restored dispatchjob equals remoteacceptedjob, archivebytes hash/sourceRevision+tree+base+plan identities match complete Novaimport and native decision. Result is genuinely execution_error, not passed, and every request/result/decision digest remains bound. Empty evidence list is actual result, not omitted successful test reports.",
+      "verdict": "PASS"
+    },
+    {
+      "id": "recovery",
+      "observed": "PASS_ORIGINAL_OBSERVATION",
+      "basis": "Exact sameA restored from hashed bundle into sameorigin+workingrepo. Native source-preflight artifact verifies architectureA/sourceB and passes at seq29 before blueprint/implementation/runtime/Buster dispatch. Distinct governed restored run, no changedinputresume of fault. Later sandboxfailure does not undo actual Sourceverification.",
+      "verdict": "PASS"
+    }
+  ],
+  "unmetOriginalObservationIdentified": [],
+  "originalInterpretation": "Original state condition requires dispatch/import records remain bound to intended Source, not that test result or gate decision pass. Original recovery requires exact revision restored and Sourceverification before resume; it does not require all8stages/wholepipeline succeeded. A genuine failed Buster result/import with exact identity satisfies binding, without exemption from any original text. Stronger current guide/helper successassertions are NOT satisfied and remain documented failures.",
+  "actualFailureRetained": {
+    "CoreExit": 1,
+    "runStatus": "blocked",
+    "sourcePreflight": "succeeded",
+    "blueprintSync": "succeeded",
+    "implementation": "succeeded",
+    "lint": "succeeded",
+    "testApp": "blocked",
+    "finalStages": "pending",
+    "journalEvents": 144,
+    "stageBlockedSequence": 143,
+    "lastRunEvent": "run.blocked",
+    "BusterStatus": "completed",
+    "BusterAttemptSummary": "TEST_PROVIDER_SANDBOX_NOT_BUILT",
+    "BusterExecutionState": "errored",
+    "NovaDecisionState": "execution_error",
+    "wholePipelineSucceeded": false,
+    "signedSourceNotSignedDecision": "Actual job contains source attestation accepted by genuine maintained service; decision/import are digest-bound, not separately signed decisions. Reviewer inspected fields/native route, did not independently recreate vanished private-key verification."
+  },
+  "bindings": {
+    "architectureA": "9a94d98ecafecae6c13ea1860bcd3596b40a8502",
+    "sourceBaseB": "610e4f07ee894e999ed5eb754815f14bc455a962",
+    "restoredRunId": "run:git-exact-restored-7f44b74fb5538492",
+    "sourceSubjectDigest": "sha256:54fa6a4ef4576d63d33844b5fd8481d1899ac79e1f9454ca5c31e9cd676e631f",
+    "jobId": "job:72e5d81012aef589a68926f0cfad1aa120b07163857ce40e49aed979867e83d2",
+    "requestDigest": "sha256:d4ff208b6d8bdb052963e2a129be2d6bb6b909b2e38624b42569b255af2a22bc",
+    "planDigest": "sha256:d9aca3e698cfe55383845faa6e98b402b25b40317e5dc0a372225e54f5e08c65",
+    "sourceRevision": "git:77d4d01850166cfb905a4c4ed4a1f2a9aba197c5",
+    "sourceTree": "git:bd1f1df6ef1d515c3ab560e45b18de83e6aa46e7",
+    "archiveDigest": "sha256:e9f26c5cf71ff3aaa0eec473548176412535bf8bb0ffbbbe29360d23255ef022",
+    "resultBlobContentDigest": "sha256:5b293211e78b640e246e6349aa45c9bbc10db16c1c448317705c3461b162945d",
+    "remoteResultDigest": "sha256:867298ca95141f895905ac3fe4129575f3dd93a1e9630f5ff5164e50609c0d3f",
+    "decisionDigest": "sha256:c0208228f38280eb68bd018c8855ff675851c7d7fd6fee2e103f210cd9ea8df0",
+    "importState": "complete"
+  },
+  "verifiedJoins": [
+    "Original/remotejob exact equality",
+    "Archivebytes digest",
+    "Source subjectA/B and artifactbytes digest",
+    "SourceRevision actual tree and descendantbase Gitobjects",
+    "Completed import exact job/request/plan/source/result/decision equality",
+    "Native effect.completed decision equals stored import decision",
+    "No test evidence invented from empty list"
+  ],
+  "evidence": [
+    {
+      "path": "/tmp/kubeclaw-git-original-author-v3-20261101/git-exercise-registration.json",
+      "sha256": "801b45a882e78d0fb85df33157a40295e02ad692ee7029c2e966abe2b6466c68"
+    },
+    {
+      "path": "/tmp/kubeclaw-git-original-author-v3-20261101/exact-restoration-proof.json",
+      "sha256": "472cffaa28b39eddcd4c724e60abc3573b2ea118db3e2414c4d9ffc6835927bc"
+    },
+    {
+      "path": "/tmp/kubeclaw-git-original-author-v3-20261101/fault/inspection.json",
+      "sha256": "667935c01a28779155c1f046c8815d82853c4408c911ac85d43de781850a77ed"
+    },
+    {
+      "path": "/tmp/kubeclaw-git-original-author-v3-20261101/restored/compiled-run.stdout",
+      "sha256": "6b28a7ee4f30d79a231851662b669f2778052e8227e902cef71edd7b69e4e12e"
+    },
+    {
+      "path": "/tmp/kubeclaw-git-original-author-v3-20261101/restored/compiled-run.stderr",
+      "sha256": "504381d16a31c34c13507dc1acc2d4415041fb76b8e55b52c911e88250c36973"
+    },
+    {
+      "path": "/tmp/kubeclaw-git-original-author-v3-20261101/restored/compiled-state/runs/v2-55719a65a4b7d6b1db18400dd639febd9de57b5fe2825f34813e9616f5c5f6ef/events.jsonl",
+      "sha256": "d0be58e4516993fa6da14bdcf9a8b6beaf445fd813b40e6b5efa1fc4b7acfe08"
+    },
+    {
+      "path": "/tmp/kubeclaw-git-original-author-v3-20261101/restored/local/artifacts/blobs/sha256/7c/9f1fcd7704f66a44058386e78dfff8f454fd28295912823875334e8be6fee5",
+      "sha256": "7c9f1fcd7704f66a44058386e78dfff8f454fd28295912823875334e8be6fee5"
+    },
+    {
+      "path": "/tmp/kubeclaw-git-original-author-v3-20261101/restored/buster-state/records/store.json",
+      "sha256": "813bbd6fcc15eed609555552544d7b97df06572cc1d82219ab2cf4eef626da25"
+    },
+    {
+      "path": "/tmp/kubeclaw-git-original-author-v3-20261101/restored/nova-test-state/dispatch/records/store.json",
+      "sha256": "62427ea91eae1e44c843dc8ee015011e69bed2280cbe89c5deab9916933dda27"
+    },
+    {
+      "path": "/tmp/kubeclaw-git-original-author-v3-20261101/restored/nova-test-state/imports/records/store.json",
+      "sha256": "d9d0289efe5dd1ada23e4f0e35637b3acdfd085bc5e0f4500c426dfaff25a427"
+    },
+    {
+      "path": "/tmp/kubeclaw-git-original-author-v3-20261101/restored/buster-state/results/blobs/sha256/5b/293211e78b640e246e6349aa45c9bbc10db16c1c448317705c3461b162945d",
+      "sha256": "5b293211e78b640e246e6349aa45c9bbc10db16c1c448317705c3461b162945d"
+    }
+  ],
+  "finalizationStillRequired": [],
+  "limits": [
+    "Exactly original EXEC-FAIL-GIT four observations in owned author/facilitator deployment-class exercise, not fresh MODELreader or human.",
+    "Actual restored fullpipeline FAILED/Core1blocked with TEST_PROVIDER_SANDBOX_NOT_BUILT and genuine imported execution_error. No successful Buster tests/finalstages/eightstagegreen or productiondeployment awarded.",
+    "No wholeA97-10/A913-05 gate, new requirement/gate/AT/contrast/defaultgenerator/API/AP10 acceptance.",
+    "Source-attested job through native service and digest-bound result/decision import, not separately signed decision or independently recreated ephemeral-key verification.",
+    "Targeted originalcase inputs/raw-native/result/import/Gitbundles retained byteexact; not full workspace/cache archival. Old failures/rawP2/context/Source mistakes unchanged.",
+    "No runtime/check/model rerun or main mutation. Root publiccopy/registration/unchangedchecker/commitremote remain separate actions."
+  ],
+  "finalizedAt": "2026-11-01T07:35:51.911129+00:00",
+  "priorAssessment": {
+    "path": "operations/pr13/evidence/exec-fail-git-original-20261101/actual-v3-original-four-observation-assessment.json",
+    "sha256": "bc947ad44414c49840e946aea48004c6c580a0d867187fe889b0c0609e9c914f"
+  },
+  "reviewedDocumentationRevision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+  "runtimeProductSourceRevision": "cbcbbd31d17dbe8450cf6e02e5a080b74614db46",
+  "actualConditionClosures": [
+    {
+      "path": "operations/pr13/evidence/exec-fail-git-original-20261101/current-build.json",
+      "sha256": "4af6ce6cc7b5e4c689400f169cf4e5d6c3a32d663189b83a5139598ac017d766",
+      "exitCode": 0,
+      "seconds": 304.67083172500134,
+      "sourceRevision": "1acae874335ee6a33b5dedf2bf366411663064b1"
+    },
+    {
+      "path": "operations/pr13/evidence/exec-fail-git-original-20261101/current-artifact.json",
+      "sha256": "f9f14925ca778da127ad615fb560e469a1179964b06e36b25159e68cf4c26fe9",
+      "exitCode": 0,
+      "seconds": 53.4247136459453,
+      "sourceRevision": "1acae874335ee6a33b5dedf2bf366411663064b1"
+    },
+    {
+      "path": "operations/pr13/evidence/exec-fail-git-original-20261101/current-search.json",
+      "sha256": "5015a6ad96b34b4f6fb7db58b7dea9c8b1a6c678c479e4e4c2595fd3bcf50ecf",
+      "exitCode": 0,
+      "seconds": 38.405106134014204,
+      "sourceRevision": "1acae874335ee6a33b5dedf2bf366411663064b1"
+    },
+    {
+      "path": "operations/pr13/evidence/exec-fail-git-original-20261101/current-source-previews.json",
+      "sha256": "518e250508bee23914fef0d37e50d0e63874c4b878e605b89cffed516383659e",
+      "exitCode": 0,
+      "seconds": 57.71206529799383,
+      "sourceRevision": "1acae874335ee6a33b5dedf2bf366411663064b1"
+    },
+    {
+      "path": "operations/pr13/evidence/exec-fail-git-original-20261101/current-diagrams.json",
+      "sha256": "d5ff8300b98c8b2310b6763f9f97d86c10f05a8ba3397bc3a3fd7774dc6ec734",
+      "exitCode": 0,
+      "seconds": 41.84824111999478,
+      "sourceRevision": "1acae874335ee6a33b5dedf2bf366411663064b1"
+    },
+    {
+      "path": "operations/pr13/evidence/exec-fail-git-original-20261101/current-source-links.json",
+      "sha256": "a03e7758e8179d4cc53a1f91fad772c9c9b1b6209f7417c2151bdc8a3d1989f8",
+      "exitCode": 0,
+      "seconds": 373.3679334829794,
+      "sourceRevision": "1acae874335ee6a33b5dedf2bf366411663064b1"
+    },
+    {
+      "path": "operations/pr13/evidence/exec-fail-git-original-20261101/current-diagnose-delivery-check.json",
+      "sha256": "b7e9421ff5b5a5199ac5078ec3b1466af87fd5f42b1877266033536531240db1",
+      "pass": true,
+      "sourceRevision": "1acae874335ee6a33b5dedf2bf366411663064b1"
+    }
+  ],
+  "finalCustody": {
+    "path": "operations/pr13/evidence/exec-fail-git-original-20261101/final-independent-custody-check.json",
+    "sha256": "a8626ab554fb68d21343e55836769158195be6d2885790dd89b3e0eecb12faa7",
+    "v2Files": 84,
+    "v3Files": 102,
+    "allElevenPriorEvidenceHashesRecovered": true,
+    "centralNonterminal": 0,
+    "ownedRootCleanupObserved": true,
+    "remoteJobsCancelled": false
+  },
+  "retainedEvidenceRelocation": [
+    {
+      "originalPath": "/tmp/kubeclaw-git-original-author-v3-20261101/git-exercise-registration.json",
+      "retainedPaths": [
+        "git-exercise-registration.json"
+      ],
+      "sha256": "801b45a882e78d0fb85df33157a40295e02ad692ee7029c2e966abe2b6466c68"
+    },
+    {
+      "originalPath": "/tmp/kubeclaw-git-original-author-v3-20261101/exact-restoration-proof.json",
+      "retainedPaths": [
+        "exact-restoration-proof.json"
+      ],
+      "sha256": "472cffaa28b39eddcd4c724e60abc3573b2ea118db3e2414c4d9ffc6835927bc"
+    },
+    {
+      "originalPath": "/tmp/kubeclaw-git-original-author-v3-20261101/fault/inspection.json",
+      "retainedPaths": [
+        "fault/inspection.json"
+      ],
+      "sha256": "667935c01a28779155c1f046c8815d82853c4408c911ac85d43de781850a77ed"
+    },
+    {
+      "originalPath": "/tmp/kubeclaw-git-original-author-v3-20261101/restored/compiled-run.stdout",
+      "retainedPaths": [
+        "restored/compiled-run.stdout",
+        "restored/raw-before-audit/compiled-run.stdout"
+      ],
+      "sha256": "6b28a7ee4f30d79a231851662b669f2778052e8227e902cef71edd7b69e4e12e"
+    },
+    {
+      "originalPath": "/tmp/kubeclaw-git-original-author-v3-20261101/restored/compiled-run.stderr",
+      "retainedPaths": [
+        "restored/compiled-run.stderr",
+        "restored/raw-before-audit/compiled-run.stderr"
+      ],
+      "sha256": "504381d16a31c34c13507dc1acc2d4415041fb76b8e55b52c911e88250c36973"
+    },
+    {
+      "originalPath": "/tmp/kubeclaw-git-original-author-v3-20261101/restored/compiled-state/runs/v2-55719a65a4b7d6b1db18400dd639febd9de57b5fe2825f34813e9616f5c5f6ef/events.jsonl",
+      "retainedPaths": [
+        "restored/raw-before-audit/compiled-state/runs/v2-55719a65a4b7d6b1db18400dd639febd9de57b5fe2825f34813e9616f5c5f6ef/events.jsonl"
+      ],
+      "sha256": "d0be58e4516993fa6da14bdcf9a8b6beaf445fd813b40e6b5efa1fc4b7acfe08"
+    },
+    {
+      "originalPath": "/tmp/kubeclaw-git-original-author-v3-20261101/restored/local/artifacts/blobs/sha256/7c/9f1fcd7704f66a44058386e78dfff8f454fd28295912823875334e8be6fee5",
+      "retainedPaths": [
+        "restored/raw-before-audit/local/artifacts/blobs/sha256/7c/9f1fcd7704f66a44058386e78dfff8f454fd28295912823875334e8be6fee5"
+      ],
+      "sha256": "7c9f1fcd7704f66a44058386e78dfff8f454fd28295912823875334e8be6fee5"
+    },
+    {
+      "originalPath": "/tmp/kubeclaw-git-original-author-v3-20261101/restored/buster-state/records/store.json",
+      "retainedPaths": [
+        "restored/raw-before-audit/buster-state/records/store.json"
+      ],
+      "sha256": "813bbd6fcc15eed609555552544d7b97df06572cc1d82219ab2cf4eef626da25"
+    },
+    {
+      "originalPath": "/tmp/kubeclaw-git-original-author-v3-20261101/restored/nova-test-state/dispatch/records/store.json",
+      "retainedPaths": [
+        "restored/raw-before-audit/nova-test-state/dispatch/records/store.json"
+      ],
+      "sha256": "62427ea91eae1e44c843dc8ee015011e69bed2280cbe89c5deab9916933dda27"
+    },
+    {
+      "originalPath": "/tmp/kubeclaw-git-original-author-v3-20261101/restored/nova-test-state/imports/records/store.json",
+      "retainedPaths": [
+        "restored/raw-before-audit/nova-test-state/imports/records/store.json"
+      ],
+      "sha256": "d9d0289efe5dd1ada23e4f0e35637b3acdfd085bc5e0f4500c426dfaff25a427"
+    },
+    {
+      "originalPath": "/tmp/kubeclaw-git-original-author-v3-20261101/restored/buster-state/results/blobs/sha256/5b/293211e78b640e246e6349aa45c9bbc10db16c1c448317705c3461b162945d",
+      "retainedPaths": [
+        "restored/raw-before-audit/buster-state/results/blobs/sha256/5b/293211e78b640e246e6349aa45c9bbc10db16c1c448317705c3461b162945d"
+      ],
+      "sha256": "5b293211e78b640e246e6349aa45c9bbc10db16c1c448317705c3461b162945d"
+    }
+  ],
+  "unmetOriginalConditions": [],
+  "publicCompactReview": {
+    "path": "operations/pr13/evidence/exec-fail-git-original-20261101/compact-public-proposal/results.md",
+    "sha256": "e4e5482a24f1c1cb95417562fb8de4dbf006b9b3fac2f3fd1f2b34c808f18ebf",
+    "materialProblemsRemaining": [],
+    "clarificationApplied": "zero Buster-provider test cases ran, not zero all tests; actual implementation node--test remains separately observed."
+  },
+  "earlierLaunchLimit": "Actual operational launch lacked later external catalogue module pin; do not retroactively attest that guard or rewrite old P2/launch. Actual original four observations remain their factual native scope; no duplicate runtime or new authentication feature is required merely to change launch guard history.",
+  "blockedTerminologyClarification": "Historical custom terminal:false means not eligible completed-work evidence API. Ordinary Core recover/wait treats blocked as terminalSTOP; no administrative issuer/reset/replay or generic resume permitted. Distinct governed restored run only."
+}

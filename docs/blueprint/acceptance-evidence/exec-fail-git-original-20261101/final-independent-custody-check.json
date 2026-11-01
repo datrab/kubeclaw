@@ -1,0 +1,110 @@
+{
+  "status": "PASS_TARGETED_ORIGINAL_CUSTODY_AND_OWNED_CLEANUP",
+  "reviewer": "/root/reader_pipeline04_fresh_20261101",
+  "at": "2026-11-01T07:31:43.150202+00:00",
+  "exports": [
+    {
+      "root": "operations/pr13/evidence/exec-fail-git-original-20261101/retained-v2",
+      "manifestSHA256": "4e85aa8d8a4a57dec8733e36b52143fdcf08fd07f3e5efbcf9ddaf3bd1d985c4",
+      "files": 84,
+      "allHashesAndBytesMatch": true,
+      "sourceObjectBundleRetained": true
+    },
+    {
+      "root": "operations/pr13/evidence/exec-fail-git-original-20261101/retained-v3",
+      "manifestSHA256": "ff9d2e114e428dbaf995907cd02e4f5827663580178bef3581dd36a733d59e20",
+      "files": 102,
+      "allHashesAndBytesMatch": true,
+      "sourceObjectBundleRetained": true
+    }
+  ],
+  "allElevenPriorOriginalAssessmentByteHashesRetained": [
+    {
+      "originalPath": "/tmp/kubeclaw-git-original-author-v3-20261101/git-exercise-registration.json",
+      "retainedPaths": [
+        "git-exercise-registration.json"
+      ],
+      "sha256": "801b45a882e78d0fb85df33157a40295e02ad692ee7029c2e966abe2b6466c68"
+    },
+    {
+      "originalPath": "/tmp/kubeclaw-git-original-author-v3-20261101/exact-restoration-proof.json",
+      "retainedPaths": [
+        "exact-restoration-proof.json"
+      ],
+      "sha256": "472cffaa28b39eddcd4c724e60abc3573b2ea118db3e2414c4d9ffc6835927bc"
+    },
+    {
+      "originalPath": "/tmp/kubeclaw-git-original-author-v3-20261101/fault/inspection.json",
+      "retainedPaths": [
+        "fault/inspection.json"
+      ],
+      "sha256": "667935c01a28779155c1f046c8815d82853c4408c911ac85d43de781850a77ed"
+    },
+    {
+      "originalPath": "/tmp/kubeclaw-git-original-author-v3-20261101/restored/compiled-run.stdout",
+      "retainedPaths": [
+        "restored/compiled-run.stdout",
+        "restored/raw-before-audit/compiled-run.stdout"
+      ],
+      "sha256": "6b28a7ee4f30d79a231851662b669f2778052e8227e902cef71edd7b69e4e12e"
+    },
+    {
+      "originalPath": "/tmp/kubeclaw-git-original-author-v3-20261101/restored/compiled-run.stderr",
+      "retainedPaths": [
+        "restored/compiled-run.stderr",
+        "restored/raw-before-audit/compiled-run.stderr"
+      ],
+      "sha256": "504381d16a31c34c13507dc1acc2d4415041fb76b8e55b52c911e88250c36973"
+    },
+    {
+      "originalPath": "/tmp/kubeclaw-git-original-author-v3-20261101/restored/compiled-state/runs/v2-55719a65a4b7d6b1db18400dd639febd9de57b5fe2825f34813e9616f5c5f6ef/events.jsonl",
+      "retainedPaths": [
+        "restored/raw-before-audit/compiled-state/runs/v2-55719a65a4b7d6b1db18400dd639febd9de57b5fe2825f34813e9616f5c5f6ef/events.jsonl"
+      ],
+      "sha256": "d0be58e4516993fa6da14bdcf9a8b6beaf445fd813b40e6b5efa1fc4b7acfe08"
+    },
+    {
+      "originalPath": "/tmp/kubeclaw-git-original-author-v3-20261101/restored/local/artifacts/blobs/sha256/7c/9f1fcd7704f66a44058386e78dfff8f454fd28295912823875334e8be6fee5",
+      "retainedPaths": [
+        "restored/raw-before-audit/local/artifacts/blobs/sha256/7c/9f1fcd7704f66a44058386e78dfff8f454fd28295912823875334e8be6fee5"
+      ],
+      "sha256": "7c9f1fcd7704f66a44058386e78dfff8f454fd28295912823875334e8be6fee5"
+    },
+    {
+      "originalPath": "/tmp/kubeclaw-git-original-author-v3-20261101/restored/buster-state/records/store.json",
+      "retainedPaths": [
+        "restored/raw-before-audit/buster-state/records/store.json"
+      ],
+      "sha256": "813bbd6fcc15eed609555552544d7b97df06572cc1d82219ab2cf4eef626da25"
+    },
+    {
+      "originalPath": "/tmp/kubeclaw-git-original-author-v3-20261101/restored/nova-test-state/dispatch/records/store.json",
+      "retainedPaths": [
+        "restored/raw-before-audit/nova-test-state/dispatch/records/store.json"
+      ],
+      "sha256": "62427ea91eae1e44c843dc8ee015011e69bed2280cbe89c5deab9916933dda27"
+    },
+    {
+      "originalPath": "/tmp/kubeclaw-git-original-author-v3-20261101/restored/nova-test-state/imports/records/store.json",
+      "retainedPaths": [
+        "restored/raw-before-audit/nova-test-state/imports/records/store.json"
+      ],
+      "sha256": "d9d0289efe5dd1ada23e4f0e35637b3acdfd085bc5e0f4500c426dfaff25a427"
+    },
+    {
+      "originalPath": "/tmp/kubeclaw-git-original-author-v3-20261101/restored/buster-state/results/blobs/sha256/5b/293211e78b640e246e6349aa45c9bbc10db16c1c448317705c3461b162945d",
+      "retainedPaths": [
+        "restored/raw-before-audit/buster-state/results/blobs/sha256/5b/293211e78b640e246e6349aa45c9bbc10db16c1c448317705c3461b162945d"
+      ],
+      "sha256": "5b293211e78b640e246e6349aa45c9bbc10db16c1c448317705c3461b162945d"
+    }
+  ],
+  "cleanupReceiptSHA256": "698059c640e550ca87b0192fb48bbaea5e2dee111706886391bd448b3909b8dc",
+  "sevenOwnedRootsInactiveRemovedObservedByRoot": true,
+  "centralCensusSHA256": "59db4636eea074023229e81fdcf2aca81a9636b442a7113395e4b17ae36a7e79",
+  "centralTotal": 216,
+  "centralNonterminal": 0,
+  "remoteJobsCancelled": false,
+  "sourceWipPreserved": true,
+  "limits": "Targeted complete case inputs/raw-native stores/audit/import and Git object bundles, not every workspace/cache. Reviewer verified exports and owner receipts, not new runtime/proc census or cleanup. Fullpipeline failure remains. Source-links terminal receipt pending at this check."
+}

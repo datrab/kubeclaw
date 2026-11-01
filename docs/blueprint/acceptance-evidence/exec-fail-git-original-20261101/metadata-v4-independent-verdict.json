@@ -1,0 +1,59 @@
+{
+  "status": "PASS_BOUNDED_METADATA_V4_SOURCE_READER_QUALITY_CONDITIONAL_CURRENT_RECEIVERS",
+  "reviewer": "/root/reader_pipeline04_fresh_20261101",
+  "at": "2026-11-01T07:08:11.931168+00:00",
+  "manifestSHA256": "c81e4c516c0837212be590b8a1f202e74a6e60fb04eab19acd847df1c12702f4",
+  "patchSHA256": "2293be7b9d43853aad35fabd5bde7d1c211cc8f08e528fe80ddd4f7063b91404",
+  "guideSHA256": "54cbb9fa7ef96a3b67913b0973a3bdae6530f8d8aa57aa92e9a8e674c5d2985f",
+  "files": [
+    {
+      "path": "docs/config/publication-example-claims.json",
+      "oldSHA256": "223c7ec01af0931925ce46a6a5dc72b0bd37180099b04cb7a7d8ebb4ecaa98c1",
+      "currentSHA256": "12f0da0d5873fd67e19d95278a9f308d5190e7a96579f8c622508b58646b5be6",
+      "bytes": 22689035
+    },
+    {
+      "path": "scripts/docs-api-output-discovery.mjs",
+      "oldSHA256": "53629bf24093c35a781a827b2842829454d00f16016c41e9ee8ab44ac42ed798",
+      "currentSHA256": "cbb4510b17f2d6a02935f1c8844b29beb77812cd182a0c490c4b0aea1917b450",
+      "bytes": 615173
+    },
+    {
+      "path": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "oldSHA256": "b8259554f89fd73830a183faad96da4c81e803a82212c3b1753a6f3c6acdf6b5",
+      "currentSHA256": "cef34235d813a65ef892f1826b47d7de6d8941ab8c02222cdc26d0b7b1fdd584",
+      "bytes": 35686
+    },
+    {
+      "path": "scripts/lib/docs-publication-instruction-bindings.mjs",
+      "oldSHA256": "6505fdb0f2538375f9edc923b5d4a3115eae61a47b72a5f6b5605e5b37522b63",
+      "currentSHA256": "f23caef1baea4ff237129cc8d101b569847f5da56318b09b1ba89e4e7d79b00f",
+      "bytes": 32412
+    }
+  ],
+  "judgments": {
+    "Source": "PASS",
+    "Reader": "PASS",
+    "Quality": "PASS"
+  },
+  "materialFindings": [],
+  "scope": "One diagnose page157, changed5old blocks27/28/30/31/32 and4old prose27/29/31/33; whole current controlled-dependency contract173 anchor plus source-procedure prerequisites/errors/cleanup/expectedResults and instructionbindings authority36; four existing literal slots and four existing native/YAML/child input seals. Not a model-read claim for every unchanged full metadata token.",
+  "meaning": "Claims accurately state genuine sameA/baseB unavailable-source restoration, new isolated optionalconfig before bothruns, exact native source proof, blocked stop vs completed-work projection, sandbox prerequisite and failed provider/import boundary. Current finite basis appends preserve prior historical Source-only obligations and no runtime acceptance. The old unexecuted/source-contract-only language remains its historical declaration scope under explicit execution.mode/source-only/historicalEvidencePolicy, not denial or reclassification of separate actual failed/case records.",
+  "instructionBoundary": "Four existing JS literal slots reference same guide block IDs/languages/module modes; only exact changed Source spans/hashes move. Native syntax receipts exit0 are parse-only, not executing restore/approval/Core/model/sandbox/provider code.471host membership and every other binding/check vector remain exact.",
+  "purposeBoundary": "Four existing input seals transfer to reviewed claims/guide only. Complete13 owner statements retain physical canonical input checks, finite same callers/rosters/descriptors/slots/facts/UNKNOWN/no-runtime grants. No blind facts/role/rootclosure update: selected native/YAML and182/36/51 closures unchanged at actual supplied scope.",
+  "mapBoundary": "Actual native governance0/6.163s supplied owned proof yields map/classification/product exact; guide header metadata unchanged. No mapseal/classification refresh or new SourceSurfaceMap scope.",
+  "custodyProof": "metadata-v4-independent-custody.json",
+  "actualCurrentReceiversRequired": [
+    "bindPublicationExampleCoverage +validatePublicationClaimContracts with ALL actual186pages+43assets and declaration; not one-page API misuse.",
+    "validateInstructionSyntax ALL actual pages+sources with four changed old literal slots; expect471 unchanged hosts.",
+    "Native docs-governance --check (or supported generation with exact map/classification compare) proves no header-map change; no assumed mapseal.",
+    "Targeted existing publication native/YAML/child guards after qualified metadata state; no unchanged18predicate blanket rerun/defaultgenerator."
+  ],
+  "adoption": "CONDITIONAL: after coherent Root application, actual complete186page/43asset bindPublicationExampleCoverage+validatePublicationClaimContracts, all-page validateInstructionSyntax471hosts/changed four literal slots, relevant current native/YAML/child input-purpose guard positives/refusals, and governance exactno-map-change. This review does not claim those future results.",
+  "limits": [
+    "No main/proposal mutation or native/check/runtime/model rerun by reviewer.",
+    "No original complete-case registration/wholegate/currentartifact/humanAT/production or fullpipelinegreen award.",
+    "Old ENOENT/summary/completedreader/expectedHead/sandbox failures and rawP2/independent mistakes remain unchanged.",
+    "Root guide/catalog/P2 partitions and later current publication/delivery remain separate; no blanket scope preservation campaign."
+  ]
+}

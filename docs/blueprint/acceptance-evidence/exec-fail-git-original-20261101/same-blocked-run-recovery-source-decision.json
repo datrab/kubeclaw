@@ -1,0 +1,19 @@
+{
+  "status": "NO_SUPPORTED_SAME_BLOCKED_RUN_RETRY_WITH_ORIGINAL_PLATFORM_AUTHORITY",
+  "scope": "Read-only exactactualcase; no invocation/reconfiguration/retry/newcase",
+  "actualRun": "run:git-exact-restored-7f44b74fb5538492",
+  "actualState": "source-preflight/blueprint/implementation/lint succeeded, test-app blocked after signed-source genuine Buster errored import TEST_PROVIDER_SANDBOX_NOT_BUILT; no fullpipelinePASS",
+  "ordinaryCLI": "engine-run.ts46-63 rejects latest run.blocked boundary as RECOVERY_RUN_TERMINAL. --signal path uses same assertRecoverableRun WAIT prefix and requires actualwait; no wait here.",
+  "administrativeAPI": "engine.ts reopenBlockedPipelineV2 routes authenticated engine-admin Reopener; actor mustmatch real principal AND platform administrativeDecisionIssuers. Actual restored compiled-platform.complete.json has [] issuers; remaining maxAttempts7/used1 is not permission. CLI exposes no adminreopen option.",
+  "permittedRepair": "Root already built maintained native sandbox from Source; availability repair does not change stored failed job/import or authorize replay. Keep exact failed state/Source import record.",
+  "originalCondition": "Independent four original Git observations may pass with exact A restored/sourceverified/bound FAILED import. Do not impose extra all8stagegreen nor convert failed import to success.",
+  "nextOwnerAction": "Root retain actual signed-source/digest-result/nativeaudit observations and independently register only originalGitfacet if all4conditions substantiated; preserve failedfullpipeline. No samecase replay, newadminissuer, forgedprincipal, resetbudget, newfaultpair or unrelatedrun proposed.",
+  "priorReceiptClarification": "offline-fault-v3 terminal:false is the narrow completed-evidence-reader exclusion, not ordinary recover eligibility. Preserve receiptbyteexact; clarify separately here/guide.",
+  "sourceHashes": {
+    "skills/nova/core/cli.ts": "09121b4b0a160d2e5e35448795156856b15ccc078a229bb1895f570c22f76787",
+    "skills/nova/core/execution/engine-run.ts": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819",
+    "skills/nova/core/execution/engine-admin.ts": "f3ba44d49baffa01ee74a4d749818e8f903feb48827eb9108f959c24c8a0a1f2",
+    "skills/buster/engine/test-gates/provider-loader.ts": "8453535b799916c74d2f036ca09a5bc973f600eb402ade0da57f93ab24ab6c85",
+    "scripts/build-plugin-sandbox.mjs": "ea546fd31e572312986730c4f8c89aacf0943aeb37b560cc63281cf67a9f92ec"
+  }
+}

@@ -1,0 +1,133 @@
+{
+  "status": "FOUR_ORIGINAL_EXEC_FAIL_GIT_OBSERVATIONS_SUPPORTED_FINAL_CASE_REGISTRATION_PENDING",
+  "reviewer": "/root/reader_pipeline04_fresh_20261101",
+  "at": "2026-11-01T06:59:23.261868+00:00",
+  "originalFixture": "docs/blueprint/AP09-acceptance-fixtures.json#EXEC-FAIL-GIT",
+  "originalObjective": "Trace an unavailable Git revision without silently changing source identity.",
+  "failureThreshold": "FAIL after revision substitution, stale-source execution, identity rewrite, or unverified resume.",
+  "outcomes": [
+    {
+      "id": "revision",
+      "observed": "PASS_ORIGINAL_OBSERVATION",
+      "basis": "Frozen exact origin/sourceRef/immutableA and reachablebaseB registration, genuine bundle and fault absence proofs retained."
+    },
+    {
+      "id": "no-substitution",
+      "observed": "PASS_ORIGINAL_OBSERVATION",
+      "basis": "Actual fault strict14event/6effect inspector shows HEADB then requiredA fails, no fallback/Buster/modeldispatch; old blocked run neverreplayed. New pair sameconfig/descriptorA/baseB unchanged."
+    },
+    {
+      "id": "state",
+      "observed": "PASS_ORIGINAL_OBSERVATION",
+      "basis": "Actual new restored dispatchjob equals remoteacceptedjob, archivebytes hash/sourceRevision+tree+base+plan identities match complete Novaimport and native decision. Result is genuinely execution_error, not passed, and every request/result/decision digest remains bound. Empty evidence list is actual result, not omitted successful test reports."
+    },
+    {
+      "id": "recovery",
+      "observed": "PASS_ORIGINAL_OBSERVATION",
+      "basis": "Exact sameA restored from hashed bundle into sameorigin+workingrepo. Native source-preflight artifact verifies architectureA/sourceB and passes at seq29 before blueprint/implementation/runtime/Buster dispatch. Distinct governed restored run, no changedinputresume of fault. Later sandboxfailure does not undo actual Sourceverification."
+    }
+  ],
+  "unmetOriginalObservationIdentified": [],
+  "originalInterpretation": "Original state condition requires dispatch/import records remain bound to intended Source, not that test result or gate decision pass. Original recovery requires exact revision restored and Sourceverification before resume; it does not require all8stages/wholepipeline succeeded. A genuine failed Buster result/import with exact identity satisfies binding, without exemption from any original text. Stronger current guide/helper successassertions are NOT satisfied and remain documented failures.",
+  "actualFailureRetained": {
+    "CoreExit": 1,
+    "runStatus": "blocked",
+    "sourcePreflight": "succeeded",
+    "blueprintSync": "succeeded",
+    "implementation": "succeeded",
+    "lint": "succeeded",
+    "testApp": "blocked",
+    "finalStages": "pending",
+    "journalEvents": 144,
+    "stageBlockedSequence": 143,
+    "lastRunEvent": "run.blocked",
+    "BusterStatus": "completed",
+    "BusterAttemptSummary": "TEST_PROVIDER_SANDBOX_NOT_BUILT",
+    "BusterExecutionState": "errored",
+    "NovaDecisionState": "execution_error",
+    "wholePipelineSucceeded": false,
+    "signedSourceNotSignedDecision": "Actual job contains source attestation accepted by genuine maintained service; decision/import are digest-bound, not separately signed decisions. Reviewer inspected fields/native route, did not independently recreate vanished private-key verification."
+  },
+  "bindings": {
+    "architectureA": "9a94d98ecafecae6c13ea1860bcd3596b40a8502",
+    "sourceBaseB": "610e4f07ee894e999ed5eb754815f14bc455a962",
+    "restoredRunId": "run:git-exact-restored-7f44b74fb5538492",
+    "sourceSubjectDigest": "sha256:54fa6a4ef4576d63d33844b5fd8481d1899ac79e1f9454ca5c31e9cd676e631f",
+    "jobId": "job:72e5d81012aef589a68926f0cfad1aa120b07163857ce40e49aed979867e83d2",
+    "requestDigest": "sha256:d4ff208b6d8bdb052963e2a129be2d6bb6b909b2e38624b42569b255af2a22bc",
+    "planDigest": "sha256:d9aca3e698cfe55383845faa6e98b402b25b40317e5dc0a372225e54f5e08c65",
+    "sourceRevision": "git:77d4d01850166cfb905a4c4ed4a1f2a9aba197c5",
+    "sourceTree": "git:bd1f1df6ef1d515c3ab560e45b18de83e6aa46e7",
+    "archiveDigest": "sha256:e9f26c5cf71ff3aaa0eec473548176412535bf8bb0ffbbbe29360d23255ef022",
+    "resultBlobContentDigest": "sha256:5b293211e78b640e246e6349aa45c9bbc10db16c1c448317705c3461b162945d",
+    "remoteResultDigest": "sha256:867298ca95141f895905ac3fe4129575f3dd93a1e9630f5ff5164e50609c0d3f",
+    "decisionDigest": "sha256:c0208228f38280eb68bd018c8855ff675851c7d7fd6fee2e103f210cd9ea8df0",
+    "importState": "complete"
+  },
+  "verifiedJoins": [
+    "Original/remotejob exact equality",
+    "Archivebytes digest",
+    "Source subjectA/B and artifactbytes digest",
+    "SourceRevision actual tree and descendantbase Gitobjects",
+    "Completed import exact job/request/plan/source/result/decision equality",
+    "Native effect.completed decision equals stored import decision",
+    "No test evidence invented from empty list"
+  ],
+  "evidence": [
+    {
+      "path": "/tmp/kubeclaw-git-original-author-v3-20261101/git-exercise-registration.json",
+      "sha256": "801b45a882e78d0fb85df33157a40295e02ad692ee7029c2e966abe2b6466c68"
+    },
+    {
+      "path": "/tmp/kubeclaw-git-original-author-v3-20261101/exact-restoration-proof.json",
+      "sha256": "472cffaa28b39eddcd4c724e60abc3573b2ea118db3e2414c4d9ffc6835927bc"
+    },
+    {
+      "path": "/tmp/kubeclaw-git-original-author-v3-20261101/fault/inspection.json",
+      "sha256": "667935c01a28779155c1f046c8815d82853c4408c911ac85d43de781850a77ed"
+    },
+    {
+      "path": "/tmp/kubeclaw-git-original-author-v3-20261101/restored/compiled-run.stdout",
+      "sha256": "6b28a7ee4f30d79a231851662b669f2778052e8227e902cef71edd7b69e4e12e"
+    },
+    {
+      "path": "/tmp/kubeclaw-git-original-author-v3-20261101/restored/compiled-run.stderr",
+      "sha256": "504381d16a31c34c13507dc1acc2d4415041fb76b8e55b52c911e88250c36973"
+    },
+    {
+      "path": "/tmp/kubeclaw-git-original-author-v3-20261101/restored/compiled-state/runs/v2-55719a65a4b7d6b1db18400dd639febd9de57b5fe2825f34813e9616f5c5f6ef/events.jsonl",
+      "sha256": "d0be58e4516993fa6da14bdcf9a8b6beaf445fd813b40e6b5efa1fc4b7acfe08"
+    },
+    {
+      "path": "/tmp/kubeclaw-git-original-author-v3-20261101/restored/local/artifacts/blobs/sha256/7c/9f1fcd7704f66a44058386e78dfff8f454fd28295912823875334e8be6fee5",
+      "sha256": "7c9f1fcd7704f66a44058386e78dfff8f454fd28295912823875334e8be6fee5"
+    },
+    {
+      "path": "/tmp/kubeclaw-git-original-author-v3-20261101/restored/buster-state/records/store.json",
+      "sha256": "813bbd6fcc15eed609555552544d7b97df06572cc1d82219ab2cf4eef626da25"
+    },
+    {
+      "path": "/tmp/kubeclaw-git-original-author-v3-20261101/restored/nova-test-state/dispatch/records/store.json",
+      "sha256": "62427ea91eae1e44c843dc8ee015011e69bed2280cbe89c5deab9916933dda27"
+    },
+    {
+      "path": "/tmp/kubeclaw-git-original-author-v3-20261101/restored/nova-test-state/imports/records/store.json",
+      "sha256": "d9d0289efe5dd1ada23e4f0e35637b3acdfd085bc5e0f4500c426dfaff25a427"
+    },
+    {
+      "path": "/tmp/kubeclaw-git-original-author-v3-20261101/restored/buster-state/results/blobs/sha256/5b/293211e78b640e246e6349aa45c9bbc10db16c1c448317705c3461b162945d",
+      "sha256": "5b293211e78b640e246e6349aa45c9bbc10db16c1c448317705c3461b162945d"
+    }
+  ],
+  "finalizationStillRequired": [
+    "Root complete raw store/authority preservation and stoppedjob/process/users reconciliation/owned cleanup.",
+    "Coherent current public guide/proof must acknowledge failed fullpipeline and distinguish originalsource recovery condition from unobserved stronger8stagegreen rehearsal.",
+    "P2/newexternalcatalogpin disposition separately; earlier actual launch did not have newguard, no retroattestation or duplicate runtime justforguard."
+  ],
+  "limits": [
+    "No final registration/wholecaseaward at this incomplete custody/documentation boundary; exact four substantive observations supported only.",
+    "No wholeA913-05/gate, fresh-reader/human/AT/production deployment or successful Buster test claim.",
+    "Later actual sandbox build is separate host preparation, not retroactive success or permission to rewrite/retry oldrun.",
+    "No Core/model/nativecheck rerun or main/runtime mutation by reviewer; pure data/hash/Gitobject read-only joins only."
+  ]
+}

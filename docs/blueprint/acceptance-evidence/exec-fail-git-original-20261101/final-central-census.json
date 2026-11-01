@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-01T07:29:52.457Z",
+  "schemaVersion": "buster-plan-census.v1",
+  "total": 216,
+  "counts": {
+    "accepted": 0,
+    "running": 0,
+    "cancelling": 0,
+    "completed": 210,
+    "failed": 4,
+    "cancelled": 2
+  },
+  "nonterminal": 0,
+  "remoteJobsCancelled": false
+}

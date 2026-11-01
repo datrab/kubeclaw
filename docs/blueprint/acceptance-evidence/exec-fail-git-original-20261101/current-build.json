@@ -1,0 +1,14 @@
+{
+  "startedAt": "2026-11-01T07:19:56.543300+00:00",
+  "endedAt": "2026-11-01T07:25:01.214156+00:00",
+  "seconds": 304.67083172500134,
+  "exitCode": 0,
+  "argv": [
+    "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh",
+    "node",
+    "scripts/docs-publication.mjs",
+    "build"
+  ],
+  "sourceRevision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+  "scope": "Actual coherent current186-page publication; nativeGit original4scope separate, fullpipeline failure and AT/generator/AP10 limits retained"
+}

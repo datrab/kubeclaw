@@ -1,0 +1,52 @@
+{
+  "status": "PASS_BOUNDED_FINAL_GUIDE_V4_SANDBOX_AND_BLOCKED_BOUNDARY_DELTA",
+  "reviewer": "/root/reader_pipeline04_fresh_20261101",
+  "at": "2026-11-01T07:02:25.535317+00:00",
+  "path": "docs/site/use/diagnose.md",
+  "priorSHA256": "1873780b6d5480db5704be7b4b6f787c79ccfbc109d82fd8c1b93be4cd4e5838",
+  "currentSHA256": "54cbb9fa7ef96a3b67913b0973a3bdae6530f8d8aa57aa92e9a8e674c5d2985f",
+  "patchSHA256": "d335a628b593ef9eed88b387a0c1c6eafb96f56d30df47b8c3bb1a794fcf1b64",
+  "judgments": {
+    "Source": "PASS",
+    "Reader": "PASS",
+    "Quality": "PASS"
+  },
+  "materialFindings": [],
+  "sandboxMeaning": "Existing maintained package script invokes actual build-plugin-sandbox.mjs, compiling real sandbox.c with cc into provider-loader expected launcher. Prerequisite before both runs and explicit exit1 preserve failure. This addresses genuine observed TEST_PROVIDER_SANDBOX_NOT_BUILT without bypass/privilege change and does not retroactively make failed fullpipeline or Buster result passed.",
+  "blockedMeaning": "Correctly distinguishes readRunEvidence completed-work projection exclusion from ordinary Core recovery/wait resume stop semantics. Native assertRecoverableRun explicitly treats run.blocked as terminal boundary for RECOVERY/WAIT; admin reopening is separately authenticated/issuer-authorized and absent from this isolated registration. No issuer addition/reset/replay permission inferred.",
+  "priorReceiptClarification": "Historical custom terminal:false remains byte-unchanged and means only excluded from completed-evidence projection. Prior blanket nonterminal wording in guide/independent review must not be generalized to ordinary Core recover/resume; this is an explicit correction/addendum, not rewriting old evidence.",
+  "preservedMeaning": "SameA/baseB, new pair optionalconfig frombeginning, exact native audit reasons, distinct governed run, strict raw/adapter custody,16KiB inline STOP and owned cleanup retain prior scope. Original four identity/recovery observations are distinct from stronger all8stagegreen rehearsal; actual failed imported decision stays execution_error.",
+  "wholeOutsideGitSectionInverseExact": true,
+  "reuse": [
+    "guide-v3-independent-delta-review.json",
+    "actual-v3-original-four-observation-assessment.json"
+  ],
+  "limits": [
+    "No current restored/fullpipeline success, original final case registration or whole gate award.",
+    "No runtime/check/native/model rerun or main mutation.",
+    "Externalcatalog pinP2/newlauncher is separate; prior launch lacked that guard and is not retroattested.",
+    "Root coherent metadata/seals/P2/current publication still required before public adoption."
+  ],
+  "nativeOwners": [
+    {
+      "path": "scripts/build-plugin-sandbox.mjs",
+      "sha256": "ea546fd31e572312986730c4f8c89aacf0943aeb37b560cc63281cf67a9f92ec"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "sha256": "8453535b799916c74d2f036ca09a5bc973f600eb402ade0da57f93ab24ab6c85"
+    },
+    {
+      "path": "skills/nova/core/execution/engine-run.ts",
+      "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819"
+    },
+    {
+      "path": "skills/nova/core/execution/engine-admin.ts",
+      "sha256": "f3ba44d49baffa01ee74a4d749818e8f903feb48827eb9108f959c24c8a0a1f2"
+    },
+    {
+      "path": "skills/nova/core/state/read-run-evidence.ts",
+      "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065"
+    }
+  ]
+}

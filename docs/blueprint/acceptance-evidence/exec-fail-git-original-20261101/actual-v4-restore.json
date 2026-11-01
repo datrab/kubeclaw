@@ -1,0 +1,13 @@
+{
+  "operation": "restore",
+  "startedAt": "2026-11-01T06:52:11.211463+00:00",
+  "exitCode": 0,
+  "elapsedSeconds": 1.516263892990537,
+  "credentialValuesRecorded": false,
+  "credentialsRead": false,
+  "externalAttestation": true,
+  "runtimeDispatched": false,
+  "driverSha256": "25ae5ea45b65f0c99e67afb321ff661be99c88988d71bfed71f00bac009fb8d0",
+  "sourceRevision": "cbcbbd31d17dbe8450cf6e02e5a080b74614db46",
+  "fixtureRoot": "/tmp/kubeclaw-git-original-author-v3-20261101"
+}

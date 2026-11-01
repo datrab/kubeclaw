@@ -1,0 +1,12 @@
+{
+  "startedAt": "2026-11-01T07:14:42.649996+00:00",
+  "seconds": 6.99799027107656,
+  "exitCode": 1,
+  "argv": [
+    "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh",
+    "node",
+    "/home/node/.openclaw/workspace/operations/pr13/evidence/exec-fail-git-original-20261101/actual-current-receivers.mjs"
+  ],
+  "candidateBinding": "coherent-five-file-local-adoption.json",
+  "sourceState": "five exact qualified WIP files on CBC baseline, not published or commit receipt rewritten"
+}

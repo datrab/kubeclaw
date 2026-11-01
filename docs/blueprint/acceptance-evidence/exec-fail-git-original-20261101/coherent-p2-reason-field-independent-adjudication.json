@@ -1,0 +1,44 @@
+{
+  "status": "SOLE_PINNED_P1_REJECTED_AS_DEMONSTRABLY_NONACTIONABLE_AT_EXACT_NATIVE_AND_ACTUAL_SCOPE",
+  "reviewer": "/root/reader_pipeline04_fresh_20261101",
+  "at": "2026-11-01T06:46:44.758484+00:00",
+  "rawReview": "operations/pr13/evidence/exec-fail-git-original-20261101/coherent-correction-pinned-review.json",
+  "rawReviewSHA256": "f878dda36e02cd7a5431f0f3b55146527dcdac5df6f6ef2cb261ca49e80e2b4b",
+  "rawOverallCorrectnessRetained": "patch is incorrect",
+  "rawConfidenceRetained": 0.99,
+  "finding": "Claim that attempt.completed has no payload.reason and inspector necessarily fails.",
+  "disposition": "REJECTED: actual native producer and actual retained event demonstrate both payload.reason and payload.result.reason. No source assertion removal or unchanged verdict-shopping rerun is indicated.",
+  "nativeProducer": {
+    "path": "kubeclaw-pr13-recovery/skills/nova/core/execution/stage-executor.ts",
+    "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb",
+    "method": "StageExecutor.#recordResult",
+    "meaning": "Appends outcome plus conditional sibling reason from actual result.reason, and structuredClone(result). For this blocked reason both paths exist by construction."
+  },
+  "actualEvent": {
+    "auditPath": "/tmp/kubeclaw-git-original-author-v2-20261101/fault/audit.stdout",
+    "auditSHA256": "3f61530fe8a1916ed2a196ad491aa025e5555f5ba0924ff6f14471ad7cbe66e1",
+    "sequence": 12,
+    "eventId": "event:1b483229-2506-4d2e-9fcd-19af872579f3",
+    "sourceRecordHash": "sha256:2669201970019fa465868241df82ba9c16a619649794d0ee7337ef0ec56ec356",
+    "type": "attempt.completed",
+    "siblingReasonEqualsNestedAndStageReason": true,
+    "reason": {
+      "code": "source_preflight.invalid",
+      "message": "Command failed: git -C /tmp/kubeclaw-git-original-author-v2-20261101/project/repository rev-parse --verify 9a94d98ecafecae6c13ea1860bcd3596b40a8502^{commit}\nfatal: Needed a single revision\n"
+    }
+  },
+  "actualInspectorResult": {
+    "path": "operations/pr13/evidence/exec-fail-git-original-20261101/offline-fault-v3/actual-same-run-result.json",
+    "sha256": "e7c2222124c65ed58e81c1c0a1776f6d058ae09a68cf51a409940ab9ec1f7f45",
+    "scriptSHA256": "06be0d8b656af2407997bf08556d9b127c399380a26d7c1c2e060b45cd426f37",
+    "actualReadOnlySameRunSuccessfulOutputAlreadyRetained": true,
+    "rerunByReviewer": false
+  },
+  "importantDistinction": "CLI run.stages source summary lacks reason (previous real defect), but native attempt.completed audit payload does expose sibling reason. Guide using nested result reason does not imply sibling absence. Existing inspector compares both and is valid on actual record.",
+  "reuse": "Prior bounded offline inspector/guide Source judgments remain qualified only at exact actual blocked case/native assertions. New optional-expectedHead case requires its own material-delta controls/frozen review; add complete stage-executor producer context to that genuinely new review, not unchanged review loop.",
+  "limits": [
+    "Raw coherent P2 incorrect0.99 remains verbatim, not relabeled clean.",
+    "No original wholecase/gate award or successful old restored run inferred.",
+    "No native/check/runtime/model rerun or source/raw/main mutation."
+  ]
+}

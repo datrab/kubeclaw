@@ -1,0 +1,152 @@
+[
+  {
+    "path": "actual-current-receivers.json",
+    "bytes": 500,
+    "sha256": "30860e53fc409960c1481c49b13f8a1c452ba69c56be7ce24dec608d180575a9"
+  },
+  {
+    "path": "actual-current-syntax-v2.json",
+    "bytes": 436,
+    "sha256": "dd6506dd9d430a1b8df2eb0ac2e3d67f56db7e5dfbf83b2470778a27c131e059"
+  },
+  {
+    "path": "actual-v3-original-four-observation-assessment.json",
+    "bytes": 8318,
+    "sha256": "bc947ad44414c49840e946aea48004c6c580a0d867187fe889b0c0609e9c914f"
+  },
+  {
+    "path": "actual-v4-fault.json",
+    "bytes": 898,
+    "sha256": "24826ff31dc2123be82efe6ff0d8f0275436fd98d42b2c48f782a66eba7553f5"
+  },
+  {
+    "path": "actual-v4-restore.json",
+    "bytes": 478,
+    "sha256": "78df21d88ea19d183412ffbb447576c82d8ed1f102ad8b6528ec95c38a922883"
+  },
+  {
+    "path": "actual-v4-restored.json",
+    "bytes": 903,
+    "sha256": "490546ac9024592861b2d9f0551a2ae155d145c2c85e506ae461be688ce8135b"
+  },
+  {
+    "path": "affected-original-preservation-verdict.json",
+    "bytes": 129586,
+    "sha256": "aa7c03dd96ef888f1db792a392ea1be6e0716c2503c2f55985aa90b65ee8259d"
+  },
+  {
+    "path": "coherent-p2-reason-field-independent-adjudication.json",
+    "bytes": 3254,
+    "sha256": "88b80989cf12766e23b287b7da07571dfc613ec2df0aca73b032afc02a472126"
+  },
+  {
+    "path": "current-artifact.json",
+    "bytes": 459,
+    "sha256": "f9f14925ca778da127ad615fb560e469a1179964b06e36b25159e68cf4c26fe9"
+  },
+  {
+    "path": "current-build.json",
+    "bytes": 519,
+    "sha256": "4af6ce6cc7b5e4c689400f169cf4e5d6c3a32d663189b83a5139598ac017d766"
+  },
+  {
+    "path": "current-diagnose-delivery-check.json",
+    "bytes": 1127,
+    "sha256": "b7e9421ff5b5a5199ac5078ec3b1466af87fd5f42b1877266033536531240db1"
+  },
+  {
+    "path": "current-diagrams.json",
+    "bytes": 460,
+    "sha256": "d5ff8300b98c8b2310b6763f9f97d86c10f05a8ba3397bc3a3fd7774dc6ec734"
+  },
+  {
+    "path": "current-governance.json",
+    "bytes": 1058,
+    "sha256": "23d8d5d34b4f246f79f46e15f1acbf574f842f725f0d713d17907d7066a67085"
+  },
+  {
+    "path": "current-search.json",
+    "bytes": 459,
+    "sha256": "5015a6ad96b34b4f6fb7db58b7dea9c8b1a6c678c479e4e4c2595fd3bcf50ecf"
+  },
+  {
+    "path": "current-source-links.json",
+    "bytes": 464,
+    "sha256": "a03e7758e8179d4cc53a1f91fad772c9c9b1b6209f7417c2151bdc8a3d1989f8"
+  },
+  {
+    "path": "current-source-previews.json",
+    "bytes": 467,
+    "sha256": "518e250508bee23914fef0d37e50d0e63874c4b878e605b89cffed516383659e"
+  },
+  {
+    "path": "current-targeted-guards.json",
+    "bytes": 501,
+    "sha256": "87f22a2ec369f49ae4a30a3e4b6a2fb5e1ff294f4da2cb63162be46057fd1aad"
+  },
+  {
+    "path": "final-central-census.json",
+    "bytes": 286,
+    "sha256": "59db4636eea074023229e81fdcf2aca81a9636b442a7113395e4b17ae36a7e79"
+  },
+  {
+    "path": "final-independent-custody-check.json",
+    "bytes": 5233,
+    "sha256": "a8626ab554fb68d21343e55836769158195be6d2885790dd89b3e0eecb12faa7"
+  },
+  {
+    "path": "final-owned-cleanup.json",
+    "bytes": 2234,
+    "sha256": "698059c640e550ca87b0192fb48bbaea5e2dee111706886391bd448b3909b8dc"
+  },
+  {
+    "path": "guide-v4-independent-final-delta-review.json",
+    "bytes": 3477,
+    "sha256": "c026861771229799f512d171f196e9003a3ac0767541eea6d45453741173b56d"
+  },
+  {
+    "path": "independent-original-verdict.json",
+    "bytes": 16363,
+    "sha256": "6fcf790b327e6a30d6e59900b7eb0278eadd459af1ef5aa32bf045cfddc5a6f9"
+  },
+  {
+    "path": "metadata-v4-independent-verdict.json",
+    "bytes": 5132,
+    "sha256": "5e6d09637e8d02062f1fb467bceb8bd5dd4a136c8315d580ab3d696528d794cf"
+  },
+  {
+    "path": "metadata-v4-p2-ancestry-independent-adjudication.json",
+    "bytes": 3535,
+    "sha256": "415ec6fad8b4215d12eb355e47ea96aaec8409341defbf29486f95588466e445"
+  },
+  {
+    "path": "native-sandbox-build.json",
+    "bytes": 582,
+    "sha256": "aa1feca1d1c0b61ad5fc7882052c441666efa96c4de177a9a01a2547aa6e5b10"
+  },
+  {
+    "path": "original-checker.json",
+    "bytes": 435,
+    "sha256": "d5c36b144290711da1de184f1f6067130a64fa35ab71452ef86bbe5fbba10a51"
+  },
+  {
+    "path": "pinned-review-dispositions.json",
+    "bytes": 3536,
+    "sha256": "87fa754ff1cf4b656eccdea8dc111999acf0fa1f24cefaaa53abb94a70f4a26d"
+  },
+  {
+    "path": "results.md",
+    "bytes": 3980,
+    "sha256": "e4e5482a24f1c1cb95417562fb8de4dbf006b9b3fac2f3fd1f2b34c808f18ebf"
+  },
+  {
+    "path": "retained-raw-authority-custody.json",
+    "bytes": 38495,
+    "sha256": "e6904afabbff7cbe7d391857166adad6fde33a36d1483973c719ebfc5461a67d"
+  },
+  {
+    "path": "same-blocked-run-recovery-source-decision.json",
+    "bytes": 2482,
+    "sha256": "c1b5801fe46410e50a5d71947e46b0a484f58d7514630a3c2ceafc61492fe693"
+  }
+]

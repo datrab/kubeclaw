@@ -1,0 +1,48 @@
+{
+  "status": "SOLE_METADATA_P1_REJECTED_FACTUAL_ARCHITECTURE_SOURCE_LINEAGE_CONFLATION",
+  "reviewer": "/root/reader_pipeline04_fresh_20261101",
+  "at": "2026-11-01T07:13:18.489637+00:00",
+  "rawReview": "operations/pr13/evidence/exec-fail-git-original-20261101/metadata-v4-claims-pinned-review.json",
+  "rawReviewSHA256": "d4ed81c0554ee357d287277c724ee9d75b985a0cc4284d94a87a5180a6838594",
+  "rawIncorrectConfidenceRetained": 0.97,
+  "finding": "Architecture rootA must have parentB because Buster source must descendB.",
+  "disposition": "REJECTED_AS_NONACTIONABLE: native contract and actual source admission/dispatch disprove premise. Do not add -pB merely to appease review.",
+  "nativeMeaning": "captureReviewSubject freezes working HEAD/sourceRevision and selected architectureRef/architectureRevision separately; native preflight requires working sourceRevision==baseB, not A descendantB or A==B. Blueprint sync reads control paths fromA into the working repository and optionally commits there; it does not move working HEAD ontoA. Buster source lineage follows governed working sourceB through implementation, not parentage of architecture objectA.",
+  "actualProof": {
+    "A": "9a94d98ecafecae6c13ea1860bcd3596b40a8502",
+    "AHasNoParents": true,
+    "B": "610e4f07ee894e999ed5eb754815f14bc455a962",
+    "sourceAdmission": "passed with architectureA/sourceB exact",
+    "BusterSource": "77d4d01850166cfb905a4c4ed4a1f2a9aba197c5",
+    "BAncestorOfBusterSourceActualGitExit": 0,
+    "sourceArtifactSHA256": "7c9f1fcd7704f66a44058386e78dfff8f454fd28295912823875334e8be6fee5",
+    "actualOriginalFourAssessment": "operations/pr13/evidence/exec-fail-git-original-20261101/actual-v3-original-four-observation-assessment.json",
+    "actualBusterResult": "execution_error TEST_PROVIDER_SANDBOX_NOT_BUILT retained; ancestry/source correctness is not test or wholepipeline success."
+  },
+  "originalBoundary": "EXEC-FAIL-GIT requires same exact revision restored and verified, no substitution and bound state. It imposes no A-parentB condition. Existing lawful optional-pin configuration is separately qualified; no Source/schema/proof weakening is proposed.",
+  "evidenceKinds": "Read actual commit metadata, read-only Git ancestry and retained native source artifact; reused independently inspected real job/import bindings. No new runtime/check/model execution.",
+  "nativeOwners": [
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/review-subject.ts",
+      "sha256": "da9b32a8da9d0d53fc11b79685ef3ff8cddd2f2b299f846fc2072224c6dc7719"
+    },
+    {
+      "path": "skills/nova/project/source.ts",
+      "sha256": "f652f5bda01a9a39ea7015ddbf12867ff81f989b0fbe2e0cadcff1a4b4ae2cd0"
+    },
+    {
+      "path": "skills/nova/plugins/preflight-contract/src/source-stage.ts",
+      "sha256": "9f7e566f15813cb4b096dbd5dcd84f9d4925e09da29075ef8a85dc1f352bb1c6"
+    },
+    {
+      "path": "skills/nova/plugins/blueprint-sync/src/stage.ts",
+      "sha256": "77735e30c7109aee73cd6c396fe11858275935df1f251aae77d582ed4a7f2765"
+    }
+  ],
+  "nextReviewBoundary": "Full native owner and actual-four-evidence context may accompany a genuinely material new review. Do not unchanged rerun solely to shop verdict; retained metadata semantic qualification remains conditional actual applied receivers.",
+  "limits": [
+    "Raw P2 incorrect0.97 remains unchanged, not falsely marked clean.",
+    "No wholecase registration/wholegate or failed fullpipeline success award.",
+    "No main/proposal/runtime mutation or native/check rerun."
+  ]
+}

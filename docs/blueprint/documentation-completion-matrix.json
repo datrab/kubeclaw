@@ -13725,7 +13725,7 @@
     },
     {
       "id": "AP09-compiler-import-provider-diagnosis-20261021",
-      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "Documentation authors and /root correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
       "gateIds": [
@@ -14053,9 +14053,19 @@
             "docs/site/use/workflows/README.md"
           ],
           "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/diagnose.md"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
-      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "revisionHistory": [
         {
           "revision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
@@ -14079,7 +14089,8 @@
         },
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
-        "01f0f1d58037293e18045b5483f4c9f9da91061e"
+        "01f0f1d58037293e18045b5483f4c9f9da91061e",
+        "1a93145e51354630a4fb117bd379b011a89c5cf5"
       ],
       "scopePreservation3408": {
         "priorRevision": "7ef16585ba04eba3628cead304be85307436f091",
@@ -16460,7 +16471,7 @@
     },
     {
       "id": "AP09-documentation-agent-maintenance-20261021",
-      "revision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -17870,9 +17881,19 @@
             "scripts/docs-api-output-discovery.mjs"
           ],
           "scope": "Exact explicit changed-input intersections only. Preserve every original substantive condition/check/review/limit/negative and historical practical observation at its actual scope. No new case/gate/requirement, production/provider/human/AT/defaultgenerator/AP10 award; required actual currentartifact checks separate."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "scripts/docs-api-output-discovery.mjs"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
-      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "previousReviewedRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
       "revisionHistory": [
         {
           "revision": "3745dce3d46361806f86f17595f20aef1e044f1b",
@@ -18030,7 +18051,8 @@
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
         "01f0f1d58037293e18045b5483f4c9f9da91061e",
-        "1a93145e51354630a4fb117bd379b011a89c5cf5"
+        "1a93145e51354630a4fb117bd379b011a89c5cf5",
+        "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
       ],
       "scopePreservation3408": {
         "priorRevision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
@@ -23499,7 +23521,7 @@
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "verdict": "PASS",
@@ -24445,7 +24467,8 @@
         },
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
-        "01f0f1d58037293e18045b5483f4c9f9da91061e"
+        "01f0f1d58037293e18045b5483f4c9f9da91061e",
+        "1a93145e51354630a4fb117bd379b011a89c5cf5"
       ],
       "impactReviews": [
         {
@@ -25962,6 +25985,16 @@
             "docs/site/use/workflows/README.md"
           ],
           "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/diagnose.md"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
       "scopePreservation3408": {
@@ -26005,7 +26038,7 @@
         "browserPreservation": "No new browser, screenreader or fresh-persona exercise: unchanged authored pages/shared renderer outputs retain only prior successful original scopes. Current Source/output checks separately executed.",
         "globalGeneratorLimit": "Original normal5b1b localHelm exits1 at scripts/install/register-runtime-argo.mjs29; infrastructure slots passed. No global configuration/API/schema/runtime acceptance."
       },
-      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "mnt004ScopedPreservation": {
         "priorRevision": "ce66ce71912fa6ab03f1671602d82ed9af799bc3",
         "priorReviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer; MNT011 current bounded maintenance/guard scope preservation by independent content reviewer; MNT010 current bounded maintenance/guard scope preservation by independent content reviewer; QUA004 current bounded maintenance/guard scope preservation by independent content reviewer",
@@ -27427,7 +27460,7 @@
     },
     {
       "id": "AP09-rendered-source-bounds-gate-20261021",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent non-author Source-exposed Codex configured gpt-5.6-terra/high; coherent original CLI Source/Reader/Quality and final integration under AP09sections1–4; not a new Astra-model execution; original bounded content reviewer retained in mnt004ScopedPreservation",
       "verdict": "PASS",
@@ -27941,7 +27974,8 @@
           "reason": "Exact independently reviewed platform ordering and finite shared custody original-scope preservation; no new acceptance."
         },
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ],
       "impactReviews": [
         {
@@ -28636,6 +28670,16 @@
             "scripts/lib/docs-publication-assets.mjs"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/diagnose.md"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
       "scopePreservation3408": {
@@ -28678,7 +28722,7 @@
         "browserPreservation": "No new browser, screenreader or fresh-persona exercise: unchanged authored pages/shared renderer outputs retain only prior successful original scopes. Current Source/output checks separately executed.",
         "globalGeneratorLimit": "Original normal5b1b localHelm exits1 at scripts/install/register-runtime-argo.mjs29; infrastructure slots passed. No global configuration/API/schema/runtime acceptance."
       },
-      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "previousReviewedRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
       "mnt004ScopedPreservation": {
         "priorRevision": "0d9b92b9fba234f085f228cc541faaece4846d77",
         "priorReviewer": "Independent Codex autoreview whole A912-09 Source/Reader/Quality review and narrow changed-boundary impact review for 21 prior PASS records; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer",
@@ -36047,7 +36091,7 @@
     },
     {
       "id": "AP09-whole-independent-platform-decision-review-20261021-d477",
-      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "Documentation authors and correction coordinator; /root/operator_acceptance for399d bounded corrections",
       "reviewer": "/root/operator_acceptance (remaining whole-topic Source and semantic Reader review); /root (independent399d corrections, finite source-pin repair and d477 HTTP-package corrections)",
       "gateIds": [
@@ -36642,6 +36686,16 @@
             "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt008-original-20261028/recovery-1500/publication-v2/actual-current-reference-browser.json",
             "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt008-original-20261028/recovery-1500/publication-v2/actual-complete-source-output-binding.json"
           ]
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/diagnose.md"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
       "scopePreservation3408": {
@@ -36655,7 +36709,7 @@
         "practicalReaderProvenance": "Any original practical/semantic Reader observation remains dated and scoped. This source-informed content review is not a fresh eligible practical participant or new run.",
         "limits": "Only affected declared content/source bindings preserved. Old Ops loopback/shared-token/read-only/direct-token units are superseded where applicable by current source-only central Ops contract; no original live result transfers. No new global API/config generator, runtime, full accessibility, practical Reader execution or two-build determinism claim."
       },
-      "previousReviewedRevision": "a7a855e35b01161e0328687d2c7ef34210f3bd1f",
+      "previousReviewedRevision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "revisionHistory": [
         {
           "revision": "82f87e4db5f6fd696a253986054df41f790cf86d",
@@ -36682,7 +36736,8 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/README.md",
           "reason": "Exact independently reviewed platform ordering and finite shared custody original-scope preservation; no new acceptance."
-        }
+        },
+        "7f6d3c2817743c22c6420ec46dbd595b382e0ee7"
       ]
     },
     {
@@ -37931,7 +37986,7 @@
       ]
     },
     {
-      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "existing documentation authors",
       "reviewer": "/root/workflow_acceptance supporting procedures and root integration/correction; /root independent authored row Source/Reader/quality",
       "review": {
@@ -38129,6 +38184,16 @@
             "docs/site/use/workflows/README.md"
           ],
           "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/diagnose.md"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
       "scopePreservation3408": {
@@ -38142,11 +38207,12 @@
         "practicalReaderProvenance": "Any original practical/semantic Reader observation remains dated and scoped. This source-informed content review is not a fresh eligible practical participant or new run.",
         "limits": "Only affected declared content/source bindings preserved. Old Ops loopback/shared-token/read-only/direct-token units are superseded where applicable by current source-only central Ops contract; no original live result transfers. No new global API/config generator, runtime, full accessibility, practical Reader execution or two-build determinism claim."
       },
-      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
-        "01f0f1d58037293e18045b5483f4c9f9da91061e"
+        "01f0f1d58037293e18045b5483f4c9f9da91061e",
+        "1a93145e51354630a4fb117bd379b011a89c5cf5"
       ]
     },
     {
@@ -40934,7 +41000,7 @@
     },
     {
       "id": "A99-08-complete-supported-failure-journey-union-20261021",
-      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "Documentation topic authors and integration coordinator",
       "reviewer": "Independent topic-review union: operator_acceptance (new Redis/Worker topics); original independent Codex topic reviewers (registry/Tailnet diagnosis); workflow_acceptance (uncertain-effect/Demo); root nonauthor (BuildKit/Tailnet task guides)",
       "gateIds": [
@@ -41367,6 +41433,16 @@
             "docs/site/use/workflows/README.md"
           ],
           "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/diagnose.md"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
       "scopePreservation3408": {
@@ -41380,7 +41456,7 @@
         "practicalReaderProvenance": "Any original practical/semantic Reader observation remains dated and scoped. This source-informed content review is not a fresh eligible practical participant or new run.",
         "limits": "Only affected declared content/source bindings preserved. Old Ops loopback/shared-token/read-only/direct-token units are superseded where applicable by current source-only central Ops contract; no original live result transfers. No new global API/config generator, runtime, full accessibility, practical Reader execution or two-build determinism claim."
       },
-      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "revisionHistory": [
         {
           "previousReviewedRevision": "340875215c422fb1cc0901e867420928eae3dfc0",
@@ -41389,7 +41465,8 @@
         },
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
-        "01f0f1d58037293e18045b5483f4c9f9da91061e"
+        "01f0f1d58037293e18045b5483f4c9f9da91061e",
+        "1a93145e51354630a4fb117bd379b011a89c5cf5"
       ]
     },
     {
@@ -42687,7 +42764,7 @@
     },
     {
       "id": "AP09-publication-positive-scope-7ef16585",
-      "revision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "existing publication/content maintainers; final authored Sourcefield additions separately reviewed by workflow_acceptance",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -44376,6 +44453,16 @@
             "docs/site/reference/generated-documentation-map.json"
           ],
           "scope": "Exact explicit changed-input intersections only. Preserve every original substantive condition/check/review/limit/negative and historical practical observation at its actual scope. No new case/gate/requirement, production/provider/human/AT/defaultgenerator/AP10 award; required actual currentartifact checks separate."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/diagnose.md"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
       "scopePreservation3408": {
@@ -44404,7 +44491,7 @@
         "priorSummaryStatus": "Original summary and all old limits/checks/review/persona provenance retained as historical scope; current177-page observations stated here, not retroactively attributed to old runs.",
         "globalGeneratorLimit": "Original normal81b localHelm still FAILS at infrastructure-chart.mjs63. This preservation grants no global configuration/API generator or live-release acceptance."
       },
-      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "previousReviewedRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
       "revisionHistory": [
         {
           "revision": "8fa9ed9b95bb37ca234aef1f321f68831519abab",
@@ -44451,7 +44538,8 @@
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
         "01f0f1d58037293e18045b5483f4c9f9da91061e",
-        "1a93145e51354630a4fb117bd379b011a89c5cf5"
+        "1a93145e51354630a4fb117bd379b011a89c5cf5",
+        "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
       ],
       "mnt004ScopedPreservation": {
         "priorRevision": "ce66ce71912fa6ab03f1671602d82ed9af799bc3",
@@ -44558,7 +44646,7 @@
     },
     {
       "id": "A912-05-whole-source-excerpt-callouts-20261022",
-      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "Existing publication/canonical topic maintainers; field-correction authors in named independent reviews",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -45357,6 +45445,16 @@
             "docs/site/reference/nova-project.md"
           ],
           "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/diagnose.md"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
       "scopePreservation3408": {
@@ -45385,7 +45483,7 @@
         "priorSummaryStatus": "Original summary and all old limits/checks/review/persona provenance retained as historical scope; current177-page observations stated here, not retroactively attributed to old runs.",
         "globalGeneratorLimit": "Original normal81b localHelm still FAILS at infrastructure-chart.mjs63. This preservation grants no global configuration/API generator or live-release acceptance."
       },
-      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "previousReviewedRevision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "revisionHistory": [
         {
           "revision": "8fa9ed9b95bb37ca234aef1f321f68831519abab",
@@ -45403,7 +45501,8 @@
           "review": "docs/blueprint/acceptance-evidence/README.md",
           "reason": "Independent finite CI/maintenance21 Source/Reader/Quality preservation; original summary/limits/historical observations/accepted membership unchanged."
         },
-        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
       ],
       "a91306Qua002ScopedPreservation": {
         "priorRevision": "ce66ce71912fa6ab03f1671602d82ed9af799bc3",
@@ -45443,7 +45542,7 @@
     },
     {
       "id": "A98-02-13-whole-operator-procedure-contract-20261022",
-      "revision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "Original canonical topic maintainers plus separately reviewed bounded corrections",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -46780,6 +46879,16 @@
             "docs/site/reference/generated-documentation-map.json"
           ],
           "scope": "Exact explicit changed-input intersections only. Preserve every original substantive condition/check/review/limit/negative and historical practical observation at its actual scope. No new case/gate/requirement, production/provider/human/AT/defaultgenerator/AP10 award; required actual currentartifact checks separate."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/diagnose.md"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
       "scopePreservation3408": {
@@ -46808,7 +46917,7 @@
         "priorSummaryStatus": "Original summary and all old limits/checks/review/persona provenance retained as historical scope; current177-page observations stated here, not retroactively attributed to old runs.",
         "globalGeneratorLimit": "Original normal81b localHelm still FAILS at infrastructure-chart.mjs63. This preservation grants no global configuration/API generator or live-release acceptance."
       },
-      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "previousReviewedRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
       "revisionHistory": [
         {
           "revision": "8fa9ed9b95bb37ca234aef1f321f68831519abab",
@@ -46883,7 +46992,8 @@
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
         "01f0f1d58037293e18045b5483f4c9f9da91061e",
-        "1a93145e51354630a4fb117bd379b011a89c5cf5"
+        "1a93145e51354630a4fb117bd379b011a89c5cf5",
+        "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
       ],
       "mnt004ScopedPreservation": {
         "priorRevision": "0d9b92b9fba234f085f228cc541faaece4846d77",
@@ -50588,7 +50698,7 @@
     },
     {
       "id": "AP09-whole-extension-drift-A91014-20261023",
-      "revision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "Nova documentation continuation coordinator",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -51369,9 +51479,19 @@
             "scripts/docs-documentation-owner-purpose-custody.mjs"
           ],
           "scope": "Exact explicit changed-input intersections only. Preserve every original substantive condition/check/review/limit/negative and historical practical observation at its actual scope. No new case/gate/requirement, production/provider/human/AT/defaultgenerator/AP10 award; required actual currentartifact checks separate."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "scripts/docs-documentation-owner-purpose-custody.mjs"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
-      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "previousReviewedRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
       "revisionHistory": [
         {
           "revision": "8fa9ed9b95bb37ca234aef1f321f68831519abab",
@@ -51487,7 +51607,8 @@
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
         "01f0f1d58037293e18045b5483f4c9f9da91061e",
-        "1a93145e51354630a4fb117bd379b011a89c5cf5"
+        "1a93145e51354630a4fb117bd379b011a89c5cf5",
+        "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
       ],
       "mnt004ScopedPreservation": {
         "priorRevision": "0d9b92b9fba234f085f228cc541faaece4846d77",
@@ -52406,7 +52527,7 @@
     },
     {
       "id": "A911-06-authored-surface-bindings-20261025",
-      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "PR13 documentation authors and continuation coordinator",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -53056,6 +53177,16 @@
             "docs/site/use/workflows/README.md"
           ],
           "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/diagnose.md"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -53116,16 +53247,17 @@
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
       },
-      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
-        "01f0f1d58037293e18045b5483f4c9f9da91061e"
+        "01f0f1d58037293e18045b5483f4c9f9da91061e",
+        "1a93145e51354630a4fb117bd379b011a89c5cf5"
       ]
     },
     {
       "id": "A99-13-original-seven-dimension-drift-20261025",
-      "revision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "PR13 documentation authors and continuation coordinator",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -53618,6 +53750,16 @@
             "scripts/docs-documentation-owner-purpose-custody.mjs"
           ],
           "scope": "Exact explicit changed-input intersections only. Preserve every original substantive condition/check/review/limit/negative and historical practical observation at its actual scope. No new case/gate/requirement, production/provider/human/AT/defaultgenerator/AP10 award; required actual currentartifact checks separate."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "scripts/docs-documentation-owner-purpose-custody.mjs"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -53710,12 +53852,13 @@
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
       },
-      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "previousReviewedRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
         "01f0f1d58037293e18045b5483f4c9f9da91061e",
-        "1a93145e51354630a4fb117bd379b011a89c5cf5"
+        "1a93145e51354630a4fb117bd379b011a89c5cf5",
+        "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
       ]
     },
     {
@@ -56383,7 +56526,7 @@
       ]
     },
     {
-      "revision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "Nova publication-example implementation and sole shared-lease integration owner",
       "gateIds": [],
       "requirementIds": [
@@ -57262,6 +57405,18 @@
             "scripts/docs-publication-example-assets.mjs"
           ],
           "scope": "Exact explicit changed-input intersections only. Preserve every original substantive condition/check/review/limit/negative and historical practical observation at its actual scope. No new case/gate/requirement, production/provider/human/AT/defaultgenerator/AP10 award; required actual currentartifact checks separate."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/use/diagnose.md",
+            "scripts/lib/docs-publication-instruction-bindings.mjs"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -57383,16 +57538,17 @@
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
       },
-      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "previousReviewedRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
         "01f0f1d58037293e18045b5483f4c9f9da91061e",
-        "1a93145e51354630a4fb117bd379b011a89c5cf5"
+        "1a93145e51354630a4fb117bd379b011a89c5cf5",
+        "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
       ]
     },
     {
-      "revision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "Nova publication-example implementation and sole shared-lease integration owner",
       "gateIds": [
         "A99-11"
@@ -58271,6 +58427,18 @@
             "scripts/docs-publication-example-assets.mjs"
           ],
           "scope": "Exact explicit changed-input intersections only. Preserve every original substantive condition/check/review/limit/negative and historical practical observation at its actual scope. No new case/gate/requirement, production/provider/human/AT/defaultgenerator/AP10 award; required actual currentartifact checks separate."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/use/diagnose.md",
+            "scripts/lib/docs-publication-instruction-bindings.mjs"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -58392,12 +58560,13 @@
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
       },
-      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "previousReviewedRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
         "01f0f1d58037293e18045b5483f4c9f9da91061e",
-        "1a93145e51354630a4fb117bd379b011a89c5cf5"
+        "1a93145e51354630a4fb117bd379b011a89c5cf5",
+        "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
       ]
     },
     {
@@ -58536,7 +58705,7 @@
     },
     {
       "id": "QUA-005-whole-published-live-and-completeness-claims-20261027",
-      "revision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "Nova documentation claim integration and sole shared-lease writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -59394,6 +59563,18 @@
             "scripts/docs-publication-example-assets.mjs"
           ],
           "scope": "Exact explicit changed-input intersections only. Preserve every original substantive condition/check/review/limit/negative and historical practical observation at its actual scope. No new case/gate/requirement, production/provider/human/AT/defaultgenerator/AP10 award; required actual currentartifact checks separate."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/use/diagnose.md",
+            "scripts/lib/docs-publication-instruction-bindings.mjs"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -59515,17 +59696,18 @@
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
       },
-      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "previousReviewedRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
         "01f0f1d58037293e18045b5483f4c9f9da91061e",
-        "1a93145e51354630a4fb117bd379b011a89c5cf5"
+        "1a93145e51354630a4fb117bd379b011a89c5cf5",
+        "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
       ]
     },
     {
       "id": "A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027",
-      "revision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "Nova sole shared-lease documentation integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -60610,6 +60792,17 @@
             "docs/site/reference/generated-documentation-map.json"
           ],
           "scope": "Exact explicit changed-input intersections only. Preserve every original substantive condition/check/review/limit/negative and historical practical observation at its actual scope. No new case/gate/requirement, production/provider/human/AT/defaultgenerator/AP10 award; required actual currentartifact checks separate."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/use/diagnose.md"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -60734,17 +60927,18 @@
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
       },
-      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "previousReviewedRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
         "01f0f1d58037293e18045b5483f4c9f9da91061e",
-        "1a93145e51354630a4fb117bd379b011a89c5cf5"
+        "1a93145e51354630a4fb117bd379b011a89c5cf5",
+        "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
       ]
     },
     {
       "id": "CFG-007-whole-recursive-plugin-configuration-and-native-consumer-semantics-20261028",
-      "revision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "Nova sole shared-lease documentation integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -61439,6 +61633,16 @@
             "docs/config/publication-example-claims.json"
           ],
           "scope": "Exact explicit changed-input intersections only. Preserve every original substantive condition/check/review/limit/negative and historical practical observation at its actual scope. No new case/gate/requirement, production/provider/human/AT/defaultgenerator/AP10 award; required actual currentartifact checks separate."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -61544,12 +61748,13 @@
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
       },
-      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "previousReviewedRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
         "01f0f1d58037293e18045b5483f4c9f9da91061e",
-        "1a93145e51354630a4fb117bd379b011a89c5cf5"
+        "1a93145e51354630a4fb117bd379b011a89c5cf5",
+        "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
       ]
     },
     {
@@ -62141,7 +62346,7 @@
     },
     {
       "id": "MNT-015-whole-source-owner-page-check-and-independent-review-routing-20261028",
-      "revision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "Nova /root sole integration writer with /root/language_projection_architecture authored finite native-owner proposals",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -62552,6 +62757,17 @@
             "docs/site/reference/generated-documentation-map.json"
           ],
           "scope": "Exact explicit changed-input intersections only. Preserve every original substantive condition/check/review/limit/negative and historical practical observation at its actual scope. No new case/gate/requirement, production/provider/human/AT/defaultgenerator/AP10 award; required actual currentartifact checks separate."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "scripts/lib/docs-publication-instruction-bindings.mjs"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -62648,12 +62864,13 @@
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
       },
-      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "previousReviewedRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
         "01f0f1d58037293e18045b5483f4c9f9da91061e",
-        "1a93145e51354630a4fb117bd379b011a89c5cf5"
+        "1a93145e51354630a4fb117bd379b011a89c5cf5",
+        "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
       ]
     },
     {
@@ -62856,7 +63073,7 @@
     },
     {
       "id": "CFG-013-whole-precedence-effective-values-and-source-qualified-conflicts-20261028",
-      "revision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "Nova /root sole integration writer; /root/language_projection_architecture proposed finite canonical wording; maintained contract successor authored by root",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -63294,6 +63511,16 @@
             "docs/config/publication-example-claims.json"
           ],
           "scope": "Exact explicit changed-input intersections only. Preserve every original substantive condition/check/review/limit/negative and historical practical observation at its actual scope. No new case/gate/requirement, production/provider/human/AT/defaultgenerator/AP10 award; required actual currentartifact checks separate."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -63373,17 +63600,18 @@
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
       },
-      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "previousReviewedRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
         "01f0f1d58037293e18045b5483f4c9f9da91061e",
-        "1a93145e51354630a4fb117bd379b011a89c5cf5"
+        "1a93145e51354630a4fb117bd379b011a89c5cf5",
+        "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
       ]
     },
     {
       "id": "CFG-010-whole-host-prism-codex-configuration-and-consumer-authority-20261028",
-      "revision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "Nova /root sole integration writer; /root/language_projection_architecture authored independently adjudicated finite native-owner and historical projection proposals; root authored canonical/integration/contract successors",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -63843,6 +64071,16 @@
             "docs/site/reference/generated-documentation-map.json"
           ],
           "scope": "Exact explicit changed-input intersections only. Preserve every original substantive condition/check/review/limit/negative and historical practical observation at its actual scope. No new case/gate/requirement, production/provider/human/AT/defaultgenerator/AP10 award; required actual currentartifact checks separate."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -63952,17 +64190,18 @@
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
       },
-      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "previousReviewedRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
         "01f0f1d58037293e18045b5483f4c9f9da91061e",
-        "1a93145e51354630a4fb117bd379b011a89c5cf5"
+        "1a93145e51354630a4fb117bd379b011a89c5cf5",
+        "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
       ]
     },
     {
       "id": "CFG-012-whole-ports-services-endpoints-ingress-and-controller-activation-20261028",
-      "revision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "Nova /root sole product integration author and writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -64362,6 +64601,16 @@
             "docs/site/reference/generated-documentation-map.json"
           ],
           "scope": "Exact explicit changed-input intersections only. Preserve every original substantive condition/check/review/limit/negative and historical practical observation at its actual scope. No new case/gate/requirement, production/provider/human/AT/defaultgenerator/AP10 award; required actual currentartifact checks separate."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -64460,17 +64709,18 @@
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
       },
-      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "previousReviewedRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
         "01f0f1d58037293e18045b5483f4c9f9da91061e",
-        "1a93145e51354630a4fb117bd379b011a89c5cf5"
+        "1a93145e51354630a4fb117bd379b011a89c5cf5",
+        "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
       ]
     },
     {
       "id": "REF-016-whole-verification-command-ci-environment-effects-owner-and-change-routing-20261028",
-      "revision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "Nova /root sole product integration author and writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -65803,6 +66053,16 @@
             "docs/site/reference/generated-documentation-map.json"
           ],
           "scope": "Exact explicit changed-input intersections only. Preserve every original substantive condition/check/review/limit/negative and historical practical observation at its actual scope. No new case/gate/requirement, production/provider/human/AT/defaultgenerator/AP10 award; required actual currentartifact checks separate."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -65922,17 +66182,18 @@
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
       },
-      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "previousReviewedRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
         "01f0f1d58037293e18045b5483f4c9f9da91061e",
-        "1a93145e51354630a4fb117bd379b011a89c5cf5"
+        "1a93145e51354630a4fb117bd379b011a89c5cf5",
+        "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
       ]
     },
     {
       "id": "MNT-008-whole-generated-platform-store-policy-retention-quota-cleanup-20261028",
-      "revision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -66924,19 +67185,30 @@
             "docs/site/reference/generated-documentation-map.json"
           ],
           "scope": "Exact explicit changed-input intersections only. Preserve every original substantive condition/check/review/limit/negative and historical practical observation at its actual scope. No new case/gate/requirement, production/provider/human/AT/defaultgenerator/AP10 award; required actual currentartifact checks separate."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
-      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "previousReviewedRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
         "01f0f1d58037293e18045b5483f4c9f9da91061e",
-        "1a93145e51354630a4fb117bd379b011a89c5cf5"
+        "1a93145e51354630a4fb117bd379b011a89c5cf5",
+        "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
       ]
     },
     {
       "id": "MNT-006-whole-generated-active-event-payload-version-producer-consumer-20261030",
-      "revision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -67650,19 +67922,30 @@
             "docs/site/reference/generated-documentation-map.json"
           ],
           "scope": "Exact explicit changed-input intersections only. Preserve every original substantive condition/check/review/limit/negative and historical practical observation at its actual scope. No new case/gate/requirement, production/provider/human/AT/defaultgenerator/AP10 award; required actual currentartifact checks separate."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
-      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "previousReviewedRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
         "01f0f1d58037293e18045b5483f4c9f9da91061e",
-        "1a93145e51354630a4fb117bd379b011a89c5cf5"
+        "1a93145e51354630a4fb117bd379b011a89c5cf5",
+        "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
       ]
     },
     {
       "id": "MNT-005-common-source-bound-error-catalogue-20261030",
-      "revision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -68225,19 +68508,30 @@
             "docs/site/reference/generated-documentation-map.json"
           ],
           "scope": "Exact explicit changed-input intersections only. Preserve every original substantive condition/check/review/limit/negative and historical practical observation at its actual scope. No new case/gate/requirement, production/provider/human/AT/defaultgenerator/AP10 award; required actual currentartifact checks separate."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
-      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "previousReviewedRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
         "01f0f1d58037293e18045b5483f4c9f9da91061e",
-        "1a93145e51354630a4fb117bd379b011a89c5cf5"
+        "1a93145e51354630a4fb117bd379b011a89c5cf5",
+        "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
       ]
     },
     {
       "id": "REF-005-owned-diagnostic-identities-causes-effects-recovery-20261030",
-      "revision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -68806,19 +69100,30 @@
             "docs/site/reference/generated-documentation-map.json"
           ],
           "scope": "Exact explicit changed-input intersections only. Preserve every original substantive condition/check/review/limit/negative and historical practical observation at its actual scope. No new case/gate/requirement, production/provider/human/AT/defaultgenerator/AP10 award; required actual currentartifact checks separate."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
-      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "previousReviewedRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
         "01f0f1d58037293e18045b5483f4c9f9da91061e",
-        "1a93145e51354630a4fb117bd379b011a89c5cf5"
+        "1a93145e51354630a4fb117bd379b011a89c5cf5",
+        "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
       ]
     },
     {
       "id": "MNT-011-common-diagnostic-production-input-drift-20261030",
-      "revision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -69144,19 +69449,30 @@
             "docs/config/publication-example-claims.json"
           ],
           "scope": "Exact explicit changed-input intersections only. Preserve every original substantive condition/check/review/limit/negative and historical practical observation at its actual scope. No new case/gate/requirement, production/provider/human/AT/defaultgenerator/AP10 award; required actual currentartifact checks separate."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
-      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "previousReviewedRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
         "01f0f1d58037293e18045b5483f4c9f9da91061e",
-        "1a93145e51354630a4fb117bd379b011a89c5cf5"
+        "1a93145e51354630a4fb117bd379b011a89c5cf5",
+        "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
       ]
     },
     {
       "id": "MNT-010-all-owned-json-schema-recursive-field-drift-20261030",
-      "revision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -69489,19 +69805,30 @@
             "docs/config/publication-example-claims.json"
           ],
           "scope": "Exact explicit changed-input intersections only. Preserve every original substantive condition/check/review/limit/negative and historical practical observation at its actual scope. No new case/gate/requirement, production/provider/human/AT/defaultgenerator/AP10 award; required actual currentartifact checks separate."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
-      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "previousReviewedRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
         "01f0f1d58037293e18045b5483f4c9f9da91061e",
-        "1a93145e51354630a4fb117bd379b011a89c5cf5"
+        "1a93145e51354630a4fb117bd379b011a89c5cf5",
+        "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
       ]
     },
     {
       "id": "QUA-004-whole-appropriate-technical-evidence-and-current-citations-20261030",
-      "revision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -70079,19 +70406,31 @@
             "docs/site/reference/generated-documentation-map.json"
           ],
           "scope": "Exact explicit changed-input intersections only. Preserve every original substantive condition/check/review/limit/negative and historical practical observation at its actual scope. No new case/gate/requirement, production/provider/human/AT/defaultgenerator/AP10 award; required actual currentartifact checks separate."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/use/diagnose.md"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
-      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "previousReviewedRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
         "01f0f1d58037293e18045b5483f4c9f9da91061e",
-        "1a93145e51354630a4fb117bd379b011a89c5cf5"
+        "1a93145e51354630a4fb117bd379b011a89c5cf5",
+        "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
       ]
     },
     {
       "id": "QUA-001-whole-understandable-technical-english-and-depth-20261030",
-      "revision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -70766,19 +71105,32 @@
             "scripts/docs-publication-example-assets.mjs"
           ],
           "scope": "Exact explicit changed-input intersections only. Preserve every original substantive condition/check/review/limit/negative and historical practical observation at its actual scope. No new case/gate/requirement, production/provider/human/AT/defaultgenerator/AP10 award; required actual currentartifact checks separate."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/use/diagnose.md",
+            "scripts/lib/docs-publication-instruction-bindings.mjs"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
-      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "previousReviewedRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
         "01f0f1d58037293e18045b5483f4c9f9da91061e",
-        "1a93145e51354630a4fb117bd379b011a89c5cf5"
+        "1a93145e51354630a4fb117bd379b011a89c5cf5",
+        "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
       ]
     },
     {
       "id": "MNT-004-whole-source-owned-cli-reference-20261030",
-      "revision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -72283,19 +72635,32 @@
             "scripts/docs-documentation-owner-purpose-custody.mjs"
           ],
           "scope": "Exact explicit changed-input intersections only. Preserve every original substantive condition/check/review/limit/negative and historical practical observation at its actual scope. No new case/gate/requirement, production/provider/human/AT/defaultgenerator/AP10 award; required actual currentartifact checks separate."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "scripts/docs-api-output-discovery.mjs",
+            "scripts/docs-documentation-owner-purpose-custody.mjs"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
-      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "previousReviewedRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
         "01f0f1d58037293e18045b5483f4c9f9da91061e",
-        "1a93145e51354630a4fb117bd379b011a89c5cf5"
+        "1a93145e51354630a4fb117bd379b011a89c5cf5",
+        "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
       ]
     },
     {
       "id": "CFG009-REF013-whole-current-Helm-GitOps-values-20261030",
-      "revision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -72627,19 +72992,30 @@
             "docs/site/reference/generated-documentation-map.json"
           ],
           "scope": "Exact explicit changed-input intersections only. Preserve every original substantive condition/check/review/limit/negative and historical practical observation at its actual scope. No new case/gate/requirement, production/provider/human/AT/defaultgenerator/AP10 award; required actual currentartifact checks separate."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
-      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "previousReviewedRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
         "01f0f1d58037293e18045b5483f4c9f9da91061e",
-        "1a93145e51354630a4fb117bd379b011a89c5cf5"
+        "1a93145e51354630a4fb117bd379b011a89c5cf5",
+        "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
       ]
     },
     {
       "id": "A91306-QUA002-original-controlled-language-whole-20261030",
-      "revision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "Nova /root retained sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained",
       "gateIds": [
@@ -73086,19 +73462,31 @@
             "docs/site/reference/generated-documentation-map.json"
           ],
           "scope": "Exact explicit changed-input intersections only. Preserve every original substantive condition/check/review/limit/negative and historical practical observation at its actual scope. No new case/gate/requirement, production/provider/human/AT/defaultgenerator/AP10 award; required actual currentartifact checks separate."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/use/diagnose.md"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
-      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "previousReviewedRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
         "01f0f1d58037293e18045b5483f4c9f9da91061e",
-        "1a93145e51354630a4fb117bd379b011a89c5cf5"
+        "1a93145e51354630a4fb117bd379b011a89c5cf5",
+        "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
       ]
     },
     {
       "id": "A911-05-whole-owned-diagnostic-reference-20261030",
-      "revision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "Nova sole integration owner; existing diagnostic documentation authors",
       "reviewer": "Independent Codex gpt-5.6-terra/high whole original A911-05 content assessor, session01a18bf6-0c0d-71a2-aa39-f9550bbed698; nonauthor, bounded qualified REF005/MNT005 reuse",
       "gateIds": [
@@ -73515,14 +73903,25 @@
             "docs/site/reference/generated-documentation-map.json"
           ],
           "scope": "Exact explicit changed-input intersections only. Preserve every original substantive condition/check/review/limit/negative and historical practical observation at its actual scope. No new case/gate/requirement, production/provider/human/AT/defaultgenerator/AP10 award; required actual currentartifact checks separate."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
-      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "previousReviewedRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
         "01f0f1d58037293e18045b5483f4c9f9da91061e",
-        "1a93145e51354630a4fb117bd379b011a89c5cf5"
+        "1a93145e51354630a4fb117bd379b011a89c5cf5",
+        "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
       ]
     },
     {
@@ -73635,7 +74034,7 @@
     },
     {
       "id": "REF003-whole-configuration-families-and-inverse-consumers-20261031",
-      "revision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "PR13 sole integration owner",
       "reviewer": "independent-codex-source-quality:01a18bf6-0c0d-71a2-aa39-f9550bbed698; independent Reader /root/ref003_fresh_reader",
       "gateIds": [],
@@ -73917,14 +74316,25 @@
             "scripts/docs-api-output-discovery.mjs"
           ],
           "scope": "Exact explicit changed-input intersections only. Preserve every original substantive condition/check/review/limit/negative and historical practical observation at its actual scope. No new case/gate/requirement, production/provider/human/AT/defaultgenerator/AP10 award; required actual currentartifact checks separate."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "scripts/docs-api-output-discovery.mjs"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
-      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "previousReviewedRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
         "01f0f1d58037293e18045b5483f4c9f9da91061e",
-        "1a93145e51354630a4fb117bd379b011a89c5cf5"
+        "1a93145e51354630a4fb117bd379b011a89c5cf5",
+        "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
       ]
     },
     {
@@ -74030,7 +74440,7 @@
     },
     {
       "id": "MNT003-whole-generated-configuration-defaults-maintenance-20261031",
-      "revision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "PR13 sole integration owner",
       "reviewer": "independent-codex-source-quality:01a18bf6-0c0d-71a2-aa39-f9550bbed698; independent Reader /root/mnt003_fresh_reader",
       "gateIds": [],
@@ -74309,19 +74719,30 @@
             "scripts/docs-api-output-discovery.mjs"
           ],
           "scope": "Exact explicit changed-input intersections only. Preserve every original substantive condition/check/review/limit/negative and historical practical observation at its actual scope. No new case/gate/requirement, production/provider/human/AT/defaultgenerator/AP10 award; required actual currentartifact checks separate."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "scripts/docs-api-output-discovery.mjs"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
-      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "previousReviewedRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
         "01f0f1d58037293e18045b5483f4c9f9da91061e",
-        "1a93145e51354630a4fb117bd379b011a89c5cf5"
+        "1a93145e51354630a4fb117bd379b011a89c5cf5",
+        "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
       ]
     },
     {
       "id": "GOV002-MNT001-MNT009-whole-product-authority-and-inverse-matrix-20261031",
-      "revision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "PR13 sole integration owner",
       "reviewer": "independent-codex-source-quality:01a18bf6-0c0d-71a2-aa39-f9550bbed698; independent restricted practical Reader /root/gov_mnt_practical_reader",
       "gateIds": [],
@@ -74510,19 +74931,32 @@
             "scripts/docs-documentation-owner-purpose-custody.mjs"
           ],
           "scope": "Exact explicit changed-input intersections only. Preserve every original substantive condition/check/review/limit/negative and historical practical observation at its actual scope. No new case/gate/requirement, production/provider/human/AT/defaultgenerator/AP10 award; required actual currentartifact checks separate."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "scripts/docs-api-output-discovery.mjs",
+            "scripts/docs-documentation-owner-purpose-custody.mjs"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
-      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "previousReviewedRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
         "01f0f1d58037293e18045b5483f4c9f9da91061e",
-        "1a93145e51354630a4fb117bd379b011a89c5cf5"
+        "1a93145e51354630a4fb117bd379b011a89c5cf5",
+        "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
       ]
     },
     {
       "id": "A911-07-whole-source-to-documentation-map-consolidated-20261031",
-      "revision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "PR13 sole integration owner",
       "reviewer": "Independent native child /root/qua010_execution_path; bounded A911-07 adjudication, non-author of reviewed source/map",
       "gateIds": [
@@ -74686,19 +75120,32 @@
             "scripts/docs-documentation-owner-purpose-custody.mjs"
           ],
           "scope": "Exact explicit changed-input intersections only. Preserve every original substantive condition/check/review/limit/negative and historical practical observation at its actual scope. No new case/gate/requirement, production/provider/human/AT/defaultgenerator/AP10 award; required actual currentartifact checks separate."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "scripts/docs-api-output-discovery.mjs",
+            "scripts/docs-documentation-owner-purpose-custody.mjs"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
-      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "previousReviewedRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
         "01f0f1d58037293e18045b5483f4c9f9da91061e",
-        "1a93145e51354630a4fb117bd379b011a89c5cf5"
+        "1a93145e51354630a4fb117bd379b011a89c5cf5",
+        "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
       ]
     },
     {
       "id": "A913-02-A913-03-original-content-and-independent-topic-review-consolidation-20261031",
-      "revision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "PR13 sole integration owner",
       "reviewer": "Independent non-author native child /root/qua010_execution_path",
       "gateIds": [
@@ -75558,19 +76005,34 @@
             "scripts/docs-publication-example-assets.mjs"
           ],
           "scope": "Exact explicit changed-input intersections only. Preserve every original substantive condition/check/review/limit/negative and historical practical observation at its actual scope. No new case/gate/requirement, production/provider/human/AT/defaultgenerator/AP10 award; required actual currentartifact checks separate."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/use/diagnose.md",
+            "scripts/docs-api-output-discovery.mjs",
+            "scripts/docs-documentation-owner-purpose-custody.mjs",
+            "scripts/lib/docs-publication-instruction-bindings.mjs"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
-      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "previousReviewedRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
         "01f0f1d58037293e18045b5483f4c9f9da91061e",
-        "1a93145e51354630a4fb117bd379b011a89c5cf5"
+        "1a93145e51354630a4fb117bd379b011a89c5cf5",
+        "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
       ]
     },
     {
       "id": "A98-10-A98-11-A911-02-original-configuration-reference-and-precedence-consolidation-20261031",
-      "revision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "PR13 sole integration owner",
       "reviewer": "Independent non-author native child /root/qua010_execution_path",
       "gateIds": [
@@ -76348,19 +76810,31 @@
             "scripts/docs-api-output-discovery.mjs"
           ],
           "scope": "Exact explicit changed-input intersections only. Preserve every original substantive condition/check/review/limit/negative and historical practical observation at its actual scope. No new case/gate/requirement, production/provider/human/AT/defaultgenerator/AP10 award; required actual currentartifact checks separate."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "scripts/docs-api-output-discovery.mjs"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
-      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "previousReviewedRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
         "01f0f1d58037293e18045b5483f4c9f9da91061e",
-        "1a93145e51354630a4fb117bd379b011a89c5cf5"
+        "1a93145e51354630a4fb117bd379b011a89c5cf5",
+        "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
       ]
     },
     {
       "id": "A913-01-original-261-findings-current-metadata-consolidation-20261031",
-      "revision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "PR13 sole integration owner",
       "reviewer": "Independent native non-author /root/qua010_execution_path",
       "gateIds": [
@@ -76570,14 +77044,25 @@
             "docs/site/reference/generated-documentation-map.json"
           ],
           "scope": "Exact explicit changed-input intersections only. Preserve every original substantive condition/check/review/limit/negative and historical practical observation at its actual scope. No new case/gate/requirement, production/provider/human/AT/defaultgenerator/AP10 award; required actual currentartifact checks separate."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/diagnose.md"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
-      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "previousReviewedRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
         "01f0f1d58037293e18045b5483f4c9f9da91061e",
-        "1a93145e51354630a4fb117bd379b011a89c5cf5"
+        "1a93145e51354630a4fb117bd379b011a89c5cf5",
+        "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
       ]
     },
     {
@@ -76731,7 +77216,7 @@
     },
     {
       "id": "QUA007-independent-actual-operator-six-facets-20261031",
-      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+      "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
       "author": "PR13 sole integration owner",
       "reviewer": "Independent non-author native /root/pub007_binding; distinct from documentation author and fresh operator executor",
       "gateIds": [],
@@ -76905,13 +77390,24 @@
             "docs/site/use/workflows/README.md"
           ],
           "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
+        },
+        {
+          "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+          "previousRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "reviewer": "reader_pipeline04_fresh_20261101",
+          "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/diagnose.md"
+          ],
+          "scope": "Only explicit five-file Git guide/claim/binding/fixed-input intersections. Independent original SourceAccuracy/ReaderUsability/Quality preservation at original limits; all historical checks/negatives retained. Current delivery checks separate; no new gate/case/full-pipeline success or defaultgenerator/AP10/human-AT grant."
         }
       ],
-      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "previousReviewedRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
         "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
-        "01f0f1d58037293e18045b5483f4c9f9da91061e"
+        "01f0f1d58037293e18045b5483f4c9f9da91061e",
+        "1a93145e51354630a4fb117bd379b011a89c5cf5"
       ]
     }
   ],
@@ -122481,6 +122977,41 @@
       "newAcceptedGates": [],
       "newAcceptedRequirements": [],
       "scope": "Exactly original four-outcome fresh isolated MODEL specialist case: native flow/template/actualfixedlocalprovider/typedoutput and fullBuster identities resolve; authority explanation and realDOC_DRIFT0/1/0. InitialREADME rawcustody limit/route-searchfailure preserved. No whole-reader gate, otherjourney, productiondispatch/approval, human/AT/contrast/generator/AP10 award."
+    },
+    {
+      "id": "EXEC-FAIL-GIT-owned-deployment-original-20261101",
+      "taskId": "EXEC-FAIL-GIT",
+      "reviewedDocumentationRevision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+      "executionRevision": "cbcbbd31d17dbe8450cf6e02e5a080b74614db46",
+      "participantType": "Owned author/facilitator deployment exercise through genuine Gateway; NOT fresh reader or human",
+      "verdict": "PASS",
+      "originalOutcomes": [
+        {
+          "id": "revision",
+          "verdict": "PASS"
+        },
+        {
+          "id": "no-substitution",
+          "verdict": "PASS"
+        },
+        {
+          "id": "state",
+          "verdict": "PASS"
+        },
+        {
+          "id": "recovery",
+          "verdict": "PASS"
+        }
+      ],
+      "independentDecision": "docs/blueprint/acceptance-evidence/exec-fail-git-original-20261101/independent-original-verdict.json",
+      "evidence": "docs/blueprint/acceptance-evidence/exec-fail-git-original-20261101/results.md",
+      "registeredAcceptanceIds": [
+        "A97-10",
+        "A913-05"
+      ],
+      "newAcceptedGates": [],
+      "newAcceptedRequirements": [],
+      "scope": "Exactly original four Git immutable-revision/dispatch-import identity/recovery observations; same required A restored to same origin/working repository, clean base B retained. Actual later Core blocked/test-provider sandbox failure and digest-bound execution_error import retained; NO full-pipeline success, fresh-reader, production, whole-gate, AT/generator/AP10 award."
     }
   ],
   "pipeline04PublicationCheckpoint20261101": {

@@ -1,0 +1,12 @@
+{
+  "exitCode": 0,
+  "seconds": 0.31433272489812225,
+  "actualMaintainedCommand": "npm run plugin-system:sandbox:build",
+  "sourceRevision": "cbcbbd31d17dbe8450cf6e02e5a080b74614db46",
+  "trackedStatus": "",
+  "binary": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/skills/common/plugin-runtime/foundation/isolation/plugin-sandbox",
+  "binarySHA256": "715c31703ea5704f1a600e9bb46254defd43034270941ea165128cc2a3cff08f",
+  "sourceSHA256": "2102536656c01e861f612eb18967d7881b2993629de63b6d93e0ae8b70b70376",
+  "privilegePolicyChanged": false,
+  "oldFailureRewritten": false
+}

@@ -1,0 +1,12 @@
+{
+  "exitCode": 0,
+  "seconds": 23.513741399976425,
+  "argv": [
+    "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh",
+    "node",
+    "/home/node/.openclaw/workspace/operations/pr13/evidence/exec-fail-git-original-20261101/actual-current-syntax-v2.mjs"
+  ],
+  "onlyChangedPrecondition": "native relative page IDs, not absolute publication page paths",
+  "productSourceChanged": false,
+  "priorFailureRetained": true
+}

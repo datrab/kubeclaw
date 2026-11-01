@@ -1,0 +1,1446 @@
+{
+  "status": "PASS_ORIGINAL_43_AFFECTED_SCOPES_PRESERVED",
+  "reviewer": "/root/reader_pipeline04_fresh_20261101",
+  "at": "2026-11-01T07:22:55.774039+00:00",
+  "sourceRevision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+  "baselineMatrixSHA256": "a039f9f11e9a32ace65f5bfb941b519f5efc1057ef001b043d0007174985078c",
+  "unadoptedCandidateMatrixSHA256": "7b90d4fb3c61a1cfbf34244b6816659ffe91e8b259e3b9880f279250db390c5c",
+  "affectedRecords": 43,
+  "unaffectedEntireExact": 101,
+  "wholeMatrixPhysicalInverseExact": true,
+  "allOtherTopLevelFieldsAndOldRecordsChecksReviewsNegativesHistoryExact": true,
+  "changedPathCounts": {
+    "docs/site/use/diagnose.md": 20,
+    "scripts/docs-api-output-discovery.mjs": 8,
+    "scripts/docs-documentation-owner-purpose-custody.mjs": 6,
+    "docs/config/publication-example-claims.json": 26,
+    "scripts/lib/docs-publication-instruction-bindings.mjs": 6
+  },
+  "records": [
+    {
+      "id": "AP09-compiler-import-provider-diagnosis-20261021",
+      "originalRecordIndex": 23,
+      "originalRecordCanonicalSHA256": "d83a992c719a3b8c795eeb814a1220bd25017be51925c781e944fcf96976987e",
+      "originalChecksCanonicalSHA256": "9887a7dcbc5b0cc7b8a61a9aa181a225a0f216482f50c0485494bcdeb7e625cc",
+      "originalCheckCount": 11,
+      "originalScope": "Closes complete compiler/admission, import audit, capability provider resolution and symptom-first safe diagnosis after independent current-source review.",
+      "originalLimitsCanonicalSHA256": "f6cf04d17d610bc7af7d1bcd60740c6caac05bb214ebbb16ec9c45f9baf0072e",
+      "changedExplicitPaths": [
+        "docs/site/use/diagnose.md"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only Git exercise corrected: real sameA restore, separate clean baseB, initially optionalflatpin/newpair, native blocked-stop/auditreason and genuine sandbox prerequisite. Other diagnosis sections exact; actual later failed sandbox/import never becomes fullpipelinegreen."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "AP09-documentation-agent-maintenance-20261021",
+      "originalRecordIndex": 33,
+      "originalRecordCanonicalSHA256": "93ed881e066f1fbca2bb54da07c4ecabffb547e1c5b7a831ec2156daac78e83d",
+      "originalChecksCanonicalSHA256": "0fed34df8fef75a0c6e3e78ab5bd84e23105550377f23905ed5d93b21d5068cd",
+      "originalCheckCount": 66,
+      "originalScope": "Whole central documentation-agent maintenance contract: discovery, impact, owned generation, review, reader probe and safe retirement.",
+      "originalLimitsCanonicalSHA256": "58cdf27de0ecf6436e6136bcc5059b10d80fd8223d27704fea26fac499000577",
+      "changedExplicitPaths": [
+        "scripts/docs-api-output-discovery.mjs"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only three existing native/YAML wholeclaims/guide seals move. Full qualified owning predicates/physical input/finite rosters/selectors/rawUNKNOWN/slots/facts/no-runtime boundaries stay exact."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "AP09-complete-static-reader-search-20261021",
+      "originalRecordIndex": 42,
+      "originalRecordCanonicalSHA256": "a72bfd53e6202c1af6c6fb39ec364b58ebf3bf82f5c24d921074bbf2209dd314",
+      "originalChecksCanonicalSHA256": "eedb7a9da3ae7e4d1b7f7b4d97a6905f64306e8d9cc84f4bc09f188a139c5ce7",
+      "originalCheckCount": 94,
+      "originalScope": "Whole PUB-002: existing positive page/asset allowlists plus actual artifact-local full-text search across all167 canonical reader pages, headings and code/technical identifiers. Browser find/empty/no-JS behavior observed; code and output reviewed.",
+      "originalLimitsCanonicalSHA256": "b9cbe56de732242af92fd0e76c903e836205f241d37ff858399adaf0534c93ef",
+      "changedExplicitPaths": [
+        "docs/site/use/diagnose.md"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only Git exercise corrected: real sameA restore, separate clean baseB, initially optionalflatpin/newpair, native blocked-stop/auditreason and genuine sandbox prerequisite. Other diagnosis sections exact; actual later failed sandbox/import never becomes fullpipelinegreen."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "AP09-rendered-source-bounds-gate-20261021",
+      "originalRecordIndex": 44,
+      "originalRecordCanonicalSHA256": "128e9a5325a27d757fef690a42a876a3369aa59ba38355aba1a0112e30b2a596",
+      "originalChecksCanonicalSHA256": "bc448c24679626dfffc3ea19639d1930c393cc887f74444e0dd483a2133ec8ce",
+      "originalCheckCount": 59,
+      "originalScope": "Whole A912-09: repository references and actual hash-verified built HTML links, anchors, assets and routes checked, plus full Source commit/type/actual-byte/line-or-Markdown-anchor validation.167 canonical pages,176HTML,179digests,36698localtargets,14401Source locators/3723objects including118primary upstream files across11repositories.",
+      "originalLimitsCanonicalSHA256": "f7d7281f12002f4ba2916ef8cb4bd8375abf331fd9c50339581185b47b9d3508",
+      "changedExplicitPaths": [
+        "docs/site/use/diagnose.md"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only Git exercise corrected: real sameA restore, separate clean baseB, initially optionalflatpin/newpair, native blocked-stop/auditreason and genuine sandbox prerequisite. Other diagnosis sections exact; actual later failed sandbox/import never becomes fullpipelinegreen."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "AP09-whole-independent-platform-decision-review-20261021-d477",
+      "originalRecordIndex": 66,
+      "originalRecordCanonicalSHA256": "617314675cbdfdcb19dfd6b48730b194bb61ec49e261c710b46352270d274f10",
+      "originalChecksCanonicalSHA256": "8520b7ea91350f53fb31888bd68e60581d90feae080b6ccc73ff77abdbb1ecb7",
+      "originalCheckCount": 10,
+      "originalScope": "Independent whole platform diagnosis/safe-recovery documentation decision PASS at d477: all28 dependency classes reviewed in seven coherent owner batches, accepted matrix facets reused, plus current30-group communication and complete telemetry union. New generic runtime and HTTP publisher uncertainties resolve at original key/receiver and durable authority, not OpenClaw session cancellation or Redis replay. Current-profile/conditional/optional/planned/unresolved classes remain distinct. Source and semantic reader decision supported; fresh rendered Reader checkpoint separate.",
+      "originalLimitsCanonicalSHA256": "ae646b6257587aa0c580ad905d00db352528ad88e7549b74e08085398696d776",
+      "changedExplicitPaths": [
+        "docs/site/use/diagnose.md"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only Git exercise corrected: real sameA restore, separate clean baseB, initially optionalflatpin/newpair, native blocked-stop/auditreason and genuine sandbox prerequisite. Other diagnosis sections exact; actual later failed sandbox/import never becomes fullpipelinegreen."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "FLW010-uncertain-effect-supported-boundary-20261021",
+      "originalRecordIndex": 70,
+      "originalRecordCanonicalSHA256": "952d9b841f6ad955c388baeaf1a76acda21176dd287af6b046e7e51619e38800",
+      "originalChecksCanonicalSHA256": "1707a54a79d32b058497733a2c9cfdc638f446dc5f5a516bc440e1e0672c1425",
+      "originalCheckCount": 7,
+      "originalScope": "Whole supported unclear-effect task is documented:stopped-writer raw preservation before audit;request/key/resource/receipt inspection;authorized owner read against original identity;unknown outcome is not nonexecution;Core recovery guards require explicit continuation and no general supported clearing/import CLI exists. Current guide names safe stop,original state retention,owning external authority and follow-up instead of inventing an operation.",
+      "originalLimitsCanonicalSHA256": "c569cb3756a8629f039b03c9d48c7e77463c10288a3e22b41a16938ed64f3a31",
+      "changedExplicitPaths": [
+        "docs/site/use/diagnose.md"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only Git exercise corrected: real sameA restore, separate clean baseB, initially optionalflatpin/newpair, native blocked-stop/auditreason and genuine sandbox prerequisite. Other diagnosis sections exact; actual later failed sandbox/import never becomes fullpipelinegreen."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "A99-08-complete-supported-failure-journey-union-20261021",
+      "originalRecordIndex": 85,
+      "originalRecordCanonicalSHA256": "6fbdc2848b10f8bfeeeae0c5ccab94366de7bfd6c836988d6315eb7090912eb8",
+      "originalChecksCanonicalSHA256": "f2ef0a197cd1e9acc4eb6ca24287185e11d34c97e70d6c9a9bcb1cf4d55314cc",
+      "originalCheckCount": 8,
+      "originalScope": "Whole documentation gate covers all six required failure families through independently reviewed coherent procedures: Redis, registry/image, Tailnet, Worker abort, uncertain external effect and demo rejection. Current index routes each named task; actual new recovery helper and bounded native fixtures support their stated claims. Unavailable live controls have explicit original-identity retention, owning authority, follow-up inputs, stop and cleanup boundaries, as required by compact contract1\u20134.",
+      "originalLimitsCanonicalSHA256": "e54da89dd1cda38395e0a74030fad5314325e5e67787af0b1023354d0938d53f",
+      "changedExplicitPaths": [
+        "docs/site/use/diagnose.md"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only Git exercise corrected: real sameA restore, separate clean baseB, initially optionalflatpin/newpair, native blocked-stop/auditreason and genuine sandbox prerequisite. Other diagnosis sections exact; actual later failed sandbox/import never becomes fullpipelinegreen."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "AP09-publication-positive-scope-7ef16585",
+      "originalRecordIndex": 88,
+      "originalRecordCanonicalSHA256": "78ea165b7ff4fae4d9efe9868c50cd94c4f29ec4e97fcc4f1574a76125300d45",
+      "originalChecksCanonicalSHA256": "14d1b1573a02d86b795b43405da04e1c61e830c65963bde034757670776bd6bc",
+      "originalCheckCount": 61,
+      "originalScope": "Whole positive publication/reader boundary: exact revision-bound177canonical pages, finite declared support/output set, actual rogueMarkdown no-route/no-output negative and no internal documentation-work prose/link leakage.",
+      "originalLimitsCanonicalSHA256": "711229978db6b802aacb6dedfb926b3c6db0a3fe1f99180e34d075171c3aec24",
+      "changedExplicitPaths": [
+        "docs/site/use/diagnose.md"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only Git exercise corrected: real sameA restore, separate clean baseB, initially optionalflatpin/newpair, native blocked-stop/auditreason and genuine sandbox prerequisite. Other diagnosis sections exact; actual later failed sandbox/import never becomes fullpipelinegreen."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "A912-05-whole-source-excerpt-callouts-20261022",
+      "originalRecordIndex": 89,
+      "originalRecordCanonicalSHA256": "44378b6001c1f30272698ceaf4cd5b4502b04858f801c0ea2b90c6d64aca7329",
+      "originalChecksCanonicalSHA256": "f2194485e1d9c8719d7c956df4ea793a0115a7a2328014ba8d69b0f097ad5287",
+      "originalCheckCount": 27,
+      "originalScope": "Whole A912-05 accepted: 411 actual Source boxes on 56 canonical pages have meaningful six-field explanations and explicit revisions/limits. All 1,888 built excerpts freshly match 983 exact linked-commit objects. Ordinary source links and native no-JS disclosures work; fresh 14-box observations at three widths supplement unchanged full 7ef proof without claiming a new full browser run.",
+      "originalLimitsCanonicalSHA256": "603bdd3b158284828b10fe9d95fa56a1fcb110831033596d9f8934fa526c5fd2",
+      "changedExplicitPaths": [
+        "docs/site/use/diagnose.md"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only Git exercise corrected: real sameA restore, separate clean baseB, initially optionalflatpin/newpair, native blocked-stop/auditreason and genuine sandbox prerequisite. Other diagnosis sections exact; actual later failed sandbox/import never becomes fullpipelinegreen."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "A98-02-13-whole-operator-procedure-contract-20261022",
+      "originalRecordIndex": 90,
+      "originalRecordCanonicalSHA256": "ecc449fdcefc482a89dd00340050e3e62ae15f19352e34590c3f195c184b293d",
+      "originalChecksCanonicalSHA256": "fe80d6521a57ae346be52e6bc1febf495b05ebd959df9c8f90857536f4712f31",
+      "originalCheckCount": 47,
+      "originalScope": "Whole canonical thirteen-task operator map and linked concrete workflow/host procedure family; version/location/authority/prerequisites/commands/observations/safe-stop/recovery/unsupported bounds, using independent Root correction review for authored quickstart.",
+      "originalLimitsCanonicalSHA256": "191eee77e5eef8ffe50ed6cad37a7b4c54e920bcf99d5c4ea04187acd9b7442c",
+      "changedExplicitPaths": [
+        "docs/site/use/diagnose.md"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only Git exercise corrected: real sameA restore, separate clean baseB, initially optionalflatpin/newpair, native blocked-stop/auditreason and genuine sandbox prerequisite. Other diagnosis sections exact; actual later failed sandbox/import never becomes fullpipelinegreen."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "AP09-whole-extension-drift-A91014-20261023",
+      "originalRecordIndex": 96,
+      "originalRecordCanonicalSHA256": "208abd5dafc821c2ade18cf5913731c39e1e4ae63e85d57dd35b993cc538e9bd",
+      "originalChecksCanonicalSHA256": "cd5d37dc13253014ab4bfdd2a3826c9cd51461efe09cea0f11199b2616bd251b",
+      "originalCheckCount": 53,
+      "originalScope": "Independent complete A91014 generator-or-guide mutation acceptance across SDK export/public contracts, plugin manifest, extension class, distinct provider/fixture/report registration, genuine nested configuration, capability/grant, Secret and error-code routes. Representative Add/Change/Remove per actual independent path:45 registered observations, not45 requirements. Wrong nested affected-page mapping found independently and corrected with registry-derived publication assertion; whole-topic review explicitly PASS after source/custody closure.",
+      "originalLimitsCanonicalSHA256": "fafd3f80b1deb3977ada66aa68fdbc97a74d00b9feb5266480136408413cedb5",
+      "changedExplicitPaths": [
+        "scripts/docs-documentation-owner-purpose-custody.mjs"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only one existing wholeclaims seal changes. Normal child call/root/result/cwd/command purpose checks and no direct/new caller grant stay exact."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "A911-06-authored-surface-bindings-20261025",
+      "originalRecordIndex": 99,
+      "originalRecordCanonicalSHA256": "96c4fc068e6b4bacbc60847dc1394d4b64b634cb252f60f4068cf309d318ec3d",
+      "originalChecksCanonicalSHA256": "005865f3c2c6fd9d237c27afc5c1ab4c0ed9a3941f1dbe0116e9c0d1e06d905c",
+      "originalCheckCount": 26,
+      "originalScope": "Original A911-06 authored binding across72endpoint/65outbound/75store records plus CI/product workflows. Reuses original substantive Source/semantic Reader/Quality with exact unchanged complete vectors; fresh four semantic slice assessments. Not inferred from inventory, common anchors or publication counts. No new catalogue requirement counted. Independent whole original criterion Source/semantic Reader/Quality PASS; exact five literal exclusions were assessed as nonmaterial to authored binding, not cleared for Source/execution.",
+      "originalLimitsCanonicalSHA256": "0685a5c136988702ad31408b5bee3910c0a16792ccc101dbd6e75daabd863ce6",
+      "changedExplicitPaths": [
+        "docs/site/use/diagnose.md"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only Git exercise corrected: real sameA restore, separate clean baseB, initially optionalflatpin/newpair, native blocked-stop/auditreason and genuine sandbox prerequisite. Other diagnosis sections exact; actual later failed sandbox/import never becomes fullpipelinegreen."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "A99-13-original-seven-dimension-drift-20261025",
+      "originalRecordIndex": 100,
+      "originalRecordCanonicalSHA256": "d8585bba7827a1deeb9bc3a60451b78e721b0181e7c2f6b15fe623caec26fa31",
+      "originalChecksCanonicalSHA256": "292545b51d0d86e3ee9e0e839e912bb1700db9d06ddb9a8dd2d2c096fbcb8963",
+      "originalCheckCount": 28,
+      "originalScope": "Original A99-13 seven named product-contract mutation dimensions: schemafield,stagetype,role,provider,fixture,reportformat,progresscontract. Full prior independent A91014 exact scope reused for first6; genuine current published progress baseline and3original mutation refusals/restorations supplement it. Independent complete original criterion Source/semantic Reader/Quality PASS.",
+      "originalLimitsCanonicalSHA256": "bfde3f7a477e150f80b7fd8fc6422162107905571ff3aa9d12e9e9b0c36be079",
+      "changedExplicitPaths": [
+        "scripts/docs-documentation-owner-purpose-custody.mjs"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only one existing wholeclaims seal changes. Normal child call/root/result/cwd/command purpose checks and no direct/new caller grant stay exact."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "MNT-014-whole-native-publication-examples-20261027",
+      "originalRecordIndex": 108,
+      "originalRecordCanonicalSHA256": "87811f6305a60da4504ebd3db295951184a6f51b51f08aa5662523ce3c5ed29a",
+      "originalChecksCanonicalSHA256": "6f3e70a5c751231939b26aec6813f23c0398f85f81e5aedd2216d9d9de8337ef",
+      "originalCheckCount": 34,
+      "originalScope": "Original MNT-014/F7 complete executable/schema-validated publication example obligation: exhaustive authored discovery and failclosed normalcheck/build native input/contract/projection/syntax joins, including both full project factories; no selected-plugin/resume-only substitution and no mandatory live deployment.",
+      "originalLimitsCanonicalSHA256": "9259671604bce6d2934dde605e1c094b0847e053f90bcdcbc262d43379144710",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/use/diagnose.md",
+        "scripts/lib/docs-publication-instruction-bindings.mjs"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only guide157/contract173/authority36 finite Source-procedure joins change; whole guide anchor/fragments match actual Source. Native four observations do not rewrite historical execution; all other185pages/assets/contracts/checks exact.",
+          "Only Git exercise corrected: real sameA restore, separate clean baseB, initially optionalflatpin/newpair, native blocked-stop/auditreason and genuine sandbox prerequisite. Other diagnosis sections exact; actual later failed sandbox/import never becomes fullpipelinegreen.",
+          "Only four existing embedded literal spans/hash slots move for same originalhostrefs and language modes. Native syntax parses117embedded/471hosts without executing documented commands; no new grants/host membership."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "A99-11-whole-published-example-claims-20261027",
+      "originalRecordIndex": 109,
+      "originalRecordCanonicalSHA256": "b3e6739cf992afe1b87df4a7edaab46e3fe30c836da95c83a6eabb0d782ebdec",
+      "originalChecksCanonicalSHA256": "db777b7384c40121430a8095e50a5ca6a7b1753c4f621bb8fb82e12b3ef18da1",
+      "originalCheckCount": 34,
+      "originalScope": "Original whole A99-11: all published examples discoverable and checked according to their actual claim; executable instructions retain toolchain, prerequisites, expected result, errors/effects/cleanup, and explanatory or unexecuted product paths are explicit. Separately adjudicated full original automatic-failure predicates; not an automatic promotion from MNT014.",
+      "originalLimitsCanonicalSHA256": "9259671604bce6d2934dde605e1c094b0847e053f90bcdcbc262d43379144710",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/use/diagnose.md",
+        "scripts/lib/docs-publication-instruction-bindings.mjs"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only guide157/contract173/authority36 finite Source-procedure joins change; whole guide anchor/fragments match actual Source. Native four observations do not rewrite historical execution; all other185pages/assets/contracts/checks exact.",
+          "Only Git exercise corrected: real sameA restore, separate clean baseB, initially optionalflatpin/newpair, native blocked-stop/auditreason and genuine sandbox prerequisite. Other diagnosis sections exact; actual later failed sandbox/import never becomes fullpipelinegreen.",
+          "Only four existing embedded literal spans/hash slots move for same originalhostrefs and language modes. Native syntax parses117embedded/471hosts without executing documented commands; no new grants/host membership."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "QUA-005-whole-published-live-and-completeness-claims-20261027",
+      "originalRecordIndex": 111,
+      "originalRecordCanonicalSHA256": "5f5d5f83282042d7c9b0474394e886c9d54b04952038cabed821a529702618f8",
+      "originalChecksCanonicalSHA256": "606ffc323a3debb51f1f00c616fb8c92f964bdea404d8023b11af1f939f2fcbf",
+      "originalCheckCount": 30,
+      "originalScope": "No material false live-success or unsupported unbounded completeness claim found in complete qualified actual publication contexts; not merely sampled pages, keyword absence or hashes.",
+      "originalLimitsCanonicalSHA256": "4cad5301ab418452c3a191d0a1824d6d67d13d0301f2a5c95dd76af7829c33a5",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/use/diagnose.md",
+        "scripts/lib/docs-publication-instruction-bindings.mjs"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only guide157/contract173/authority36 finite Source-procedure joins change; whole guide anchor/fragments match actual Source. Native four observations do not rewrite historical execution; all other185pages/assets/contracts/checks exact.",
+          "Only Git exercise corrected: real sameA restore, separate clean baseB, initially optionalflatpin/newpair, native blocked-stop/auditreason and genuine sandbox prerequisite. Other diagnosis sections exact; actual later failed sandbox/import never becomes fullpipelinegreen.",
+          "Only four existing embedded literal spans/hash slots move for same originalhostrefs and language modes. Native syntax parses117embedded/471hosts without executing documented commands; no new grants/host membership."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027",
+      "originalRecordIndex": 112,
+      "originalRecordCanonicalSHA256": "ad8152070ab7c991a6590b449101b6ce982c47f3a8dec64328fc1ae892ba4ace",
+      "originalChecksCanonicalSHA256": "386869e83939ef3fd7f05a427cc57603d9834f89363cced3c1075d49e51d4ef4",
+      "originalCheckCount": 41,
+      "originalScope": "Whole original applicability and visible product-boundary duty independently passed:294 structured contexts,9 authored/generated applicability families,25 owner/acceptance boundaries and complete177page/28asset implicit responsibilities. Material GitOps-status, Swarm-wrapper and unused-field/profile findings repaired through native owners and independently checked at actual full delivery. Fresh original Operator02 scored4/4. Current committed publication and all five Reader controls pass; no missing execution is disguised as N/A.",
+      "originalLimitsCanonicalSHA256": "c506dd71f17ea7c49715ca398ee899c7cefd29cad57510a0ec759446c510a06e",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/use/diagnose.md"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only guide157/contract173/authority36 finite Source-procedure joins change; whole guide anchor/fragments match actual Source. Native four observations do not rewrite historical execution; all other185pages/assets/contracts/checks exact.",
+          "Only Git exercise corrected: real sameA restore, separate clean baseB, initially optionalflatpin/newpair, native blocked-stop/auditreason and genuine sandbox prerequisite. Other diagnosis sections exact; actual later failed sandbox/import never becomes fullpipelinegreen."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "CFG-007-whole-recursive-plugin-configuration-and-native-consumer-semantics-20261028",
+      "originalRecordIndex": 113,
+      "originalRecordCanonicalSHA256": "f751e11a635773971672c54fadc3db583618461e61359a161c13209d6140ef74",
+      "originalChecksCanonicalSHA256": "73a4186ecccc77e83fe845466217046d8933455b2d0d273f5202bc440533fc32",
+      "originalCheckCount": 44,
+      "originalScope": "Whole original CFG007: all857 recursive schema declarations and actual consumer meanings plus15Swarm settings are current and source-qualified. Earlier53corrections retain actual valid qualification; new29meanings(artifact3+26durable/evidence) now state real defaults/admission/path bases/count/payload/store budgets and failure timing. Complete actual central reference and selected operator projection are independently qualified; associated29native mapfacts, qualified3scope claims and committed326 finalcontrols pass. No declaration/count/hash-only acceptance.",
+      "originalLimitsCanonicalSHA256": "87b051d6eb4acb1267fcac4e69922c07f51c790994c20341d119505d7aefa2be",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only guide157/contract173/authority36 finite Source-procedure joins change; whole guide anchor/fragments match actual Source. Native four observations do not rewrite historical execution; all other185pages/assets/contracts/checks exact."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "MNT-015-whole-source-owner-page-check-and-independent-review-routing-20261028",
+      "originalRecordIndex": 115,
+      "originalRecordCanonicalSHA256": "3b7d13c8a20681751696c6f2bc7cc2db1666fc656012d6a3cb5272394fd7f7ec",
+      "originalChecksCanonicalSHA256": "18350f99b81f7b661b41238f3ee013b94efe91c0bc645c44e0ee3a25b4d4fc50",
+      "originalCheckCount": 42,
+      "originalScope": "Whole original MNT015 source-to-canonical-page/owner/applicable-check and mandatory independent-topic review responsibility independently passed across seven composed source families and five duties. Existing exported prompt-library missing route genuinely repaired through native metadata/real workspace checks; all affected generation/failure/addition/removal/STOP and historical/source/local/live boundaries retained. Exact current source/code/bindings, meaningful native controls, committed Reader and original115 preservation qualified; not automatic closure from one witness or counts.",
+      "originalLimitsCanonicalSHA256": "4fec8ac0c702f56a4021b9b9c86e4349585cc79d4a0a482c9b2cc6fc2ce96534",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "scripts/lib/docs-publication-instruction-bindings.mjs"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only guide157/contract173/authority36 finite Source-procedure joins change; whole guide anchor/fragments match actual Source. Native four observations do not rewrite historical execution; all other185pages/assets/contracts/checks exact.",
+          "Only four existing embedded literal spans/hash slots move for same originalhostrefs and language modes. Native syntax parses117embedded/471hosts without executing documented commands; no new grants/host membership."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "CFG-013-whole-precedence-effective-values-and-source-qualified-conflicts-20261028",
+      "originalRecordIndex": 117,
+      "originalRecordCanonicalSHA256": "6d4eb50a0ec9bfcc14a3d23602c48f9b1f2ad2a12b244d13b5bcf01963a60349",
+      "originalChecksCanonicalSHA256": "bf11131676462d6fadff0d9ab27e373230b468db5a29486413b1395304f0bb81",
+      "originalCheckCount": 39,
+      "originalScope": "Whole original CFG-013 independently passed across all ten actual configuration families: producer-to-consumer merge/default/capture, absence/empty/null/false, conflict/error and safe effective-value inspection duties. Newly found genuine fixed-env/extraEnv duplicate and required-Secret failure gap repaired through the canonical authored owner and a semantic maintained one-page contract successor. Complete core and host/Helm/Kubernetes/Secret responsibilities and individual23 historical finding facets qualified; original global failures remain unawarded. Actual committed publication controls and original117 semantic preservation complete; no table/count/hash-only closure.",
+      "originalLimitsCanonicalSHA256": "3efd1c1407feb8b6df88e7c7800c69b77e5990670fb285139011d86b5f97019f",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only guide157/contract173/authority36 finite Source-procedure joins change; whole guide anchor/fragments match actual Source. Native four observations do not rewrite historical execution; all other185pages/assets/contracts/checks exact."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "CFG-010-whole-host-prism-codex-configuration-and-consumer-authority-20261028",
+      "originalRecordIndex": 118,
+      "originalRecordCanonicalSHA256": "402b00211abb35650813f1f7cf155693448d78df974c633d6edc573160d333ac",
+      "originalChecksCanonicalSHA256": "8d8d7b4faec5a60337f0f504de880a3e5127cbddd34c0dfc32caeab184cc82ac",
+      "originalCheckCount": 40,
+      "originalScope": "Whole original CFG-010 independently passed across all seven actual host/Prism/OpenClaw/standalone-Codex families: configuration sources, defaults, Secret consumers, precedence, startup capture and safe verification. Stage agentRole versus actual config.agent selection and standalone Codex persisted-home/forced-MCP/credential boundaries corrected centrally. Complete63 Prism names/77 consumer contracts and158 Helm meaning cells were source-reconciled; eight real semantic families corrected through existing shared native owners and genuinely implemented authenticated finite v2 delivery (11 ENV tuples/16 Helm identities/15 DB Secret consumers), not hand-edited raw inventories. Current meaning provenance is separate from retained historical observations. Whole13 original finding facets qualified only locally. Actual committed publication7, full physical/Git output/source binding and original118 semantic preservation independently passed; no count/hash-only or unexecuted live closure.",
+      "originalLimitsCanonicalSHA256": "46679b98439053f0902f87875c134d0fe0bdece26a5220cf467483ab4b82ec42",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only guide157/contract173/authority36 finite Source-procedure joins change; whole guide anchor/fragments match actual Source. Native four observations do not rewrite historical execution; all other185pages/assets/contracts/checks exact."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "CFG-012-whole-ports-services-endpoints-ingress-and-controller-activation-20261028",
+      "originalRecordIndex": 119,
+      "originalRecordCanonicalSHA256": "b27fb031525cebb5ac2788bcb4a6eb70b602e6bc03ae4793f1d2e032f405e8a8",
+      "originalChecksCanonicalSHA256": "e41790d9e3e202fb0a42b9acc005e0ebff6d1efa0f803f4bcb87afde976f32a5",
+      "originalCheckCount": 43,
+      "originalScope": "Whole original CFG-012 independently passed for configured ports, Services, inbound/outbound endpoints and ingress: all22 exposures/72 inbound/65 outbound occurrences reconciled across39 actual producer/receiver bodies and coherent trust/health/failure/operator duties. Four ordinary controller Kubernetes calls incorrectly hidden behind optional readiness activation corrected through the existing native caller-aware owner. Omitted PostgreSQL targetPort now preserves the raw omission and explains numeric Service-port default with pinned primary evidence; named targets and profile-specific ownership/storage/ports remain distinct. Genuine source-first bounded endpoint publication delivered both remedies without full configuration/SDK regeneration. Whole delivered content, seven committed publication controls, actual output/Git/native-metadata binding and every original119 scope independently passed.",
+      "originalLimitsCanonicalSHA256": "fee8e8a7e5807f3a9caf182174950ba52551608b59a46ac8c451311c81dc44fc",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only guide157/contract173/authority36 finite Source-procedure joins change; whole guide anchor/fragments match actual Source. Native four observations do not rewrite historical execution; all other185pages/assets/contracts/checks exact."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "REF-016-whole-verification-command-ci-environment-effects-owner-and-change-routing-20261028",
+      "originalRecordIndex": 120,
+      "originalRecordCanonicalSHA256": "70be78a8277b62a7a880f7c11e991a0fc41ed18d8222ed89ff8443640df00a47",
+      "originalChecksCanonicalSHA256": "04f0cfebbd399f8ff05fd119122a7004aa47c59d8ae8cc8f8aa49495bb429bcb",
+      "originalCheckCount": 40,
+      "originalScope": "Whole original REF-016 independently passed: all301 root npm aliases,14 actual CI workflows,41 deployment forms,18 guide forms and88 concrete package/specialist routes map purpose, scope, environment, authority/write/residual effects, expected results/limits, existing canonical maintainer owner and change-to-check. Actual private/delegated versus public frontdoor scope is Source-reasoned, not a counts exemption. All49 wrapper-selected package lifecycles plus explicit focused Prism/Ops/lint, telemetry and committed Reader routes retain concrete duties. Exact301 raw root command declarations and58 selected manifest definitions are read-only literal Source data; genuine native loader/Source guards, independent semantic review and actual current HTML prove values/order/cwd and preserve wildcards without executing those commands. Actual native current generation/publication/Reader/references and old120 preservation passed.",
+      "originalLimitsCanonicalSHA256": "ef04f19a0fbc3143012b781fdca7a6360a3b4d273440c7ee23b418339f3e9be5",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only guide157/contract173/authority36 finite Source-procedure joins change; whole guide anchor/fragments match actual Source. Native four observations do not rewrite historical execution; all other185pages/assets/contracts/checks exact."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "MNT-008-whole-generated-platform-store-policy-retention-quota-cleanup-20261028",
+      "originalRecordIndex": 121,
+      "originalRecordCanonicalSHA256": "d610e6ec871c2688c79f34c35423ff7329131570bcd85d77f50cf590be32b172",
+      "originalChecksCanonicalSHA256": "d724a0ab3a307d1b1e3b8cedf44db665bba24f3d4f5a7a2a93f1f435fb0a977e",
+      "originalCheckCount": 42,
+      "originalScope": "Whole original MNT-008 independently passed: generated ports/endpoints/stores retain nine original surfaces and75 original store identities;52 source-qualified policy families and9 additional native instances carry machine-readable typed declarations/limits, constructor/caller/configuration boundaries, retention/capacity/cleanup/failure/retained-authority responsibilities and concrete Source locators. Native conditional Helm projection is explicitly distinguished from six original profiles and unresolved expressions. Maintainer guidance explains clean committed Source generation versus later canonical contract preparation and normal publication. Independent actual current Reader/Quality and complete121preservation passed; no gate or unrelated requirement awarded.",
+      "originalLimitsCanonicalSHA256": "13fc4c88732dfeb68cee6d3629a03ecf669b9c7a5bd6bfae373b4f680a582806",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only guide157/contract173/authority36 finite Source-procedure joins change; whole guide anchor/fragments match actual Source. Native four observations do not rewrite historical execution; all other185pages/assets/contracts/checks exact."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "MNT-006-whole-generated-active-event-payload-version-producer-consumer-20261030",
+      "originalRecordIndex": 122,
+      "originalRecordCanonicalSHA256": "a2006864ebaef57eff0bb6f44c0441cfdbf6a0b9e58205e18d21e2d957c10b96",
+      "originalChecksCanonicalSHA256": "e16089282816f405fa7aec64e23eda6184eba7d62723b042a32187e0e12f826c",
+      "originalCheckCount": 41,
+      "originalScope": "Whole original MNT-006 PASS under AP09 sections1\u20133: source-qualified generated active event/payload/version and actual producer/transformer/validator/consumer graph across all14 mechanisms, joined to activation, retained/unknown boundaries and complete maintenance/verification ownership. Original F4 names/positions-only deficiency is remedied. Independent Source and delivered technical Reader/Quality judgments compose with actual native parser-route drift tests and final seven publication checks; original122 preservation PASS at original limits. No unrelated gate or whole controlled-language award.",
+      "originalLimitsCanonicalSHA256": "bb1369056cb8ec69e952cf70b68c29319a205cad1cd0f5e9a888d0279bb07f63",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only guide157/contract173/authority36 finite Source-procedure joins change; whole guide anchor/fragments match actual Source. Native four observations do not rewrite historical execution; all other185pages/assets/contracts/checks exact."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "MNT-005-common-source-bound-error-catalogue-20261030",
+      "originalRecordIndex": 123,
+      "originalRecordCanonicalSHA256": "61f6960d8ac13dd88b884dbf64179b574a4d5699dc444b848e1c9b8cee6b0fb5",
+      "originalChecksCanonicalSHA256": "7836485c4fb86fb24c3469de07c7c832fd411b975d33530b48778c1f9e2699a6",
+      "originalCheckCount": 35,
+      "originalScope": "Whole original MNT005 content deficiency F3 resolved under AP09 sections1\u20133 and Raven owner-priority20261030: generated common diagnostic catalogue across Foundation/plugins, Nova/projects, Worker/native, Prism/backup, platform and Helm, not Buster-only. Entries explain identity/construction, actual trigger/effect, retry/safe-action, retained evidence and consumer boundaries. Independent complete page/semantic review plus unchanged qualified Source scopes and concrete reader tasks found no material error; original content PASS explicitly reaffirmed after ten title/path labels were corrected. Actual seven publication commands pass. No new gate or whole controlled-language acceptance.",
+      "originalLimitsCanonicalSHA256": "31554b7f2b1ec12ed008edf74760900562e4ae698eefb39fe8896de113cf5302",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only guide157/contract173/authority36 finite Source-procedure joins change; whole guide anchor/fragments match actual Source. Native four observations do not rewrite historical execution; all other185pages/assets/contracts/checks exact."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "REF-005-owned-diagnostic-identities-causes-effects-recovery-20261030",
+      "originalRecordIndex": 124,
+      "originalRecordCanonicalSHA256": "b27b47233f04e9c4ea6ba246f3fd2f34160132bc0b1a6ae69c1b38af2633cfb7",
+      "originalChecksCanonicalSHA256": "2ccc842ef54f94a7cb981659a60b06ae9037aab5141caf71322d3d8c0ade6f1e",
+      "originalCheckCount": 31,
+      "originalScope": "Original REF005 PASS under controlling AP09 sections1\u20133 and owner usable-documentation policy: owned diagnostic codes, message/construction patterns, declared-only vocabulary and successful control outcomes are separated and source-linked with causes, side effects, safe next actions and retained-state limits. Common/worker, project compiler/CLI/recovery and canonical-state/evidence responsibilities now complement typed constructors and existing wrapper/HTTP/result routing. Independent whole-topic Source/usability/quality/completeness review found no material omission or unsafe instruction. Actual seven publication checks pass. No new gate or whole controlled-language award.",
+      "originalLimitsCanonicalSHA256": "8633af139aea33b13042b0b53e4f381654393d28787c1c108aa51d81f8b57af6",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only guide157/contract173/authority36 finite Source-procedure joins change; whole guide anchor/fragments match actual Source. Native four observations do not rewrite historical execution; all other185pages/assets/contracts/checks exact."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "MNT-011-common-diagnostic-production-input-drift-20261030",
+      "originalRecordIndex": 125,
+      "originalRecordCanonicalSHA256": "35b2f453b1ce1aad4453f71763877e5cc8f4fcd9c843397c9096f7008dc16480",
+      "originalChecksCanonicalSHA256": "f49a9bfb726d9635d6387fdbd8ae0512e0432062a32175cb75544a448bb90e56",
+      "originalCheckCount": 31,
+      "originalScope": "Original MNT011 PASS: common diagnostic driftcheck now refuses selected owned production-input path additions/removals/byte changes, including formerly error-free active Nova and Studio sources, before existing source-binding and generated-output checks. Root/direct/deployment-script symlink paths fail closed. Independent coherent original Source/Reader/Quality and transfer review passed after two concrete material implementation defects were corrected. The maintenance route explains finite scope and reviewed refresh rather than hash-only semantic approval. Actual publication checks pass. No new gate or whole controlled-language award.",
+      "originalLimitsCanonicalSHA256": "de10ab8ce158ec9aa6d46acbc81fc35809c4dd8d21f2b6aba6aba6171ed63d48",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only guide157/contract173/authority36 finite Source-procedure joins change; whole guide anchor/fragments match actual Source. Native four observations do not rewrite historical execution; all other185pages/assets/contracts/checks exact."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "MNT-010-all-owned-json-schema-recursive-field-drift-20261030",
+      "originalRecordIndex": 126,
+      "originalRecordCanonicalSHA256": "951bb7708b9eeb502edd4a88c6ebc1e78821c8b16677176e948b04c4089f6427",
+      "originalChecksCanonicalSHA256": "6c8f9cc00a936ccac55403d355d8c1f8c6ead248f93ee12a32e43472abe85b06",
+      "originalCheckCount": 31,
+      "originalScope": "Original MNT010 PASS at its explicit original schema-field drift scope: the former16-schema subset is replaced by all current owned regular schema JSON source membership/bytes, recursive literal property-pointer/member-subtree inventory, explicit current/fixture/retained/documentation status and reader routes. Both current plugin.json and openclaw.plugin.json registration forms are bound. Independent coherent original Source/Reader/Quality and responsibility transfer passed after the one real OpenClaw registration omission was corrected. Actual publication runs the new check before every prior native action and all seven checks pass. No new gate, universal API/consumer, runtime-schema or whole controlled-language award.",
+      "originalLimitsCanonicalSHA256": "6ca119b6a6e184047be67d0d7418a829d87dae1ca154330d1a70f4e7f5d20707",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only guide157/contract173/authority36 finite Source-procedure joins change; whole guide anchor/fragments match actual Source. Native four observations do not rewrite historical execution; all other185pages/assets/contracts/checks exact."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "QUA-004-whole-appropriate-technical-evidence-and-current-citations-20261030",
+      "originalRecordIndex": 127,
+      "originalRecordCanonicalSHA256": "e7551898eeaa2f095cc0e28dfbc2032237bf108041dcd12f4abb547c8b49cbc5",
+      "originalChecksCanonicalSHA256": "53f80d2bef2fcc6e215c3d0743a3174c96bd4eb2e4ba2011d2d631993dd0ea84",
+      "originalCheckCount": 31,
+      "originalScope": "Whole original QUA004 PASS at appropriate evidence for asserted technical scope: independent non-author Source/usability/quality judgment joins the qualified original177-page/28-asset Source-content facets, later MNT006/MNT005/REF005/MNT011/MNT010 scoped successors, actual F2 host-version/default/minimum and F3 release-selection PR versus Ops direct-push source corrections, historical/nonexecution boundaries and three current citation repairs. Current evidence kinds remain distinct from runtime proof.22of24old citation values were already current; only twoPrism and one newSchema cleanup copy required current qualification. Maintenance guidance prevents top-level-only citation updates. All current literal copies and all7publication checks pass. No new gate or whole A913/language/universal API award.",
+      "originalLimitsCanonicalSHA256": "613b7b2bf81e9ee3d27b3fdf1ce4e39a39c4983e980987d51bc1b35bf0174658",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/use/diagnose.md"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only guide157/contract173/authority36 finite Source-procedure joins change; whole guide anchor/fragments match actual Source. Native four observations do not rewrite historical execution; all other185pages/assets/contracts/checks exact.",
+          "Only Git exercise corrected: real sameA restore, separate clean baseB, initially optionalflatpin/newpair, native blocked-stop/auditreason and genuine sandbox prerequisite. Other diagnosis sections exact; actual later failed sandbox/import never becomes fullpipelinegreen."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "QUA-001-whole-understandable-technical-english-and-depth-20261030",
+      "originalRecordIndex": 128,
+      "originalRecordCanonicalSHA256": "0b9fc54e2c96f0659f08d32ba243a1d3bd2bf559aa7d8addee24e1e52cb3c83d",
+      "originalChecksCanonicalSHA256": "179087655dbeb91ed61b3734bbc0c951fdc17b78f808ac5299e24dcf64a14edd",
+      "originalCheckCount": 31,
+      "originalScope": "Whole original QUA001 PASS: understandable technical English and sufficient technical depth across qualified original177-page/28-asset corpus plus current topic deltas/seven catalogue pages. Independent current canonical-document task traces resolve F1 complete project input\u2192compiled graph and F3 supported capability/plugin integration change, with authority, prerequisites, expected output, failure stop, retained evidence, original-versus-new input, recovery and owned cleanup. Existing whole Source-content-quality and later changed-topic qualifications supply the whole meaning/structure join; not three samples promoted by count. Final integration explicitly satisfies legacy astra-final disposition under controlling compact AP09sections1\u20134 through this non-author coherent review, without a new Astra-model run. Source-body-identical successful publication checks reused. No new gate or QUA002/A91306 award.",
+      "originalLimitsCanonicalSHA256": "de07116fa4d2242305188b011ede2eee428301c81d4d8d2ba0105bbc314afe8f",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/use/diagnose.md",
+        "scripts/lib/docs-publication-instruction-bindings.mjs"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only guide157/contract173/authority36 finite Source-procedure joins change; whole guide anchor/fragments match actual Source. Native four observations do not rewrite historical execution; all other185pages/assets/contracts/checks exact.",
+          "Only Git exercise corrected: real sameA restore, separate clean baseB, initially optionalflatpin/newpair, native blocked-stop/auditreason and genuine sandbox prerequisite. Other diagnosis sections exact; actual later failed sandbox/import never becomes fullpipelinegreen.",
+          "Only four existing embedded literal spans/hash slots move for same originalhostrefs and language modes. Native syntax parses117embedded/471hosts without executing documented commands; no new grants/host membership."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "MNT-004-whole-source-owned-cli-reference-20261030",
+      "originalRecordIndex": 129,
+      "originalRecordCanonicalSHA256": "1f888209c49d569086a3596b8da93c517b6ab6c9471649c2d09b2742753e231e",
+      "originalChecksCanonicalSHA256": "2af2c908e5e9a1488fdbc68131bd2dea215eabcab5e4948ed7ec98575024759d",
+      "originalCheckCount": 24,
+      "originalScope": "Whole original generated CLI documentation PASS: source-owned commands/subcommands/options/defaults/exit boundaries from current scripts/entrypoints, not deploy-only inventory. Native model covers859 selected sources/480manifest interfaces with precise physical source and parent/receiver/cwd/manifest authority. Supported and qualified-maintenance routes lead; private/source-only/delegated/upstream boundaries do not gain invocation authority. Independent practical lookup tasks qualify deployment nesting/default/function return, Node check/stale exit, Python defaultFalse and Go conditionalexit. All declaration values preserved by ordinary complete compact JSON; semantic contract successors, actual publication and source checks pass. Qualified prior129 scopes preserved, legacy astra-final truthfully satisfied by the same non-author final integration under controlling compact contract.",
+      "originalLimitsCanonicalSHA256": "f62d01fc9407fba6d1ef2950c00100ff488f79018d620705d2a2c36be44f2b72",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-documentation-owner-purpose-custody.mjs"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only guide157/contract173/authority36 finite Source-procedure joins change; whole guide anchor/fragments match actual Source. Native four observations do not rewrite historical execution; all other185pages/assets/contracts/checks exact.",
+          "Only three existing native/YAML wholeclaims/guide seals move. Full qualified owning predicates/physical input/finite rosters/selectors/rawUNKNOWN/slots/facts/no-runtime boundaries stay exact.",
+          "Only one existing wholeclaims seal changes. Normal child call/root/result/cwd/command purpose checks and no direct/new caller grant stay exact."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "CFG009-REF013-whole-current-Helm-GitOps-values-20261030",
+      "originalRecordIndex": 130,
+      "originalRecordCanonicalSHA256": "b9b9f6d6b68f3cf365718ac21f4e25b430a15f11b30b284c51ec7c89e6d34675",
+      "originalChecksCanonicalSHA256": "c3111a58354d945335cc4723834111d005f1156f35c04282e346d07b8b869bbc",
+      "originalCheckCount": 16,
+      "originalScope": "Whole original Helm/GitOps/infrastructure values reference: current discovered inputs and nested defaults, precedence, owning producers/controllers/processes, failure and restart/effective-state boundaries. Local chart/release/production profiles and embedded Argo metadata/retry/collection meanings source-qualified. Passive release metadata is not ownership/sync proof; retry counts differ from backoff time. Practical independent reader tasks and complete original-topic Source/Quality/final integration pass. Native generation/drift, exact literal-key examples, maintained CLI preservation and actual frozen rendered publication controls pass; prior130 content responsibilities preserved.",
+      "originalLimitsCanonicalSHA256": "7ba4a4095b2dfdf3ca367f9c6543c2224c473f39920ef487e1ed155901f7de02",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only guide157/contract173/authority36 finite Source-procedure joins change; whole guide anchor/fragments match actual Source. Native four observations do not rewrite historical execution; all other185pages/assets/contracts/checks exact."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "A91306-QUA002-original-controlled-language-whole-20261030",
+      "originalRecordIndex": 131,
+      "originalRecordCanonicalSHA256": "26da95d647f442d3ebb996e7ee9e308739e61e1af9ee516b2c277d47a87cc5d7",
+      "originalChecksCanonicalSHA256": "32fbc0e165267638446658ea033d5336bc98e6a330c8d44868f72fdf8510a21f",
+      "originalCheckCount": 12,
+      "originalScope": "Original controlled-language review closes retained177-page/28-asset scope plus seven current catalogue pages. Qualified applicable53-rule method, dictionary/POS/sense, technical noun/verb and first-dependent contexts, maintained-owner corrections and resolved findings are joined through actual current material-delta Source review. Fresh Source-unexposed delivered Reader task review and reader-facing Quality pass after actual table-loss finding and targeted corrected-delivery retest. Prior131 accepted responsibilities preserved, including original122 subset; historical negatives retained. Independent original final integration PASS; no score/linter substitutes for editorial judgment.",
+      "originalLimitsCanonicalSHA256": "4722acded92ce55539ed3d172bd62ac3dd08c37c3ee4b924c21fa3da4a895a09",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/use/diagnose.md"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only guide157/contract173/authority36 finite Source-procedure joins change; whole guide anchor/fragments match actual Source. Native four observations do not rewrite historical execution; all other185pages/assets/contracts/checks exact.",
+          "Only Git exercise corrected: real sameA restore, separate clean baseB, initially optionalflatpin/newpair, native blocked-stop/auditreason and genuine sandbox prerequisite. Other diagnosis sections exact; actual later failed sandbox/import never becomes fullpipelinegreen."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "A911-05-whole-owned-diagnostic-reference-20261030",
+      "originalRecordIndex": 132,
+      "originalRecordCanonicalSHA256": "6b70d909d2c4fe311c0a885974e1802024cc195b9422a5502274a25853797f57",
+      "originalChecksCanonicalSHA256": "fe27217395dd274fc175574b6621aa31f51feeb927d1a22907b3a14481ccce52",
+      "originalCheckCount": 7,
+      "originalScope": "A911-05's additional dynamic-formation and lifecycle requirements are now materially met. The prior active runtime-config dynamic family is covered with its constructor, activation ordering, effect boundary, retry stop, safe correction, and reconciliation limit; the catalog is no longer a Buster-only diagnostic surface. Independent exact eight-dimension judgments: docs/blueprint/acceptance-evidence/a91105-errors-20261030/whole-content-verdict.json. Original dynamic runtime-config failure explicitly resolved at current Source; prior negative retained, no receipt rewritten. No other ID awarded.",
+      "originalLimitsCanonicalSHA256": "b35e89dfc02cb23144b1495c8d6e014ac85f522255f6f2fe9c6403e464a21acc",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only guide157/contract173/authority36 finite Source-procedure joins change; whole guide anchor/fragments match actual Source. Native four observations do not rewrite historical execution; all other185pages/assets/contracts/checks exact."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "REF003-whole-configuration-families-and-inverse-consumers-20261031",
+      "originalRecordIndex": 134,
+      "originalRecordCanonicalSHA256": "edc0afeb883a14f5e10c2635535dac79450617f8005335cb5d84aa7e97e2999a",
+      "originalChecksCanonicalSHA256": "8ed3fc0e2b0863166a0e34d77d40f7b73b17d78e92d042987f42c763b919a605",
+      "originalCheckCount": 13,
+      "originalScope": "Original REF-003 all supported configuration-family/default/precedence/owner/consumer/reload-or-retention/sensitivity and inverse-consumer usable-reference criterion independently accepted. Existing guarded YAML/schema/runtime composition plus finite direct-source map yields complete bounded configuration reference without promoting docs/validation fixtures or unproved payload readers. One coherent remainder replaces serial unrelated API-output role repairs.",
+      "originalLimitsCanonicalSHA256": "4565fd513c279d40b41c532cbfcc71d7ba3eb16c3b6162a572e9210f1747bc5f",
+      "changedExplicitPaths": [
+        "scripts/docs-api-output-discovery.mjs"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only three existing native/YAML wholeclaims/guide seals move. Full qualified owning predicates/physical input/finite rosters/selectors/rawUNKNOWN/slots/facts/no-runtime boundaries stay exact."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "MNT003-whole-generated-configuration-defaults-maintenance-20261031",
+      "originalRecordIndex": 136,
+      "originalRecordCanonicalSHA256": "9887a14f900e587dd9a78f70cc52d8e29967b730aa118083bfab5e46afc955cd",
+      "originalChecksCanonicalSHA256": "ba5f14d714ed5e8c50b2cbd3d5acb58f754ea55562a474d0c1ec404aa3ce4840",
+      "originalCheckCount": 9,
+      "originalScope": "Original MNT-003 complete supported generated configuration/default inventory and usable maintenance criterion independently accepted. Existing qualified family/default/precedence/consumer/inverse and schema authority coverage is maintained by precise owned generation/check pairs, explicit source-plus-inventory commit order and source-linked failure boundaries. One coherent procedure correction and native projection refresh; no new collector or global proof platform.",
+      "originalLimitsCanonicalSHA256": "a5cfa1d20fde73f3de572f6d6a224f03bca671621152d4f8743e8a29d3aff6d6",
+      "changedExplicitPaths": [
+        "scripts/docs-api-output-discovery.mjs"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only three existing native/YAML wholeclaims/guide seals move. Full qualified owning predicates/physical input/finite rosters/selectors/rawUNKNOWN/slots/facts/no-runtime boundaries stay exact."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "GOV002-MNT001-MNT009-whole-product-authority-and-inverse-matrix-20261031",
+      "originalRecordIndex": 137,
+      "originalRecordCanonicalSHA256": "f0ca11b35d46180ee6e7857c84bc2f901dd94844e61fd9b87e8f7c9dd7abbf8c",
+      "originalChecksCanonicalSHA256": "c9b8f67063e137846eef1030f08953cc8375fd7a387c6d7257af1a92dbfa9e7b",
+      "originalCheckCount": 7,
+      "originalScope": "Original GOV-002 complete documentation-obligated product-surface inventory, MNT-001 one mechanical authority per fact, and MNT-009 complete forward/inverse source-to-documentation coverage matrix independently accepted together. Existing source-qualified84families/12groups and30typed/54manual routes retain their exact meaning and limits; bounded manual routes are not automatic product-fact authority. Usable reader lookup and actual regeneration/check/restoration close the original maintenance obligations.",
+      "originalLimitsCanonicalSHA256": "62f4ffd1bea0e5d67f1a2c5ba55b488f2e1758fabc55d0fbc204b46aa165fee3",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-documentation-owner-purpose-custody.mjs"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only guide157/contract173/authority36 finite Source-procedure joins change; whole guide anchor/fragments match actual Source. Native four observations do not rewrite historical execution; all other185pages/assets/contracts/checks exact.",
+          "Only three existing native/YAML wholeclaims/guide seals move. Full qualified owning predicates/physical input/finite rosters/selectors/rawUNKNOWN/slots/facts/no-runtime boundaries stay exact.",
+          "Only one existing wholeclaims seal changes. Normal child call/root/result/cwd/command purpose checks and no direct/new caller grant stay exact."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "A911-07-whole-source-to-documentation-map-consolidated-20261031",
+      "originalRecordIndex": 138,
+      "originalRecordCanonicalSHA256": "6aa51620b83814705c16b0964af11321b6f026efbf06f26b8046339b749f0b89",
+      "originalChecksCanonicalSHA256": "d4bf102a39536c79cf83978fb1b0160ee360275eb08e43fd7155f1bdebbdf6d6",
+      "originalCheckCount": 4,
+      "originalScope": "Independent original A911-07 forward/inverse source-to-documentation map accepted from complete applicable authority assignment, orphan/inverse controls and actual restricted Reader task evidence; distinct whole-gate decision, not inherited requirement counters.",
+      "originalLimitsCanonicalSHA256": "d2f4b94dfd0681e185c491874780e29ac9348070093b93fc7ae65203fa521980",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-documentation-owner-purpose-custody.mjs"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only guide157/contract173/authority36 finite Source-procedure joins change; whole guide anchor/fragments match actual Source. Native four observations do not rewrite historical execution; all other185pages/assets/contracts/checks exact.",
+          "Only three existing native/YAML wholeclaims/guide seals move. Full qualified owning predicates/physical input/finite rosters/selectors/rawUNKNOWN/slots/facts/no-runtime boundaries stay exact.",
+          "Only one existing wholeclaims seal changes. Normal child call/root/result/cwd/command purpose checks and no direct/new caller grant stay exact."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "A913-02-A913-03-original-content-and-independent-topic-review-consolidation-20261031",
+      "originalRecordIndex": 139,
+      "originalRecordCanonicalSHA256": "8676d1a59965778917083230fc6969e94f7d09edb38cc39b0d9516bda4c6a714",
+      "originalChecksCanonicalSHA256": "5af0817a9cb98b938404d92ae799d493e92d9e20912700a75b80a3a217e0873d",
+      "originalCheckCount": 4,
+      "originalScope": "Separate original content-six-aspect and independent-topic-review conditions adjudicated from existing complete applicable semantic/topic/actual Reader evidence. Current operational accessibility/operator/mutation obligations, metadata join and config baseline defect remain explicitly open; no blanket review rerun or requirement counter promotion.",
+      "originalLimitsCanonicalSHA256": "120a0a07f87c730e3e14f96e9c28af45b986b8e5ba8982334f15746a3f4d06ef",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/use/diagnose.md",
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-documentation-owner-purpose-custody.mjs",
+        "scripts/lib/docs-publication-instruction-bindings.mjs"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only guide157/contract173/authority36 finite Source-procedure joins change; whole guide anchor/fragments match actual Source. Native four observations do not rewrite historical execution; all other185pages/assets/contracts/checks exact.",
+          "Only Git exercise corrected: real sameA restore, separate clean baseB, initially optionalflatpin/newpair, native blocked-stop/auditreason and genuine sandbox prerequisite. Other diagnosis sections exact; actual later failed sandbox/import never becomes fullpipelinegreen.",
+          "Only three existing native/YAML wholeclaims/guide seals move. Full qualified owning predicates/physical input/finite rosters/selectors/rawUNKNOWN/slots/facts/no-runtime boundaries stay exact.",
+          "Only one existing wholeclaims seal changes. Normal child call/root/result/cwd/command purpose checks and no direct/new caller grant stay exact.",
+          "Only four existing embedded literal spans/hash slots move for same originalhostrefs and language modes. Native syntax parses117embedded/471hosts without executing documented commands; no new grants/host membership."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "A98-10-A98-11-A911-02-original-configuration-reference-and-precedence-consolidation-20261031",
+      "originalRecordIndex": 140,
+      "originalRecordCanonicalSHA256": "07c61b98f77f002adf6e3e097da5031637a3ca9c3a96419bf60254ccfbba48e3",
+      "originalChecksCanonicalSHA256": "e55969381971df12ef1443ae5e67bb17ecbfa165f5ec37d9f728562c1f022b2f",
+      "originalCheckCount": 6,
+      "originalScope": "Three separate original configuration inventory, effective-value precedence and recursive reference conditions independently judged PASS from complete applicable topic Source/Reader/Quality decisions and actual tests, with current native supported comparator/output join and coherent publication. No whole mutation award.",
+      "originalLimitsCanonicalSHA256": "128a064f15de66782df46606b2d27b20cb1310419474b467df33369e840858a7",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "scripts/docs-api-output-discovery.mjs"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only guide157/contract173/authority36 finite Source-procedure joins change; whole guide anchor/fragments match actual Source. Native four observations do not rewrite historical execution; all other185pages/assets/contracts/checks exact.",
+          "Only three existing native/YAML wholeclaims/guide seals move. Full qualified owning predicates/physical input/finite rosters/selectors/rawUNKNOWN/slots/facts/no-runtime boundaries stay exact."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "A913-01-original-261-findings-current-metadata-consolidation-20261031",
+      "originalRecordIndex": 141,
+      "originalRecordCanonicalSHA256": "5ab5461551fcf470ac918251e74b814e37b4bf658fadc4892ada4485cfc93135",
+      "originalChecksCanonicalSHA256": "693f775e51a44d15a50a5ad436585c5ac789e30c0f28cd252961dc7574179ef0",
+      "originalCheckCount": 5,
+      "originalScope": "Exact current261-ID individual findings, page/owner/check/review joins and status/completion-record consistency independently PASS at qualified metadata candidate. Only QUA-010 subsequently changes through a separate original whole actual PASS record; PUB-007 and QUA-007 remain unmet. All184 entire canonical page records remain unchanged.",
+      "originalLimitsCanonicalSHA256": "560b92dd293a8bad0e6e575b0de18ff7246bb778734d3718f3fc2822fd83d12e",
+      "changedExplicitPaths": [
+        "docs/site/use/diagnose.md"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only Git exercise corrected: real sameA restore, separate clean baseB, initially optionalflatpin/newpair, native blocked-stop/auditreason and genuine sandbox prerequisite. Other diagnosis sections exact; actual later failed sandbox/import never becomes fullpipelinegreen."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    },
+    {
+      "id": "QUA007-independent-actual-operator-six-facets-20261031",
+      "originalRecordIndex": 143,
+      "originalRecordCanonicalSHA256": "dbaaa100f66ac3fd18766965f240df595bff75860c29cf49e7bac71b2722da28",
+      "originalChecksCanonicalSHA256": "08dbf806f0df568a87c416e8e924c5c4346777258431c00fcd98efd9d43a2937",
+      "originalCheckCount": 16,
+      "originalScope": "Actual fresh independent model operator: central docs only, documented authority-safe installation STOP, configuration, same eight-stage compiled pipeline with ten original artifacts/221 events, observed diagnosis, checkpoint recovery and three external-effect safe stops, verified cleanup. Distinct nonauthor original whole judgement PASS.",
+      "originalLimitsCanonicalSHA256": "62caae5d851dcc6956105d136befdac8fdf02fb2ad1653e1dfa3b19e9fc69aec",
+      "changedExplicitPaths": [
+        "docs/site/use/diagnose.md"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": [
+          "Only Git exercise corrected: real sameA restore, separate clean baseB, initially optionalflatpin/newpair, native blocked-stop/auditreason and genuine sandbox prerequisite. Other diagnosis sections exact; actual later failed sandbox/import never becomes fullpipelinegreen."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific Reader observations remain historical and unchanged. Previously qualified finite guide/metadata meanings are reused without semantic rerun; actual sameSource build, five artifact checks and320/1440 diagnosis delivery with32exact fences/keyboard/search close the explicit delivery conditions. Engineering evidence is not new fresh/human/AT acceptance."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified Source/native binding/P2 dispositions and inverse proofs reused unchanged. Actual current build/artifact/delivery conditions now terminalPASS. Old compoundreceiverexit1, failed fullpipeline/import execution_error, rawP2 and every original check/review/limit/history remain exact."
+      },
+      "originalFieldsChecksReviewsLimitsAndHistoryPrefixesExact": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "reader_pipeline04_fresh_20261101",
+      "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+    }
+  ],
+  "materialOriginalContentGaps": [],
+  "actualCurrentNativeObservations": {
+    "coverage": "phasePASS186pages43assets3529sourceentries before later compound syntaxcaller error",
+    "claimContracts": "phasePASS229scopes1109anchors before later compound syntaxcaller error",
+    "syntax": "corrected relativepage caller terminal0;471hosts117embedded4materializations; commandsExecutedfalse",
+    "targetedGuards": "6actual selected tests terminal0, unchanged other12 not rerun",
+    "governance": "terminal0/6.148s wholemap/classification/productexact"
+  },
+  "retainedCurrentFailures": [
+    "Initial compoundreceiver exit1 due absolutepage caller misuse remains1, not relabeled wholeprocessPASS; its completed coverage/claim phases separately valid.",
+    "Actual fullrestored pipeline Core1blocked with imported TEST_PROVIDER_SANDBOX_NOT_BUILT execution_error, not eightstagegreen.",
+    "Earlier ENOENT/expectedHead/completedreader errors, allrawP2 including factually rejected findings remain unchanged."
+  ],
+  "adoptionConditions": [],
+  "currentBuildFiveChecksAffectedDelivery": "ACTUAL_TERMINAL_PASS_SAME_SOURCE",
+  "evidenceReuse": [
+    "guide-v4-independent-final-delta-review.json",
+    "metadata-v4-independent-verdict.json",
+    "metadata-v4-independent-custody.json",
+    "actual-current-receivers.stdout",
+    "actual-current-receivers.json",
+    "actual-current-syntax-v2-summary.json",
+    "current-targeted-guards.json",
+    "current-governance.json",
+    "actual-v3-original-four-observation-assessment.json",
+    "metadata-v4-p2-ancestry-independent-adjudication.json"
+  ],
+  "limits": [
+    "Receipt-only same43scope finalization; no new semantic campaign/check/runtime/model rerun or main mutation.",
+    "101unaffected whole records and every old check/review/limit/negative/history retain exact originalscope and bytes per inverse.",
+    "No new case/gate/requirement, wholeA91305, fresh/human/AT/contrast/defaultglobalAPI/generator/AP10 award from preservation.",
+    "Root solematrix adoption/unchangedoriginalchecker/commitpush/exactremote remain separate; none presumed."
+  ],
+  "conditionalDecisionReference": {
+    "path": "operations/pr13/evidence/exec-fail-git-original-20261101/conditional-affected-original-preservation-verdict.json",
+    "sha256": "152d78986281c03341c5184bbf642d65da3df856f66f3c63db6df5fbaf50a57b"
+  },
+  "finalizedAt": "2026-11-01T07:35:51.908692+00:00",
+  "actualConditionClosures": [
+    {
+      "path": "operations/pr13/evidence/exec-fail-git-original-20261101/current-build.json",
+      "sha256": "4af6ce6cc7b5e4c689400f169cf4e5d6c3a32d663189b83a5139598ac017d766",
+      "exitCode": 0,
+      "seconds": 304.67083172500134,
+      "sourceRevision": "1acae874335ee6a33b5dedf2bf366411663064b1"
+    },
+    {
+      "path": "operations/pr13/evidence/exec-fail-git-original-20261101/current-artifact.json",
+      "sha256": "f9f14925ca778da127ad615fb560e469a1179964b06e36b25159e68cf4c26fe9",
+      "exitCode": 0,
+      "seconds": 53.4247136459453,
+      "sourceRevision": "1acae874335ee6a33b5dedf2bf366411663064b1"
+    },
+    {
+      "path": "operations/pr13/evidence/exec-fail-git-original-20261101/current-search.json",
+      "sha256": "5015a6ad96b34b4f6fb7db58b7dea9c8b1a6c678c479e4e4c2595fd3bcf50ecf",
+      "exitCode": 0,
+      "seconds": 38.405106134014204,
+      "sourceRevision": "1acae874335ee6a33b5dedf2bf366411663064b1"
+    },
+    {
+      "path": "operations/pr13/evidence/exec-fail-git-original-20261101/current-source-previews.json",
+      "sha256": "518e250508bee23914fef0d37e50d0e63874c4b878e605b89cffed516383659e",
+      "exitCode": 0,
+      "seconds": 57.71206529799383,
+      "sourceRevision": "1acae874335ee6a33b5dedf2bf366411663064b1"
+    },
+    {
+      "path": "operations/pr13/evidence/exec-fail-git-original-20261101/current-diagrams.json",
+      "sha256": "d5ff8300b98c8b2310b6763f9f97d86c10f05a8ba3397bc3a3fd7774dc6ec734",
+      "exitCode": 0,
+      "seconds": 41.84824111999478,
+      "sourceRevision": "1acae874335ee6a33b5dedf2bf366411663064b1"
+    },
+    {
+      "path": "operations/pr13/evidence/exec-fail-git-original-20261101/current-source-links.json",
+      "sha256": "a03e7758e8179d4cc53a1f91fad772c9c9b1b6209f7417c2151bdc8a3d1989f8",
+      "exitCode": 0,
+      "seconds": 373.3679334829794,
+      "sourceRevision": "1acae874335ee6a33b5dedf2bf366411663064b1"
+    },
+    {
+      "path": "operations/pr13/evidence/exec-fail-git-original-20261101/current-diagnose-delivery-check.json",
+      "sha256": "b7e9421ff5b5a5199ac5078ec3b1466af87fd5f42b1877266033536531240db1",
+      "pass": true,
+      "sourceRevision": "1acae874335ee6a33b5dedf2bf366411663064b1"
+    }
+  ],
+  "report": "operations/pr13/evidence/exec-fail-git-original-20261101/affected-original-preservation-verdict.json"
+}

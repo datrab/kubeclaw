@@ -1,0 +1,37 @@
+{
+  "at": "2026-11-01T07:28:30.273Z",
+  "revision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+  "pass": true,
+  "assets": [],
+  "observations": [
+    {
+      "width": 320,
+      "route": "/use/diagnose.html",
+      "httpStatus": 200,
+      "layout": {
+        "viewport": 320,
+        "scrollWidth": 320
+      },
+      "exactAuthoredFencePayloads": 32,
+      "sourcePreviewCodeExcluded": true,
+      "keyboardSkip": true,
+      "keyboardNavigationToggleAndLinkFocus": true,
+      "keyboardSearchAndResultActivation": true
+    },
+    {
+      "width": 1440,
+      "route": "/use/diagnose.html",
+      "httpStatus": 200,
+      "layout": {
+        "viewport": 1440,
+        "scrollWidth": 1440
+      },
+      "exactAuthoredFencePayloads": 32,
+      "sourcePreviewCodeExcluded": true,
+      "keyboardSkip": true,
+      "keyboardNavigationToggleAndLinkFocus": true,
+      "keyboardSearchAndResultActivation": true
+    }
+  ],
+  "limits": "Bounded engineering route/viewport/fence/keyboard/search/asset delivery only; not fresh participant, assistive technology, screen reader, contrast, protected browser or original acceptance."
+}

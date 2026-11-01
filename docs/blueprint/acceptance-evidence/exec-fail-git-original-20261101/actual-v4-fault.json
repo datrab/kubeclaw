@@ -1,0 +1,23 @@
+{
+  "operation": "run-fault",
+  "startedAt": "2026-11-01T06:51:32.045673+00:00",
+  "finishedAt": "2026-11-01T06:51:45.231162+00:00",
+  "elapsedSeconds": 13.185473280027509,
+  "exitCode": 0,
+  "timedOut": false,
+  "ownedProcessGroup": 1011448,
+  "maximumSeconds": 2400,
+  "remoteJobsCancelled": false,
+  "sourceRoot": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+  "fixtureRoot": "/tmp/kubeclaw-git-original-author-v3-20261101",
+  "driverSha256": "25ae5ea45b65f0c99e67afb321ff661be99c88988d71bfed71f00bac009fb8d0",
+  "command": [
+    "node",
+    "/home/node/.openclaw/workspace/operations/pr13/evidence/exec-fail-git-original-20261101/candidate-v3/git-revision-exercise.mjs",
+    "run-fault",
+    "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+    "/tmp/kubeclaw-git-original-author-v3-20261101"
+  ],
+  "credentialValuesRecorded": false,
+  "originalAcceptanceAwarded": false
+}

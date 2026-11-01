@@ -1,0 +1,13 @@
+{
+  "startedAt": "2026-11-01T07:28:08.166330+00:00",
+  "endedAt": "2026-11-01T07:29:01.591053+00:00",
+  "seconds": 53.4247136459453,
+  "exitCode": 0,
+  "argv": [
+    "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh",
+    "node",
+    "scripts/docs-reader/check-artifact.mjs"
+  ],
+  "sourceRevision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+  "scope": "Actual current publication artifact; no human AT, contrast or whole gate acceptance"
+}

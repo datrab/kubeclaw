@@ -1,0 +1,54 @@
+{
+  "scope": "Pinned fe588b1a Terra/high/P2; full semantic Source contexts, official TruffleHog3.99.4; no truncation/filter/exit rewrite",
+  "actualReviewResults": {
+    "guide-v4-pinned-review.json": {
+      "sha256": "0a68f8dff0bbb0b5f454128421acd3a63f4cdfbaae0ebc8a865dfad2f50eca3f",
+      "review": {
+        "findings": [],
+        "overall_correctness": "patch is correct",
+        "overall_explanation": "The Git-revision procedure now preserves and restores the same required architecture revision, keeps the base revision distinct, requires the native sandbox before either run, and correctly treats a blocked run as ineligible for ordinary recovery while using a distinct restored run. The documented commands and checks are consistent with the supplied native behavior and preservation boundaries.",
+        "overall_confidence": 0.96
+      }
+    },
+    "catalog-pin-pinned-review.json": {
+      "sha256": "28ca0d96cb9213ff15d8bf4ab95fadf6f579e10fe774a674b36b3f230b0d8d2f",
+      "review": {
+        "findings": [],
+        "overall_correctness": "patch is correct",
+        "overall_explanation": "The launcher now canonicalizes and hashes the external catalog before the credential-bearing driver is launched. The supplied catalog is a pure, import-free module and the pinned digest matches the recorded custody attestation.",
+        "overall_confidence": 0.95
+      }
+    },
+    "metadata-v4-claims-pinned-review.json": {
+      "sha256": "d4ed81c0554ee357d287277c724ee9d75b985a0cc4284d94a87a5180a6838594",
+      "review": {
+        "findings": [
+          {
+            "title": "Create A as a descendant of the base commit",
+            "body": "`git commit-tree \"$architecture_tree\"` creates A with no parent, so A is an unrelated root commit even though it has B's tree. The documented restored-run proof later requires B to be an ancestor of the Buster source; a source based on the admitted architecture A cannot satisfy that condition, and source admission may reject A's revision proof before then. Create A with `-p \"$RELEASE_COMMIT\"` so it remains a distinct immutable object while preserving the required B\u2192A ancestry.",
+            "priority": "P1",
+            "confidence": 0.97,
+            "category": "bug",
+            "code_location": {
+              "file_path": "docs/config/publication-example-claims.json",
+              "line": 909
+            }
+          }
+        ],
+        "overall_correctness": "patch is incorrect",
+        "overall_explanation": "The updated publication claim certifies an A/B Git procedure whose constructed architecture commit cannot meet its own required ancestry relationship.",
+        "overall_confidence": 0.97
+      }
+    },
+    "metadata-v4-guards-pinned-review.json": {
+      "sha256": "d7587767731651dc331df1226bfda5e38e158945b9e603f5c9069665a8960378",
+      "review": {
+        "findings": [],
+        "overall_correctness": "patch is correct",
+        "overall_explanation": "The three sealed validation profiles now pin the supplied current claims digest, and the YAML profile also pins the supplied current diagnose-guide digest. The changes match the stated bounded metadata update without altering validation scope or behavior.",
+        "overall_confidence": 0.98
+      }
+    }
+  },
+  "disposition": "Guide/catalog/guards clean. Claims raw finding rejected independently: A architecture is separate root, base B\u2192actualimplementation77d ancestry verified. Raw review failure remains failed; no source modification to appease false finding."
+}

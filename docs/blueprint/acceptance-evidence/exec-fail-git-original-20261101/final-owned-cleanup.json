@@ -1,0 +1,61 @@
+{
+  "at": "2026-11-01T07:30:15.119491+00:00",
+  "centralNonterminal": 0,
+  "remoteJobsCancelled": false,
+  "sourceWipPreserved": true,
+  "observations": [
+    {
+      "root": "/tmp/kubeclaw-git-original-author-v2-20261101",
+      "activeReferences": [],
+      "retainedFiles": 84,
+      "retainedBytes": 512038,
+      "removedBytes": 900284,
+      "removed": true,
+      "manifest": "/home/node/.openclaw/workspace/operations/pr13/evidence/exec-fail-git-original-20261101/retained-v2/export-manifest.json"
+    },
+    {
+      "root": "/tmp/kubeclaw-git-original-author-v3-20261101",
+      "activeReferences": [],
+      "retainedFiles": 102,
+      "retainedBytes": 993349,
+      "removedBytes": 2536083,
+      "removed": true,
+      "manifest": "/home/node/.openclaw/workspace/operations/pr13/evidence/exec-fail-git-original-20261101/retained-v3/export-manifest.json"
+    },
+    {
+      "root": "/home/node/.openclaw/workspace/tmp/exec-fail-git-runtime-v3-pinned-20261101",
+      "activeReferences": [],
+      "removedBytes": 333418,
+      "removed": true,
+      "retained": "Exact reviewer contexts, raw logs and verdicts outside tmp"
+    },
+    {
+      "root": "/home/node/.openclaw/workspace/tmp/exec-fail-git-catalog-pin-pinned-20261101",
+      "activeReferences": [],
+      "removedBytes": 100992,
+      "removed": true,
+      "retained": "Exact reviewer contexts, raw logs and verdicts outside tmp"
+    },
+    {
+      "root": "/home/node/.openclaw/workspace/tmp/exec-fail-git-guide-v4-pinned-20261101",
+      "activeReferences": [],
+      "removedBytes": 666532,
+      "removed": true,
+      "retained": "Exact reviewer contexts, raw logs and verdicts outside tmp"
+    },
+    {
+      "root": "/home/node/.openclaw/workspace/tmp/exec-fail-git-metadata-v4-claims-pinned-20261101",
+      "activeReferences": [],
+      "removedBytes": 447550,
+      "removed": true,
+      "retained": "Exact reviewer contexts, raw logs and verdicts outside tmp"
+    },
+    {
+      "root": "/home/node/.openclaw/workspace/tmp/exec-fail-git-metadata-v4-guards-pinned-20261101",
+      "activeReferences": [],
+      "removedBytes": 1442180,
+      "removed": true,
+      "retained": "Exact reviewer contexts, raw logs and verdicts outside tmp"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "startedAt": "2026-11-01T07:36:10.407694+00:00",
+  "endedAt": "2026-11-01T07:37:12.852588+00:00",
+  "seconds": 62.44488040008582,
+  "exitCode": 0,
+  "argv": [
+    "node",
+    "scripts/check-ap09-acceptance-contract.mjs"
+  ],
+  "sourceRevision": "1acae874335ee6a33b5dedf2bf366411663064b1",
+  "scope": "Unchanged original checker after qualified43scope preservation and fouroutcome ownedGit case registration; no whole gate award"
+}
