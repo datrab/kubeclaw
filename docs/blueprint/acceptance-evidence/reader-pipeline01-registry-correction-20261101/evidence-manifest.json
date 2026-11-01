@@ -1,0 +1,137 @@
+[
+  {
+    "file": "fresh-pipeline01-original-independent-verdict.json",
+    "sha256": "14b099572346999d2e9aae2de2ac004841eb9dc797e73ee5e85458b7e25b0109",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/fresh-pipeline01-original-independent-verdict.json"
+  },
+  {
+    "file": "fresh-procedure-material-independent-verdict.json",
+    "sha256": "94c6f7ff9dbe6114b7504b04cb5935d0ac78f6700ee55b92b17e88f860d23624",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/fresh-procedure-material-independent-verdict.json"
+  },
+  {
+    "file": "fresh-correction-pinned-review.json",
+    "sha256": "a48f8fce715b7a60bfcd0c7242acd9191b251c830ae46a631a094764cce0e462",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/fresh-correction-pinned-review.json"
+  },
+  {
+    "file": "fresh-procedure-metadata-independent-verdict.json",
+    "sha256": "12e62bf2e5006ffb198c61853170e7e02a74a80fe3eae7c86b1ce880599d3b86",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/fresh-procedure-metadata-independent-verdict.json"
+  },
+  {
+    "file": "fresh-six-seals-pinned-review.json",
+    "sha256": "aa3ea621a22ea5b6b68ba67c2d1fe25dcd73f6bf7514875f5748c1b3958666db",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/fresh-six-seals-pinned-review.json"
+  },
+  {
+    "file": "fresh-correction-native-governance.json",
+    "sha256": "26ec023394aefaabd43f9a1586888aa7e3620374327ed6ea86e2ab981612f860",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/fresh-correction-native-governance.json"
+  },
+  {
+    "file": "fresh-correction-native-claim-coverage.json",
+    "sha256": "3831c5d78905f9cda2f1972590e7204a7ed5ce55b1b292077056dea93f8b7d39",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/fresh-correction-native-claim-coverage.json"
+  },
+  {
+    "file": "fresh-host-browser-composition-actual.json",
+    "sha256": "110ec06d9c79b7da76e89b439505213a3d48279ffb3aa2f266f12da04d6e48ce",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/fresh-host-browser-composition-actual.json"
+  },
+  {
+    "file": "fresh-correction-current-build.json",
+    "sha256": "2ed9a388502103afd8c85576823854bd209df471cf156fde7b02b2b836c5f248",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/fresh-correction-current-build.json"
+  },
+  {
+    "file": "fresh-correction-workflow-delivery-check.json",
+    "sha256": "390c94133e26a7deee4a970b2a7026652ef80311d515dfd449ef65448b255967",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/fresh-correction-workflow-delivery-check.json"
+  },
+  {
+    "file": "first-fresh-reader-record.md",
+    "sha256": "0699215c156390cd5d3af174caa7a1d4da084a31df85be8f0a939722dfcaf0e8",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-fresh-20261101/reader-record.md"
+  },
+  {
+    "file": "first-fresh-healthy-summary.json",
+    "sha256": "7711fe307358e527cf240b7cd9196f145e37b2be143022559be6ab632de37449",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-fresh-20261101/healthy-observed-summary.json"
+  },
+  {
+    "file": "late-root-custody-only.json",
+    "sha256": "8e80702217ff5bed05db61b393336ea45b08dfb93a304292c70ec56b6ac6b202",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-fresh-20261101/root-offline-custody-export.json"
+  },
+  {
+    "file": "selected-native-registry-controls.json",
+    "sha256": "b44b72198f41bfecdff57c002c2ab22d48d64394884e77462deeed59543524ca",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/fresh-procedure-material-correction-20261101/actual-selected-runtime-identity-controls.json"
+  },
+  {
+    "file": "terminal-interface-controls.json",
+    "sha256": "cb7d61dc862434799deb9603e662fab26242e60bb829a7d1cf0b5b373d533e03",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/fresh-procedure-material-correction-20261101/shell-interface-controls.json"
+  },
+  {
+    "file": "fresh-correction-check-artifact.json",
+    "sha256": "ac3b856028c1eb891a1159dd84e50e9bdd4fd8ae8af26802bb7c39b74c72ae90",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/fresh-correction-check-artifact.json"
+  },
+  {
+    "file": "fresh-correction-check-search.json",
+    "sha256": "ab6b32f199b62109d99957ee26cdf5c112fa455d0d77de3ac982b64b749847b7",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/fresh-correction-check-search.json"
+  },
+  {
+    "file": "fresh-correction-check-source-previews.json",
+    "sha256": "a9b93720fe7a299599936e33f4a5ef5c03840d31328a18a60fbb757b937ff49d",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/fresh-correction-check-source-previews.json"
+  },
+  {
+    "file": "fresh-correction-check-diagrams.json",
+    "sha256": "9f77606d9018552e61ded5182be5cdf674caf99e1f6e4356cd74bc9bd80b68a9",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/fresh-correction-check-diagrams.json"
+  },
+  {
+    "file": "affected-original-preservation-verdict.json",
+    "sha256": "963345bbffc53192b1937482630d52b8116fa0c3fefb0922a6a94963eb215af6",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/fresh-correction-58-scopes-final-qualified-20261101/verdict.json"
+  },
+  {
+    "file": "affected-original-inverse-proof.json",
+    "sha256": "0a97b7187edd259cc197587e71780e5d1127c6e4f3d00b1a6338db8b06c88f56",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/fresh-correction-58-scopes-final-qualified-20261101/inverse-proof.json"
+  },
+  {
+    "file": "fresh-correction-check-source-links.json",
+    "sha256": "a8aae0893a05ccd2e5e2ed62f286dc7d9b89f31e219d04669f25c74e1e64c7d8",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/fresh-correction-check-source-links.json"
+  },
+  {
+    "file": "fresh-correction-original-checker-qualified.json",
+    "sha256": "32ea79f7ce07c5e0d43e11584cf035d8746fcfe46f816f09f5d4e7736195da15",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/fresh-correction-original-checker-qualified.json"
+  },
+  {
+    "file": "fresh-correction-original-checker-qualified.log",
+    "sha256": "90a350b42b9cf9dd5d621e1f2d3cff8549c65bf9524d42a81fe879842bd9c3c5",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/fresh-correction-original-checker-qualified.log"
+  },
+  {
+    "file": "fresh-correction-initial-adoption-launch-failure.json",
+    "sha256": "772cff20fde52d898fc491a05b8b3e157678b5652252837a70b727b14c488b81",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/fresh-correction-initial-adoption-launch-failure.json"
+  },
+  {
+    "file": "fresh-correction-original-checker.json",
+    "sha256": "e9377ac7c20772f7c66e5baa1918a9b6d591864f83846c276958f65ef71d2109",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/fresh-correction-original-checker.json"
+  },
+  {
+    "file": "fresh-correction-original-checker.log",
+    "sha256": "a3e3a1a21d82a2c1ec130f7ccb4c39be23a3c7ca87e7b5bc3499af92c8f50097",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/fresh-correction-original-checker.log"
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-01T04:38:02.782676+00:00",
+  "exitCode": 0,
+  "seconds": 5.721700023044832,
+  "before": {
+    "docs/site/reference/generated-documentation-map.json": "bdd14a0769d2ff65a042be4bd5f9c7db12003ce017d8f053d45191c3a7446ea7",
+    "docs/config/documentation-tree-classification.json": "9d27fc45da52788e58abc43b2f024d24e81970ee1c0aca8a4b9c5237618342bd"
+  },
+  "after": {
+    "docs/site/reference/generated-documentation-map.json": "bdd14a0769d2ff65a042be4bd5f9c7db12003ce017d8f053d45191c3a7446ea7",
+    "docs/config/documentation-tree-classification.json": "9d27fc45da52788e58abc43b2f024d24e81970ee1c0aca8a4b9c5237618342bd"
+  },
+  "wholeBytesUnchanged": true,
+  "scope": "Actual maintained governance generation for3qualifiedproductchanges; no API/defaultgenerator/freshacceptance"
+}

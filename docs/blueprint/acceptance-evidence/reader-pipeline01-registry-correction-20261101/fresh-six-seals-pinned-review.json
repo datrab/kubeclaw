@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "All six changed SHA-256 seals match the supplied current artifacts and claims manifest. The bundle only updates the bounded guard companions' fixed-input hashes and introduces no behavioral, authority, or scope change.",
+  "overall_confidence": 0.99
+}

@@ -1,0 +1,25 @@
+{
+  "scope": "Native shell/PTY mechanics with cat/node13/synthetic inspector, not runtime task outcomes",
+  "results": [
+    {
+      "case": "actual-script-closed-stdin-does-not-eat-queued-shell",
+      "exit": 0,
+      "status": "PASS",
+      "actualProductAudit": false
+    },
+    {
+      "case": "expected13-captured-then-qualified-synthetic-inspector",
+      "exit": 0,
+      "preservedFaultExit": 13,
+      "status": "PASS",
+      "actualFaultExecuted": false
+    },
+    {
+      "case": "expected13-captured-then-wrong-synthetic-inspector",
+      "exit": 1,
+      "preservedFaultExit": 13,
+      "status": "PASS",
+      "actualFaultExecuted": false
+    }
+  ]
+}

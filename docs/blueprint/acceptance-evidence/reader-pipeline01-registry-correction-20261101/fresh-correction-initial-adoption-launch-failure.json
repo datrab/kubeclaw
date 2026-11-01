@@ -1,0 +1,8 @@
+{
+  "initialAssertion": "Root incorrectly required verdict label PASS instead of actual PASS_PRESERVE_ORIGINAL_SCOPE",
+  "initialMatrixMutation": false,
+  "baselineAndCandidateHashesBothExact": true,
+  "erroneouslyFollowingOriginalChecker": "fresh-correction-original-checker.json/log exit1 against unadopted matrix; not a new Source failure or qualified adoption",
+  "correction": "Exact actual qualified labels/adoption verified before mutation; no standard or source change",
+  "historicalFilesRewritten": false
+}

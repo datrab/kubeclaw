@@ -1,0 +1,688 @@
+{
+  "scope": "Receipt-only finalization of independently qualified58original affected scopes/4paths; no repeated content review",
+  "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+  "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+  "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+  "adoption": "QUALIFIED_AT_EXACT_CURRENT_SOURCE",
+  "targetSource": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+  "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+  "publicReportTarget": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+  "qualifiedRecords": [
+    {
+      "id": "AP09-reader-workflows-20261020",
+      "changedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "9ee6fd7a2b13f26fc7d9dc6155cfbc34c781173f45420bbeb682a4036582bd26"
+    },
+    {
+      "id": "AP09-reviewed-publication-navigation-20261020",
+      "changedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "7ddb837102a90f450ef168643f5664c436dbb6cf82bb8dbf925c71d89ed058b6"
+    },
+    {
+      "id": "AP09-first-project-example-20261020",
+      "changedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "7200f045a60ae055fd69082e1d004f4fac6d54f347201639fd1a56e94de2611d"
+    },
+    {
+      "id": "AP09-compiler-import-provider-diagnosis-20261021",
+      "changedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "24b564722c5b12e9dffcecaecc21c55e0dc5ffb71c038a21f893e4851d304123"
+    },
+    {
+      "id": "AP09-install-maintenance-project-entry-20261021",
+      "changedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "3054dcd136356479f67c79cebc89193cc65efad603332042e2913c58f901d2d3"
+    },
+    {
+      "id": "AP09-documentation-agent-maintenance-20261021",
+      "changedPaths": [
+        "scripts/docs-api-output-discovery.mjs"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "0c1f30e616f3110a0b76998f9f27c9f98cec2222f3db5f63766031931f6a651b"
+    },
+    {
+      "id": "AP09-complete-static-reader-search-20261021",
+      "changedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "87b3f29b1cafafda21966365a15787fd0721f7c071e1ea149d7be094fab5489d"
+    },
+    {
+      "id": "AP09-complete-static-offline-fallback-20261021",
+      "changedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "d6835fad0bf14668186fd20556344d6084ba93cf2dd49bd80889ce820bc343d0"
+    },
+    {
+      "id": "FLW010-uncertain-effect-supported-boundary-20261021",
+      "changedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "d758c7edcad94c782432c128486a1589a89e01f801db506f17d3c1c15ccf900a"
+    },
+    {
+      "id": "FLW014-plugin-operator-supported-lifecycle-20261021",
+      "changedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "e6f6f0ba7871db1dd3aaf877e4225365f5391f283888b2293eb7ac1e46dfd7b0"
+    },
+    {
+      "id": "FLW017-demo-supported-contract-and-live-gap-20261021",
+      "changedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "bdd638f9c112b5ea8230f9d4c21d73e8ca0f0784dd0c163f0b2f66e0b3b96e4c"
+    },
+    {
+      "id": "FLW006-local-core-same-run-audit-artifact-telemetry-20261021",
+      "changedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "40efe0b6b0365225798a54764b8481a268cf9207ec14b448c1af6ea5d1dc2212"
+    },
+    {
+      "id": "A99-07-representative-buster-workflow-content-20261021",
+      "changedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "cbff04e18b164f7906ed774a0bc9aa01af8c9648bc755a339d84097baabb9ee7"
+    },
+    {
+      "id": "FLW007-supported-failure-task-20261021",
+      "changedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "7ca9d7674eeaffc2e748779d8c509ed665d7b9919be9b25e684e2e7c7dc2e0f4"
+    },
+    {
+      "id": "FLW009-supported-failure-task-20261021",
+      "changedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "f5c3563aed389f0132a382c4934cc32079c6af6bb8abc30d9869e5e7c100f332"
+    },
+    {
+      "id": "FLW015-supported-failure-task-20261021",
+      "changedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "cf06c11bdbce5f1f70c0ea971640f9532e2d8886d474e147574ecde81181e9cc"
+    },
+    {
+      "id": "FLW016-supported-failure-task-20261021",
+      "changedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "c4c038208f8b8127841eb7869a8805e710fcdc9e9068c05df106ee9a86cb00e7"
+    },
+    {
+      "id": "FLW012-supported-failure-task-20261021",
+      "changedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "4036efaac14abe3dbc078abee06c611db0a1dcd902d6f61c569b6aa783bebfbd"
+    },
+    {
+      "id": "FLW013-supported-failure-task-20261021",
+      "changedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "4315ff6ae0853bc746b8d3d63dcba729e0fe63cdb233e78723f35ced1a3ada46"
+    },
+    {
+      "id": "A99-08-complete-supported-failure-journey-union-20261021",
+      "changedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "724c5ec59f2b24412856172f949e388ad07f6e1a50fc82827148512deb470700"
+    },
+    {
+      "id": "AP09-publication-positive-scope-7ef16585",
+      "changedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "8915fe254f35fc35a258792d2cd46c367425a50bc98be723114537ea5500917d"
+    },
+    {
+      "id": "A98-02-13-whole-operator-procedure-contract-20261022",
+      "changedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "3488e593d75f1b0c5923b5ac1531f2bd2033aa77cb8a783c98afc97fbd8f78d0"
+    },
+    {
+      "id": "AP09-whole-extension-drift-A91014-20261023",
+      "changedPaths": [
+        "scripts/docs-documentation-owner-purpose-custody.mjs"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "44d4323c5d9d85a07201d79f2210558688395bf1e41d44abfcfa73b4ef8f2bcd"
+    },
+    {
+      "id": "A911-06-authored-surface-bindings-20261025",
+      "changedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "25e1019d790473790da4229171e0acd23e28b55b3282a0eba1d1814bc57a29aa"
+    },
+    {
+      "id": "A99-13-original-seven-dimension-drift-20261025",
+      "changedPaths": [
+        "scripts/docs-documentation-owner-purpose-custody.mjs"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "d723b033632da55edfed0c863c27d30211205953f38e4789a835543c9635cc11"
+    },
+    {
+      "id": "A99-06-actual-compiled-minimal-project-20261026",
+      "changedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "19e98565200609bc41804aebb739cd95e16c6943e57b59c6604af4be71eec668"
+    },
+    {
+      "id": "A910-10-whole-supported-extension-lifecycle-20261026",
+      "changedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "783a898430256a71f0988751e80a96cd391bb0595fe54663387577eba887cf35"
+    },
+    {
+      "id": "QUA-006-fresh-independent-technical-reader-20261027",
+      "changedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "220c26b8dc5ded55a1783a29f4a633246b483a383b15f22417a61dfe707af33c"
+    },
+    {
+      "id": "MNT-014-whole-native-publication-examples-20261027",
+      "changedPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/use/workflows/README.md"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "3d6f06ec8611f67eeb2b60b2f8b3bd1e32f9be320a4f3561db6fc8c93bec7425"
+    },
+    {
+      "id": "A99-11-whole-published-example-claims-20261027",
+      "changedPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/use/workflows/README.md"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "5e353dfb4985cd37a1592d2605ae33d87604cf989032cf830a92165ad13d5e26"
+    },
+    {
+      "id": "QUA-005-whole-published-live-and-completeness-claims-20261027",
+      "changedPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/use/workflows/README.md"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "24df32f7d8b8a56569dbc8067ec5ed86b9379b070c29db002782040e3d3e2dcb"
+    },
+    {
+      "id": "A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027",
+      "changedPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/use/workflows/README.md"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "5cae367a2248e4c24259b03dfed888e2614de05335d9ce5460691e8741c7d538"
+    },
+    {
+      "id": "CFG-007-whole-recursive-plugin-configuration-and-native-consumer-semantics-20261028",
+      "changedPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "3990683085fe91396eab7e7ca41e200490b5f2d46c43fc0cd948776812d4591b"
+    },
+    {
+      "id": "MNT-015-whole-source-owner-page-check-and-independent-review-routing-20261028",
+      "changedPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "09612537bf5552478f7ca21555d6dd155003a9464e6acec3ccb8d6a3071abba8"
+    },
+    {
+      "id": "CFG-013-whole-precedence-effective-values-and-source-qualified-conflicts-20261028",
+      "changedPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "fcf4330c8ed89f3a62296ffffc494ec19cad29d475e56ed64097697016ae7783"
+    },
+    {
+      "id": "CFG-010-whole-host-prism-codex-configuration-and-consumer-authority-20261028",
+      "changedPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "e1cf7f50d81733e5be14a9c86e128317f9143256a52d65d41871e27acb0adbf8"
+    },
+    {
+      "id": "CFG-012-whole-ports-services-endpoints-ingress-and-controller-activation-20261028",
+      "changedPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "3512e4dbe3b3daa2076b0a28745b4a9c87a235d453affae390b9dd1f88c41b75"
+    },
+    {
+      "id": "REF-016-whole-verification-command-ci-environment-effects-owner-and-change-routing-20261028",
+      "changedPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/use/workflows/README.md"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "514a6aed6a201c17258e9a10e58756a8417b0b698852690b5c01b31c73c4fdf3"
+    },
+    {
+      "id": "MNT-008-whole-generated-platform-store-policy-retention-quota-cleanup-20261028",
+      "changedPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "f2625d98fdd98bba27fc2afb8dcdb270a6af2013d61edfe418152c8bca09b10b"
+    },
+    {
+      "id": "MNT-006-whole-generated-active-event-payload-version-producer-consumer-20261030",
+      "changedPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "f900819cd5e19ed58c7142905f64a2a4b71e1087ecb0dfc6471ebd433b6e7129"
+    },
+    {
+      "id": "MNT-005-common-source-bound-error-catalogue-20261030",
+      "changedPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "7323a950decc6e6a33b7f2ec1a4bbadee2e8d7a02dfc00ee7006398b8619bfb2"
+    },
+    {
+      "id": "REF-005-owned-diagnostic-identities-causes-effects-recovery-20261030",
+      "changedPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "dced4a27021615564ab5fe61df14bc21760f525ccb1f79140d1889b84f2c82dd"
+    },
+    {
+      "id": "MNT-011-common-diagnostic-production-input-drift-20261030",
+      "changedPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "71d23ebf6dbcc1d22c7b6afaeec47bc8b4013ebc12cc48aa03b070be8115851d"
+    },
+    {
+      "id": "MNT-010-all-owned-json-schema-recursive-field-drift-20261030",
+      "changedPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "18d681e959b6251a546307967ea14b24f578bf7f2f22d33e0aa90729e2eadc0c"
+    },
+    {
+      "id": "QUA-004-whole-appropriate-technical-evidence-and-current-citations-20261030",
+      "changedPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/use/workflows/README.md"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "c18673cd6f2e36a6505d0723b5bf2e1594ce64bab3d787ea73381bbc725eaeba"
+    },
+    {
+      "id": "QUA-001-whole-understandable-technical-english-and-depth-20261030",
+      "changedPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/use/workflows/README.md"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "40957e19a243e78a7ba57191032e14cc6d29e490fea7504821553f9cd3e637dc"
+    },
+    {
+      "id": "MNT-004-whole-source-owned-cli-reference-20261030",
+      "changedPaths": [
+        "docs/config/publication-example-claims.json",
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-documentation-owner-purpose-custody.mjs"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "fbd475306922ff66b4cfc2f36d03841041db2f044084c14a000a799968877068"
+    },
+    {
+      "id": "CFG009-REF013-whole-current-Helm-GitOps-values-20261030",
+      "changedPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "570b1a286b8a23812f6c0f0636e99f6bd8a856a9bcce7e92ccfcdbe65ce4896f"
+    },
+    {
+      "id": "A91306-QUA002-original-controlled-language-whole-20261030",
+      "changedPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/use/workflows/README.md"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "bda61d8c7dbbca59e50e8fd16d057559e8143f9e85c1ec668efb3087a93b9f61"
+    },
+    {
+      "id": "A911-05-whole-owned-diagnostic-reference-20261030",
+      "changedPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "e9e9ad8414b8e155e5c866d925309b352c393e9a0edc228a5e8ef6648e4272cf"
+    },
+    {
+      "id": "REF003-whole-configuration-families-and-inverse-consumers-20261031",
+      "changedPaths": [
+        "scripts/docs-api-output-discovery.mjs"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "2a6e8b103a585caa07b3c83945868e2152525dbcd38c1a00cb073650adc46f14"
+    },
+    {
+      "id": "MNT003-whole-generated-configuration-defaults-maintenance-20261031",
+      "changedPaths": [
+        "scripts/docs-api-output-discovery.mjs"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "f43048f355f5c492e591edb0d7f366ab8ee13ddc8c11f1457cf64b137f93893a"
+    },
+    {
+      "id": "GOV002-MNT001-MNT009-whole-product-authority-and-inverse-matrix-20261031",
+      "changedPaths": [
+        "docs/config/publication-example-claims.json",
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-documentation-owner-purpose-custody.mjs"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "576bf80774bb0a92812c1d8a55592cf7121e02f7717fb4cc5470e7cc91cd7af6"
+    },
+    {
+      "id": "A911-07-whole-source-to-documentation-map-consolidated-20261031",
+      "changedPaths": [
+        "docs/config/publication-example-claims.json",
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-documentation-owner-purpose-custody.mjs"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "8630f2f467f1b7843d473e9380e777f7a327f32ec9ac8595a1052ccbbefb81f8"
+    },
+    {
+      "id": "A913-02-A913-03-original-content-and-independent-topic-review-consolidation-20261031",
+      "changedPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/use/workflows/README.md",
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-documentation-owner-purpose-custody.mjs"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "4e093e4d34a11757c396eca38581d256f00f09dd717ecc4a0acf0f7b5f1be449"
+    },
+    {
+      "id": "A98-10-A98-11-A911-02-original-configuration-reference-and-precedence-consolidation-20261031",
+      "changedPaths": [
+        "docs/config/publication-example-claims.json",
+        "scripts/docs-api-output-discovery.mjs"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "4a6783fc13ba4944c1f228c939f314c2dd057f19d6eb0c0022b00604909f0736"
+    },
+    {
+      "id": "A913-01-original-261-findings-current-metadata-consolidation-20261031",
+      "changedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "307ee34c19c1b2af9ffc61d6070b2730a33cebdc7d96200bf6e1382ce855a433"
+    },
+    {
+      "id": "QUA007-independent-actual-operator-six-facets-20261031",
+      "changedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "SourceAccuracy": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "ReaderUsability": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "Quality": "PASS_PRESERVE_ORIGINAL_SCOPE",
+      "originalCanonicalSHA256": "0db97d2e1a4f2c32345ff9df625099ceda18ee464db2eefbf646faec30ad4651"
+    }
+  ],
+  "actualCurrentChecks": [
+    {
+      "path": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/fresh-correction-current-build.json",
+      "sha256": "2ed9a388502103afd8c85576823854bd209df471cf156fde7b02b2b836c5f248",
+      "exitCode": 0,
+      "seconds": 309.13825672806706
+    },
+    {
+      "path": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/fresh-correction-check-artifact.json",
+      "sha256": "ac3b856028c1eb891a1159dd84e50e9bdd4fd8ae8af26802bb7c39b74c72ae90",
+      "exitCode": 0,
+      "seconds": 55.321919231908396
+    },
+    {
+      "path": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/fresh-correction-check-search.json",
+      "sha256": "ab6b32f199b62109d99957ee26cdf5c112fa455d0d77de3ac982b64b749847b7",
+      "exitCode": 0,
+      "seconds": 43.81530328001827
+    },
+    {
+      "path": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/fresh-correction-check-source-previews.json",
+      "sha256": "a9b93720fe7a299599936e33f4a5ef5c03840d31328a18a60fbb757b937ff49d",
+      "exitCode": 0,
+      "seconds": 61.72333367797546
+    },
+    {
+      "path": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/fresh-correction-check-diagrams.json",
+      "sha256": "9f77606d9018552e61ded5182be5cdf674caf99e1f6e4356cd74bc9bd80b68a9",
+      "exitCode": 0,
+      "seconds": 43.59593233093619
+    },
+    {
+      "path": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/fresh-correction-check-source-links.json",
+      "sha256": "a8aae0893a05ccd2e5e2ed62f286dc7d9b89f31e219d04669f25c74e1e64c7d8",
+      "exitCode": 0,
+      "seconds": 377.5748045690125
+    },
+    {
+      "path": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/fresh-correction-workflow-delivery-check.json",
+      "sha256": "390c94133e26a7deee4a970b2a7026652ef80311d515dfd449ef65448b255967",
+      "pass": true,
+      "widths": [
+        320,
+        1440
+      ]
+    }
+  ],
+  "dischargedConditions": "Actual current build, all five artifact checks and affected workflow delivery observed successful; no pending/future PASS assertion.",
+  "substantiveBasisReused": {
+    "workflow": "Previously qualified complete corrected procedure adds exact frozen selected runtime registry command and five missing observations, closed audit stdin, retained fault command status before strict inspection and genuine browser-host prerequisite distinction. Original route families/authority/defaults/historical proofs retained; no execution completion invented.",
+    "claims": "Qualified current3blocks/5prose/2assets/3contracts preserve full old source/limit prefixes and accurate read-only/operational/syntax/historical boundaries. Other185pages/allotherassetscontracts/checkvectors/authorities remain exact.",
+    "nativeOutputPurpose": "Only5existing owned input seals for claims/page/twohelpers andYAMLclaims; actual native predicates/facts/slots/rosters/selectors unchanged.",
+    "publicationChildPurpose": "Only1existing claims seal; physical caller/argv/check-result/normalchild/source-purpose boundaries retained.",
+    "originalTopics": "Prior whole-topic configuration/CLI/schema/event/diagnostic/mutation/Source-map/catalogue/language/claim-honesty/fresh model scopes reused at exact unchanged original duties. Their larger original scopes are not newly audited or promoted through changed hashes. Current changes remove concrete procedure gaps without altering underlying product reference facts or historical runtime outcomes."
+  },
+  "conditionalEvidence": {
+    "path": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/fresh-correction-58-scopes-conditional-independent-verdict.json",
+    "sha256": "b9e15ea17d670feb7fc8058bd37cdb5dbe6bdbb8a4ce498cc22e492adf9715c6"
+  },
+  "materialFindings": [],
+  "preservation": {
+    "affectedRecords": 58,
+    "unaffectedWholeRecordsExact": 86,
+    "onlyFinalizationFieldsChanged": "New appended impact reviewer/report only,116fields total",
+    "oldChecksReviewsSummariesLimitsNegativesHistoriesExact": true,
+    "wholePhysicalMatrixInverseByteExact": true,
+    "baselineMatrixSHA256": "c53308f4b3bd3fa8c5fd8cce87df84a244ee1beafd20fc1bb453d853f2fffaf7",
+    "finalQualifiedCandidateSHA256": "0321a4dc184fe3339466538f39c2a5b5cc87bdb07119707ea89813f2df9c12dd"
+  },
+  "remainingOriginalLimits": [
+    "First fresh PIPE01 NOT_COMPLETE:1/2/3PASS,4partialFAIL,5unobserved; assessor lookup/lateRootcustody cleanup cannot supply participant4/5.",
+    "DefaultglobalAPI/configgenerator/ToolSource/profile/purpose/UNKNOWN negatives unwaived.",
+    "PUB007 humanAT/contrast and originalfresh multirole task obligations remain; AP10 deferral unchanged.",
+    "Historical old model/operator/runtime/build observations retain exact dated Source/exposure limits, not current reruns."
+  ],
+  "noNewAward": "No new original task/gate/requirement/fresh/human/AT/contrast award; firstfreshPIPE01NOT_COMPLETE with1/2/3PASS,4partialFAIL,5unobserved unchanged. LateRootcustody not participant continuation. GlobalAPI/defaultgenerator failures andAP10 deferral retained.",
+  "nextOwner": "Root applies qualified candidate, runs unchanged originalchecker, commits/pushes and verifies exactremote. This review does none of those actions.",
+  "activity": "Receipt-only reads and owned evidence writes; no new checks/reruns/Source/main mutation or expanded audit."
+}

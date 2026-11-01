@@ -4841,7 +4841,7 @@
     },
     {
       "id": "AP09-reader-workflows-20261020",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_data_ready",
       "gateIds": [],
@@ -5202,6 +5202,16 @@
             "docs/site/use/workflows/README.md"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
@@ -5227,7 +5237,8 @@
       },
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
@@ -9006,7 +9017,7 @@
     },
     {
       "id": "AP09-reviewed-publication-navigation-20261020",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "Documentation implementation authors",
       "reviewer": "/root/review_publication; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer",
       "gateIds": [
@@ -9734,6 +9745,16 @@
             "scripts/lib/docs-publication-assets.mjs"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
@@ -9808,7 +9829,8 @@
           "reason": "Independent finite aggregate31 Source/Reader/Quality preservation; original summary/limits/historical checks and accepted membership unchanged."
         },
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ],
       "scopePreservation3408": {
         "priorRevision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
@@ -12431,7 +12453,7 @@
     },
     {
       "id": "AP09-first-project-example-20261020",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_first_project; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer",
       "gateIds": [],
@@ -12777,6 +12799,16 @@
             "scripts/lib/docs-publication-assets.mjs"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
@@ -12798,7 +12830,8 @@
           "reason": "Narrow independent preservation after four source-backed diagram boundary corrections, exact alternative/registry updates, four owner-generated metadata fields and nine explicitly internal proof records. No reapproval of untouched historical claims or broad diagram/runtime semantics."
         },
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
@@ -13670,7 +13703,7 @@
     },
     {
       "id": "AP09-compiler-import-provider-diagnosis-20261021",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "Documentation authors and /root correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
       "gateIds": [
@@ -13988,6 +14021,16 @@
             "docs/site/use/workflows/README.md"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
@@ -14013,7 +14056,8 @@
           "reason": "Independent narrow Source/Reader/Quality preservation: truthful current selection stop, family-specific Ops direct-main authority, bound manifest observation with explicit false loaded-module/payload flags. Current d303 reader: 167 canonical pages/177 HTML/209 hashes/36958 local targets; 14471 Source links/3742 objects;1696 excerpts/889 objects;27 deterministic SVGs;12 search questions and12 scoped offline/noJS width observations PASS. Unchanged original accepted scopes/limits preserved; no blanket semantic, operational or live reapproval."
         },
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ],
       "scopePreservation3408": {
         "priorRevision": "7ef16585ba04eba3628cead304be85307436f091",
@@ -14653,7 +14697,7 @@
     },
     {
       "id": "AP09-install-maintenance-project-entry-20261021",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "Documentation authors and /root entry correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (operator, entry closeout and publication impact invocations)",
       "gateIds": [],
@@ -14805,7 +14849,8 @@
           "reason": "Independent narrow Source/Reader/Quality preservation: truthful current selection stop, family-specific Ops direct-main authority, bound manifest observation with explicit false loaded-module/payload flags. Current d303 reader: 167 canonical pages/177 HTML/209 hashes/36958 local targets; 14471 Source links/3742 objects;1696 excerpts/889 objects;27 deterministic SVGs;12 search questions and12 scoped offline/noJS width observations PASS. Unchanged original accepted scopes/limits preserved; no blanket semantic, operational or live reapproval."
         },
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ],
       "impactReviews": [
         {
@@ -14982,6 +15027,16 @@
             "docs/site/use/workflows/README.md"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "scopePreservation3408": {
@@ -16383,7 +16438,7 @@
     },
     {
       "id": "AP09-documentation-agent-maintenance-20261021",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -17773,6 +17828,16 @@
             "scripts/lib/docs-publication-assets.mjs"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "scripts/docs-api-output-discovery.mjs"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
@@ -17931,7 +17996,8 @@
           "reason": "Exact independently reviewed platform ordering and finite shared custody original-scope preservation; no new acceptance."
         },
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ],
       "scopePreservation3408": {
         "priorRevision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
@@ -23400,7 +23466,7 @@
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "verdict": "PASS",
@@ -24345,7 +24411,8 @@
           "reason": "Independent original-scope preservation after single Prism page correction; no recount."
         },
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ],
       "impactReviews": [
         {
@@ -25852,6 +25919,16 @@
             "scripts/lib/docs-publication-assets.mjs"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "scopePreservation3408": {
@@ -28608,7 +28685,7 @@
     },
     {
       "id": "AP09-complete-static-offline-fallback-20261021",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole PUB-006/A912-10 Source/Reader/Quality closeout, inspecting original obligation, actual browser provenance and critical task prose; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer",
       "verdict": "PASS",
@@ -28778,7 +28855,8 @@
           "reason": "Independent finite aggregate31 Source/Reader/Quality preservation; original summary/limits/historical checks and accepted membership unchanged."
         },
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ],
       "impactReviews": [
         {
@@ -29155,6 +29233,16 @@
             "scripts/lib/docs-publication-assets.mjs"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
@@ -37810,7 +37898,7 @@
       ]
     },
     {
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "existing documentation authors",
       "reviewer": "/root/workflow_acceptance supporting procedures and root integration/correction; /root independent authored row Source/Reader/quality",
       "review": {
@@ -37998,6 +38086,16 @@
             "docs/site/use/workflows/README.md"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "scopePreservation3408": {
@@ -38014,11 +38112,12 @@
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "existing documentation authors",
       "reviewer": "/root/workflow_acceptance supporting procedures and root integration/correction; /root independent authored row Source/Reader/quality",
       "review": {
@@ -38346,6 +38445,16 @@
             "docs/site/use/workflows/README.md"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
@@ -38356,7 +38465,8 @@
           "reason": "Independently reviewed additive package-check lifecycle guide preserves exact original scope; not recounted."
         },
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ],
       "revisionImpacts": [
         {
@@ -38378,7 +38488,7 @@
       }
     },
     {
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "existing documentation authors",
       "reviewer": "/root/workflow_acceptance",
       "review": {
@@ -38538,12 +38648,23 @@
             "docs/site/use/workflows/README.md"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
@@ -39034,7 +39155,7 @@
       ]
     },
     {
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "/root/workflow_acceptance",
       "reviewer": "/root",
       "pages": [
@@ -39206,12 +39327,23 @@
             "docs/site/use/workflows/README.md"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
@@ -39304,7 +39436,7 @@
     },
     {
       "id": "A99-07-representative-buster-workflow-content-20261021",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "existing Buster workflow authors; package citation repair independently reviewed by root",
       "reviewer": "/root/workflow_acceptance",
       "gateIds": [
@@ -39649,12 +39781,23 @@
             "docs/site/use/workflows/README.md"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
@@ -39754,7 +39897,7 @@
     },
     {
       "id": "FLW007-supported-failure-task-20261021",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "/root/workflow_acceptance",
       "reviewer": "/root/operator_acceptance independent whole topic and correction rereview; parent installed-path/Reader integration",
       "gateIds": [],
@@ -39882,17 +40025,28 @@
             "docs/site/use/workflows/README.md"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
       "id": "FLW009-supported-failure-task-20261021",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "/root/workflow_acceptance",
       "reviewer": "/root/operator_acceptance independent whole topic and correction rereview; parent installed-path/Reader integration",
       "gateIds": [],
@@ -40012,17 +40166,28 @@
             "docs/site/use/workflows/README.md"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
       "id": "FLW015-supported-failure-task-20261021",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "/root/workflow_acceptance",
       "reviewer": "/root/operator_acceptance independent whole topic and correction rereview; parent installed-path/Reader integration",
       "gateIds": [],
@@ -40260,17 +40425,28 @@
             "docs/site/use/workflows/README.md"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
       "id": "FLW016-supported-failure-task-20261021",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "/root/workflow_acceptance",
       "reviewer": "/root/operator_acceptance independent whole topic and correction rereview; parent installed-path/Reader integration",
       "gateIds": [],
@@ -40411,6 +40587,16 @@
             "docs/site/use/workflows/README.md"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "revisionHistory": [
@@ -40420,12 +40606,13 @@
           "reason": "Independent exact one-page native-scope example correction preserves original scope and limits; not recounted."
         },
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
       "id": "FLW012-supported-failure-task-20261021",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "/root/workflow_acceptance",
       "reviewer": "/root independent nonauthor Source/Reader/quality review; operator_acceptance independent canonical integration preservation",
       "gateIds": [],
@@ -40549,17 +40736,28 @@
             "docs/site/use/workflows/README.md"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
       "id": "FLW013-supported-failure-task-20261021",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "/root/workflow_acceptance",
       "reviewer": "/root independent nonauthor Source/Reader/quality review; operator_acceptance independent canonical integration preservation",
       "gateIds": [],
@@ -40682,17 +40880,28 @@
             "docs/site/use/workflows/README.md"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
       "id": "A99-08-complete-supported-failure-journey-union-20261021",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "Documentation topic authors and integration coordinator",
       "reviewer": "Independent topic-review union: operator_acceptance (new Redis/Worker topics); original independent Codex topic reviewers (registry/Tailnet diagnosis); workflow_acceptance (uncertain-effect/Demo); root nonauthor (BuildKit/Tailnet task guides)",
       "gateIds": [
@@ -41115,6 +41324,16 @@
             "docs/site/use/workflows/README.md"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "scopePreservation3408": {
@@ -41136,7 +41355,8 @@
           "reason": "Independent exact one-page native-scope example correction preserves original scope and limits; not recounted."
         },
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
@@ -42423,7 +42643,7 @@
     },
     {
       "id": "AP09-publication-positive-scope-7ef16585",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "existing publication/content maintainers; final authored Sourcefield additions separately reviewed by workflow_acceptance",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -44092,6 +44312,16 @@
             "scripts/lib/docs-publication-assets.mjs"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "scopePreservation3408": {
@@ -44165,7 +44395,8 @@
           "reason": "Independent original-scope preservation after single Prism page correction; no recount."
         },
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ],
       "mnt004ScopedPreservation": {
         "priorRevision": "ce66ce71912fa6ab03f1671602d82ed9af799bc3",
@@ -45157,7 +45388,7 @@
     },
     {
       "id": "A98-02-13-whole-operator-procedure-contract-20261022",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "Original canonical topic maintainers plus separately reviewed bounded corrections",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -46474,6 +46705,16 @@
             "scripts/lib/docs-publication-assets.mjs"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "scopePreservation3408": {
@@ -46575,7 +46816,8 @@
           "reason": "Independently reviewed additive package-check lifecycle guide preserves exact original scope; not recounted."
         },
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ],
       "mnt004ScopedPreservation": {
         "priorRevision": "0d9b92b9fba234f085f228cc541faaece4846d77",
@@ -50280,7 +50522,7 @@
     },
     {
       "id": "AP09-whole-extension-drift-A91014-20261023",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "Nova documentation continuation coordinator",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -51041,6 +51283,16 @@
             "scripts/docs-documentation-owner-purpose-custody.mjs"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "scripts/docs-documentation-owner-purpose-custody.mjs"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
@@ -51157,7 +51409,8 @@
           "reason": "Exact independently reviewed platform ordering and finite shared custody original-scope preservation; no new acceptance."
         },
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ],
       "mnt004ScopedPreservation": {
         "priorRevision": "0d9b92b9fba234f085f228cc541faaece4846d77",
@@ -52076,7 +52329,7 @@
     },
     {
       "id": "A911-06-authored-surface-bindings-20261025",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "PR13 documentation authors and continuation coordinator",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -52716,6 +52969,16 @@
             "docs/site/use/workflows/README.md"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -52779,12 +53042,13 @@
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
       "id": "A99-13-original-seven-dimension-drift-20261025",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "PR13 documentation authors and continuation coordinator",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -53257,6 +53521,16 @@
             "scripts/docs-documentation-owner-purpose-custody.mjs"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "scripts/docs-documentation-owner-purpose-custody.mjs"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -53352,7 +53626,8 @@
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
@@ -53479,7 +53754,7 @@
     },
     {
       "id": "A99-06-actual-compiled-minimal-project-20261026",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "PR13 documentation continuation coordinator",
       "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra/high/P2 SourceQuality and fresh semantic Reader reviewers; final original-scope adoption reviewer",
       "gateIds": [
@@ -53840,6 +54115,16 @@
             "scripts/lib/docs-publication-assets.mjs"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "scopePreservationPlatformBaseline20261031": {
@@ -53854,12 +54139,13 @@
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
       "id": "A910-10-whole-supported-extension-lifecycle-20261026",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "Nova documentation implementation and closure coordinator",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -54702,6 +54988,16 @@
             "scripts/lib/docs-publication-assets.mjs"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -54786,12 +55082,13 @@
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
       "id": "QUA-006-fresh-independent-technical-reader-20261027",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "Nova documentation continuation coordinator",
       "reviewer": "Independent pinned fe588b1a Codex Terra/high/P2 original criterion adjudicator; fresh native model Reader /root/fresh_technical_reader",
       "gateIds": [],
@@ -55002,6 +55299,16 @@
             "docs/site/use/workflows/README.md"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "scopePreservationPlatformBaseline20261031": {
@@ -55016,7 +55323,8 @@
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
@@ -55976,7 +56284,7 @@
       ]
     },
     {
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "Nova publication-example implementation and sole shared-lease integration owner",
       "gateIds": [],
       "requirementIds": [
@@ -56832,6 +57140,17 @@
             "scripts/lib/docs-publication-assets.mjs"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -56956,11 +57275,12 @@
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "Nova publication-example implementation and sole shared-lease integration owner",
       "gateIds": [
         "A99-11"
@@ -57816,6 +58136,17 @@
             "scripts/lib/docs-publication-assets.mjs"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -57940,7 +58271,8 @@
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
@@ -58079,7 +58411,7 @@
     },
     {
       "id": "QUA-005-whole-published-live-and-completeness-claims-20261027",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "Nova documentation claim integration and sole shared-lease writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -58914,6 +59246,17 @@
             "scripts/lib/docs-publication-assets.mjs"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -59038,12 +59381,13 @@
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
       "id": "A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "Nova sole shared-lease documentation integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -60106,6 +60450,17 @@
             "docs/site/use/workflows/README.md"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -60233,12 +60588,13 @@
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
       "id": "CFG-007-whole-recursive-plugin-configuration-and-native-consumer-semantics-20261028",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "Nova sole shared-lease documentation integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -60913,6 +61269,16 @@
             "docs/config/publication-example-claims.json"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -61021,7 +61387,8 @@
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
@@ -61613,7 +61980,7 @@
     },
     {
       "id": "MNT-015-whole-source-owner-page-check-and-independent-review-routing-20261028",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "Nova /root sole integration writer with /root/language_projection_architecture authored finite native-owner proposals",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -62003,6 +62370,16 @@
             "scripts/docs-publication-instruction-syntax.mjs"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -62102,7 +62479,8 @@
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
@@ -62305,7 +62683,7 @@
     },
     {
       "id": "CFG-013-whole-precedence-effective-values-and-source-qualified-conflicts-20261028",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "Nova /root sole integration writer; /root/language_projection_architecture proposed finite canonical wording; maintained contract successor authored by root",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -62723,6 +63101,16 @@
             "docs/config/publication-example-claims.json"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -62805,12 +63193,13 @@
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
       "id": "CFG-010-whole-host-prism-codex-configuration-and-consumer-authority-20261028",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "Nova /root sole integration writer; /root/language_projection_architecture authored independently adjudicated finite native-owner and historical projection proposals; root authored canonical/integration/contract successors",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -63249,6 +63638,16 @@
             "docs/site/reference/generated-documentation-map.json"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -63361,12 +63760,13 @@
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
       "id": "CFG-012-whole-ports-services-endpoints-ingress-and-controller-activation-20261028",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "Nova /root sole product integration author and writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -63745,6 +64145,16 @@
             "docs/site/reference/generated-documentation-map.json"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -63846,12 +64256,13 @@
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
       "id": "REF-016-whole-verification-command-ci-environment-effects-owner-and-change-routing-20261028",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "Nova /root sole product integration author and writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -65162,6 +65573,17 @@
             "docs/site/use/workflows/README.md"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -65284,12 +65706,13 @@
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
       "id": "MNT-008-whole-generated-platform-store-policy-retention-quota-cleanup-20261028",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -66260,17 +66683,28 @@
             "docs/site/reference/generated-documentation-map.json"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
       "id": "MNT-006-whole-generated-active-event-payload-version-producer-consumer-20261030",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -66963,17 +67397,28 @@
             "docs/site/reference/generated-documentation-map.json"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
       "id": "MNT-005-common-source-bound-error-catalogue-20261030",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -67515,17 +67960,28 @@
             "docs/site/reference/generated-documentation-map.json"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
       "id": "REF-005-owned-diagnostic-identities-causes-effects-recovery-20261030",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -68073,17 +68529,28 @@
             "docs/site/reference/generated-documentation-map.json"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
       "id": "MNT-011-common-diagnostic-production-input-drift-20261030",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -68389,17 +68856,28 @@
             "docs/config/publication-example-claims.json"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
       "id": "MNT-010-all-owned-json-schema-recursive-field-drift-20261030",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -68712,17 +69190,28 @@
             "docs/config/publication-example-claims.json"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
       "id": "QUA-004-whole-appropriate-technical-evidence-and-current-citations-20261030",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -69278,17 +69767,29 @@
             "docs/site/use/workflows/README.md"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
       "id": "QUA-001-whole-understandable-technical-english-and-depth-20261030",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -69940,17 +70441,29 @@
             "scripts/lib/docs-publication-assets.mjs"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
       "id": "MNT-004-whole-source-owned-cli-reference-20261030",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -71430,17 +71943,30 @@
             "scripts/docs-publication-instruction-syntax.mjs"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "scripts/docs-api-output-discovery.mjs",
+            "scripts/docs-documentation-owner-purpose-custody.mjs"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
       "id": "CFG009-REF013-whole-current-Helm-GitOps-values-20261030",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -71751,17 +72277,28 @@
             "docs/site/reference/generated-documentation-map.json"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
       "id": "A91306-QUA002-original-controlled-language-whole-20261030",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "Nova /root retained sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained",
       "gateIds": [
@@ -72186,17 +72723,29 @@
             "docs/site/use/workflows/README.md"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
       "id": "A911-05-whole-owned-diagnostic-reference-20261030",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "Nova sole integration owner; existing diagnostic documentation authors",
       "reviewer": "Independent Codex gpt-5.6-terra/high whole original A911-05 content assessor, session01a18bf6-0c0d-71a2-aa39-f9550bbed698; nonauthor, bounded qualified REF005/MNT005 reuse",
       "gateIds": [
@@ -72592,12 +73141,23 @@
             "docs/site/reference/generated-documentation-map.json"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
@@ -72710,7 +73270,7 @@
     },
     {
       "id": "REF003-whole-configuration-families-and-inverse-consumers-20261031",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "PR13 sole integration owner",
       "reviewer": "independent-codex-source-quality:01a18bf6-0c0d-71a2-aa39-f9550bbed698; independent Reader /root/ref003_fresh_reader",
       "gateIds": [],
@@ -72972,12 +73532,23 @@
             "scripts/docs-api-output-discovery.mjs"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "scripts/docs-api-output-discovery.mjs"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
@@ -73083,7 +73654,7 @@
     },
     {
       "id": "MNT003-whole-generated-configuration-defaults-maintenance-20261031",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "PR13 sole integration owner",
       "reviewer": "independent-codex-source-quality:01a18bf6-0c0d-71a2-aa39-f9550bbed698; independent Reader /root/mnt003_fresh_reader",
       "gateIds": [],
@@ -73342,17 +73913,28 @@
             "scripts/docs-api-output-discovery.mjs"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "scripts/docs-api-output-discovery.mjs"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
       "id": "GOV002-MNT001-MNT009-whole-product-authority-and-inverse-matrix-20261031",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "PR13 sole integration owner",
       "reviewer": "independent-codex-source-quality:01a18bf6-0c0d-71a2-aa39-f9550bbed698; independent restricted practical Reader /root/gov_mnt_practical_reader",
       "gateIds": [],
@@ -73517,17 +74099,30 @@
             "scripts/docs-publication-instruction-syntax.mjs"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "scripts/docs-api-output-discovery.mjs",
+            "scripts/docs-documentation-owner-purpose-custody.mjs"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
       "id": "A911-07-whole-source-to-documentation-map-consolidated-20261031",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "PR13 sole integration owner",
       "reviewer": "Independent native child /root/qua010_execution_path; bounded A911-07 adjudication, non-author of reviewed source/map",
       "gateIds": [
@@ -73667,17 +74262,30 @@
             "scripts/docs-publication-instruction-syntax.mjs"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "scripts/docs-api-output-discovery.mjs",
+            "scripts/docs-documentation-owner-purpose-custody.mjs"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
       "id": "A913-02-A913-03-original-content-and-independent-topic-review-consolidation-20261031",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "PR13 sole integration owner",
       "reviewer": "Independent non-author native child /root/qua010_execution_path",
       "gateIds": [
@@ -74510,17 +75118,31 @@
             "scripts/lib/docs-publication-assets.mjs"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/use/workflows/README.md",
+            "scripts/docs-api-output-discovery.mjs",
+            "scripts/docs-documentation-owner-purpose-custody.mjs"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
       "id": "A98-10-A98-11-A911-02-original-configuration-reference-and-precedence-consolidation-20261031",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "PR13 sole integration owner",
       "reviewer": "Independent non-author native child /root/qua010_execution_path",
       "gateIds": [
@@ -75275,17 +75897,29 @@
             "scripts/docs-api-output-discovery.mjs"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "scripts/docs-api-output-discovery.mjs"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
       "id": "A913-01-original-261-findings-current-metadata-consolidation-20261031",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "PR13 sole integration owner",
       "reviewer": "Independent native non-author /root/qua010_execution_path",
       "gateIds": [
@@ -75475,12 +76109,23 @@
             "docs/site/use/workflows/README.md"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     },
     {
@@ -75623,7 +76268,7 @@
     },
     {
       "id": "QUA007-independent-actual-operator-six-facets-20261031",
-      "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+      "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
       "author": "PR13 sole integration owner",
       "reviewer": "Independent non-author native /root/pub007_binding; distinct from documentation author and fresh operator executor",
       "gateIds": [],
@@ -75787,12 +76432,23 @@
             "docs/site/use/workflows/README.md"
           ],
           "scope": "PROPOSED ONLY: named explicit input intersections. Original checks, review, summaries, limits, negatives, practical observations and exposure retained at actual historical scope/revisions; no current rerun or new award inferred."
+        },
+        {
+          "revision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+          "previousRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+          "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101; original SourceAccuracy/ReaderUsability/Quality affected-scope preservation; not fresh participant",
+          "report": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/affected-original-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "PROPOSED ONLY: exact explicit changed-input intersections. Retain every original contract/check/review/limit/negative/practical observation/history at actual original scope/revision. No new original task/gate award or fresh runtime/Reader check inferred."
         }
       ],
       "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
-        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc"
+        "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+        "01f0f1d58037293e18045b5483f4c9f9da91061e"
       ]
     }
   ],

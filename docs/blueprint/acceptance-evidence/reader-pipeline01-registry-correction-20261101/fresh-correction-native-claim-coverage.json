@@ -1,0 +1,11 @@
+{
+  "at": "2026-11-01T04:43:56.091Z",
+  "native": "bindPublicationExampleCoverage",
+  "ok": true,
+  "pages": 186,
+  "assets": 43,
+  "sourceEntries": 3529,
+  "checks": 28,
+  "seconds": 6.317891895,
+  "scope": "Actual current coverage/hash binding only; not runtime, fresh reader or whole acceptance"
+}

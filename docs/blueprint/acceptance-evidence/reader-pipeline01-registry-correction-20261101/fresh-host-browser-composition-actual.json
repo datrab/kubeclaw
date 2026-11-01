@@ -1,0 +1,17 @@
+{
+  "tool": "openclaw__gateway_exec",
+  "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node /home/node/.openclaw/workspace/operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/fresh-host-browser-composition-check.mjs",
+  "actualReturnedObservation": {
+    "status": "PASS_ACTUAL_COMPOSED_BROWSER_AND_REDIS_HOST_LIBRARIES",
+    "at": "2026-11-01T04:38:50.057Z",
+    "redisCliVersion": "redis-cli 7.0.15",
+    "browserVersion": "151.0.7922.34",
+    "LD_LIBRARY_PATH": "/home/node/.openclaw/workspace/operations/pr13/runtime/reader-pipeline01-execution-20261101/redis/usr/lib/x86_64-linux-gnu:/home/node/.openclaw/workspace/operations/pr13/runtime/browser-support/usr/lib/x86_64-linux-gnu",
+    "fontConfig": "/home/node/.openclaw/workspace/operations/pr13/runtime/chromium-fonts.conf",
+    "actualPageURL": "about:blank",
+    "newWorkflowOrModelRun": false,
+    "globalPackageVerification": false,
+    "protectedBrowserOrAssistiveAcceptance": false,
+    "limits": "Genuine conventional Playwright no-sandbox headless host prerequisite only; not original reader task or PUB007 AT/contrast/protected-browser acceptance."
+  }
+}

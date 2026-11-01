@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "The change consistently adds a read-only frozen-run runtime identity inspection, documents its intended scope, and preserves the bounded fault inspection flow without introducing an actionable defect in the supplied bundle.",
+  "overall_confidence": 0.91
+}

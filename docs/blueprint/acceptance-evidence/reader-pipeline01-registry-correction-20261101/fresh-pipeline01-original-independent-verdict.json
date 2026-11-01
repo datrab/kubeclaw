@@ -1,0 +1,149 @@
+{
+  "scope": "Actual terminal fresh MODEL READER-PIPELINE-01 original five outcomes; not new gate/whole acceptance",
+  "overall": "NOT_COMPLETE_NO_ORIGINAL_TASK_AWARD",
+  "reviewedRevision": "f5c816097a0bbb998ccfc80cb0430d5458736aae",
+  "participant": "Fresh isolated MODEL, not human; disclosed actor-originated byte-exact Gateway relay, not direct native child Gateway access",
+  "outcomes": [
+    {
+      "id": "pipeline-validates",
+      "observed": "PASS",
+      "basis": "Exact documented prepare and identities executed under set-e; canonical fixture equality and eight stages retained. Subsequent commands/prompt plus healthy same graph support zero validation.",
+      "evidence": [
+        "request-003.txt",
+        "response-004.json",
+        "response-006.json"
+      ]
+    },
+    {
+      "id": "minimal-run-succeeds",
+      "observed": "PASS",
+      "basis": "One actual documented healthy run reaches run.succeeded/exit0; stopped native audit and documented inspector verify same run/journal head, eight successes/attempts, ten original artifacts and221same-run rows in12streams. Historical224events is not a fixed expected current count.",
+      "evidence": [
+        "request-009.txt",
+        "healthy-native-audit.stdout",
+        "healthy-inspect.stdout",
+        "healthy-observed-summary.json"
+      ]
+    },
+    {
+      "id": "effective-defaults-explained",
+      "observed": "PASS",
+      "basis": "Participant records actual finite compiler-inserted defaults and arithmetic against documented finite authority table, distinguishes explicit encodings/derived values/disabled extra Buster agent. This original compiler scope does not require exhaustive adapter/runtime defaults.",
+      "evidence": [
+        "reader-record.md",
+        "response-004.json",
+        "response-006.json"
+      ]
+    },
+    {
+      "id": "runtime-identities-resolve",
+      "observed": "FAIL",
+      "disposition": "Partial evidence; not proof that selected providers are nonexistent or native admission failed.",
+      "basis": "Participant observes8stage selections,5named runtime adapters,observer,both direct-command plans/JUnit,canonical fixture andGateway forge\u2192main/model. Actual complete platform selects10unique adapter/provider identities; five additional selected registrations lack participant explicit documented registry/provenance observation. Config reading and successful native admission/execution support actual operational resolution, but do not replace the original registry-command evidence.",
+      "selectedProviderObservationGap": [
+        "kubeclaw.artifact-store:artifact-store",
+        "kubeclaw.git-workspace:git",
+        "kubeclaw.lint:executor",
+        "kubeclaw.repository-adapter:repository",
+        "kubeclaw.state-store:state"
+      ],
+      "notRequired": "No arbitrary whole transitive package/library/consumer census or distinct registry command per identity required. Canonical suites[] selects no suite/fixture provider, so do not invent a missing one.",
+      "evidence": [
+        "reader-record.md",
+        "response-004.json",
+        "response-006.json",
+        "response-008.json",
+        "/tmp/kubeclaw-reader-pipeline01/compiled-platform.complete.json"
+      ]
+    },
+    {
+      "id": "failure-action-is-bounded",
+      "observed": "unobserved",
+      "disposition": "NOT_EXECUTED; original outcome not satisfied",
+      "basis": "No healthy export/cleanup, authorized fault injection, fault run, persisted fault-state inspection or actual selected fault action. Documentary SAFE_STOP reading is not an observed injected-fault outcome. Request021 was authored but unsent.",
+      "evidence": [
+        "reader-record.md",
+        "request-021.txt",
+        "transport-020.json"
+      ]
+    }
+  ],
+  "actualHealthy": {
+    "runId": "run:first-project-001",
+    "journalHead": "sha256:539dcfd5a86bcba687d53e8ae521f6f6f9416775fd6bd000c82b830cf80558a6",
+    "terminal": "run.succeeded",
+    "coreExitCode": 0,
+    "rows": 221,
+    "streams": 12,
+    "events": 221,
+    "canonicalRecordsRewritten": false
+  },
+  "materialGaps": [
+    {
+      "kind": "original selected registry observation",
+      "exact": [
+        "kubeclaw.artifact-store:artifact-store",
+        "kubeclaw.git-workspace:git",
+        "kubeclaw.lint:executor",
+        "kubeclaw.repository-adapter:repository",
+        "kubeclaw.state-store:state"
+      ],
+      "boundary": "Finite participant evidence gap, not global transitive authority demand; no post-task assessor lookup can retroactively supply actor outcome."
+    },
+    {
+      "kind": "host prerequisite failure",
+      "exact": "Documented verify:plugin-packages reaches axe Chromium and fails loading libglib-2.0.so.0, browser exit127. Protected set-e shell ends. Outer Gateway exit0 is not package verification success.",
+      "boundary": "Separate host provision/optional broader verification path failure; not proof canonical healthy graph or five registrations are invalid. No library repair or rerun in this adjudication."
+    },
+    {
+      "kind": "original dependency-fault action absent",
+      "exact": "Healthy evidence not exported/cleaned and declared Redis fault never injected/run. Original task terminal/incomplete; cannot resume clock or merge later actor work into this attempt."
+    }
+  ],
+  "retainedNegatives": [
+    "Native actor Gateway/process metadata absent; disclosed relay transport limitation retained",
+    "Early platform JSON read ENOENT",
+    "Speculative documented path absent; no forbidden file actually read",
+    "Whole-file audit JSON decode failed on PTY echo prefix; original raw bytes retained, valid audit JSON begins after69prefix bytes",
+    "Some giant run terminal output lost to terminal retention; native helper raw state plus full redirected audit/inspector retained",
+    "Broad package verification failed; no retry or request021send",
+    "Original task incomplete; no fresh multi-role/AT/contrast/human/whole-gate award"
+  ],
+  "transportObservation": "All recorded write requests independently SHA-matched request/sent receipts with byteExact true; every transport receipt states no Root interpretation. No transport021 exists. This supports disclosed mechanical relay, not independent knowledge of unrecorded conversation.",
+  "custody": [
+    {
+      "path": "operations/pr13/evidence/reader-pipeline01-fresh-20261101/registered-task.json",
+      "sha256": "18844f566fdc213eaaaba340750f4e0533b68a59f9d16df6f35cb36325d54421"
+    },
+    {
+      "path": "operations/pr13/evidence/reader-pipeline01-fresh-20261101/reader-record.md",
+      "sha256": "0699215c156390cd5d3af174caa7a1d4da084a31df85be8f0a939722dfcaf0e8"
+    },
+    {
+      "path": "operations/pr13/evidence/reader-pipeline01-fresh-20261101/healthy-observed-summary.json",
+      "sha256": "7711fe307358e527cf240b7cd9196f145e37b2be143022559be6ab632de37449"
+    },
+    {
+      "path": "operations/pr13/evidence/reader-pipeline01-fresh-20261101/healthy-native-audit.stdout",
+      "sha256": "b1df207f23e8b661e1232aa6997138202c6aead13d228dd0eb43d110705fd6f7"
+    },
+    {
+      "path": "operations/pr13/evidence/reader-pipeline01-fresh-20261101/healthy-inspect.stdout",
+      "sha256": "57606f8b0154916394bd57c6561ea38fb8b6d9da1ed2013550e741d22b0e020a"
+    },
+    {
+      "path": "operations/pr13/evidence/reader-pipeline01-fresh-20261101/request-019.txt",
+      "sha256": "35436808fd9e135d4fa4330dac27bb5ab2ed4ec4d5a54ce1fce6226a41e94478"
+    },
+    {
+      "path": "operations/pr13/evidence/reader-pipeline01-fresh-20261101/request-021.txt",
+      "sha256": "7e04a15a6c295aca3a66535217c3e00d9444c77315ab7ae1910198a414bfd9f9"
+    },
+    {
+      "path": "operations/pr13/evidence/reader-pipeline01-fresh-20261101/response-020.json",
+      "sha256": "d96089708482efb07e4583dd5072a23e504f775493a98b25494bec8d8a178583"
+    }
+  ],
+  "ownerNext": "Root reconciles host/owned Redis/process tree and preserves/exports exact successful run authority before any authorized cleanup. Such owner custody work is not participant continuation or original fault-outcome PASS.",
+  "reviewActivity": "Read-only evidence/state inspection only; no Source/main mutation, native/model/Core rerun, fault injection or new actor."
+}

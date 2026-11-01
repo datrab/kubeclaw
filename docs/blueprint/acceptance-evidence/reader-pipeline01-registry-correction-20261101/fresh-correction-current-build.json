@@ -1,0 +1,14 @@
+{
+  "startedAt": "2026-11-01T04:44:25.817691+00:00",
+  "endedAt": "2026-11-01T04:49:34.955958+00:00",
+  "sourceRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+  "argv": [
+    "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh",
+    "node",
+    "scripts/docs-publication.mjs",
+    "build"
+  ],
+  "exitCode": 0,
+  "seconds": 309.13825672806706,
+  "scope": "Actual current publication after firstfresh reader materialcorrection; no AT/fresh/wholeaward"
+}

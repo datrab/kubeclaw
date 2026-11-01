@@ -1,0 +1,92 @@
+{
+  "audit": {
+    "schemaVersion": "pipeline-audit.v1",
+    "runId": "run:first-project-001",
+    "journalHead": "sha256:539dcfd5a86bcba687d53e8ae521f6f6f9416775fd6bd000c82b830cf80558a6",
+    "digest": "sha256:25425440749452a8206622a93142a9353f248fa075b1b017e3e1b154829160aa",
+    "eventCount": 221,
+    "terminals": [
+      {
+        "eventId": "event:d9864c53-d948-40d8-b200-0ab35d971fb0",
+        "sequence": 221,
+        "type": "run.succeeded",
+        "identity": {
+          "runId": "run:first-project-001"
+        },
+        "occurredAt": "2026-11-01T04:24:40.158Z",
+        "causationId": null,
+        "payload": {},
+        "sourceRecordHash": "sha256:539dcfd5a86bcba687d53e8ae521f6f6f9416775fd6bd000c82b830cf80558a6"
+      }
+    ]
+  },
+  "inspection": {
+    "boundRedisURL": "redis://127.0.0.1:37677",
+    "schemaVersion": "pipeline01-real-redis-case.v1",
+    "mode": "healthy",
+    "runId": "run:first-project-001",
+    "journalHead": "sha256:539dcfd5a86bcba687d53e8ae521f6f6f9416775fd6bd000c82b830cf80558a6",
+    "actualCoreTerminal": "run.succeeded",
+    "coreResult": {
+      "exitCode": 0,
+      "compiledBytesUnchanged": true,
+      "runId": "run:first-project-001"
+    },
+    "expectedSubscribedEventCount": 221,
+    "observerCheckpointFileExists": true,
+    "canonicalRecordsRewritten": false,
+    "credentialsRetained": false,
+    "rawRedisCollection": "/tmp/kubeclaw-reader-pipeline01/redis-stream-raw/collection-a8d83e51-6a69-4efc-8a74-64a73c6bf3f6",
+    "status": "HEALTHY_CORE_AUDIT_AND_REAL_SAME_RUN_REDIS_JOIN"
+  },
+  "streams": [
+    {
+      "stream": "reader-pipeline01:v2:telemetry:run.created",
+      "rows": 1
+    },
+    {
+      "stream": "reader-pipeline01:v2:telemetry:run.started",
+      "rows": 1
+    },
+    {
+      "stream": "reader-pipeline01:v2:telemetry:stage.started",
+      "rows": 8
+    },
+    {
+      "stream": "reader-pipeline01:v2:telemetry:attempt.created",
+      "rows": 8
+    },
+    {
+      "stream": "reader-pipeline01:v2:telemetry:attempt.dispatched",
+      "rows": 8
+    },
+    {
+      "stream": "reader-pipeline01:v2:telemetry:effect.requested",
+      "rows": 56
+    },
+    {
+      "stream": "reader-pipeline01:v2:telemetry:effect.accepted",
+      "rows": 56
+    },
+    {
+      "stream": "reader-pipeline01:v2:telemetry:effect.completed",
+      "rows": 56
+    },
+    {
+      "stream": "reader-pipeline01:v2:telemetry:attempt.completed",
+      "rows": 8
+    },
+    {
+      "stream": "reader-pipeline01:v2:telemetry:artifact.created",
+      "rows": 10
+    },
+    {
+      "stream": "reader-pipeline01:v2:telemetry:stage.succeeded",
+      "rows": 8
+    },
+    {
+      "stream": "reader-pipeline01:v2:telemetry:run.succeeded",
+      "rows": 1
+    }
+  ]
+}

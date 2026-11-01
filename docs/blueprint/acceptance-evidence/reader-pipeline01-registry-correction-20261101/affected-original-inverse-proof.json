@@ -1,0 +1,12 @@
+{
+  "baselineMatrixSHA256": "c53308f4b3bd3fa8c5fd8cce87df84a244ee1beafd20fc1bb453d853f2fffaf7",
+  "proposalSHA256": "7962e747c9652d3a4b2021fadd66d303e03f79b6104d32920b377d445495339d",
+  "qualifiedCandidateSHA256": "0321a4dc184fe3339466538f39c2a5b5cc87bdb07119707ea89813f2df9c12dd",
+  "affectedRecords": 58,
+  "unaffectedRecordsEntireExact": 86,
+  "only116NewImpactReviewerReportFieldsFinalized": true,
+  "restoreFinalizationOnlyRecoversProposalExact": true,
+  "restoreAffectedTransitionsRecoversWholeOriginalPhysicalBytes": true,
+  "noOldFieldOrHistoryRewrite": true,
+  "targetSource": "1a93145e51354630a4fb117bd379b011a89c5cf5"
+}

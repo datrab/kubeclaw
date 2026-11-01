@@ -1,0 +1,44 @@
+{
+  "scope": "Same corrected3Source files: three existing metadata files, selected claims/fragments/contracts and six existing owned input seals",
+  "Source": "PASS",
+  "Reader": "PASS",
+  "Quality": "PASS_AT_BOUNDED_METADATA_SCOPE",
+  "materialFindings": [],
+  "claimsSHA256": "d01d9218b63960685ede897d5f03d4d4abd5d7d380b62ca585bfc3c8a5f8a370",
+  "patchSHA256": "11ab63a0406831efc68114bb739a4ae6271f8635b756b16c8c403e79139f6d32",
+  "metadataHashes": {
+    "docs/config/publication-example-claims.json": "d01d9218b63960685ede897d5f03d4d4abd5d7d380b62ca585bfc3c8a5f8a370",
+    "scripts/docs-api-output-discovery.mjs": "1d54a8e5793619c9324ea9f616c6c1551cfc8a449f5599ec17e6c76fb7956406",
+    "scripts/docs-documentation-owner-purpose-custody.mjs": "7f0a2adb450b7a01a7817ec463ffdb29e256a3552c73ee2fba2a485226394e29"
+  },
+  "contextHashes": {
+    "complete-selected-claims-context.json": "b8096ceb8f460fb3795a2506b8ed99f82fb16ac27a99f9178725be742f1896ca",
+    "complete-selected-profiles-and-inverse.json": "bdd06f95b42b976ab3e6b26a73b38bc79afc06b127d9354f97434aa973fee209",
+    "complete-13-owning-context.json": "7c13703a462731359e065fda86856e195b57f1ff439fb0da60de7aab8a0c76bf"
+  },
+  "independentChecks": [
+    "Whole physical claims inverse restores current old claims byte-for-byte after only workflow page,2assets and3existingcontracts restored",
+    "Current changed3fence/5prose complete bodies match declared hashes; complete Source anchors occur exact requested count in qualified frozen Source",
+    "Complete3profiles invert exactly after six existing input seals restored; whole two guard-source inverses exact",
+    "All3 physical metadata hashes match manifest; no guards or native action predicates change"
+  ],
+  "meaning": [
+    "Current claims preserve original basis/limits and distinguish read-only frozen selected registry observation from existing runtime and historical fresh NOTCOMPLETE result",
+    "8stages/15caps10adapters/1observer and exact missing5identities are current supported frozen registry responsibilities; separate Gateway/Buster/canonical fixture authorities retained",
+    "Closed audit stdin and captured fault wrapper exit remain instructions before strict native state qualification, not Core-success/fault-pass inference",
+    "Genuine browser support/Redis loader composition is a host prerequisite and conventional observed host check, not global package verification or AT/contrast acceptance",
+    "Existing native/YAML/normal-publication-child input seals bind exactly current claims/page/twohelpers; copy/syntax-only semantics and acquired receipt boundaries unchanged"
+  ],
+  "unchangedScopes": [
+    "20blocks/21prose ordinals and471selected hosts remain; special workflowblock2 embedded body unchanged",
+    "Other185pages/allotherassets-contracts/checkvectors/authorities physically inverse exact",
+    "Native governance receipt0 confirms map/classification unchanged; no map seal needed",
+    "Library43allowances/syntax471code/rootclosure/182-36-51fact vectors require no invented refresh"
+  ],
+  "limits": [
+    "No new original participant/task/gate award; first fresh actorNOTCOMPLETE/fiveidentitygap/Chromium127/queuedinput/unsent021 retained",
+    "Root late export/cleanup is custody only, not participant4/5",
+    "No reruns/main/proposal mutations by reviewer; native checks/current artifact/publication/future fresh task remain separate",
+    "Prior global API/defaultgenerator/UNKNOWN/AT/contrast/AP10 boundaries unchanged"
+  ]
+}

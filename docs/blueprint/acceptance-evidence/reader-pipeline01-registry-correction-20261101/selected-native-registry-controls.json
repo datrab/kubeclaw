@@ -1,0 +1,20 @@
+{
+  "status": "PASS_READ_ONLY_ACTUAL_EXISTING_FROZEN_REGISTRY",
+  "runId": "run:first-project-001",
+  "snapshotDigest": "sha256:ced5c8890a2f607149952242facb99d66f681088352d13cd3572be92ef6ed110",
+  "stages": 8,
+  "selectedCapabilities": 15,
+  "uniqueAdapters": 10,
+  "observers": 1,
+  "fivePreviouslyUnobservedIDs": [
+    "kubeclaw.repository-adapter:repository",
+    "kubeclaw.artifact-store:artifact-store",
+    "kubeclaw.git-workspace:git",
+    "kubeclaw.state-store:state",
+    "kubeclaw.lint:executor"
+  ],
+  "negativeControls": 8,
+  "noExecution": true,
+  "noMutation": true,
+  "qualification": "Actual readonly projection +eight meaningful negatives performed before final additional configured-observer presence assertion. Actual observed oneconfigured observer/one output sameID satisfies added assertion; focused synthetic observer omission control retained separately."
+}

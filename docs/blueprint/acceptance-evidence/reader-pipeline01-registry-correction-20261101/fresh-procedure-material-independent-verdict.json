@@ -1,0 +1,41 @@
+{
+  "scope": "Three-file actual-reader material correction only; original failed actor/task unchanged",
+  "Source": "PASS",
+  "Reader": "PASS_PROCEDURE_COVERAGE_ONLY",
+  "Quality": "PASS_AT_CORRECTION_SCOPE",
+  "materialFindings": [],
+  "patchSHA256": "c2be9e77f0bb1146b3b98ab5d398185c025ce1bb0267bc784d09385f6b334dae",
+  "candidateHashes": {
+    "docs/site/use/workflows/README.md": "91a14e8418f2bfc0f7d3242deb77a2387448ff8598ea1db8cc1dcb32dd3ed946",
+    "docs/site/use/workflows/examples/minimal-compiled-redis.mjs": "5bc2998072d885410553a0094dc8a9260948f65573d8cf67e9ce44aa9117fdc0",
+    "docs/site/use/workflows/examples/minimal-redis-inspection.mjs": "1a53d19b148eb69b5ac72c1cd21668faa228cbd0837aa89ea88f8992693d354a"
+  },
+  "completeContextSHA256": "60ed92ec93f360a425152aa46aa963bc5333f3f6a4d6468c648b7eb934a5c29b",
+  "independentCustody": "Complete old3files match immutable f5c816 Source, proposed3files match whole context and manifest, all three complete native owning sources match actual maintained Source.",
+  "originalIdentityCoverage": "New documented runtime-identities joins integrity-checked frozen run snapshot, raw/original equality and canonical graph to8configured stages,15selected capabilities/10unique adapters and1observer with full package provenance. Exact previously missing repository/artifact/git/state/lint selected registrations are covered. Existing initial identities supplies Buster direct-command/JUnit plans and canonical fixture; Gateway lookup supplies forge agent/model. No arbitrary global/transitive census or unselected suite/fixture provider demanded.",
+  "authorityMeaning": [
+    "Native readRunSnapshot validates versioned digest/runtime schema before projection; graphSnapshot binds current canonical graph",
+    "Native frozenRegistryRecord records actual selected providers/configuration, enabled registrations, configured stages, complete registration/package provenance; no new catalogue timestamp normalization",
+    "Projection checks enabled membership, package equality, configured-stage owner equality, unique capability/adapter registry identity and selected configuration joins, complete configured capability set and observer presence",
+    "Read-only runner branch after installed Source/physical/tracked/canonical/marker guards but before runtime service imports; no password needed or execution/cleanup action"
+  ],
+  "interfaceMeaning": [
+    "Explicit audit stdin closure prevents script consuming queued terminal bytes; one command per prompt preserves sequencing",
+    "Fault wrapper status captured before strict inspector; neither zero nor nonzero wrapper exit becomes Core/fault qualification; wrong state still stops under set-e",
+    "Broad browser package tests separated from selected identity lookup; genuine browser/Redis loader composition and missing-lib host limitation explicit, no stub/check disable/hidden failure"
+  ],
+  "controlsAssessment": [
+    "Actual existing native frozen registry projection+8 meaningful negatives reviewed; not a new workflow/service/model run",
+    "Final configured-observer presence guard separately synthetic1positive/1negative; actual native positive originally observed same configured observer",
+    "Actual script/cat stdin closure and queued-marker control reviewed as PTY mechanics, not product audit",
+    "Synthetic status13 capture +strict wrong-inspector refusal reviewed; not actual fault success",
+    "No controls rerun by this reviewer"
+  ],
+  "limits": [
+    "Earlier fresh actor remains NOT_COMPLETE:1/2/3PASS,4partialFAIL,5unobserved; no retroactive completion from assessor/control work",
+    "Late Root offline export/cleanup is custody only, not participant4/5",
+    "Current public immutable Source/artifact/metadata/dependent seals/protected host preparation and NEW eligible original participant remain separate",
+    "Old failures/native capability negative/Chromium127/unsent021 and all original scope boundaries retained",
+    "No main/proposal mutation, new model/Core/service rerun or expanded audit by review"
+  ]
+}

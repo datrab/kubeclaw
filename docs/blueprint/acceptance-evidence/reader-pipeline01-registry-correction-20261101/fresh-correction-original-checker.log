@@ -1,0 +1,25 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: AP09-reader-workflows-20261020: relevant files changed; recheck only affected scope
++ actual - expected
+
++ 'docs/site/use/workflows/README.md'
+- ''
+
+    at validateCompletionRecords (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/check-ap09-acceptance-contract.mjs:85:12)
+    at checkContract (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/check-ap09-acceptance-contract.mjs:150:3)
+    at file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/check-ap09-acceptance-contract.mjs:160:39
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'docs/site/use/workflows/README.md',
+  expected: '',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.22.1
