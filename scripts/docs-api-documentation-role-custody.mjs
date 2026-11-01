@@ -10714,7 +10714,7 @@ const reviewedPublicationParserRecipe=frozenRecipes({
     },
     {
       "path": "scripts/docs-publication-instruction-syntax.mjs",
-      "sha256": "51424c23dcb60f8505fc35ddac9e90bd53d22c2e7803cf9f71bd4c5024437949"
+      "sha256": "a67002bba4e7a2759534dd206d558a79d96136162cb1abab4d77d9a6a74e5881"
     },
     {
       "path": "scripts/docs-publication-embedded-yaml.mjs",

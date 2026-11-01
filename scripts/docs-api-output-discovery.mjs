@@ -2697,7 +2697,7 @@ const reviewedPublicationYamlValidationInputs = Object.freeze({
     },
     {
       "path": "docs/config/publication-example-claims.json",
-      "sha256": "b04462f5d3e48e9aa32711c0475725da81071c88b4df8bbec8001c187c6d7a60"
+      "sha256": "0019f6a9d106a1630ef43ac8f2f95ad14e688b9a61f6193c5cdd07945d97b2a7"
     },
     {
       "path": "docs/site/use/diagnose.md",
@@ -3428,7 +3428,7 @@ const reviewedPublicationNativeValidation = Object.freeze({
     },
     {
       "path": "docs/config/publication-example-claims.json",
-      "sha256": "b04462f5d3e48e9aa32711c0475725da81071c88b4df8bbec8001c187c6d7a60"
+      "sha256": "0019f6a9d106a1630ef43ac8f2f95ad14e688b9a61f6193c5cdd07945d97b2a7"
     },
     {
       "path": "docs/site/extend/examples/minimal-stage/package.json",
@@ -3692,7 +3692,7 @@ const reviewedPublicationNativeValidation = Object.freeze({
     },
     {
       "path": "scripts/docs-publication-instruction-syntax.mjs",
-      "sha256": "51424c23dcb60f8505fc35ddac9e90bd53d22c2e7803cf9f71bd4c5024437949"
+      "sha256": "a67002bba4e7a2759534dd206d558a79d96136162cb1abab4d77d9a6a74e5881"
     },
     {
       "path": "scripts/docs-publication.mjs",
