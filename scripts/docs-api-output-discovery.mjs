@@ -2697,7 +2697,7 @@ const reviewedPublicationYamlValidationInputs = Object.freeze({
     },
     {
       "path": "docs/config/publication-example-claims.json",
-      "sha256": "e8e29e8ff3560fc6e3eb252d5a7b8fe9091ab8b672578832455c66e456895d1d"
+      "sha256": "dc132bc762d54068ce563e7df23fdad91af90c7b1798768a0e686ea4b3ab2a1f"
     },
     {
       "path": "docs/site/use/diagnose.md",
@@ -3428,7 +3428,7 @@ const reviewedPublicationNativeValidation = Object.freeze({
     },
     {
       "path": "docs/config/publication-example-claims.json",
-      "sha256": "e8e29e8ff3560fc6e3eb252d5a7b8fe9091ab8b672578832455c66e456895d1d"
+      "sha256": "dc132bc762d54068ce563e7df23fdad91af90c7b1798768a0e686ea4b3ab2a1f"
     },
     {
       "path": "docs/site/extend/examples/minimal-stage/package.json",
@@ -5577,7 +5577,7 @@ export function discoverScriptApiOutputs(root) {
   const eventContractOutputs=checkedEventContractDocumentationOutputs(root,documentationGraphCache.get(root),sourcePurposeClassifier,sourcePurposeSources);
   const publicationYamlInputs=checkedPublicationYamlValidationInputs(root,documentationGraphCache.get(root),sourcePurposeClassifier,sourcePurposeSources);
   const publicationNative=checkedPublicationNativeValidation(root,documentationGraphCache.get(root),sourcePurposeClassifier,sourcePurposeSources);
-  const topLevelPurposes=checkedTopLevelScriptPurposes(root,documentationGraphCache.get(root),sourcePurposeClassifier,sourcePurposeSources);
+  const topLevelPurposes=checkedTopLevelScriptPurposes(root,documentationGraphCache.get(root),sourcePurposeClassifier,sourcePurposeSources,documentationEntryPoints(JSON.parse(fs.readFileSync(path.join(root,'package.json'),'utf8')).scripts??{},false,root));
   const probe39=checkedOriginalProbe39Output(root,documentationGraphCache.get(root),sourcePurposeClassifier,sourcePurposeSources);
   const versionsMap=checkedVersionsMapOutputs(root,documentationGraphCache.get(root),sourcePurposeClassifier,sourcePurposeSources);
   const releaseRenderer=sourcePurposeSources.includes('scripts/updates/deployment-release.mjs')
@@ -5984,7 +5984,7 @@ export function discoverScriptOutputRoleClassifications(root) {
   const documentationTools=documentationToolSources(root);
   const sources=nodeOutputExecutableSources(root).filter(file=>!documentationTools.has(file));
   const classify=createSerializedOutputRoleClassifier(root,sources);
-  const topLevelPurposes=checkedTopLevelScriptPurposes(root,documentationGraphCache.get(root),classify,sources);
+  const topLevelPurposes=checkedTopLevelScriptPurposes(root,documentationGraphCache.get(root),classify,sources,documentationEntryPoints(JSON.parse(fs.readFileSync(path.join(root,'package.json'),'utf8')).scripts??{},false,root));
   const versionsMap=checkedVersionsMapOutputs(root,documentationGraphCache.get(root),classify,sources);
   const observations=discoverDeploymentNodeOutputObservations(root);
   const gitOpsProfile=checkedGitOpsOutputProfiles(root,documentationGraphCache.get(root));

@@ -4,7 +4,7 @@ import path from 'node:path';
 import {createHash} from 'node:crypto';
 
 const authorityPath = 'scripts/docs-api-top-level-script-purpose-authority.json';
-const authoritySha256 = 'a0cf010ffc16a1c952879698d9ede2ce38364807ec3a4996cf68c8fed26d0d1b';
+const authoritySha256 = '88850308d72e7f7595d0926dded683d1224731d7169f0648b97b0f3afe037f95';
 const currentPurposeInputBindings20261031 = Object.freeze([
   {
     "path": "docs/site/extend/lint.md",
@@ -31,9 +31,16 @@ const selectedSources = Object.freeze([
   'scripts/updates/deployment-release.mjs', 'scripts/updates/materialize-release.mjs',
   'scripts/updates/refresh-versions.mjs', 'scripts/updates/release-images.mjs', 'scripts/versions.mjs',
   'scripts/generate-plugin-dependency-aggregate.mjs',
+  'scripts/lib/docs-retained-configuration-formatters.mjs',
+  'scripts/lib/docs-retained-source.mjs',
 ]);
 const descriptor = role => Object.fromEntries(['line', 'sink', 'expression', 'sinkContract', 'role'].map(key => [key, role[key] ?? null]));
 const purposes = Object.freeze({
+  "scripts/lib/docs-retained-configuration-formatters.mjs:11": "Exact Source/caller-bound documentary environment-purpose prose formatter. Supplied meaning/owner/boundary text remains raw documentary text; no independent truth, HTML safety, runtime configuration or API classification grant.",
+  "scripts/lib/docs-retained-source.mjs:145": "Exact retained-language bundle JSON-plus-newline serializer at sealed construction callers. Arbitrary nested data remains UNKNOWN; not universal canonicalization, safe arbitrary getters/toJSON, current discovery or API admission.",
+  "scripts/lib/docs-retained-source.mjs:166": "Exact staged600 retained-language bundle write from the sealed projection caller; physical root/canonical parent/regular target and strictly outside-checkout target checks retained. Genuinely writes outside checkout; no permission to invoke it, general external-write authority, durability or hostile-filesystem guarantee.",
+  "scripts/lib/docs-retained-source.mjs:199": "Exact staged644 selected Markdown page write from sealed docs-generate retained branch after complete two/three-page destination validation. Writer alone has no path guard; a new caller or changed target branch fails this Source/caller seal. Not arbitrary path permission, read-only proof or durable transaction.",
+
   "scripts/generate-plugin-dependency-aggregate.mjs:21": "Exact native aggregate write/check occurrence: fresh extension discovery and ownership assertions precede the strict declaration report; raw native manifests and bounded schema-reference documents are serialized only to fixed docs/blueprint/generated/plugin-dependency-aggregate.json, or compared read-only to that same file. Nested schema/examples remain arbitrary raw data, not globally non-API or observed provider DATA. No API submission, schema-semantic validation, runtime role, credential or operational-owner grant.",
   'scripts/lint-baseline-update.mjs:74': 'selected local lint-baseline configuration rewrite after report/baseline digest, findings and approval-argument checks; not API submission',
   'scripts/lint-baseline-update.mjs:75': 'raw tool name and approved-fingerprint count status following the local lint-baseline write; unbounded text remains UNKNOWN',
@@ -52,7 +59,7 @@ const purposes = Object.freeze({
 // Whole Source/caller/receiver and canonical descriptors are checked afresh
 // BEFORE the receiving inventories' caches and ordinary mutable role fallback.
 // No product module is imported, invoked or fabricated by this qualification.
-export function checkedTopLevelScriptPurposes(root, graph, classify, sources) {
+export function checkedTopLevelScriptPurposes(root, graph, classify, sources, nativePackageEntries) {
   if (!sources.some(source => selectedSources.includes(source))) return null;
   const fail = detail => assert.fail(`API_PRODUCT_TOP_LEVEL_SOURCE_PURPOSE_UNQUALIFIED: ${detail}`);
   if (!path.isAbsolute(root) || fs.realpathSync(root) !== root) fail('canonical checkout root');
@@ -91,6 +98,25 @@ export function checkedTopLevelScriptPurposes(root, graph, classify, sources) {
   }
   if (!graph || JSON.stringify(graph.edges.filter(edge => selectedSources.includes(edge.target))) !== JSON.stringify(authority.incomingEdges)
     || JSON.stringify(graph.publicEntries.filter(entry => selectedSources.includes(entry.canonicalSource))) !== JSON.stringify(authority.publicEntries)) fail('changed caller or aliased public entry');
+  // These four raw UNKNOWN occurrences have a documentary purpose only under
+  // this exact caller context. The unselected editorial projection stays
+  // unselected: no docsReachable seed, module exclusion or execution grant.
+  const editorial = authority.retainedEditorialContext;
+  const retainedSources = ['scripts/lib/docs-retained-configuration-formatters.mjs', 'scripts/lib/docs-retained-source.mjs'];
+  if (!editorial || JSON.stringify(editorial.sources) !== JSON.stringify(retainedSources)) fail('retained editorial source roster');
+  const ancestors = new Set(retainedSources);
+  let changed = true;
+  while (changed) { const count = ancestors.size; for (const edge of graph.edges) if (ancestors.has(edge.target)) ancestors.add(edge.source); changed = ancestors.size !== count; }
+  if (!Array.isArray(nativePackageEntries)) fail('native package entry acquisition required');
+  const context = {
+    sources: retainedSources, ancestors: [...ancestors].sort(),
+    incomingEdges: graph.edges.filter(edge => ancestors.has(edge.target)),
+    packageEntries: nativePackageEntries.filter(entry => ancestors.has(entry.source)),
+    publicEntries: graph.publicEntries.filter(entry => ancestors.has(entry.canonicalSource) || ancestors.has(entry.source)),
+    aliases: graph.aliases,
+    unresolvedModuleOperations: graph.dynamicOperations.map(({source, expression, operation, hints}) => ({source, expression, operationSha256: hash(operation), hints})),
+  };
+  if (JSON.stringify(context) !== JSON.stringify(editorial)) fail('retained editorial caller/public/alias/dynamic context');
   const actual = selectedSources.flatMap(source => classify(source).map(role => ({source, ...descriptor(role)})));
   if (JSON.stringify(actual) !== JSON.stringify(authority.descriptors)) fail('canonical native slot/role roster; registry relabel or missing/new slot');
   const receipt = Object.freeze({

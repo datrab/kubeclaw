@@ -378,7 +378,8 @@ export function assertDocumentationOwnerAncestry(root,source,ancestors,docsReach
  return profile;
 }
 export function documentationOwnerNativeEntryMatches(source,entry){
- return reviewedDocumentationOwnerPurposes[source]?.allowedNativePackageEntries.some(value=>JSON.stringify(value)===JSON.stringify(entry))??false;
+ if(reviewedDocumentationOwnerPurposes[source]?.allowedNativePackageEntries.some(value=>JSON.stringify(value)===JSON.stringify(entry))??false)return true;
+ return false;
 }
 
 // Exact external CI caller seeds, separate from root-package/native entries.
@@ -541,7 +542,7 @@ const publicationExampleChildPurpose=freeze({
     },
     {
       "path": "docs/config/publication-example-claims.json",
-      "sha256": "e8e29e8ff3560fc6e3eb252d5a7b8fe9091ab8b672578832455c66e456895d1d"
+      "sha256": "dc132bc762d54068ce563e7df23fdad91af90c7b1798768a0e686ea4b3ab2a1f"
     },
     {
       "path": "package.json",

@@ -11,7 +11,9 @@
     "scripts/updates/refresh-versions.mjs": "f125cb70dd7dec201ab1415a61d21d5f87e8e6e8ea3f5bd8f2ce1deaa5a04356",
     "scripts/updates/release-images.mjs": "6c9afb34ba328142af2b086985ceda3313e74a48fac1608dc2271d8f80e47bf5",
     "scripts/versions.mjs": "c837f871d19a8d37bc1748c3f85db9cb46ccdf9d53b1c0aaa6f64c7c6efbf00b",
-    "scripts/generate-plugin-dependency-aggregate.mjs": "6e1953fccf9f5157c8c49533feba28f3c2560867ae545f33fa4ece7a143ef249"
+    "scripts/generate-plugin-dependency-aggregate.mjs": "6e1953fccf9f5157c8c49533feba28f3c2560867ae545f33fa4ece7a143ef249",
+    "scripts/lib/docs-retained-configuration-formatters.mjs": "4688fa761e4a5b5c0eedf75929b322d24c32940e53d8c2548a8fbf375e67df7c",
+    "scripts/lib/docs-retained-source.mjs": "ae43af2513846ec8a58c345e84d01a2c1d547e8b3fa25cd3c1829e721c6ab7b6"
   },
   "descriptors": [
     {
@@ -245,6 +247,38 @@
       "expression": null,
       "sinkContract": null,
       "role": "non-api"
+    },
+    {
+      "source": "scripts/lib/docs-retained-configuration-formatters.mjs",
+      "line": 11,
+      "sink": "return",
+      "expression": "`${environmentSourceProse(contract.purpose)} Owner: ${environmentSourceProse(contract.owner)}. Owning setting: ${environmentSourceProse(contract.owningSurface).replace(/\\.$/u, '')}.${producer ? ` Producer binding: ${producer.setting}.` : ''} Boundary: ${contract.boundary}.`",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "scripts/lib/docs-retained-source.mjs",
+      "line": 145,
+      "sink": "return",
+      "expression": "`${JSON.stringify(bundle, null, 2)}\\n`",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "scripts/lib/docs-retained-source.mjs",
+      "line": 166,
+      "sink": "fs.writeFileSync",
+      "expression": "export function stableBundleText(bundle) {\n  return `${JSON.stringify(bundle, null, 2)}\\n`;\n}",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "scripts/lib/docs-retained-source.mjs",
+      "line": 199,
+      "sink": "fs.writeFileSync",
+      "expression": "text",
+      "sinkContract": null,
+      "role": "unknown"
     }
   ],
   "inputs": [
@@ -563,6 +597,34 @@
     {
       "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
       "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+    },
+    {
+      "path": "scripts/docs-generate.mjs",
+      "sha256": "cc6e7b8d45bab47fb3ee40b63aef294eae1131d3e7123dd1d888502d390b6843"
+    },
+    {
+      "path": "scripts/docs-retained-language-projection.mjs",
+      "sha256": "f7c3e98554b8ae7832f00c9778708539e6d291e5d0055f88b6b6f8a3b3fc17ee"
+    },
+    {
+      "path": "scripts/lib/docs-retained-configuration-formatters.mjs",
+      "sha256": "4688fa761e4a5b5c0eedf75929b322d24c32940e53d8c2548a8fbf375e67df7c"
+    },
+    {
+      "path": "scripts/lib/docs-retained-configuration-projection.mjs",
+      "sha256": "11d18d828f7624d28d60f7dd91b99589e6046b6fed7ca0cd1912efd609f65f5c"
+    },
+    {
+      "path": "scripts/lib/docs-retained-language-bundle.mjs",
+      "sha256": "08d0b4414fbddccf4690bf0a71ceeed733ad1507f32bc6761cc9b91e853d54b7"
+    },
+    {
+      "path": "scripts/lib/docs-retained-prism-semantics.mjs",
+      "sha256": "3689263f56fe494d04bb9882e88dfe6b8dee3442039ab4736e494a56dc85fccd"
+    },
+    {
+      "path": "scripts/lib/docs-retained-source.mjs",
+      "sha256": "ae43af2513846ec8a58c345e84d01a2c1d547e8b3fa25cd3c1829e721c6ab7b6"
     }
   ],
   "incomingEdges": [
@@ -571,6 +633,18 @@
       "target": "scripts/updates/deployment-release.mjs",
       "kind": "import",
       "operation": "import { validateReleaseReceipt } from './updates/deployment-release.mjs';"
+    },
+    {
+      "source": "scripts/docs-generate.mjs",
+      "target": "scripts/lib/docs-retained-source.mjs",
+      "kind": "import",
+      "operation": "import { loadRetainedConfigurationSnapshot, assertRetainedPageDestinations, writeRetainedPage } from './lib/docs-retained-source.mjs';"
+    },
+    {
+      "source": "scripts/docs-retained-language-projection.mjs",
+      "target": "scripts/lib/docs-retained-source.mjs",
+      "kind": "import",
+      "operation": "import { storeRetainedLanguageBundle } from './lib/docs-retained-source.mjs';"
     },
     {
       "source": "scripts/gitops-bundle.mjs",
@@ -583,6 +657,24 @@
       "target": "scripts/updates/deployment-release.mjs",
       "kind": "import",
       "operation": "import { validateReleaseReceipt, validateRenderedRelease } from './updates/deployment-release.mjs';"
+    },
+    {
+      "source": "scripts/lib/docs-retained-configuration-projection.mjs",
+      "target": "scripts/lib/docs-retained-configuration-formatters.mjs",
+      "kind": "import",
+      "operation": "import {environmentConsumerPurpose,formatLocalHelmMeaning,formatApiOperationalMeaning,versionedApiSchemaContract} from './docs-retained-configuration-formatters.mjs';"
+    },
+    {
+      "source": "scripts/lib/docs-retained-language-bundle.mjs",
+      "target": "scripts/lib/docs-retained-source.mjs",
+      "kind": "import",
+      "operation": "import { assertEditorialSourceRevision, loadRetainedConfigurationSnapshot, stableBundleText, retainedSemanticSourceManifest } from './docs-retained-source.mjs';"
+    },
+    {
+      "source": "scripts/lib/docs-retained-prism-semantics.mjs",
+      "target": "scripts/lib/docs-retained-configuration-formatters.mjs",
+      "kind": "import",
+      "operation": "import {environmentConsumerPurpose,formatEnvironmentAggregate,formatLocalHelmMeaning} from './docs-retained-configuration-formatters.mjs';"
     },
     {
       "source": "scripts/updates/check-upstream-refresh.mjs",
@@ -639,6 +731,14 @@
       "canonicalSource": "scripts/generate-plugin-dependency-aggregate.mjs"
     },
     {
+      "path": "scripts/lib/docs-retained-configuration-formatters.mjs",
+      "canonicalSource": "scripts/lib/docs-retained-configuration-formatters.mjs"
+    },
+    {
+      "path": "scripts/lib/docs-retained-source.mjs",
+      "canonicalSource": "scripts/lib/docs-retained-source.mjs"
+    },
+    {
       "path": "scripts/lint-baseline-update.mjs",
       "canonicalSource": "scripts/lint-baseline-update.mjs"
     },
@@ -688,5 +788,780 @@
     "scripts/updates/package.json",
     "scripts/observability-retirement/package.json"
   ],
-  "authority": "Source-owned finite output-purpose/descriptor seal, not producer execution observations, global non-API classification, API admission or apply authorization."
+  "authority": "Source-owned finite output-purpose/descriptor seal, not producer execution observations, global non-API classification, API admission or apply authorization.",
+  "retainedEditorialContext": {
+    "sources": [
+      "scripts/lib/docs-retained-configuration-formatters.mjs",
+      "scripts/lib/docs-retained-source.mjs"
+    ],
+    "ancestors": [
+      "scripts/docs-generate.mjs",
+      "scripts/docs-retained-language-projection.mjs",
+      "scripts/lib/docs-retained-configuration-formatters.mjs",
+      "scripts/lib/docs-retained-configuration-projection.mjs",
+      "scripts/lib/docs-retained-language-bundle.mjs",
+      "scripts/lib/docs-retained-prism-semantics.mjs",
+      "scripts/lib/docs-retained-source.mjs"
+    ],
+    "incomingEdges": [
+      {
+        "source": "scripts/docs-generate.mjs",
+        "target": "scripts/lib/docs-retained-language-bundle.mjs",
+        "kind": "import",
+        "operation": "import { readVerifiedRetainedLanguageBundle } from './lib/docs-retained-language-bundle.mjs';"
+      },
+      {
+        "source": "scripts/docs-generate.mjs",
+        "target": "scripts/lib/docs-retained-source.mjs",
+        "kind": "import",
+        "operation": "import { loadRetainedConfigurationSnapshot, assertRetainedPageDestinations, writeRetainedPage } from './lib/docs-retained-source.mjs';"
+      },
+      {
+        "source": "scripts/docs-retained-language-projection.mjs",
+        "target": "scripts/lib/docs-retained-language-bundle.mjs",
+        "kind": "import",
+        "operation": "import { buildRetainedLanguageBundle } from './lib/docs-retained-language-bundle.mjs';"
+      },
+      {
+        "source": "scripts/docs-retained-language-projection.mjs",
+        "target": "scripts/lib/docs-retained-source.mjs",
+        "kind": "import",
+        "operation": "import { storeRetainedLanguageBundle } from './lib/docs-retained-source.mjs';"
+      },
+      {
+        "source": "scripts/lib/docs-retained-configuration-projection.mjs",
+        "target": "scripts/lib/docs-retained-configuration-formatters.mjs",
+        "kind": "import",
+        "operation": "import {environmentConsumerPurpose,formatLocalHelmMeaning,formatApiOperationalMeaning,versionedApiSchemaContract} from './docs-retained-configuration-formatters.mjs';"
+      },
+      {
+        "source": "scripts/lib/docs-retained-language-bundle.mjs",
+        "target": "scripts/lib/docs-retained-source.mjs",
+        "kind": "import",
+        "operation": "import { assertEditorialSourceRevision, loadRetainedConfigurationSnapshot, stableBundleText, retainedSemanticSourceManifest } from './docs-retained-source.mjs';"
+      },
+      {
+        "source": "scripts/lib/docs-retained-language-bundle.mjs",
+        "target": "scripts/lib/docs-retained-prism-semantics.mjs",
+        "kind": "import",
+        "operation": "import { projectRetainedPrismSemantics, PRISM_SEMANTIC_RECEIVERS } from './docs-retained-prism-semantics.mjs';"
+      },
+      {
+        "source": "scripts/lib/docs-retained-language-bundle.mjs",
+        "target": "scripts/lib/docs-retained-configuration-projection.mjs",
+        "kind": "import",
+        "operation": "import { projectRetainedInventoryLanguage } from './docs-retained-configuration-projection.mjs';"
+      },
+      {
+        "source": "scripts/lib/docs-retained-prism-semantics.mjs",
+        "target": "scripts/lib/docs-retained-configuration-formatters.mjs",
+        "kind": "import",
+        "operation": "import {environmentConsumerPurpose,formatEnvironmentAggregate,formatLocalHelmMeaning} from './docs-retained-configuration-formatters.mjs';"
+      },
+      {
+        "source": "scripts/lib/docs-retained-prism-semantics.mjs",
+        "target": "scripts/lib/docs-retained-configuration-projection.mjs",
+        "kind": "import",
+        "operation": "import {projectRetainedInventoryLanguage} from './docs-retained-configuration-projection.mjs';"
+      }
+    ],
+    "packageEntries": [
+      {
+        "name": "docs:generate",
+        "command": "node scripts/docs-generate.mjs",
+        "source": "scripts/docs-generate.mjs"
+      },
+      {
+        "name": "docs:generate:check",
+        "command": "node scripts/docs-generate.mjs --check",
+        "source": "scripts/docs-generate.mjs"
+      }
+    ],
+    "publicEntries": [
+      {
+        "path": "scripts/docs-generate.mjs",
+        "canonicalSource": "scripts/docs-generate.mjs"
+      },
+      {
+        "path": "scripts/docs-retained-language-projection.mjs",
+        "canonicalSource": "scripts/docs-retained-language-projection.mjs"
+      },
+      {
+        "path": "scripts/lib/docs-retained-configuration-formatters.mjs",
+        "canonicalSource": "scripts/lib/docs-retained-configuration-formatters.mjs"
+      },
+      {
+        "path": "scripts/lib/docs-retained-configuration-projection.mjs",
+        "canonicalSource": "scripts/lib/docs-retained-configuration-projection.mjs"
+      },
+      {
+        "path": "scripts/lib/docs-retained-language-bundle.mjs",
+        "canonicalSource": "scripts/lib/docs-retained-language-bundle.mjs"
+      },
+      {
+        "path": "scripts/lib/docs-retained-prism-semantics.mjs",
+        "canonicalSource": "scripts/lib/docs-retained-prism-semantics.mjs"
+      },
+      {
+        "path": "scripts/lib/docs-retained-source.mjs",
+        "canonicalSource": "scripts/lib/docs-retained-source.mjs"
+      }
+    ],
+    "aliases": [],
+    "unresolvedModuleOperations": [
+      {
+        "source": "scripts/check-ap08-effectful-guide.mjs",
+        "expression": "import(pathToFileURL(path.join(root, 'skills/nova/core/src/index.ts')).href)",
+        "operationSha256": "e37fdf35d00d84370f841ecce9a848d2ba923cbdd680bc13a40a22df184455f6",
+        "hints": [
+          "..",
+          "skills/nova/core/src/index.ts"
+        ]
+      },
+      {
+        "source": "scripts/check-ap08-effectful-guide.mjs",
+        "expression": "import(pathToFileURL(path.join(root, 'skills/nova/core/effects/identity.ts')).href)",
+        "operationSha256": "cd2b2596fe713204410154e1c03df87428ab0094a714d6bf50051d06682fb2cc",
+        "hints": [
+          "..",
+          "skills/nova/core/effects/identity.ts"
+        ]
+      },
+      {
+        "source": "scripts/check-ap08-effectful-guide.mjs",
+        "expression": "import(pathToFileURL(path.join(root, 'skills/nova/plugins/blueprint-sync/src/stage.ts')).href)",
+        "operationSha256": "e2425fd5a1b432b923d23c3dfae5ff4164ee2b7f876e1ac6a56deffe420649e6",
+        "hints": [
+          "..",
+          "skills/nova/plugins/blueprint-sync/src/stage.ts"
+        ]
+      },
+      {
+        "source": "scripts/check-ap08-minimal-plugin.mjs",
+        "expression": "import(pathToFileURL(path.join(root, 'skills/nova/core/src/index.ts')).href)",
+        "operationSha256": "e37fdf35d00d84370f841ecce9a848d2ba923cbdd680bc13a40a22df184455f6",
+        "hints": [
+          "..",
+          "skills/nova/core/src/index.ts"
+        ]
+      },
+      {
+        "source": "scripts/check-ap08-minimal-plugin.mjs",
+        "expression": "import(pathToFileURL(path.join(root, 'skills/nova/core/execution/engine-runtime.ts')).href)",
+        "operationSha256": "a34a5bb2c9caeef62aeca9eb82749e5f3834a7fe0800bddb00ef554b688f514c",
+        "hints": [
+          "..",
+          "skills/nova/core/execution/engine-runtime.ts"
+        ]
+      },
+      {
+        "source": "scripts/check-core-architecture-guides.mjs",
+        "expression": "import(pathToFileURL(path.join(root,\n  'skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts')).href)",
+        "operationSha256": "e95967a94f6574e73f78cc3d3d06be4ee16d019fff2a4be68287d1221c63a631",
+        "hints": [
+          "..",
+          "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts"
+        ]
+      },
+      {
+        "source": "scripts/check-platform-specialist-guides.mjs",
+        "expression": "import(path.join(root, 'charts/kubeclaw/files/config', file))",
+        "operationSha256": "7ee198b79c5c7c3c21e63ff57fd03b7ad27cd8f233b8b7e49d58a73d18686f85",
+        "hints": [
+          "..",
+          "charts/kubeclaw/files/config"
+        ]
+      },
+      {
+        "source": "scripts/docs-configuration-inventory.mjs",
+        "expression": "import(pathToFileURL(path.join(root, file)).href)",
+        "operationSha256": "53fc856d785475a3bd077b8cf5cc078b996dbe3ab2f00afaa48fe29e34b47f64",
+        "hints": [
+          "--root"
+        ]
+      },
+      {
+        "source": "scripts/docs-configuration-inventory.mjs",
+        "expression": "import(pathToFileURL(path.join(root, 'skills/common/plugin-runtime/foundation/registry/configuration.ts')).href)",
+        "operationSha256": "8bdbec08e9102d0d8bd5c43ed99a3e7d7701b843be8b0c997aa0083e2209faed",
+        "hints": [
+          "--root",
+          "skills/common/plugin-runtime/foundation/registry/configuration.ts"
+        ]
+      },
+      {
+        "source": "scripts/docs-configuration-inventory.mjs",
+        "expression": "import(pathToFileURL(path.join(root, 'skills/common/plugin-runtime/foundation/registry/schema.ts')).href)",
+        "operationSha256": "8bdbec08e9102d0d8bd5c43ed99a3e7d7701b843be8b0c997aa0083e2209faed",
+        "hints": [
+          "--root",
+          "skills/common/plugin-runtime/foundation/registry/schema.ts"
+        ]
+      },
+      {
+        "source": "scripts/docs-configuration-inventory.mjs",
+        "expression": "import(pathToFileURL(path.join(root, 'skills/nova/plugins/human-approval/src/approval.ts')).href)",
+        "operationSha256": "8bdbec08e9102d0d8bd5c43ed99a3e7d7701b843be8b0c997aa0083e2209faed",
+        "hints": [
+          "--root",
+          "skills/nova/plugins/human-approval/src/approval.ts"
+        ]
+      },
+      {
+        "source": "scripts/docs-configuration-inventory.mjs",
+        "expression": "import(pathToFileURL(path.join(root, 'skills/buster/plugins/direct-command/src/provider.js')).href)",
+        "operationSha256": "8bdbec08e9102d0d8bd5c43ed99a3e7d7701b843be8b0c997aa0083e2209faed",
+        "hints": [
+          "--root",
+          "skills/buster/plugins/direct-command/src/provider.js"
+        ]
+      },
+      {
+        "source": "scripts/docs-configuration-inventory.mjs",
+        "expression": "import(pathToFileURL(path.join(root, 'skills/common/plugins/command-runner/src/adapter.ts')).href)",
+        "operationSha256": "8bdbec08e9102d0d8bd5c43ed99a3e7d7701b843be8b0c997aa0083e2209faed",
+        "hints": [
+          "--root",
+          "skills/common/plugins/command-runner/src/adapter.ts"
+        ]
+      },
+      {
+        "source": "scripts/docs-lint-policy-reference.mjs",
+        "expression": "import(path.join(\n  root, 'skills/nova/plugins/lint/src/engine/tool-registry.ts'))",
+        "operationSha256": "ade2110fbe7ee1d00ed7b25bea0c4876c140d053cf65bd9babfd13ec5cc17847",
+        "hints": [
+          "..",
+          "skills/nova/plugins/lint/src/engine/tool-registry.ts"
+        ]
+      },
+      {
+        "source": "scripts/docs-lint-policy-reference.mjs",
+        "expression": "import(path.join(root, 'charts/kubeclaw/files/config', file))",
+        "operationSha256": "7ee198b79c5c7c3c21e63ff57fd03b7ad27cd8f233b8b7e49d58a73d18686f85",
+        "hints": [
+          "..",
+          "charts/kubeclaw/files/config"
+        ]
+      },
+      {
+        "source": "scripts/updates/check-renovate.mjs",
+        "expression": "import(pathToFileURL(`${renovate}/dist/modules/manager/custom/regex/index.js`))",
+        "operationSha256": "f26a92f09b064a8a8d5b21d1f768ec0c9e6d0e6f8dde478aa8289239373e21c7",
+        "hints": [
+          "/usr/local/renovate"
+        ]
+      },
+      {
+        "source": "scripts/updates/check-renovate.mjs",
+        "expression": "import(pathToFileURL(`${renovate}/dist/workers/repository/update/branch/auto-replace.js`))",
+        "operationSha256": "c58d04ee402b3ef5d4f6a49e39c3d10c1e83191b05408ca658c301b8aad972be",
+        "hints": [
+          "/usr/local/renovate"
+        ]
+      },
+      {
+        "source": "scripts/updates/check-renovate.mjs",
+        "expression": "import(pathToFileURL(`${renovate}/dist/config/global.js`))",
+        "operationSha256": "224bee0f50d1aa5b08999e431df0c12045834547bdcd9a7693674dd9846fb51b",
+        "hints": [
+          "/usr/local/renovate"
+        ]
+      },
+      {
+        "source": "skills/buster/engine/test-gates/provider-child.mjs",
+        "expression": "import(pathToFileURL(command.modulePath).href)",
+        "operationSha256": "7ba39d5ac689a95f850fbd9b36616bc9c0e53573dce46a4ee68ccdf03fa21b00",
+        "hints": []
+      },
+      {
+        "source": "skills/buster/engine/test-gates/report-adapter-child.mjs",
+        "expression": "import(pathToFileURL(command.modulePath).href)",
+        "operationSha256": "92f943125dde721feb4e58ecd302ddbb2b1a0188295ba4b4ee7af3956300d45b",
+        "hints": []
+      },
+      {
+        "source": "skills/common/plugin-runtime/foundation/isolation/child.mjs",
+        "expression": "import(pathToFileURL(command.modulePath).href)",
+        "operationSha256": "92f943125dde721feb4e58ecd302ddbb2b1a0188295ba4b4ee7af3956300d45b",
+        "hints": []
+      },
+      {
+        "source": "skills/common/plugin-runtime/foundation/registry/activation.ts",
+        "expression": "import(pathToFileURL(`${entry.package.root}/${entry.registration.module}`).href)",
+        "operationSha256": "ad9269138c113776d32c11d9de9a5dc42c33da196db2fce463245eef4fbaeee7",
+        "hints": []
+      },
+      {
+        "source": "skills/common/plugin-runtime/foundation/registry/import-audit-child.mjs",
+        "expression": "require(name)",
+        "operationSha256": "ba0f2213e279c1cc9f943017a7a82bc4d260d2f17a1bde4c050191157dca88f0",
+        "hints": []
+      },
+      {
+        "source": "skills/common/plugin-runtime/foundation/registry/import-audit-child.mjs",
+        "expression": "require(name)",
+        "operationSha256": "ba0f2213e279c1cc9f943017a7a82bc4d260d2f17a1bde4c050191157dca88f0",
+        "hints": []
+      },
+      {
+        "source": "skills/common/plugin-runtime/foundation/registry/import-audit-child.mjs",
+        "expression": "require(name)",
+        "operationSha256": "ba0f2213e279c1cc9f943017a7a82bc4d260d2f17a1bde4c050191157dca88f0",
+        "hints": []
+      },
+      {
+        "source": "skills/common/plugin-runtime/foundation/registry/import-audit-child.mjs",
+        "expression": "require(name)",
+        "operationSha256": "ba0f2213e279c1cc9f943017a7a82bc4d260d2f17a1bde4c050191157dca88f0",
+        "hints": []
+      },
+      {
+        "source": "skills/common/plugin-runtime/foundation/registry/import-audit-child.mjs",
+        "expression": "import(pathToFileURL(modulePath).href)",
+        "operationSha256": "5cc87864b98ca34840541a357ee2c6a385acac3f2cbb8765cff64e04c4dc241a",
+        "hints": []
+      },
+      {
+        "source": "tests/verification/contracts/check-nova-journal-scale.mts",
+        "expression": "import(pathToFileURL(path.resolve('skills/nova/core/src/index.ts')).href)",
+        "operationSha256": "889d35a5cff7b6cfb752b6cf89f7b7ff27f8807ccca483ee4edb8a57743fdc5b",
+        "hints": [
+          "skills/nova/core/src/index.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/check-pipeline-observability-legacy-cutover.mjs",
+        "expression": "import(moduleUrl)",
+        "operationSha256": "7c8fe398cd82d5ea80560281e00f6154b09b15615233da0a8b56ac03f861e51b",
+        "hints": [
+          "../../..",
+          "skills/common/plugin-runtime/foundation/observability/durable-records.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+        "expression": "import(pathToFileURL(path.resolve('tests/verification/reliability/nova-remote-faults.mts')).href)",
+        "operationSha256": "a528a93dc369322c4618e4b1cd168ab5d9667b6524d704793382926ea407ebf9",
+        "hints": [
+          "tests/verification/reliability/nova-remote-faults.mts"
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/check-pipeline-visual-legacy-comparison.mts",
+        "expression": "import(`${pathToFileURL(legacyModule).href}?proof=1`)",
+        "operationSha256": "a185e66be5b82e2eefe7e69e65c8253fb30220eeca36f661f1bc429bc1fb604b",
+        "hints": [
+          ".visual-legacy-comparison-",
+          "visual-reg-image.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/check-plugin-system-v2-boundaries.mjs",
+        "expression": "import(pathToFileURL(path.resolve('skills/nova/core/src/index.ts')).href)",
+        "operationSha256": "889d35a5cff7b6cfb752b6cf89f7b7ff27f8807ccca483ee4edb8a57743fdc5b",
+        "hints": [
+          "skills/nova/core/src/index.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs",
+        "expression": "import(pathToFileURL(path.resolve('skills/nova/core/src/index.ts')).href)",
+        "operationSha256": "889d35a5cff7b6cfb752b6cf89f7b7ff27f8807ccca483ee4edb8a57743fdc5b",
+        "hints": [
+          "skills/nova/core/src/index.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/check-plugin-system-v2-capability-security.mjs",
+        "expression": "import(pathToFileURL(\n  path.resolve('skills/nova/core/src/index.ts'),\n).href)",
+        "operationSha256": "b85b66f28ec93d86b284c9485cc97218a276d56c1d52ecdba20d9496b0dc0567",
+        "hints": [
+          "skills/nova/core/src/index.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/check-plugin-system-v2-e2e.mjs",
+        "expression": "import(pathToFileURL(path.resolve('skills/nova/core/src/index.ts')).href)",
+        "operationSha256": "889d35a5cff7b6cfb752b6cf89f7b7ff27f8807ccca483ee4edb8a57743fdc5b",
+        "hints": [
+          "skills/nova/core/src/index.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/check-plugin-system-v2-external-engine.mjs",
+        "expression": "import(\n  pathToFileURL(path.resolve('skills/nova/core/execution/engine.ts')).href\n)",
+        "operationSha256": "f64cf53adb48ac6df52464b11d33b0d49d24ff81e68419d5e64ee090fbd49ce9",
+        "hints": [
+          "skills/nova/core/execution/engine.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/check-plugin-system-v2-external-engine.mjs",
+        "expression": "import(\n  pathToFileURL(path.resolve('skills/common/plugin-runtime/foundation/registry/digest.ts')).href\n)",
+        "operationSha256": "09e8c611e647b7be6bac31e7ea09ff64f59a566d17ffe07bc4aa3744d0b4e6d0",
+        "hints": [
+          "skills/common/plugin-runtime/foundation/registry/digest.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/check-plugin-system-v2-import-safety.mjs",
+        "expression": "import(pathToFileURL(path.resolve('skills/nova/core/src/index.ts')).href)",
+        "operationSha256": "889d35a5cff7b6cfb752b6cf89f7b7ff27f8807ccca483ee4edb8a57743fdc5b",
+        "hints": [
+          "skills/nova/core/src/index.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/check-plugin-system-v2-installation.mjs",
+        "expression": "import(pathToFileURL(path.resolve('skills/nova/core/src/index.ts')).href)",
+        "operationSha256": "889d35a5cff7b6cfb752b6cf89f7b7ff27f8807ccca483ee4edb8a57743fdc5b",
+        "hints": [
+          "skills/nova/core/src/index.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/check-plugin-system-v2-installation.mjs",
+        "expression": "import(\n  pathToFileURL(path.resolve('skills/common/plugin-runtime/foundation/registry/digest.ts')).href\n)",
+        "operationSha256": "09e8c611e647b7be6bac31e7ea09ff64f59a566d17ffe07bc4aa3744d0b4e6d0",
+        "hints": [
+          "skills/common/plugin-runtime/foundation/registry/digest.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/check-plugin-system-v2-isolation.mjs",
+        "expression": "import(\n  pathToFileURL(path.resolve('skills/common/plugin-runtime/foundation/isolation/runner.ts')).href\n)",
+        "operationSha256": "970ec726dbfbda48b319202cbd6750df8d566a1179ecda67fe75c126a4c95ec2",
+        "hints": [
+          "skills/common/plugin-runtime/foundation/isolation/runner.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/check-plugin-system-v2-lifecycle.mjs",
+        "expression": "import(pathToFileURL(path.resolve('skills/nova/core/src/index.ts')).href)",
+        "operationSha256": "889d35a5cff7b6cfb752b6cf89f7b7ff27f8807ccca483ee4edb8a57743fdc5b",
+        "hints": [
+          "skills/nova/core/src/index.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/check-plugin-system-v2-phase11.mts",
+        "expression": "import(pathToFileURL(path.join(\n  root,\n  'skills/nova/core/src/index.ts',\n)).href)",
+        "operationSha256": "e8f74385e9785e6694c345674762012783894301e8062b9d6af395441b289d9f",
+        "hints": [
+          ".",
+          "skills/nova/core/src/index.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/check-plugin-system-v2-phase11.mts",
+        "expression": "import(pathToFileURL(path.join(\n  root,\n  'skills/common/plugin-runtime/foundation/registry/digest.ts',\n)).href)",
+        "operationSha256": "8e830b795402c27f33e62db6373b497b35d4387e649e198d3d200d84e5289872",
+        "hints": [
+          ".",
+          "skills/common/plugin-runtime/foundation/registry/digest.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/check-plugin-system-v2-phase6.mjs",
+        "expression": "import(pathToFileURL(\n  path.resolve('skills/nova/core/src/index.ts'),\n).href)",
+        "operationSha256": "b85b66f28ec93d86b284c9485cc97218a276d56c1d52ecdba20d9496b0dc0567",
+        "hints": [
+          "skills/nova/core/src/index.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/check-plugin-system-v2-phase6.mjs",
+        "expression": "import(pathToFileURL(\n  path.resolve('skills/nova/core/execution/engine-snapshots.ts'),\n).href)",
+        "operationSha256": "a361f79337e54dad60f0661742503a0dea562ed2a3057aea521f0202911a4b36",
+        "hints": [
+          "skills/nova/core/execution/engine-snapshots.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/check-plugin-system-v2-phase6.mjs",
+        "expression": "import(pathToFileURL(\n  path.resolve('skills/nova/core/execution/run-root.ts'),\n).href)",
+        "operationSha256": "a85f1967d10e57cf675ab004087ec646d216f590fcd6365bbfd387cd43eb1387",
+        "hints": [
+          "skills/nova/core/execution/run-root.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/check-plugin-system-v2-phase7.mjs",
+        "expression": "import(pathToFileURL(\n  path.resolve('skills/nova/core/src/index.ts'),\n).href)",
+        "operationSha256": "b85b66f28ec93d86b284c9485cc97218a276d56c1d52ecdba20d9496b0dc0567",
+        "hints": [
+          "skills/nova/core/src/index.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/check-plugin-system-v2-platform-config.mjs",
+        "expression": "import(pathToFileURL(path.resolve('skills/nova/core/src/index.ts')).href)",
+        "operationSha256": "889d35a5cff7b6cfb752b6cf89f7b7ff27f8807ccca483ee4edb8a57743fdc5b",
+        "hints": [
+          "skills/nova/core/src/index.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/check-plugin-system-v2-registry.mjs",
+        "expression": "import(pathToFileURL(path.resolve('skills/nova/core/src/index.ts')).href)",
+        "operationSha256": "889d35a5cff7b6cfb752b6cf89f7b7ff27f8807ccca483ee4edb8a57743fdc5b",
+        "hints": [
+          "skills/nova/core/src/index.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/check-project-compiler.mts",
+        "expression": "import(pathToFileURL(compilerFile).href)",
+        "operationSha256": "b6469708ec3764fbc4218b5f069a97125f3b5bd4d491ad4166b8fdbe8c9d5914",
+        "hints": [
+          ".",
+          "skills/nova",
+          "nova-project-proof-",
+          "runtime",
+          "skills",
+          "packages/nova-project/compiler.ts",
+          "project/compiler.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/historical-branch-acceptance/delivery-manifest-v3-compiler-recovery-independent.test.mjs",
+        "expression": "import(pathToFileURL(path.join(root, relative)).href)",
+        "operationSha256": "5d42ff2dc06c25c59aaa847164193273f4fa8a9a3643059d3f5e6b2941c6c666",
+        "hints": []
+      },
+      {
+        "source": "tests/verification/historical-branch-acceptance/delivery-manifest-v3-contract-independent.test.mjs",
+        "expression": "import(pathToFileURL(path.join(\n  sourceRoot,\n  'contracts/delivery-manifest/v3/src/index.ts',\n)).href)",
+        "operationSha256": "bc194707b2f64513567be034e7717326a916b7be55ee523bf8dfbe97761439fa",
+        "hints": [
+          "contracts/delivery-manifest/v3/src/index.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/historical-branch-acceptance/delivery-manifest-v3-summary-mode-independent.test.mjs",
+        "expression": "import(pathToFileURL(path.join(sourceRoot, 'skills/nova/plugins/project-summary/src/summary.ts')).href)",
+        "operationSha256": "cdef21f91d925aa2a8ed8528a82220ca5caf4768d494fc5877698817cc09ef5e",
+        "hints": [
+          "skills/nova/plugins/project-summary/src/summary.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/historical-branch-acceptance/delivery-manifest-v3-summary-mode-independent.test.mjs",
+        "expression": "import(pathToFileURL(path.join(sourceRoot, 'skills/common/plugins/artifact-store/src/adapter.ts')).href)",
+        "operationSha256": "7bba4a2304fed4843e5928e450612b774fab9a8c5c261c22da60fc03609c38c4",
+        "hints": [
+          "skills/common/plugins/artifact-store/src/adapter.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/reliability/observability-replay.test.mjs",
+        "expression": "import(pathToFileURL(path.join(sourceRoot, 'skills/common/plugin-runtime/foundation/observability/durable-delivery.ts')).href)",
+        "operationSha256": "de48826a3b343df431354abd6e5a32236fa2b860f736a66f934e6288b7bd64f7",
+        "hints": [
+          "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/reliability/observability-replay.test.mjs",
+        "expression": "import(pathToFileURL(path.join(sourceRoot, 'skills/common/plugin-runtime/foundation/observability/durable-attempts.ts')).href)",
+        "operationSha256": "749f576885a259dc25e24f58cfceed0cefaf0320a56f03daccddea5d967dbb62",
+        "hints": [
+          "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/reliability/review-cache-legacy-prefix.test.mjs",
+        "expression": "import(pathToFileURL(path.join(core,'execution/engine-snapshots.ts')))",
+        "operationSha256": "e2841bf836d362b9924012b29ecd09ec2fe8cb934d9dc16c22e6067ed4fe36cf",
+        "hints": [
+          "core",
+          "execution/engine-snapshots.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/reliability/review-cache-legacy-prefix.test.mjs",
+        "expression": "import(pathToFileURL(path.join(selected,'repository-audit-cache.ts')))",
+        "operationSha256": "e2841bf836d362b9924012b29ecd09ec2fe8cb934d9dc16c22e6067ed4fe36cf",
+        "hints": [
+          "v4",
+          "review",
+          ".",
+          "skills/nova/plugins/review/src",
+          "repository-audit-cache.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/reliability/review-cache-legacy-prefix.test.mjs",
+        "expression": "import(pathToFileURL(path.join(selected,'review-content-cache.ts')))",
+        "operationSha256": "e2841bf836d362b9924012b29ecd09ec2fe8cb934d9dc16c22e6067ed4fe36cf",
+        "hints": [
+          "v4",
+          "review",
+          ".",
+          "skills/nova/plugins/review/src",
+          "review-content-cache.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/reliability/review-evidence-compiler-recovery.test.mjs",
+        "expression": "import(pathToFileURL(target).href)",
+        "operationSha256": "c45f88e16e9e627c20989fe8a9c976d898f95447072def8e91709470064e46f8",
+        "hints": [
+          "review-compiler-recovery-",
+          "original",
+          "../../fixtures/repair-budget/legacy-review-compiler.json",
+          "utf8"
+        ]
+      },
+      {
+        "source": "tests/verification/reliability/review-report-compiler-recovery.test.mjs",
+        "expression": "import(pathToFileURL(target).href)",
+        "operationSha256": "c45f88e16e9e627c20989fe8a9c976d898f95447072def8e91709470064e46f8",
+        "hints": [
+          "report-archived-",
+          "original",
+          "../../fixtures/repair-budget/legacy-review-compiler.json",
+          "utf8"
+        ]
+      },
+      {
+        "source": "tests/verification/reliability/runtime-dispatch-native-profile.test.mjs",
+        "expression": "import(pathToFileURL(path.join(source,'skills/nova/core/src/index.ts')))",
+        "operationSha256": "912847ae35aabb8bc8cf9c13aee438081ebeb6fec5539f0e8ab691c23dcbe477",
+        "hints": [
+          ".",
+          "skills/nova/core/src/index.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/reliability/runtime-dispatch-native-profile.test.mjs",
+        "expression": "import(pathToFileURL(path.join(source,'skills/nova/core/execution/engine-snapshots.ts')))",
+        "operationSha256": "8c331c82fbe760354b5ef2102b7f7a866e0fa5dd8af3993125136e2ae6fe4075",
+        "hints": [
+          ".",
+          "skills/nova/core/execution/engine-snapshots.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/reliability/runtime-dispatch-native-profile.test.mjs",
+        "expression": "import(pathToFileURL(path.join(source,'skills/nova/core/execution/engine-runtime.ts')))",
+        "operationSha256": "e93480229ffa5a42ab780c9196a58d401c2dbcc90e5c06092cab9f82e77ae7bf",
+        "hints": [
+          ".",
+          "skills/nova/core/execution/engine-runtime.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/reliability/runtime-dispatch-native-profile.test.mjs",
+        "expression": "import(pathToFileURL(path.join(source,'skills/nova/core/execution/run-root.ts')))",
+        "operationSha256": "836257c7ac96cfd28425a6a3fb92ebbacb923fd4b939046f253876a210f3e96d",
+        "hints": [
+          ".",
+          "skills/nova/core/execution/run-root.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/reliability/runtime-dispatch-native-profile.test.mjs",
+        "expression": "import(pathToFileURL(path.join(source,'skills/nova/plugins/architecture-validator/src/protocol.ts')))",
+        "operationSha256": "44e021555e4ad39af6d082268666d36e11bca90a07ed3921ce86eed1a4cda691",
+        "hints": [
+          ".",
+          "skills/nova/plugins/architecture-validator/src/protocol.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/reliability/runtime-dispatch-native-profile.test.mjs",
+        "expression": "import(pathToFileURL(path.join(modules,'review-graph.ts')))",
+        "operationSha256": "8cee6df5e6133383bdc138fab9d1ea4eba3b50d30d92e9514d5148f148a226f9",
+        "hints": [
+          ".",
+          "skills/nova/plugins/review/src",
+          "review-graph.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/reliability/runtime-dispatch-native-profile.test.mjs",
+        "expression": "import(pathToFileURL(path.join(modules,'review-snapshot-inventory.ts')))",
+        "operationSha256": "ee12290104391a59b9fb62c8e0ad42fd07e9b24b0b569f4d674205fb8fb7bb89",
+        "hints": [
+          ".",
+          "skills/nova/plugins/review/src",
+          "review-snapshot-inventory.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/reliability/runtime-dispatch-native-profile.test.mjs",
+        "expression": "import(pathToFileURL(path.join(modules,'review-scale-slicing.ts')))",
+        "operationSha256": "3ad451f342fa91a74d3b536807d3745c53c65e0424a64ac5a995744e8d2d2d5a",
+        "hints": [
+          ".",
+          "skills/nova/plugins/review/src",
+          "review-scale-slicing.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/reliability/runtime-dispatch-native-profile.test.mjs",
+        "expression": "import(pathToFileURL(path.join(modules,'scalable-review-jobs.ts')))",
+        "operationSha256": "57dabfbeb800f3f7446c909af925564fe2b0d4a8016e9257b507a3c7d2c05603",
+        "hints": [
+          ".",
+          "skills/nova/plugins/review/src",
+          "scalable-review-jobs.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/reliability/runtime-dispatch-native-profile.test.mjs",
+        "expression": "import(pathToFileURL(path.join(modules,'scalable-review-execution.ts')))",
+        "operationSha256": "2029d8ea7baec599764111c50b58bb9cfee09e30a4689df7b38f5a700c95d1aa",
+        "hints": [
+          ".",
+          "skills/nova/plugins/review/src",
+          "scalable-review-execution.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/reliability/runtime-dispatch-native-profile.test.mjs",
+        "expression": "import(pathToFileURL(path.join(modules,'scalable-review-verification.ts')))",
+        "operationSha256": "d26274d329c75b2e388ba8b8dc836afa1ae7fbe081fe4d8871ea357409c65650",
+        "hints": [
+          ".",
+          "skills/nova/plugins/review/src",
+          "scalable-review-verification.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/reliability/runtime-dispatch-native-profile.test.mjs",
+        "expression": "import(pathToFileURL(path.join(mode==='pipeline'?archivedCore(root,version):path.join(source,'skills/nova/core'),'execution/engine.ts')))",
+        "operationSha256": "580f7d2b98e0ededd4b534114ff17168e4510a8a462ede9663b0725aef760bbe",
+        "hints": [
+          "pipeline",
+          ".",
+          "skills/nova/core",
+          "execution/engine.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/reliability/runtime-dispatch-native-profile.test.mjs",
+        "expression": "import(pathToFileURL(path.join(archivedCore(root,version),'execution/engine-snapshots.ts')))",
+        "operationSha256": "026fbb46f7d47f50514fe538330d2b1dd2534faeae859eefc2a3018effd72ab5",
+        "hints": [
+          "execution/engine-snapshots.ts"
+        ]
+      },
+      {
+        "source": "tests/verification/contracts/project-legacy-import-cases.mts",
+        "expression": "import(pathToFileURL(compilerFile).href)",
+        "operationSha256": "c815a74930036ebc80dcfeb50f1ee4d286b26fd811cb7c471b48948493f3da6b",
+        "hints": []
+      },
+      {
+        "source": "tests/verification/contracts/project-legacy-import-cases.mts",
+        "expression": "import(pathToFileURL(path.join(path.dirname(compilerFile), 'legacy-import.ts')).href)",
+        "operationSha256": "c815a74930036ebc80dcfeb50f1ee4d286b26fd811cb7c471b48948493f3da6b",
+        "hints": [
+          "legacy-import.ts"
+        ]
+      }
+    ]
+  }
 }

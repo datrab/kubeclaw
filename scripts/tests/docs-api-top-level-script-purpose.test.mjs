@@ -1,3 +1,4 @@
+import ts from 'typescript';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -14,7 +15,24 @@ const repository = path.resolve(import.meta.dirname, '../..');
 const authorityPath = 'scripts/docs-api-top-level-script-purpose-authority.json';
 const authority = JSON.parse(fs.readFileSync(path.join(repository, authorityPath)));
 const sources = Object.keys(authority.sourcePins);
-const graph = {edges: authority.incomingEdges, publicEntries: authority.publicEntries};
+// Synthetic guard context reconstructed from the sealed current Source; this
+// unit fixture is not a fresh selected native graph or execution observation.
+const editorial = authority.retainedEditorialContext;
+const operationText = row => {
+  const text = fs.readFileSync(path.join(repository, row.source), 'utf8');
+  const tree = ts.createSourceFile(row.source, text, ts.ScriptTarget.Latest, true);
+  let found;
+  function visit(node) { const value = node.getText(tree); if (createHash('sha256').update(value).digest('hex') === row.operationSha256) found = value; if (!found) ts.forEachChild(node, visit); }
+  visit(tree); assert.notEqual(found, undefined, 'current operation syntax must reconstruct exactly'); return found;
+};
+const graph = {
+  edges: [...new Map([...authority.incomingEdges, ...editorial.incomingEdges].map(edge => [JSON.stringify(edge), edge])).values()].sort((a,b)=>a.source.localeCompare(b.source)||fs.readFileSync(path.join(repository,a.source),'utf8').indexOf(a.operation)-fs.readFileSync(path.join(repository,b.source),'utf8').indexOf(b.operation)),
+  publicEntries: [...new Map([...authority.publicEntries, ...editorial.publicEntries].map(entry => [JSON.stringify(entry), entry])).values()].sort((a,b)=>a.path.localeCompare(b.path)),
+  aliases: editorial.aliases,
+  dynamicOperations: editorial.unresolvedModuleOperations.map(({operationSha256, ...row}) => ({...row, operation: operationText({...row, operationSha256})})),
+};
+// Existing owner parser supplies these in real discovery; this fixture is data.
+const nativePackageEntries = editorial.packageEntries;
 const original = source => authority.descriptors.filter(role => role.source === source).map(({source, ...role}) => ({...role, dependencies: []}));
 const diagnostic = /API_PRODUCT_TOP_LEVEL_SOURCE_PURPOSE_UNQUALIFIED/u;
 function fixture(run) {
@@ -22,14 +40,14 @@ function fixture(run) {
   const write = (file, bytes) => {fs.mkdirSync(path.dirname(path.join(root, file)), {recursive: true}); fs.writeFileSync(path.join(root, file), bytes);};
   try {
     for (const file of [authorityPath, ...authority.inputs.map(input => input.path)]) write(file, fs.readFileSync(path.join(repository, file)));
-    run({root, write, acquire: (classify = original, selectedGraph = graph, census = sources) => checkedTopLevelScriptPurposes(root, selectedGraph, classify, census)});
+    run({root, write, acquire: (classify = original, selectedGraph = graph, census = sources) => checkedTopLevelScriptPurposes(root, selectedGraph, classify, census, nativePackageEntries)});
   } finally {fs.rmSync(root, {recursive: true, force: true});}
 }
 
-test('current real native parser agrees with complete reviewed26-slot seal', () => {
+test('current real native parser agrees with complete reviewed30-slot seal', () => {
   const classify = createSerializedOutputRoleClassifier(repository, sources);
-  const receipt = checkedTopLevelScriptPurposes(repository, graph, classify, sources);
-  assert.equal(receipt.descriptors.length, 26);
+  const receipt = checkedTopLevelScriptPurposes(repository, graph, classify, sources, nativePackageEntries);
+  assert.equal(receipt.descriptors.length, 30);
   assert.equal(receipt.runtimeExecutionAuthorized, false);
   assert.equal(receipt.apiApplyAuthorized, false);
   assert.match(receipt.currentPurposeInputBindingDigest, /^[a-f0-9]{64}$/u);
@@ -47,7 +65,7 @@ test('current real native parser agrees with complete reviewed26-slot seal', () 
   assert.equal(selectedTopLevelScriptPurpose('scripts/versions.mjs', classify('scripts/versions.mjs')[0], receipt), null);
 });
 
-test('each of79 Source/helper/input byte changes and missing primary source fail before reuse', () => fixture(({root, write, acquire}) => {
+test('each sealed Source/helper/input byte change and missing primary source fail before reuse', () => fixture(({root, write, acquire}) => {
   acquire(); acquire();
   for (const input of authority.inputs) {
     const bytes = fs.readFileSync(path.join(root, input.path));
@@ -58,7 +76,7 @@ test('each of79 Source/helper/input byte changes and missing primary source fail
   assert.throws(() => acquire(original, graph, sources.slice(1)), /missing selected source/u);
 }));
 
-test('all12 source role inversions and every26-slot omission/extension fail', () => fixture(({acquire}) => {
+test('all14 source role inversions and every30-slot omission/extension fail', () => fixture(({acquire}) => {
   for (const source of sources) {
     assert.throws(() => acquire(candidate => original(candidate).map((role, index) => candidate === source && index === 0 ? {...role, role: role.role === 'unknown' ? 'non-api' : 'unknown'} : role)), /canonical native slot\/role roster/u);
   }
@@ -141,7 +159,7 @@ test('renewed governance custody still rejects a changed source-map constructor'
 
 test('five additional artifact/status purposes preserve UNKNOWN and their actual limited meaning', () => {
   const classify = createSerializedOutputRoleClassifier(repository, sources);
-  const receipt = checkedTopLevelScriptPurposes(repository, graph, classify, sources);
+  const receipt = checkedTopLevelScriptPurposes(repository, graph, classify, sources, nativePackageEntries);
   for (const [source, line, distinction] of [
     ['scripts/recover-openclaw-audit-input.mjs', 70, /not API submission or successful doctor/u],
     ['scripts/updates/materialize-release.mjs', 50, /write branch, not check success/u],
@@ -168,7 +186,7 @@ test('five additional artifact/status purposes preserve UNKNOWN and their actual
 
 test('stateful stream purpose keeps canonical UNKNOWN and requires its separate original API adapter', () => {
   const classify = createSerializedOutputRoleClassifier(repository, sources);
-  const receipt = checkedTopLevelScriptPurposes(repository, graph, classify, sources);
+  const receipt = checkedTopLevelScriptPurposes(repository, graph, classify, sources, nativePackageEntries);
   const source = 'scripts/render-stateful-network-policies.mjs';
   const role = classify(source).find(row => row.line === 68);
   assert.equal(role.role, 'unknown');
@@ -183,7 +201,7 @@ test('stateful stream purpose keeps canonical UNKNOWN and requires its separate 
 
 test('release renderer retains original API documents from every maintained Ops forwarding profile', () => {
   const classify = createSerializedOutputRoleClassifier(repository, sources);
-  const receipt = checkedTopLevelScriptPurposes(repository, graph, classify, sources);
+  const receipt = checkedTopLevelScriptPurposes(repository, graph, classify, sources, nativePackageEntries);
   const proof = checkedReleaseRendererOutputs(repository, receipt);
   const renderer = 'scripts/updates/deployment-release.mjs';
   assert.equal(classify(renderer).find(role => role.line === 195).role, 'unknown');
@@ -273,6 +291,42 @@ test('exact three current purpose bindings reject missing duplicate reordered ex
   ]) {
     const candidate = code.slice(0, start) + JSON.stringify(mutate(structuredClone(bindings))) + code.slice(end);
     const receiver = await import('data:text/javascript;base64,' + Buffer.from(candidate).toString('base64'));
-    assert.throws(() => receiver.checkedTopLevelScriptPurposes(root, graph, original, sources), diagnostic);
+    assert.throws(() => receiver.checkedTopLevelScriptPurposes(root, graph, original, sources, nativePackageEntries), diagnostic);
   }
 });
+
+
+test('four retained occurrences keep genuine UNKNOWN and require acquired exact-slot receipts', () => {
+  const classify = createSerializedOutputRoleClassifier(repository, sources);
+  const receipt = checkedTopLevelScriptPurposes(repository, graph, classify, sources, nativePackageEntries);
+  const selected = authority.descriptors.filter(row => editorial.sources.includes(row.source));
+  assert.equal(selected.length, 4);
+  for (const descriptor of selected) {
+    const role = classify(descriptor.source).find(row => row.line === descriptor.line && row.sink === descriptor.sink);
+    assert.equal(role.role, 'unknown');
+    const before = structuredClone(role);
+    const purpose = selectedTopLevelScriptPurpose(descriptor.source, role, receipt);
+    assert.equal(purpose.canonicalRawRole, 'unknown');
+    assert.equal(purpose.runtimeExecutionAuthorized, false);
+    assert.equal(purpose.apiApplyAuthorized, false);
+    assert.deepEqual(role, before);
+    assert.throws(() => selectedTopLevelScriptPurpose(descriptor.source, role, {...receipt}), /unacquired receipt/u);
+    for (const changed of [{...role, line: role.line+1}, {...role, sink: 'console.log'}, {...role, expression: 'arbitraryInput'}, {...role, role: 'non-api'}]) {
+      assert.throws(() => selectedTopLevelScriptPurpose(descriptor.source, changed, receipt), /changed canonical slot or role/u);
+    }
+  }
+});
+
+test('retained transitive caller, native package, public, alias and unresolved-loader changes refuse authority', () => fixture(({root, acquire}) => {
+  acquire();
+  const retainedFailure = /retained editorial caller\/public\/alias\/dynamic context/u;
+  const projection = 'scripts/docs-retained-language-projection.mjs';
+  assert.throws(() => acquire(original, {...graph, edges: [...graph.edges, {source: 'scripts/new-runtime-consumer.mjs', target: projection, kind: 'import', operation: 'import newConsumer'}]}), retainedFailure);
+  assert.throws(() => acquire(original, {...graph, publicEntries: [...graph.publicEntries, {path: 'scripts/new-alias.mjs', canonicalSource: projection}]}), retainedFailure);
+  assert.throws(() => acquire(original, {...graph, aliases: [...graph.aliases, {source: 'scripts/new-alias.mjs', target: editorial.sources[0]}]}), retainedFailure);
+  assert.throws(() => acquire(original, {...graph, dynamicOperations: [...graph.dynamicOperations, {source: 'scripts/new-runtime-consumer.mjs', expression: 'import(selected)', operation: 'import(selected)', hints: []}]}), retainedFailure);
+  const changed = structuredClone(graph.dynamicOperations); changed[0].operation += '\n';
+  assert.throws(() => acquire(original, {...graph, dynamicOperations: changed}), retainedFailure);
+  assert.throws(() => checkedTopLevelScriptPurposes(root, graph, original, sources), /native package entry acquisition required/u);
+  assert.throws(() => checkedTopLevelScriptPurposes(root, graph, original, sources, [...nativePackageEntries, {name: 'runtime:retained', command: 'node '+projection, source: projection}]), retainedFailure);
+}));

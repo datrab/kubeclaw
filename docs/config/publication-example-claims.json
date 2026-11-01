@@ -1601,7 +1601,7 @@
         },
         {
           "ordinal": 7,
-          "sha256": "d4cfcacbd47352d2a276fe111307c74a0974cc0745fc416497ca653be5e9c2a6",
+          "sha256": "2599ab820593619432026d75651144c247cbb7a8cbc85abbc19ce5304bc45de2",
           "owner": "extension guide/native component owners",
           "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
           "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
@@ -1700,7 +1700,7 @@
         },
         {
           "ordinal": 16,
-          "sha256": "f750478c8329648add23d896931499f641286f6860a998f4f45875bc6c5117e7",
+          "sha256": "b1f40291f32be666962d44726ef1c998f39d8e31902fa8c881052fb43d36d840",
           "owner": "extension guide/native component owners",
           "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
           "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
@@ -1986,7 +1986,7 @@
         },
         {
           "ordinal": 42,
-          "sha256": "8a6f40961845cca56d1a59c262151b8745f03723eecc4ba7c0f32ac7463b2530",
+          "sha256": "430f66115f45d56df31a4a222e2cfc4280c7cecd6341399249576d770ce8eaa2",
           "owner": "extension guide/native component owners",
           "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
           "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
@@ -50265,7 +50265,7 @@
     },
     {
       "path": "scripts/docs-configuration-inventory.mjs",
-      "sha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f",
+      "sha256": "96b9718d76f038ee2fc9176a1dd5c22833e941a7195b26548a91e0a79686f316",
       "responsibility": "Maintained schemaFieldMeaning generic failure-sentence composition and preserved schema-only projection/override/branch/consumer controls at independently reviewed A1 responsibility; not whole inventory discovery/API/runtime qualification.\nMNT005 qualifies only actual NativeWorkerOwnershipLease PID environment producer plus C receiver meaning and an explicit named single-entry projection. Original default global environment/Secret checks unchanged; preexisting YAML rejection remains a failure, not waived.\nCurrent CFG009/REF013 qualification: independently reviewed bounded current YAML generation/renderer and semantic page successor; unchanged unrelated normal renderer/API/env responsibilities retained. Literal option check deduplicates identical repeated profile examples while validating every original15 exact key identity through native Helm selection; actual28occurrences, malformed escaping and unknownidentity negatives pass. Not global discovery, runtime, deployment or whole publication proof. Evidence operations/pr13/evidence/helm-gitops-values-whole-20261030/."
     },
     {
