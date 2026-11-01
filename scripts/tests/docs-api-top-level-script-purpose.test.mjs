@@ -18,7 +18,11 @@ const sources = Object.keys(authority.sourcePins);
 // Synthetic guard context reconstructed from the sealed current Source; this
 // unit fixture is not a fresh selected native graph or execution observation.
 const editorial = authority.retainedEditorialContext;
-const standalone = authority.standaloneManifestAssertionContext;
+const standalone = authority.standaloneVerificationContext;
+const documentary = authority.documentaryFormatterContext;
+const realPipeline = authority.realPipelineReceivingContext;
+const declarationServer = authority.declarationAndServerReceivingContext;
+const classifierUniverse = [...new Set([...sources, ...standalone.contextSources, ...documentary.contextSources, ...realPipeline.contextSources, ...declarationServer.contextSources, ...editorial.ancestors])];
 const operationText = row => {
   const text = fs.readFileSync(path.join(repository, row.source), 'utf8');
   const tree = ts.createSourceFile(row.source, text, ts.ScriptTarget.Latest, true);
@@ -26,14 +30,37 @@ const operationText = row => {
   function visit(node) { const value = node.getText(tree); if (createHash('sha256').update(value).digest('hex') === row.operationSha256) found = value; if (!found) ts.forEachChild(node, visit); }
   visit(tree); assert.notEqual(found, undefined, 'current operation syntax must reconstruct exactly'); return found;
 };
+// Merge sealed ordered projections without inventing a lexical traversal order.
+// This is a synthetic consistency fixture, never actual native graph evidence.
+function orderedProjectionUnion(groups) {
+  const values = new Map(), next = new Map(), incoming = new Map();
+  for (const rows of groups) {
+    let previous;
+    for (const row of rows) {
+      const key = JSON.stringify(row);
+      if (!values.has(key)) {values.set(key, row); next.set(key, new Set()); incoming.set(key, 0);}
+      if (previous !== undefined && previous !== key && !next.get(previous).has(key)) {
+        next.get(previous).add(key); incoming.set(key, incoming.get(key) + 1);
+      }
+      previous = key;
+    }
+  }
+  const result = [], ready = [...values.keys()].filter(key => incoming.get(key) === 0);
+  for (let index = 0; index < ready.length; index++) {
+    const key = ready[index]; result.push(values.get(key));
+    for (const target of next.get(key)) {incoming.set(target, incoming.get(target) - 1); if (!incoming.get(target)) ready.push(target);}
+  }
+  assert.equal(result.length, values.size, 'sealed native graph projections must have consistent order');
+  return result;
+}
 const graph = {
-  edges: [...new Map([...authority.incomingEdges, ...editorial.incomingEdges, ...standalone.incomingEdges, ...standalone.outgoingEdges].map(edge => [JSON.stringify(edge), edge])).values()].sort((a,b)=>a.source.localeCompare(b.source)||fs.readFileSync(path.join(repository,a.source),'utf8').indexOf(a.operation)-fs.readFileSync(path.join(repository,b.source),'utf8').indexOf(b.operation)),
-  publicEntries: [...new Map([...authority.publicEntries, ...editorial.publicEntries, ...standalone.publicEntries].map(entry => [JSON.stringify(entry), entry])).values()].sort((a,b)=>a.path.localeCompare(b.path)),
+  edges: orderedProjectionUnion([authority.incomingEdges, editorial.incomingEdges, standalone.incomingEdges, standalone.outgoingEdges, documentary.incomingEdges, documentary.outgoingEdges, realPipeline.incomingEdges, realPipeline.outgoingEdges, declarationServer.incomingEdges, declarationServer.outgoingEdges]),
+  publicEntries: orderedProjectionUnion([authority.publicEntries, editorial.publicEntries, standalone.publicEntries, documentary.publicEntries, realPipeline.publicEntries, declarationServer.publicEntries]),
   aliases: editorial.aliases,
   dynamicOperations: editorial.unresolvedModuleOperations.map(({operationSha256, ...row}) => ({...row, operation: operationText({...row, operationSha256})})),
 };
 // Existing owner parser supplies these in real discovery; this fixture is data.
-const nativePackageEntries = [...editorial.packageEntries, ...standalone.packageEntries];
+const nativePackageEntries = orderedProjectionUnion([editorial.packageEntries, standalone.packageEntries, documentary.packageEntries, realPipeline.packageEntries, declarationServer.packageEntries]);
 const original = source => authority.descriptors.filter(role => role.source === source).map(({source, ...role}) => ({...role, dependencies: []}));
 const diagnostic = /API_PRODUCT_TOP_LEVEL_SOURCE_PURPOSE_UNQUALIFIED/u;
 function fixture(run) {
@@ -45,10 +72,10 @@ function fixture(run) {
   } finally {fs.rmSync(root, {recursive: true, force: true});}
 }
 
-test('current real native parser agrees with complete reviewed92-slot seal', () => {
-  const classify = createSerializedOutputRoleClassifier(repository, sources);
+test('current real native parser agrees with complete reviewed494-slot seal', () => {
+  const classify = createSerializedOutputRoleClassifier(repository, classifierUniverse);
   const receipt = checkedTopLevelScriptPurposes(repository, graph, classify, sources, nativePackageEntries);
-  assert.equal(receipt.descriptors.length, 92);
+  assert.equal(receipt.descriptors.length, 494);
   assert.equal(receipt.runtimeExecutionAuthorized, false);
   assert.equal(receipt.apiApplyAuthorized, false);
   assert.match(receipt.currentPurposeInputBindingDigest, /^[a-f0-9]{64}$/u);
@@ -77,7 +104,7 @@ test('each sealed Source/helper/input byte change and missing primary source fai
   assert.throws(() => acquire(original, graph, sources.slice(1)), /missing selected source/u);
 }));
 
-test('all17 source role inversions and every92-slot omission/extension fail', () => fixture(({acquire}) => {
+test('all95 source role inversions and every494-slot omission/extension fail', () => fixture(({acquire}) => {
   for (const source of sources) {
     assert.throws(() => acquire(candidate => original(candidate).map((role, index) => candidate === source && index === 0 ? {...role, role: role.role === 'unknown' ? 'non-api' : 'unknown'} : role)), /canonical native slot\/role roster/u);
   }
@@ -159,7 +186,7 @@ test('renewed governance custody still rejects a changed source-map constructor'
 });
 
 test('five additional artifact/status purposes preserve UNKNOWN and their actual limited meaning', () => {
-  const classify = createSerializedOutputRoleClassifier(repository, sources);
+  const classify = createSerializedOutputRoleClassifier(repository, classifierUniverse);
   const receipt = checkedTopLevelScriptPurposes(repository, graph, classify, sources, nativePackageEntries);
   for (const [source, line, distinction] of [
     ['scripts/recover-openclaw-audit-input.mjs', 70, /not API submission or successful doctor/u],
@@ -186,7 +213,7 @@ test('five additional artifact/status purposes preserve UNKNOWN and their actual
 });
 
 test('stateful stream purpose keeps canonical UNKNOWN and requires its separate original API adapter', () => {
-  const classify = createSerializedOutputRoleClassifier(repository, sources);
+  const classify = createSerializedOutputRoleClassifier(repository, classifierUniverse);
   const receipt = checkedTopLevelScriptPurposes(repository, graph, classify, sources, nativePackageEntries);
   const source = 'scripts/render-stateful-network-policies.mjs';
   const role = classify(source).find(row => row.line === 68);
@@ -201,7 +228,7 @@ test('stateful stream purpose keeps canonical UNKNOWN and requires its separate 
 });
 
 test('release renderer retains original API documents from every maintained Ops forwarding profile', () => {
-  const classify = createSerializedOutputRoleClassifier(repository, sources);
+  const classify = createSerializedOutputRoleClassifier(repository, classifierUniverse);
   const receipt = checkedTopLevelScriptPurposes(repository, graph, classify, sources, nativePackageEntries);
   const proof = checkedReleaseRendererOutputs(repository, receipt);
   const renderer = 'scripts/updates/deployment-release.mjs';
@@ -298,7 +325,7 @@ test('exact three current purpose bindings reject missing duplicate reordered ex
 
 
 test('four retained occurrences keep genuine UNKNOWN and require acquired exact-slot receipts', () => {
-  const classify = createSerializedOutputRoleClassifier(repository, sources);
+  const classify = createSerializedOutputRoleClassifier(repository, classifierUniverse);
   const receipt = checkedTopLevelScriptPurposes(repository, graph, classify, sources, nativePackageEntries);
   const selected = authority.descriptors.filter(row => editorial.sources.includes(row.source));
   assert.equal(selected.length, 4);
@@ -333,28 +360,28 @@ test('retained transitive caller, native package, public, alias and unresolved-l
 }));
 
 const manifestSources = standalone.sources;
-test('manifest-lint family selects all34 retained UNKNOWN inputs without role mutation or API grants', () => {
-  const classify = createSerializedOutputRoleClassifier(repository, sources);
+test('standalone verification family selects all134 retained UNKNOWN occurrences without role mutation or API grants', () => {
+  const classify = createSerializedOutputRoleClassifier(repository, classifierUniverse);
   const receipt = checkedTopLevelScriptPurposes(repository, graph, classify, sources, nativePackageEntries);
   let selected = 0, total = 0;
   for (const source of manifestSources) for (const role of classify(source)) {
     total++; const before = JSON.stringify(role);
     const purpose = selectedTopLevelScriptPurpose(source, role, receipt);
     assert.equal(JSON.stringify(role), before);
-    if (role.role === 'unknown' && role.sink === 'fs.writeFileSync') {
+    if (role.role === 'unknown' && standalone.slots.some(slot => slot.source === source && slot.line === role.line && slot.sink === role.sink)) {
       assert(purpose); selected++;
       assert.equal(purpose.canonicalRawRole, 'unknown');
       assert.equal(purpose.runtimeExecutionAuthorized, false);
       assert.equal(purpose.apiApplyAuthorized, false);
-      assert.match(purpose.purpose, /verification receiving purpose only/u);
+      assert.match(purpose.purpose, /receiving context/u);
     } else assert.equal(purpose, null);
   }
-  assert.equal(selected, 34); assert.equal(total, 62);
-  const outside = 'tests/verification/e2e/manifest-lint-production.mts';
+  assert.equal(selected, 134); assert.equal(total, 375);
+  const outside = 'unreviewed-production-writer.mjs';
   // Foreign Source rejection only, not a native classification observation.
   assert.equal(selectedTopLevelScriptPurpose(outside, {line: 12, sink: 'fs.writeFileSync', role: 'unknown'}, receipt), null);
 });
-test('manifest-lint family rejects changes in any of its five complete Source inputs', () => fixture(({root, write, acquire}) => {
+test('standalone family rejects changes in each complete Source/caller input', () => fixture(({root, write, acquire}) => {
   acquire();
   for (const source of standalone.contextSources) {
     const bytes = fs.readFileSync(path.join(root, source));
@@ -364,7 +391,7 @@ test('manifest-lint family rejects changes in any of its five complete Source in
   }
   acquire();
 }));
-test('manifest-lint family retains actual incoming outgoing native command and public boundaries', () => fixture(({root, write, acquire}) => {
+test('standalone family retains actual incoming outgoing native command and public boundaries', () => fixture(({root, write, acquire}) => {
   const helper = manifestSources.find(source => source.includes('/support/'));
   assert.throws(() => acquire(original, {...graph, edges: [...graph.edges,
     {source: 'unreviewed.mjs', target: helper, kind: 'import', operation: 'import x'}]}), diagnostic);
@@ -384,4 +411,234 @@ test('manifest-lint family retains actual incoming outgoing native command and p
   write('package.json', packageBytes);
   const dynamic = {source: manifestSources[0], expression: 'unresolved', operation: 'import(unknown)', hints: []};
   assert.throws(() => acquire(original, {...graph, dynamicOperations: [...graph.dynamicOperations, dynamic]}), diagnostic);
+}));
+
+// Finite saved-row receiving-purpose regression, not runtime acceptance or payload truth.
+const finalReceivingRows = [
+  {
+    "source": "tests/verification/historical-branch-acceptance/delivery-manifest-stage-boundary.test.mjs",
+    "rowId": "1001:0",
+    "line": 22,
+    "sink": "console.log"
+  },
+  {
+    "source": "tests/verification/reliability/adapter-dependency-boundary.test.mjs",
+    "rowId": "1017:3",
+    "line": 32,
+    "sink": "console.log"
+  },
+  {
+    "source": "tests/verification/reliability/admission-retirement.test.mjs",
+    "rowId": "1025:4",
+    "line": 134,
+    "sink": "fs.writeFileSync"
+  },
+  {
+    "source": "tests/verification/reliability/admission-retirement.test.mjs",
+    "rowId": "1025:5",
+    "line": 134,
+    "sink": "fs.writeFileSync"
+  },
+  {
+    "source": "tests/verification/reliability/blob-read-independent.test.mjs",
+    "rowId": "1036:0",
+    "line": 17,
+    "sink": "fs.writeFileSync"
+  },
+  {
+    "source": "tests/verification/reliability/blob-read-independent.test.mjs",
+    "rowId": "1036:2",
+    "line": 37,
+    "sink": "console.log"
+  },
+  {
+    "source": "tests/verification/reliability/delivery-manifest-v3-stage-boundary.test.mjs",
+    "rowId": "1050:0",
+    "line": 23,
+    "sink": "console.log"
+  },
+  {
+    "source": "tests/verification/reliability/delivery-manifest-v3-stage-boundary.test.mjs",
+    "rowId": "1050:1",
+    "line": 34,
+    "sink": "console.log"
+  },
+  {
+    "source": "tests/verification/reliability/delivery-manifest-v3-stage-boundary.test.mjs",
+    "rowId": "1050:2",
+    "line": 44,
+    "sink": "console.log"
+  },
+  {
+    "source": "tests/verification/reliability/delivery-manifest-v3-stage-boundary.test.mjs",
+    "rowId": "1050:3",
+    "line": 54,
+    "sink": "console.log"
+  },
+  {
+    "source": "tests/verification/reliability/discord-delivery-receipt.test.mts",
+    "rowId": "1053:0",
+    "line": 27,
+    "sink": "fs.writeFileSync"
+  },
+  {
+    "source": "tests/verification/reliability/kubernetes-manifest-budget.test.mjs",
+    "rowId": "1062:0",
+    "line": 33,
+    "sink": "fs.writeFileSync"
+  },
+  {
+    "source": "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+    "rowId": "1069:3",
+    "line": 160,
+    "sink": "console.log"
+  },
+  {
+    "source": "tests/verification/reliability/operator-request-projection.test.mjs",
+    "rowId": "1078:1",
+    "line": 75,
+    "sink": "fs.writeFileSync"
+  },
+  {
+    "source": "tests/verification/reliability/operator-request-projection.test.mjs",
+    "rowId": "1078:2",
+    "line": 85,
+    "sink": "fs.writeFileSync"
+  },
+  {
+    "source": "tests/verification/reliability/operator-request-projection.test.mjs",
+    "rowId": "1078:3",
+    "line": 90,
+    "sink": "fs.writeFileSync"
+  },
+  {
+    "source": "tests/verification/reliability/report-evidence.test.mts",
+    "rowId": "1099:10",
+    "line": 127,
+    "sink": "fs.writeFileSync"
+  },
+  {
+    "source": "tests/verification/reliability/report-evidence.test.mts",
+    "rowId": "1099:11",
+    "line": 127,
+    "sink": "fs.writeFileSync"
+  },
+  {
+    "source": "tests/verification/reliability/report-evidence.test.mts",
+    "rowId": "1099:14",
+    "line": 145,
+    "sink": "fs.writeFileSync"
+  },
+  {
+    "source": "tests/verification/reliability/report-evidence.test.mts",
+    "rowId": "1099:15",
+    "line": 145,
+    "sink": "fs.writeFileSync"
+  },
+  {
+    "source": "tests/verification/reliability/report-evidence.test.mts",
+    "rowId": "1099:16",
+    "line": 149,
+    "sink": "fs.writeFileSync"
+  },
+  {
+    "source": "tests/verification/reliability/review-cache-legacy-prefix.test.mjs",
+    "rowId": "1103:0",
+    "line": 85,
+    "sink": "fs.writeFileSync"
+  },
+  {
+    "source": "tests/verification/reliability/review-report-locales.test.mjs",
+    "rowId": "1114:0",
+    "line": 11,
+    "sink": "process.stdout.write"
+  },
+  {
+    "source": "scripts/tests/api-output-publication-native-custody.test.mjs",
+    "rowId": "1162:0",
+    "line": 59,
+    "sink": "unknown-output-function"
+  },
+  {
+    "source": "scripts/tests/api-output-publication-native-custody.test.mjs",
+    "rowId": "1162:1",
+    "line": 72,
+    "sink": "unknown-output-function"
+  },
+  {
+    "source": "scripts/tests/api-output-publication-native-custody.test.mjs",
+    "rowId": "1162:2",
+    "line": 85,
+    "sink": "unknown-output-function"
+  },
+  {
+    "source": "skills/nova/plugins/review/scripts/generate-bundle-schema.mjs",
+    "rowId": "609:1",
+    "line": 40,
+    "sink": "fs.writeFileSync"
+  },
+  {
+    "source": "skills/prism/server/bootstrap-database.ts",
+    "rowId": "770:0",
+    "line": 15,
+    "sink": "process.stderr.write"
+  },
+  {
+    "source": "skills/prism/server/ingestion.ts",
+    "rowId": "775:0",
+    "line": 20,
+    "sink": "console.error"
+  },
+  {
+    "source": "skills/prism/server/ingestion.ts",
+    "rowId": "775:1",
+    "line": 20,
+    "sink": "console.error"
+  },
+  {
+    "source": "skills/prism/server/ingestion.ts",
+    "rowId": "775:2",
+    "line": 77,
+    "sink": "fs.writeFileSync"
+  }
+];
+test('all31 residual receiving rows join exact canonical descriptors without raw-role mutation', () => fixture(({acquire}) => {
+  const receipt = acquire();
+  for (const slot of finalReceivingRows) {
+    const candidates = original(slot.source).filter(role => role.line === slot.line && role.sink === slot.sink);
+    assert(candidates.length, slot.rowId);
+    for (const role of candidates) {
+      const before = structuredClone(role);
+      const purpose = selectedTopLevelScriptPurpose(slot.source, role, receipt);
+      assert(purpose, slot.rowId);
+      assert.equal(purpose.canonicalRawRole, 'unknown');
+      assert.equal(purpose.runtimeExecutionAuthorized, false);
+      assert.equal(purpose.apiApplyAuthorized, false);
+      assert.deepEqual(role, before);
+      assert.throws(() => selectedTopLevelScriptPurpose(slot.source, {...role, expression: 'FORGED-UNSEALED'}, receipt), /changed canonical slot/u);
+    }
+  }
+  const repeatSource = 'tests/verification/reliability/admission-retirement.test.mjs';
+  const repeated = original(repeatSource).filter(role => role.line === 134 && role.sink === 'fs.writeFileSync');
+  assert.equal(repeated.length, 2);
+  assert.notDeepEqual(repeated[0], repeated[1]);
+  for (const role of repeated) assert(selectedTopLevelScriptPurpose(repeatSource, role, receipt));
+  const quarantine = original('skills/prism/server/ingestion.ts').find(role => role.line === 77);
+  assert.match(selectedTopLevelScriptPurpose('skills/prism/server/ingestion.ts', quarantine, receipt).purpose, /raw BYTES/u);
+  assert.equal(selectedTopLevelScriptPurpose('tests/verification/live/prism-production-failures.mjs', {line:6,sink:'kubectl-request',role:'unknown'}, receipt), null);
+}));
+
+test('new workspace declarations and complete receiving context cannot drift', () => fixture(({root,write,acquire}) => {
+  acquire();
+  for (const item of declarationServer.workspacePackages) {
+    const bytes = fs.readFileSync(path.join(root,item.path));
+    write(item.path, JSON.stringify({scripts:{forged:'node arbitrary.mjs'}}));
+    assert.throws(() => acquire(), diagnostic);
+    write(item.path, bytes);
+  }
+  const target = declarationServer.sources[0];
+  assert.throws(() => acquire(original, {...graph,edges:[...graph.edges,{source:'scripts/foreign-product.mjs',target,kind:'import',operation:'import x'}]}), diagnostic);
+  assert.throws(() => acquire(original, {...graph,publicEntries:[...graph.publicEntries,{path:'foreign.mjs',canonicalSource:target}]}), diagnostic);
+  assert.throws(() => acquire(original, graph, sources, [...nativePackageEntries,{source:target,name:'forged',command:'node arbitrary.mjs'}]), diagnostic);
+  assert.throws(() => acquire(original, {...graph,dynamicOperations:[...graph.dynamicOperations,{source:target,expression:'import(x)',operation:'import(x)',hints:[]}]}), diagnostic);
 }));

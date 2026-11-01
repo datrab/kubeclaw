@@ -6,7 +6,7 @@ import ts from 'typescript';
 import {shellNativeNodeEntries} from './docs-shell-source-custody.mjs';
 
 const authorityPath = 'scripts/docs-api-top-level-script-purpose-authority.json';
-const authoritySha256 = 'ce3151db4da995514943ff1be8b8768792f7b9aaf6831770d2a074cee06ebe32';
+const authoritySha256 = 'f5ab471dfd592b972ab19db80ad60a37cb01d6ff1f87229d5614dc23d24d054f';
 const currentPurposeInputBindings20261031 = Object.freeze([
   {
     "path": "docs/site/extend/lint.md",
@@ -38,13 +38,162 @@ const selectedSources = Object.freeze([
   "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
   "tests/verification/contracts/check-pipeline-manifest-lint-parity.mts",
   "tests/verification/contracts/support/manifest-lint-parity-fixture.mts",
+  "tests/verification/contracts/check-junit-executed-required.mts",
+  "tests/verification/contracts/check-pipeline-api-implementation.mts",
+  "tests/verification/contracts/check-pipeline-committed-source-snapshot.mts",
+  "tests/verification/contracts/check-pipeline-container-build-production.mts",
+  "tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts",
+  "tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts",
+  "tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts",
+  "tests/verification/contracts/check-pipeline-observability-durable-attempts.mts",
+  "tests/verification/contracts/check-pipeline-observability-nova-reconciliation.mts",
+  "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+  "tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+  "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+  "tests/verification/contracts/check-pipeline-report-adapter-runtime.mts",
+  "tests/verification/contracts/check-pipeline-size-budget-implementation.mts",
+  "tests/verification/contracts/check-pipeline-size-budget-parity.mts",
+  "tests/verification/contracts/check-pipeline-size-budget-production.mts",
+  "tests/verification/contracts/check-pipeline-test-plan-runner.mts",
+  "tests/verification/contracts/check-pipeline-test-provider-registry.mts",
+  "tests/verification/contracts/check-pipeline-test-suite-resolver.mts",
+  "tests/verification/contracts/check-pipeline-unit-parity-ledger.mjs",
+  "tests/verification/contracts/check-pipeline-visual-legacy-comparison.mts",
+  "tests/verification/contracts/check-pipeline-visual-remote-vertical.mts",
+  "tests/verification/contracts/check-plugin-system-v2-boundaries.mjs",
+  "tests/verification/contracts/check-plugin-system-v2-phase6.mjs",
+  "tests/verification/contracts/check-plugin-system-v2-phase7.mjs",
+  "tests/verification/contracts/check-project-compiler.mts",
+  "tests/verification/contracts/check-runtime-bundle-isolation.mjs",
+  "tests/verification/contracts/check-production-receipt-attestation.mjs",
+  "tests/verification/contracts/project-legacy-import-cases.mts",
+  "tests/verification/reliability/sdk-json-portable.test.mts",
+  "tests/verification/reliability/source-identity-version.test.mjs",
+  "tests/verification/reliability/effect-identity-version.test.mts",
+  "tests/verification/reliability/project-source-fixture.mjs",
+  "tests/verification/reliability/adapter-dependency-locale-fixture.mjs",
+  "tests/verification/reliability/adapter-dependency-historical.mjs",
+  "tests/verification/reliability/repair-identity-historical.mjs",
+  "tests/verification/reliability/worker-deadline-fixture.mts",
+  "tests/verification/reliability/fixtures/forge-runtime.mts",
+  "scripts/tests/docs-cli-typed.test.mjs",
+  "tests/verification/deployment/check-deployment-truth.mjs",
+
+  "scripts/docs-publication-examples.mjs",
+  "scripts/docs-publication-sdk-examples.mjs",
+  "scripts/docs-schema-fields.mjs",
+  "scripts/generate-buster-error-reference.mjs",
+  "scripts/generate-buster-provider-reference.mjs",
+  "scripts/lib/docs-event-reference.mjs",
+  "tests/verification/e2e/nova-a11y-production-preflight.mts",
+  "tests/verification/e2e/nova-e2e-production-preflight.mts",
+  "tests/verification/e2e/nova-http-production-preflight.mts",
+  "tests/verification/e2e/nova-kubernetes-fixture-production-preflight.mts",
+  "tests/verification/e2e/nova-lighthouse-production-preflight.mts",
+  "tests/verification/e2e/nova-security-production-preflight.mts",
+  "tests/verification/e2e/nova-tailscale-production-preflight.mts",
+  "tests/verification/e2e/nova-visual-production-preflight.mts",
+  "tests/verification/e2e/run-real-pipeline-e2e.mjs",
+  "tests/verification/e2e/run-real-pipeline-failure-matrix.mjs",
+  "tests/verification/e2e/checkpoints.mjs",
+  "tests/verification/e2e/failure-scenarios.mjs",
+  "tests/verification/e2e/real-run-workspace.mjs",
+  "tests/verification/e2e/manifest-lint-production.mts",
+  "tests/verification/e2e/malformed-output-publisher.mjs",
+  "tests/verification/e2e/bounded-output-capture.mjs",
+  "tests/verification/historical-branch-acceptance/delivery-manifest-stage-boundary.test.mjs",
+  "tests/verification/reliability/adapter-dependency-boundary.test.mjs",
+  "tests/verification/reliability/admission-retirement.test.mjs",
+  "tests/verification/reliability/blob-read-independent.test.mjs",
+  "tests/verification/reliability/delivery-manifest-v3-stage-boundary.test.mjs",
+  "tests/verification/reliability/discord-delivery-receipt.test.mts",
+  "tests/verification/reliability/kubernetes-manifest-budget.test.mjs",
+  "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+  "tests/verification/reliability/operator-request-projection.test.mjs",
+  "tests/verification/reliability/report-evidence.test.mts",
+  "tests/verification/reliability/review-cache-legacy-prefix.test.mjs",
+  "tests/verification/reliability/review-report-locales.test.mjs",
+  "scripts/tests/api-output-publication-native-custody.test.mjs",
+  "skills/nova/plugins/review/scripts/generate-bundle-schema.mjs",
+  "skills/prism/server/bootstrap-database.ts",
+  "skills/prism/server/ingestion.ts",
+
 ]);
-const standaloneManifestAssertionSources = Object.freeze([
+const documentaryFormatterSources = Object.freeze(["scripts/docs-publication-examples.mjs", "scripts/docs-publication-sdk-examples.mjs", "scripts/docs-schema-fields.mjs", "scripts/generate-buster-error-reference.mjs", "scripts/generate-buster-provider-reference.mjs", "scripts/lib/docs-event-reference.mjs"]);
+const documentaryFormatterPurposes = Object.freeze({
+  diagnostic: 'Exact complete-Source documentation validator/reference CLI diagnostic receiving purpose: original error stack/message or generator path/count status. Arbitrary diagnostic text remains UNKNOWN; no authenticity, API exclusion, validator success or native execution grant.',
+  sdk: 'Exact independently SHA-256-selected complete canonical SDK codec example written as the input program for the reviewed Node child process. Genuine executable program input, not inert prose; original content digest, scratch checks, process capability guards and cleanup remain mandatory. No arbitrary program, execution success or API grant.',
+  schema: 'Exact schema-field inventory JSON serialization to the fixed documentary drift index after schema/registration hashes and authority dispositions. Literal recursive properties pointers and digests, not reference resolution, runtime validation, activation or API grant.',
+  event: 'Exact marker-absent event-reference page append transform at the sealed event-contract publication caller. Original page text and generated source-contract reference remain documentary bytes; not arbitrary payload truth, runtime delivery, filesystem permission or API exclusion.'
+});
+const standaloneVerificationSources = Object.freeze([
   "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
   "tests/verification/contracts/check-pipeline-manifest-lint-parity.mts",
-  "tests/verification/contracts/support/manifest-lint-parity-fixture.mts"
+  "tests/verification/contracts/support/manifest-lint-parity-fixture.mts",
+  "tests/verification/contracts/check-junit-executed-required.mts",
+  "tests/verification/contracts/check-pipeline-api-implementation.mts",
+  "tests/verification/contracts/check-pipeline-committed-source-snapshot.mts",
+  "tests/verification/contracts/check-pipeline-container-build-production.mts",
+  "tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts",
+  "tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts",
+  "tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts",
+  "tests/verification/contracts/check-pipeline-observability-durable-attempts.mts",
+  "tests/verification/contracts/check-pipeline-observability-nova-reconciliation.mts",
+  "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+  "tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+  "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+  "tests/verification/contracts/check-pipeline-report-adapter-runtime.mts",
+  "tests/verification/contracts/check-pipeline-size-budget-implementation.mts",
+  "tests/verification/contracts/check-pipeline-size-budget-parity.mts",
+  "tests/verification/contracts/check-pipeline-size-budget-production.mts",
+  "tests/verification/contracts/check-pipeline-test-plan-runner.mts",
+  "tests/verification/contracts/check-pipeline-test-provider-registry.mts",
+  "tests/verification/contracts/check-pipeline-test-suite-resolver.mts",
+  "tests/verification/contracts/check-pipeline-unit-parity-ledger.mjs",
+  "tests/verification/contracts/check-pipeline-visual-legacy-comparison.mts",
+  "tests/verification/contracts/check-pipeline-visual-remote-vertical.mts",
+  "tests/verification/contracts/check-plugin-system-v2-boundaries.mjs",
+  "tests/verification/contracts/check-plugin-system-v2-phase6.mjs",
+  "tests/verification/contracts/check-plugin-system-v2-phase7.mjs",
+  "tests/verification/contracts/check-project-compiler.mts",
+  "tests/verification/contracts/check-runtime-bundle-isolation.mjs",
+  "tests/verification/contracts/check-production-receipt-attestation.mjs",
+  "tests/verification/contracts/project-legacy-import-cases.mts",
+  "tests/verification/reliability/sdk-json-portable.test.mts",
+  "tests/verification/reliability/source-identity-version.test.mjs",
+  "tests/verification/reliability/effect-identity-version.test.mts",
+  "tests/verification/reliability/project-source-fixture.mjs",
+  "tests/verification/reliability/adapter-dependency-locale-fixture.mjs",
+  "tests/verification/reliability/adapter-dependency-historical.mjs",
+  "tests/verification/reliability/repair-identity-historical.mjs",
+  "tests/verification/reliability/worker-deadline-fixture.mts",
+  "tests/verification/reliability/fixtures/forge-runtime.mts",
+  "scripts/tests/docs-cli-typed.test.mjs",
+  "tests/verification/deployment/check-deployment-truth.mjs",
+  "tests/verification/historical-branch-acceptance/delivery-manifest-stage-boundary.test.mjs",
+  "tests/verification/reliability/adapter-dependency-boundary.test.mjs",
+  "tests/verification/reliability/admission-retirement.test.mjs",
+  "tests/verification/reliability/blob-read-independent.test.mjs",
+  "tests/verification/reliability/delivery-manifest-v3-stage-boundary.test.mjs",
+  "tests/verification/reliability/discord-delivery-receipt.test.mts",
+  "tests/verification/reliability/kubernetes-manifest-budget.test.mjs",
+  "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+  "tests/verification/reliability/operator-request-projection.test.mjs",
+  "tests/verification/reliability/report-evidence.test.mts",
+  "tests/verification/reliability/review-cache-legacy-prefix.test.mjs",
+  "tests/verification/reliability/review-report-locales.test.mjs",
+  "scripts/tests/api-output-publication-native-custody.test.mjs"
 ]);
-const standaloneManifestAssertionPurpose = "Exact complete-Source manifest-lint standalone assertion-family fixture file input to the reviewed lint-report/parity receivers. This is verification receiving purpose only: arbitrary YAML, schema/policy variants and bytes remain raw UNKNOWN; no payload truth, API/node-constructor exclusion, runtime execution, safe filesystem, native-tool success or apply grant.";
+const standaloneVerificationPurpose = "Exact Source-owned standalone verification-program, controlled child/fixture, or assertion-result receiving context at the sealed original output occurrence. Fixture/archive/schema/policy/image/key/log/result bytes remain raw UNKNOWN and actual API/SDK/process/native capabilities retain their independent guards. Not payload truth, a non-API/constructor exclusion, runtime safety, selected native execution/success, read-only proof or apply permission.";
+const realPipelineReceivingSources = Object.freeze(["tests/verification/e2e/nova-a11y-production-preflight.mts", "tests/verification/e2e/nova-e2e-production-preflight.mts", "tests/verification/e2e/nova-http-production-preflight.mts", "tests/verification/e2e/nova-kubernetes-fixture-production-preflight.mts", "tests/verification/e2e/nova-lighthouse-production-preflight.mts", "tests/verification/e2e/nova-security-production-preflight.mts", "tests/verification/e2e/nova-tailscale-production-preflight.mts", "tests/verification/e2e/nova-visual-production-preflight.mts", "tests/verification/e2e/run-real-pipeline-e2e.mjs", "tests/verification/e2e/run-real-pipeline-failure-matrix.mjs", "tests/verification/e2e/checkpoints.mjs", "tests/verification/e2e/failure-scenarios.mjs", "tests/verification/e2e/real-run-workspace.mjs", "tests/verification/e2e/manifest-lint-production.mts", "tests/verification/e2e/malformed-output-publisher.mjs", "tests/verification/e2e/bounded-output-capture.mjs"]);
+const realPipelineReceivingPurpose = "Exact Source-owned real-pipeline/preflight receiving context: scenario workspace/configuration/deployment or deliberate failure input, checkpoint rebase, report/status/usage, or raw child-log capture at the sealed original occurrence. These are genuine runtime-backed inputs/results, not inert prose or observed successful execution. Arbitrary bytes/values remain UNKNOWN; API/SDK/process/network/native capabilities retain independent guards. No payload truth, non-API/constructor exclusion, universal filesystem/log-bound/durability safety or invocation/apply grant.";
+const declarationAndServerReceivingSources = Object.freeze(["skills/nova/plugins/review/scripts/generate-bundle-schema.mjs", "skills/prism/server/bootstrap-database.ts", "skills/prism/server/ingestion.ts"]);
+const declarationAndServerReceivingPurposes = Object.freeze({
+  "skills/nova/plugins/review/scripts/generate-bundle-schema.mjs:40": "Selected portable review-bundle/review-report schema declaration JSON serialized to the fixed additional schema outputs, or compared byte-for-byte under --check. Not arbitrary schema truth, runtime validation, non-API payload proof or successful generation.",
+  "skills/prism/server/bootstrap-database.ts:15": "Original PostgreSQL bootstrap retry diagnostic on stderr. Error/code text remains UNKNOWN; actual database bootstrap, credentials and SQL effects retain independent guards and are not observed or authorized by this purpose.",
+  "skills/prism/server/ingestion.ts:20": "Original Prism quarantine cleanup failure diagnostic arguments. Error data remains UNKNOWN; no cleanup success or general non-API claim.",
+  "skills/prism/server/ingestion.ts:77": "Actual acquired raw BYTES stored under their SHA256 quarantine name with exclusive creation, and separately returned by the ingestion response. Not YAML normalization, payload truth, hostile-filesystem safety, arbitrary content non-API proof or API execution permission."
+});
 const descriptor = role => Object.fromEntries(['line', 'sink', 'expression', 'sinkContract', 'role'].map(key => [key, role[key] ?? null]));
 const purposes = Object.freeze({
 
@@ -131,16 +280,16 @@ export function checkedTopLevelScriptPurposes(root, graph, classify, sources, na
   if (JSON.stringify(context) !== JSON.stringify(editorial)) fail('retained editorial caller/public/alias/dynamic context');
   // One sealed standalone assertion-family Source review; NOT a test-directory,
   // assert-import, filename or arbitrary runtime payload classifier.
-  const standalone = authority.standaloneManifestAssertionContext;
-  if (!standalone || JSON.stringify(standalone.sources) !== JSON.stringify(standaloneManifestAssertionSources)) fail('standalone assertion source roster');
+  const standalone = authority.standaloneVerificationContext;
+  if (!standalone || JSON.stringify(standalone.sources) !== JSON.stringify(standaloneVerificationSources)) fail('standalone assertion source roster');
   const standaloneContextSources = standalone.contextSources;
-  if (!Array.isArray(standaloneContextSources) || standaloneContextSources.length !== 5
+  if (!Array.isArray(standaloneContextSources) || standaloneContextSources.length !== 85
     || !standaloneContextSources.every(source => authority.inputs.some(input => input.path === source))) fail('standalone assertion complete sealed caller inputs');
   const rootPackage = JSON.parse(read('package.json'));
   if (nativePackageEntries.filter(entry => standaloneContextSources.includes(entry.source))
     .some(entry => rootPackage.scripts?.[entry.name] !== entry.command)) fail('standalone assertion actual maintained command');
   const standaloneActual = {
-    sources: standaloneManifestAssertionSources, contextSources: standaloneContextSources,
+    sources: standaloneVerificationSources, contextSources: standaloneContextSources,
     incomingEdges: graph.edges.filter(edge => standaloneContextSources.includes(edge.target)),
     outgoingEdges: graph.edges.filter(edge => standaloneContextSources.includes(edge.source)),
     packageEntries: nativePackageEntries.filter(entry => standaloneContextSources.includes(entry.source)),
@@ -149,14 +298,80 @@ export function checkedTopLevelScriptPurposes(root, graph, classify, sources, na
     packageTargets: Object.fromEntries(['bin','main','exports'].map(key => [key,rootPackage[key] ?? null])),
     unresolvedModuleOperations: graph.dynamicOperations.filter(operation => standaloneContextSources.includes(operation.source))
       .map(operation => Object.fromEntries(['source','expression','operation','hints'].map(key => [key,operation[key] ?? null]))),
+    slots: standalone.slots,
   };
   if (JSON.stringify(standaloneActual) !== JSON.stringify(standalone)) fail('standalone assertion native/caller/public/dynamic context');
+  const documentary = authority.documentaryFormatterContext;
+  if (!documentary || JSON.stringify(documentary.sources) !== JSON.stringify(documentaryFormatterSources)
+    || !Array.isArray(documentary.contextSources) || documentary.contextSources.length !== 9
+    || !documentary.contextSources.every(source => authority.inputs.some(input => input.path === source))) fail('documentary complete Source/caller roster');
+  const documentarySources = documentary.contextSources;
+  if (nativePackageEntries.filter(entry => documentarySources.includes(entry.source))
+    .some(entry => rootPackage.scripts?.[entry.name] !== entry.command)) fail('documentary native package command');
+  const documentaryActual = {
+    sources: documentaryFormatterSources, contextSources: documentarySources,
+    incomingEdges: graph.edges.filter(edge => documentarySources.includes(edge.target)),
+    outgoingEdges: graph.edges.filter(edge => documentarySources.includes(edge.source)),
+    packageEntries: nativePackageEntries.filter(entry => documentarySources.includes(entry.source)),
+    publicEntries: graph.publicEntries.filter(entry => documentarySources.includes(entry.canonicalSource) || documentarySources.includes(entry.source)),
+    aliases: graph.aliases,
+    packageTargets: Object.fromEntries(['bin','main','exports'].map(key => [key,rootPackage[key] ?? null])),
+    unresolvedModuleOperations: graph.dynamicOperations.filter(operation => documentarySources.includes(operation.source))
+      .map(operation => Object.fromEntries(['source','expression','operation','hints'].map(key => [key,operation[key] ?? null]))),
+  };
+  if (JSON.stringify(documentaryActual) !== JSON.stringify(documentary)) fail('documentary native/caller/public/dynamic context');
+  const pipeline = authority.realPipelineReceivingContext;
+  if (!pipeline || JSON.stringify(pipeline.sources) !== JSON.stringify(realPipelineReceivingSources)
+    || !Array.isArray(pipeline.contextSources) || pipeline.contextSources.length !== 23
+    || !pipeline.contextSources.every(source => authority.inputs.some(input => input.path === source))) fail('real pipeline sealed Source context');
+  const pipelineSources = pipeline.contextSources;
+  if (nativePackageEntries.filter(entry => pipelineSources.includes(entry.source))
+    .some(entry => rootPackage.scripts?.[entry.name] !== entry.command)) fail('real pipeline actual maintained command');
+  const pipelineActual = {
+    sources: realPipelineReceivingSources, contextSources: pipelineSources,
+    incomingEdges: graph.edges.filter(edge => pipelineSources.includes(edge.target)),
+    outgoingEdges: graph.edges.filter(edge => pipelineSources.includes(edge.source)),
+    packageEntries: nativePackageEntries.filter(entry => pipelineSources.includes(entry.source)),
+    publicEntries: graph.publicEntries.filter(entry => pipelineSources.includes(entry.canonicalSource) || pipelineSources.includes(entry.source)),
+    aliases: graph.aliases,
+    packageTargets: Object.fromEntries(['bin','main','exports'].map(key => [key,rootPackage[key] ?? null])),
+    unresolvedModuleOperations: graph.dynamicOperations.filter(operation => pipelineSources.includes(operation.source))
+      .map(operation => Object.fromEntries(['source','expression','operation','hints'].map(key => [key,operation[key] ?? null]))),
+    slots: pipeline.slots,
+  };
+  if (JSON.stringify(pipelineActual) !== JSON.stringify(pipeline)) fail('real pipeline native/caller/public/dynamic context');
+  const receiving = authority.declarationAndServerReceivingContext;
+  if (!receiving || JSON.stringify(receiving.sources) !== JSON.stringify(declarationAndServerReceivingSources)
+    || !Array.isArray(receiving.contextSources) || receiving.contextSources.length !== 3
+    || !receiving.contextSources.every(source => authority.inputs.some(input => input.path === source))) fail('declaration/server sealed Source context');
+  const receivingSources = receiving.contextSources;
+  if (nativePackageEntries.filter(entry => receivingSources.includes(entry.source))
+    .some(entry => rootPackage.scripts?.[entry.name] !== entry.command)) fail('declaration/server actual maintained command');
+  const receivingActual = {
+    sources: declarationAndServerReceivingSources, contextSources: receivingSources,
+    incomingEdges: graph.edges.filter(edge => receivingSources.includes(edge.target)),
+    outgoingEdges: graph.edges.filter(edge => receivingSources.includes(edge.source)),
+    packageEntries: nativePackageEntries.filter(entry => receivingSources.includes(entry.source)),
+    publicEntries: graph.publicEntries.filter(entry => receivingSources.includes(entry.canonicalSource) || receivingSources.includes(entry.source)),
+    aliases: graph.aliases,
+    packageTargets: Object.fromEntries(['bin','main','exports'].map(key => [key,rootPackage[key] ?? null])),
+    unresolvedModuleOperations: graph.dynamicOperations.filter(operation => receivingSources.includes(operation.source))
+      .map(operation => Object.fromEntries(['source','expression','operation','hints'].map(key => [key,operation[key] ?? null]))),
+    workspacePackages: receiving.workspacePackages.map(({path: packagePath}) => {
+      if (!authority.inputs.some(input => input.path === packagePath)) fail('unsealed workspace declaration');
+      const declarations = JSON.parse(read(packagePath));
+      return {path: packagePath, declarations: Object.fromEntries(['scripts','bin','main','exports'].map(key => [key,declarations[key] ?? null]))};
+    }),
+  };
+  if (JSON.stringify(receivingActual) !== JSON.stringify(receiving)) fail('declaration/server caller/native/public/workspace/dynamic context');
   const actual = selectedSources.flatMap(source => classify(source).map(role => ({source, ...descriptor(role)})));
   if (JSON.stringify(actual) !== JSON.stringify(authority.descriptors)) fail('canonical native slot/role roster; registry relabel or missing/new slot');
   const receipt = Object.freeze({
     witnessDigest: authoritySha256, inputDigest: hash(JSON.stringify(facts)), currentPurposeInputBindingDigest,
     dependencies: Object.freeze([authorityPath, ...facts.map(input => input.path)]),
     descriptors: Object.freeze(authority.descriptors.map(Object.freeze)),
+    standaloneVerificationSlots: Object.freeze(standalone.slots.map(slot => Object.freeze({...slot}))),
+    realPipelineReceivingSlots: Object.freeze(pipeline.slots.map(slot => Object.freeze({...slot}))),
     runtimeExecutionAuthorized: false, apiApplyAuthorized: false,
   });
   receipts.add(receipt);
@@ -165,13 +380,27 @@ export function checkedTopLevelScriptPurposes(root, graph, classify, sources, na
 
 export function selectedTopLevelScriptPurpose(source, role, receipt) {
   if (!selectedSources.includes(source)) return null;
-  if (standaloneManifestAssertionSources.includes(source) && (role.role !== 'unknown' || role.sink !== 'fs.writeFileSync')) return null;
+  if (standaloneVerificationSources.includes(source) && role.role !== 'unknown') return null;
+  if (declarationAndServerReceivingSources.includes(source) && role.role !== 'unknown') return null;
   assert(receipt && receipts.has(receipt), 'API_PRODUCT_TOP_LEVEL_SOURCE_PURPOSE_UNQUALIFIED: unacquired receipt');
-  const expected = receipt.descriptors.find(item => item.source === source && item.line === role.line && item.sink === role.sink);
+  const expected = receipt.descriptors.find(item => item.source === source
+    && JSON.stringify(descriptor(item)) === JSON.stringify(descriptor(role)));
   assert(expected && JSON.stringify(descriptor(expected)) === JSON.stringify(descriptor(role)),
     'API_PRODUCT_TOP_LEVEL_SOURCE_PURPOSE_UNQUALIFIED: changed canonical slot or role');
-  const purpose = standaloneManifestAssertionSources.includes(source)
-    ? standaloneManifestAssertionPurpose : purposes[`${source}:${role.line}`];
+  const documentaryPurpose = documentaryFormatterSources.includes(source) && role.role === 'unknown'
+    ? source === 'scripts/docs-publication-sdk-examples.mjs' ? documentaryFormatterPurposes.sdk
+      : source === 'scripts/docs-schema-fields.mjs' ? documentaryFormatterPurposes.schema
+      : source === 'scripts/lib/docs-event-reference.mjs' ? documentaryFormatterPurposes.event
+      : documentaryFormatterPurposes.diagnostic : null;
+  const pipelinePurpose = realPipelineReceivingSources.includes(source) && role.role === 'unknown'
+    && receipt.realPipelineReceivingSlots.some(slot => slot.source === source && slot.line === role.line && slot.sink === role.sink)
+      ? realPipelineReceivingPurpose : null;
+  const receivingPurpose = declarationAndServerReceivingSources.includes(source)
+    ? declarationAndServerReceivingPurposes[`${source}:${role.line}`] : null;
+  const purpose = receivingPurpose ?? pipelinePurpose ?? documentaryPurpose ?? (standaloneVerificationSources.includes(source)
+    ? receipt.standaloneVerificationSlots.some(slot => slot.source === source && slot.line === role.line && slot.sink === role.sink)
+      ? standaloneVerificationPurpose : null
+    : purposes[`${source}:${role.line}`]);
   if (!purpose) return null; // Raw/API/mixed streams still need their own finite adapters.
   return Object.freeze({purpose, canonicalRawRole: role.role, witnessDigest: receipt.witnessDigest, inputDigest: receipt.inputDigest,
     currentPurposeInputBindingDigest: receipt.currentPurposeInputBindingDigest,
