@@ -79,8 +79,9 @@ RUN set -eux; \
     usermod --append --groups buster-suite,buster-buildkit builder; \
     printf 'builder:100000:65536\n' >> /etc/subuid; \
     printf 'builder:100000:65536\n' >> /etc/subgid; \
-    mkdir -p /app /home/builder/.openclaw/v2-jobs /home/builder/.local/share/buildkit /home/builder/.config/buildkit /home/builder/.cache/trivy /run/user/1000/buildkit; \
+    mkdir -p /app /home/builder/.openclaw/v2-jobs /home/builder/.local/share/buildkit /home/builder/.config/buildkit /home/builder/.cache/trivy /run/user/1000/buildkit /var/lib/buster-v2; \
     chown -R builder:builder /app /home/builder /run/user/1000; \
+    chown builder:builder /var/lib/buster-v2; \
     chown root:builder /home/builder/.config /home/builder/.config/buildkit; \
     chmod 0750 /home/builder/.config /home/builder/.config/buildkit
 
@@ -150,12 +151,15 @@ RUN test -n "$TRIVY_DATABASE_REFRESH" && setpriv --reuid=1000 --regid=1000 --ini
 COPY scripts/registry-client-config.mjs /app/scripts/registry-client-config.mjs
 COPY docker/buster-runtime-entrypoint.sh /usr/local/bin/buster-runtime-entrypoint
 RUN chmod 0755 /usr/local/bin/buster-runtime-entrypoint
+COPY tests/verification/deployment/buster-buildkit-state.mjs /tmp/buster-buildkit-state.mjs
+RUN setpriv --bounding-set=-dac_override,-dac_read_search,-fowner -- node /tmp/buster-buildkit-state.mjs \
+    && rm /tmp/buster-buildkit-state.mjs
 
 ENV HOME=/home/builder \
     XDG_RUNTIME_DIR=/run/user/1000 \
     NODE_PATH=/app/node_modules \
     BUILDKIT_HOST=unix:///run/user/1000/buildkit/buildkitd.sock \
-    BUILDKIT_STATE_DIR=/home/builder/.local/share/buildkit \
+    BUILDKIT_STATE_DIR=/var/lib/buster-v2/buildkit \
     BUSTER_V2_STATE_DIR=/home/builder/.openclaw/v2-jobs \
     BUSTER_V2_RUN_DIR=/tmp/buster-v2-runs \
     BUSTER_V2_MAX_ARCHIVE_BYTES=67108864 \

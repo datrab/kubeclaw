@@ -16,10 +16,17 @@ node /app/scripts/registry-client-config.mjs "$registry_contract" buildkit "$reg
 node /app/scripts/registry-client-config.mjs "$registry_contract" runtime "$registry_client_dir/runtime.json"
 registry="$(node -e 'process.stdout.write(JSON.parse(require("node:fs").readFileSync(process.argv[1],"utf8")).registryReference)' "$registry_client_dir/runtime.json")"
 config="${HOME}/.config/buildkit/buildkitd.toml"
-mkdir -p "$(dirname "$address")" "$(dirname "$otel_socket")" "$state" "$(dirname "$config")"
+mkdir -p "$(dirname "$address")" "$(dirname "$otel_socket")" "$(dirname "$config")"
 cp "$registry_client_dir/buildkit.toml" "$config"
 chown root:builder "$config"
 chmod 0640 "$config"
+
+# Keep the cache on the mounted worker volume, not nested container overlayfs.
+# Create it as its final owner: the restricted supervisor cannot traverse a
+# builder-owned mode-0700 parent, and must not recursively change old cache data.
+case "$state" in /*) ;; *) echo 'BuildKit state path must be absolute' >&2; exit 1 ;; esac
+setpriv --reuid=1000 --regid=1000 --init-groups \
+  sh -c 'umask 077; mkdir -p -- "$1" && test ! -L "$1" && chmod 0700 "$1" && test -w "$1"' sh "$state"
 
 setpriv \
   --reuid=1000 \
