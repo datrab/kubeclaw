@@ -19464,6 +19464,45 @@
           }
         ]
       }
+    },
+    {
+      "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "sink": "return",
+      "expression": "JSON.stringify([start,end,rows])",
+      "role": "non-api",
+      "basis": "original-capability-reader-fixed-heading-four-string-columns-digest-input",
+      "operations": [
+        {
+          "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "selectors": [
+            {
+              "expression": "JSON.stringify([start,end,rows])"
+            }
+          ],
+          "factsDigest": "e83508f5a6e393bb19629b452dab7a7e9c2514bffaa7944534e23da0dee1aca8"
+        }
+      ],
+      "roleConsumerEvidence": {
+        "review": "Bounded independent original receiving/shape Source judgment; native acquisition and original classifier controls remain separate. No arbitrary input, declaration correctness, API or execution authorization.",
+        "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+        "sink": "return",
+        "expression": "JSON.stringify([start,end,rows])",
+        "consumer": "Only the projected capability-reader branch returns JSON text for the tuple of two fixed headings and nonempty four-string table rows. Existing owner and executable-role input acquisition hash it against an exact declared purpose seal. Undefined-projection raw-byte passthrough is a separate return, excluded from this contract. No object/API identity or parsed arbitrary recursive payload is constructed.",
+        "evidence": [
+          {
+            "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+            "expression": "JSON.stringify([start,end,rows])"
+          },
+          {
+            "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+            "expression": "sha(documentationPurposeInputBytes(source,{...input,path:selected},fs.readFileSync(file)))===expected"
+          },
+          {
+            "source": "scripts/docs-api-documentation-role-custody.mjs",
+            "expression": "syntaxSha256(documentationPurposeInputBytes(source,input,fs.readFileSync(file)))===input.sha256"
+          }
+        ]
+      }
     }
   ],
   "nativeLanguageSerializationContracts": [
