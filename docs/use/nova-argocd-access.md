@@ -67,4 +67,3 @@ to Service TCP80/443 were refused; the MagicDNS hostname was unresolved. The
 repository's central default-deny rules lacked an explicit Nova→Argo allowance.
 These observations motivate this path but do not alone prove which live component
 rejected it. Source tests and review are separate from operator/tailnet/live checks.
-

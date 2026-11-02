@@ -31,7 +31,7 @@ remain separately reserved.
 This document describes the implemented pool preparation and verification
 contract. Prism now has an explicit native V3 startup/chart/runtime selection.
 Buster's complete fixture/host integration is still being completed. Creating pools alone does
-not activate native workers or close the original four findings.
+not activate native workers or establish live readiness.
 
 ## Tool-independent resource contract
 

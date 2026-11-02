@@ -105,3 +105,38 @@ or cancelled attempt remains failed and uses existing fixture cleanup behavior.
 
 No live success is established by local HTTP executor fixtures or unit tests.
 
+## Readiness and replacement failure evidence
+
+In the matching newer runtime, readiness and service-readiness timeouts collect
+bounded Pod identity/UID, scheduling/readiness conditions, current and previous
+container states, exit codes, restart counts and event reasons **before** lease
+cleanup. Namespace UID is best-effort; a denied read remains a separate failure,
+not evidence that no resource exists. Reads share caller cancellation, a
+one-second per-read bound and a five-second overall collection deadline.
+
+The ordinary failed result carries `providerDetails.values.failureEvidence` and
+can publish `kubernetes-fixture-failure.json` through the normal failed-node
+artifact path. The provider uses exclusive mode-0600 output inside the real
+workspace, an artifact ceiling of 128 KiB and the invocation's artifact budget.
+A publication error is a separate `failureArtifactError`; it does not replace
+the original readiness failure or turn the fixture into a successful deployment.
+
+Free-form messages and logs have a narrower confidentiality boundary than
+structural reasons. Up to eight current/previous-container log reads are bounded
+to 40 lines/4096 bytes each inside the same collection deadline. Known credential
+values and representations are redacted before final truncation; messages are
+capped at 1024 characters and the snapshot at 96 KiB. Unknown Secret-backed
+inputs, private projected/CSI inputs or unavailable Pod discovery withhold
+free-form messages/logs rather than asserting that arbitrary output is safe.
+Keep the structural conditions, exit codes and independent read errors.
+
+The newer handling also retains an ordinary failed result and pre-cleanup
+evidence for `REPLACEMENT_LEASE_CHANGED`; it does not relax UID, expiry, phase or
+replacement ownership checks. Pod/Service/Endpoints reads that match the narrow
+wrapped kubectl timeout become `READINESS_QUERY_TIMEOUT`, not workload
+`READINESS_TIMEOUT`. Cancellation, Forbidden and unrelated apply/admission
+timeouts retain their own throwing semantics. There is no retry or success
+fallback. Confirm the installed runtime actually includes these changes before
+expecting these diagnostics; older bundles can still return only the earlier
+timeout. Collection, diagnostic-agent completion, lease release and observed
+namespace/PVC deletion remain separate outcomes.
