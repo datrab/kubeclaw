@@ -1,6 +1,6 @@
 {
   "schemaVersion": "event-contract-reference.v1",
-  "sourceSetSha256": "b35c2b16d1ca8e2483fd8507c6deaa59102501632f032bcc49746c881e9bce2b",
+  "sourceSetSha256": "b010e567987a312690637aa53f7228d924f85140e862d8f24cc184d65116e5c0",
   "families": [
     {
       "id": "canonical-lifecycle-and-domain",
@@ -143789,8 +143789,8 @@
     },
     {
       "path": "scripts/docs-api-documentation-role-custody.mjs",
-      "sha256": "918091b811decb2ad3454ed95707ccd0481a318e1e4623c224f6f4ae737398ad",
-      "bytes": 1319633
+      "sha256": "303066d62a690b0997878fd09d987f87671ed24853375476fc082268d456e94c",
+      "bytes": 1320025
     },
     {
       "path": "scripts/docs-api-gitops-output-profile-authority.json",
@@ -143819,8 +143819,8 @@
     },
     {
       "path": "scripts/docs-api-output-discovery.mjs",
-      "sha256": "f64abf7e3628cd48fd6859866d0b32008cba4ea6eb6cc24e5093f3b75f229e60",
-      "bytes": 641214
+      "sha256": "afbe80df538bc67a236fb431fda826eb241d45481e509b21b20c32d7f6c5a3c3",
+      "bytes": 660849
     },
     {
       "path": "scripts/docs-api-output-role-classification.mjs",
@@ -143844,13 +143844,13 @@
     },
     {
       "path": "scripts/docs-api-producer-adapter-authorities.json",
-      "sha256": "d13281588aa606ebb8dc56813f5c23a1a760742c62cab079bcbbf91734f6ae1a",
-      "bytes": 5665353
+      "sha256": "a6306d19587b303b4d769ae643e3b394bd24a2cd528f4a7e325ec3059b20e0e0",
+      "bytes": 5770343
     },
     {
       "path": "scripts/docs-api-product-scope.mjs",
-      "sha256": "886954fc291ad77c42a92c9130e711565c27e14d58ebe2a74f14e1e873668125",
-      "bytes": 70670
+      "sha256": "1430812e2de18da95a004f67a0ff607cd30bfa558dfcd318e4d1f63b0fe14c06",
+      "bytes": 78070
     },
     {
       "path": "scripts/docs-api-python-ast-v1.py",
@@ -143899,8 +143899,8 @@
     },
     {
       "path": "scripts/docs-api-top-level-script-purpose.mjs",
-      "sha256": "d734c0fba56778d6c4d1fc323641f1d6c3808be18965d0b2c2d5938e74abdc55",
-      "bytes": 80953
+      "sha256": "53d19f6b122edc2cef867843e1326c0829429852e3b095d1950d3692d9666a76",
+      "bytes": 97673
     },
     {
       "path": "scripts/docs-api-versions-map-output-authority.json",
@@ -143974,7 +143974,7 @@
     },
     {
       "path": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
-      "sha256": "5c789ff482235eda76f89c72107927f8d9644684958a1cb6016bc9fde002c80a",
+      "sha256": "45e966cf1e113b20553c2e8c87a4307b0d7f00c6136adbb25d9102d62d653f4d",
       "bytes": 7604
     },
     {
@@ -154765,5 +154765,5 @@
       "bytes": 3220
     }
   ],
-  "combinedSourceVectorSha256": "76eeb3feaffb5915e73295e97374e88a1dea69a2949135ec01d7ef1cf0d1ba91"
+  "combinedSourceVectorSha256": "b5b0e91dcbe3f2e35cedaa4f7573d0588326d007c09557ab6c41356191a22459"
 }
