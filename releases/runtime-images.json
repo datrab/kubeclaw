@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "commit": "89f2577a8b1bb3dd8f0434ac97b792e44459c65b",
+  "commit": "8cf6229e28c29f2eb5563faee0ab14dfe7c895d0",
   "images": {
     "nova": "ghcr.io/datrab/kubeclaw-nova@sha256:18eb71992c40bb71e9aff5366eec14fc5be10ab72e1fc9907843b8c22bff98fd",
     "prism-agent": "ghcr.io/datrab/kubeclaw-prism-agent@sha256:73d2b60871c40299167922c46f719344f1a5de53e6298a1113146e8ce152ab9a",
     "buster-gateway": "ghcr.io/datrab/kubeclaw-buster-gateway@sha256:130d62ee57145c9e48a9254471db7e95986b4397cbd4a7047a3d47d33667c7f2",
-    "buster-runtime": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:413f767c808247d493c19912d8599a0f955e07f4a6b67c2d5690f1601649bfaf",
+    "buster-runtime": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:8b5b3e5f5a602ba5b1151724c5e1f47581bbfb7032a8f4a36c4e56d52a1a6b96",
     "namespace-controller": "ghcr.io/datrab/kubeclaw-namespace-controller@sha256:519d91c607bc18c01ce15e005264355da5ad322c86be51ed53619fbf45ef6739",
     "archviewer": "ghcr.io/datrab/kubeclaw-archviewer@sha256:0cbbfa7bc5a6a740e081dfcb592f43cc1b545549c08db50b72b1f8843e2c10e7",
     "prism-control": "ghcr.io/datrab/kubeclaw-prism-control@sha256:5b82e7068090e242c0af0ffd76e0cdbdf9f8b1456e5fe836f23d3ec5f1dbfe31",
@@ -13,7 +13,7 @@
     "prism-worker": "ghcr.io/datrab/kubeclaw-prism-worker@sha256:30a2b5279311dfc7b9ddd593dda36e5804c1f17ff6fdbd9ca0d899807e5c44e1",
     "prism-ingestion": "ghcr.io/datrab/kubeclaw-prism-ingestion@sha256:91b9190b0ae59440b3c9c0533a34769d1b8b648835e42750a8b135f562be7d6f"
   },
-  "sourceRunId": 41335994611,
+  "sourceRunId": 41369711938,
   "sourceRunAttempt": 1,
   "imageSources": {
     "nova": {
@@ -32,8 +32,8 @@
       "sourceRunAttempt": 1
     },
     "buster-runtime": {
-      "commit": "89f2577a8b1bb3dd8f0434ac97b792e44459c65b",
-      "sourceRunId": 41335994611,
+      "commit": "8cf6229e28c29f2eb5563faee0ab14dfe7c895d0",
+      "sourceRunId": 41369711938,
       "sourceRunAttempt": 1
     },
     "namespace-controller": {

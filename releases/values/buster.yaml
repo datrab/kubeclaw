@@ -1,4 +1,4 @@
-# Generated from release 89f2577a8b1bb3dd8f0434ac97b792e44459c65b and byte-matched source configuration; do not edit.
+# Generated from release 8cf6229e28c29f2eb5563faee0ab14dfe7c895d0 and byte-matched source configuration; do not edit.
 agentRole: buster
 gateway:
   startupDoctor:
@@ -38,13 +38,13 @@ imagePullSecrets:
 codeBundle:
   enabled: true
   archiveUrl: >-
-    https://github.com/datrab/kubeclaw/releases/download/code-bundles-41335994611-1/buster-89f2577a8b1bb3dd8f0434ac97b792e44459c65b.tgz
-  expectedCommit: 89f2577a8b1bb3dd8f0434ac97b792e44459c65b
+    https://github.com/datrab/kubeclaw/releases/download/code-bundles-41369711938-1/buster-8cf6229e28c29f2eb5563faee0ab14dfe7c895d0.tgz
+  expectedCommit: 8cf6229e28c29f2eb5563faee0ab14dfe7c895d0
   contractVersion: v2
   auth:
     existingSecret: github-bundle-reader
     existingSecretKey: token
-  sha256: 647b7cf978897be07c8b191afe0168dd7108a1ccdc0f707c6febfaa227bdf821
+  sha256: 5ba4a9d5ba68190737fd45cec5b5d51c859913f09ec9ecd8aa7e1e96c91f2a8f
 auth:
   existingSecret: openclaw-shared-secrets
   existingSecretKey: gatewayToken-buster
@@ -92,7 +92,7 @@ service:
       targetPort: buster-plan
 extraContainers:
   - name: buster-v2-runtime
-    image: ghcr.io/datrab/kubeclaw-buster-runtime@sha256:413f767c808247d493c19912d8599a0f955e07f4a6b67c2d5690f1601649bfaf
+    image: ghcr.io/datrab/kubeclaw-buster-runtime@sha256:8b5b3e5f5a602ba5b1151724c5e1f47581bbfb7032a8f4a36c4e56d52a1a6b96
     imagePullPolicy: Always
     env:
       - name: BUSTER_DIAGNOSIS_GATEWAY_TOKEN
