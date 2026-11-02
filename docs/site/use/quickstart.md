@@ -1,11 +1,11 @@
 # Operator Quickstart
 
-Status: convenience source check only; canonical install and run procedures own operator acceptance
+Status: checkout preparation only; canonical install and run procedures own operator acceptance
 Audience: operator
 Owner: platform operations
 Evidence: package.json; scripts/deploy.sh
 Applies to: current repository checkout
-Last verified: 2026-10-22, source/procedure review; revised dependency commands not executed
+Last verified: 2026-11-02, editorial separation of checkout preparation from documentation maintenance; dependency commands not rerun
 
 ## Objective
 
@@ -24,8 +24,6 @@ owned platform configuration, grants and services.
 
 - Use a clean KubeClaw checkout.
 - Install Node.js major version 24 and its supplied npm version.
-- Install Go and make `go` available on `PATH`. The generated-documentation
-  checks use it to inspect Go producers.
 - Run commands from the repository root.
 - Use the npm registry and credentials selected by the repository or host package
   authority. Keep network and DNS access to that registry when the package cache
@@ -36,8 +34,9 @@ owned platform configuration, grants and services.
 ## Supported Versions
 
 Use the [shared version rules](README.md#version-and-tool-boundary).
-This portable quickstart requires Node.js 24 and Go.
-The repository does not declare an accepted Go version range; record `go version`.
+This portable checkout preparation requires Node.js 24 and npm.
+Documentation generation has additional tools; those belong to the optional
+maintainer checks below, not to operator checkout preparation.
 It does not require Kubernetes, Helm, kubectl, or a delegated cgroup.
 
 ## Locked Dependency Installation
@@ -132,18 +131,9 @@ git status --short
 git rev-parse HEAD
 node --version
 npm --version
-command -v go
-go version
 ```
 
-3. Check generated documentation and the installed plugin inventory.
-
-```bash
-npm run docs:check:generated
-npm run plugin-system:inventory:check
-```
-
-4. Confirm the pipeline entry point.
+3. Confirm the pipeline entry point.
 
 ```bash
 npm pkg get scripts.pipeline
@@ -152,7 +142,7 @@ npm pkg get scripts.pipeline
 ## Expected Result
 
 The worktree output contains no unexpected change.
-Both checks exit with code zero.
+Dependency installation and required module resolution exit with code zero.
 
 `npm ci` reports a completed lockfile installation from the selected registry.
 Record a registry authentication, DNS, TLS, package-not-found, or integrity
@@ -166,14 +156,28 @@ Use the exact project and explicit-graph forms in [Configure and Operate](operat
 
 ## Verification
 
-Confirm that the inventory check matches every installed manifest and registration.
-Confirm that generated documentation matches its source inventories.
+Keep the source commit and dependency-installation result before continuing
+with the maintained first project, installation, or operation procedure.
+Checkout preparation does not validate plugin activation, generated reference
+freshness, cluster readiness, or a successful pipeline run.
 
-Keep the source commit before continuing to installation or operation.
+### Optional documentation and inventory maintenance
 
-Retain the complete dependency-installation evidence directory, the
-generated-documentation result, plugin-inventory result, and printed pipeline
-entry point.
+Only use this separate route when changing documentation generators or plugin
+metadata. First follow [Maintain documentation](../extend/documentation-maintenance.md)
+and its declared tool prerequisites; these checks inspect more than the
+checkout-preparation task and can require Go and other prepared tools.
+
+```bash
+npm run docs:check:generated
+npm run plugin-system:inventory:check
+```
+
+A failure here belongs to the named generator or inventory. Record it for that
+maintenance task; it does not by itself establish that the prepared checkout
+cannot run the separately documented first-project exercise. Do not repair or
+regenerate unrelated inventories as a prerequisite to reading the documentation.
+A passing result is not runtime or deployment acceptance.
 
 ## Common Failures
 
@@ -182,7 +186,7 @@ entry point.
 | Dirty worktree | Local or generated files differ | Review the changes; do not discard unknown work |
 | `npm ci` fails | Lockfile, registry, network, cache, or runtime mismatch | Retain the first failure and correct the named prerequisite before the same locked retry |
 | Required module resolution fails after install | Missing compiler/generator development dependency; production-only installation can still exit zero | Stop before generated checks; repeat the canonical include-dev installation and resolution check with new evidence |
-| Generated file drift | Source inventory changed | Run the named generator and review its diff |
+| Generated file drift during optional maintainer checks | Source inventory changed | Handle it in the documentation-maintenance task; do not expand checkout preparation into unrelated generator repairs |
 | Plugin validation fails | Manifest, module, schema, export, trust, or grant error | Repair the exact reported boundary |
 | Pipeline entry point differs | The checkout and documentation do not describe the same command | Stop and review the selected source revision |
 
