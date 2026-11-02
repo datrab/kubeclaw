@@ -409,6 +409,50 @@ const purposes = Object.freeze({
 // Whole Source/caller/receiver and canonical descriptors are checked afresh
 // BEFORE the receiving inventories' caches and ordinary mutable role fallback.
 // No product module is imported, invoked or fabricated by this qualification.
+const retainedDocumentaryReturnReceipts = new WeakMap();
+// One documentary Markdown-return node; not a module/API/JSON exclusion.
+const retainedDocumentaryReturn = Object.freeze({
+  "source": "scripts/lib/docs-retained-configuration-renderer.mjs",
+  "sourceSha256": "f8c7272feb8099489cbaf3e8f00e4fbb489aec8861426aa28e92c1006f7722b6",
+  "caller": "scripts/docs-generate.mjs",
+  "callerSha256": "41a30fba96b6ecab94926ff54ed840ec7a3c08b983c31c2840fdf0999e1f7e4c",
+  "line": 653,
+  "expressionSha256": "3ed0520975d6ad92df878c6a73954cf839bec6a9a903f113f1510ae4218dcc65",
+  "targets": [
+    "docs/site/reference/helm-values.md",
+    "docs/site/reference/environment-variables.md"
+  ],
+  "incomingEdges": [
+    {
+      "source": "scripts/docs-generate.mjs",
+      "target": "scripts/lib/docs-retained-configuration-renderer.mjs",
+      "kind": "import",
+      "operation": "import { renderRetainedConfigurationReferences } from './lib/docs-retained-configuration-renderer.mjs';"
+    }
+  ],
+  "publicEntries": [
+    {
+      "path": "scripts/docs-generate.mjs",
+      "canonicalSource": "scripts/docs-generate.mjs"
+    },
+    {
+      "path": "scripts/lib/docs-retained-configuration-renderer.mjs",
+      "canonicalSource": "scripts/lib/docs-retained-configuration-renderer.mjs"
+    }
+  ],
+  "packageEntries": [
+    {
+      "name": "docs:generate",
+      "command": "node scripts/docs-generate.mjs",
+      "source": "scripts/docs-generate.mjs"
+    },
+    {
+      "name": "docs:generate:check",
+      "command": "node scripts/docs-generate.mjs --check",
+      "source": "scripts/docs-generate.mjs"
+    }
+  ]
+});
 export function checkedTopLevelScriptPurposes(root, graph, classify, sources, nativePackageEntries) {
   if (!sources.some(source => selectedSources.includes(source))) return null;
   const fail = detail => assert.fail(`API_PRODUCT_TOP_LEVEL_SOURCE_PURPOSE_UNQUALIFIED: ${detail}`);
@@ -433,6 +477,19 @@ export function checkedTopLevelScriptPurposes(root, graph, classify, sources, na
     if (historical.length !== 1 || historical[0].sha256 !== binding.historicalSha256) fail('current binding historical identity');
   }
   const currentPurposeInputBindingDigest = hash(JSON.stringify(bindings));
+  const documentaryReturn = retainedDocumentaryReturn;
+  const observesDocumentaryReturn = sources.includes(documentaryReturn.source);
+  if (observesDocumentaryReturn) {
+  if (hash(read(documentaryReturn.source)) !== documentaryReturn.sourceSha256
+    || hash(read(documentaryReturn.caller)) !== documentaryReturn.callerSha256) fail('retained documentary return Source/caller');
+  const returnContextSources = [documentaryReturn.caller, documentaryReturn.source];
+  if (!graph || !Array.isArray(nativePackageEntries)
+    || JSON.stringify(graph.edges.filter(edge => returnContextSources.includes(edge.target))) !== JSON.stringify(documentaryReturn.incomingEdges)
+    || JSON.stringify(graph.publicEntries.filter(entry => returnContextSources.includes(entry.canonicalSource) || returnContextSources.includes(entry.source))) !== JSON.stringify(documentaryReturn.publicEntries)
+    || JSON.stringify(nativePackageEntries.filter(entry => returnContextSources.includes(entry.source))) !== JSON.stringify(documentaryReturn.packageEntries)
+    || JSON.stringify(documentaryReturn.targets) !== '["docs/site/reference/helm-values.md","docs/site/reference/environment-variables.md"]') fail('retained documentary return caller/native/public/target context');
+
+  }
   const facts = [];
   for (const input of authority.inputs) {
     const content = read(input.path);
@@ -564,6 +621,9 @@ export function checkedTopLevelScriptPurposes(root, graph, classify, sources, na
     realPipelineReceivingSlots: Object.freeze(pipeline.slots.map(slot => Object.freeze({...slot}))),
     runtimeExecutionAuthorized: false, apiApplyAuthorized: false,
   });
+  if (observesDocumentaryReturn) retainedDocumentaryReturnReceipts.set(receipt, Object.freeze({root, inputDigest:hash(JSON.stringify([
+    [documentaryReturn.source,documentaryReturn.sourceSha256], [documentaryReturn.caller,documentaryReturn.callerSha256]
+  ]))}));
   receipts.add(receipt);
   return receipt;
 }
@@ -869,4 +929,30 @@ export function selectedNodeTestFixtureNodePurpose(source,tree,node,receipt) {
   return !!proof&&proof.source===source&&tree.text===proof.bytes&&node.getSourceFile?.()===tree
     && proof.occurrences.some(occurrence=>occurrence.closedLiteral&&(node.getStart(tree)===occurrence.start&&node.end===occurrence.end
       || node.getStart(tree)>=occurrence.payloadStart&&node.end<=occurrence.payloadEnd));
+}
+
+// Called only for a real ReturnStatement publication, never constructor/raw sinks.
+export function selectedRetainedDocumentaryReturnPurpose(source, tree, publication, receipt) {
+  if (source !== retainedDocumentaryReturn.source) return null;
+  assert(receipt && receipts.has(receipt), 'API_PRODUCT_TOP_LEVEL_SOURCE_PURPOSE_UNQUALIFIED: unacquired documentary return receipt');
+  const custody = retainedDocumentaryReturnReceipts.get(receipt);
+  assert(custody, 'API_PRODUCT_TOP_LEVEL_SOURCE_PURPOSE_UNQUALIFIED: missing documentary return input custody');
+  for (const [relative, expected] of [[source,retainedDocumentaryReturn.sourceSha256], [retainedDocumentaryReturn.caller,retainedDocumentaryReturn.callerSha256]]) {
+    const file = path.join(custody.root, relative);
+    assert(fs.realpathSync(file) === file && fs.lstatSync(file).isFile() && hash(fs.readFileSync(file)) === expected,
+      'API_PRODUCT_TOP_LEVEL_SOURCE_PURPOSE_UNQUALIFIED: changed documentary return Source/caller');
+  }
+  if (tree.fileName !== source || hash(tree.text) !== retainedDocumentaryReturn.sourceSha256
+    || publication.arguments?.length !== 1) return null;
+  const argument = publication.arguments[0], returned = argument?.parent;
+  if (!returned || !ts.isReturnStatement(returned) || returned.expression !== argument) return null;
+  let root = returned; while (root.parent) root = root.parent;
+  if (root !== tree || publication.parent !== returned.parent
+    || publication.getStart(tree) !== returned.getStart(tree)
+    || tree.getLineAndCharacterOfPosition(returned.getStart(tree)).line + 1 !== retainedDocumentaryReturn.line
+    || hash(argument.getText(tree)) !== retainedDocumentaryReturn.expressionSha256) return null;
+  return Object.freeze({kind:'retained-documentary-schema-reference-markdown-return',
+    source, line:retainedDocumentaryReturn.line, targets:Object.freeze([...retainedDocumentaryReturn.targets]),
+    inputDigest:custody.inputDigest,
+    runtimeExecutionAuthorized:false, apiApplyAuthorized:false, apiExclusion:false});
 }

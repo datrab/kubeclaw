@@ -3,7 +3,7 @@ import {preparedGoEnvironment,preparedGoParser,runPreparedGoParser} from './docs
 import {localHelmChartFiles, renderLocalHelmChart} from './docs-helm-memory-chart.mjs';
 import {checkedOriginalProbe39Output, selectedOriginalProbe39Output} from './docs-api-probe39-original-output.mjs';
 import {checkedVersionsMapOutputs,selectedVersionsMapOutput} from './docs-api-versions-map-output.mjs';
-import {checkedTopLevelScriptPurposes,selectedTopLevelScriptPurpose,checkedNodeTestFixturePurpose,selectedNodeTestFixturePurpose,selectedNodeTestFixtureNodePurpose} from './docs-api-top-level-script-purpose.mjs';
+import {checkedTopLevelScriptPurposes,selectedTopLevelScriptPurpose,checkedNodeTestFixturePurpose,selectedNodeTestFixturePurpose,selectedNodeTestFixtureNodePurpose,selectedRetainedDocumentaryReturnPurpose} from './docs-api-top-level-script-purpose.mjs';
 import {checkedStorageReceiverPurposes,selectedStorageReceiverPurpose} from './docs-api-storage-receiver-purpose.mjs';
 import {checkedPrismNativeRequestCapability,classifyPrismNativeRequestRoles,selectedPrismNativeRequestCapability} from './docs-api-prism-native-request-capability.mjs';
 import {assertDocumentationOwnerPurpose,assertDocumentationOwnerAncestry,documentationOwnerNativeEntryMatches,reviewedDocumentationOwnerPurposes,assertReaderArtifactExternalCiPurpose,addReaderArtifactExternalCiSeed,assertPublicationExampleChildPurpose,addPublicationExampleChildSeed,publicationClaimsPurposeInputBytes,publicationClaimsPurposePhysicalInputs} from './docs-documentation-owner-purpose-custody.mjs';
@@ -6138,6 +6138,7 @@ export function discoverScriptApiOutputs(root) {
         outputDigest:hash(JSON.stringify(value)),inputs:[...serializedInputs].sort(),inputDigest:hash(JSON.stringify([...serializedInputs].sort().map(input=>[input,hash(fs.readFileSync(path.join(root,input)))]))),expressions:[...opaque.values()]}});
     });
     for(const publication of serializedPublications) {
+      if(selectedRetainedDocumentaryReturnPurpose(source,tree,publication,topLevelPurposes))continue;
       if(selectedNodeTestFixtureNodePurpose(source,tree,publication,nodeTestFixturePurpose))continue;
       terminalPosition=publication.getStart(tree);
       let guarded=false;
