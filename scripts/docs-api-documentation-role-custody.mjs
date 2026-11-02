@@ -10439,104 +10439,104 @@ export const documentationExecutableRoleRecipes = {
     ]
   },
   "scripts/docs-helm-memory-chart.mjs": {
-    "role": "documentation-consumer",
-    "selectors": [
-      {
-        "expressionSha256": "82a55b2ceecf1f5f6a1903986fc095f65198976e812a0bee6823fe5370377508"
-      },
-      {
-        "expressionSha256": "e747188458848f115636bbc7506ac5f55a1deccb7880dd83f205cf19d25226bd"
-      },
-      {
-        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
-      },
-      {
-        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
-      },
-      {
-        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
-      },
-      {
-        "expressionSha256": "3e5402543eb71fe9bde85752fe172f65732c8e475b4ecbb67a2be4233b0c7faa"
-      },
-      {
-        "expressionSha256": "09b1340d0a4d4dd72e22e768ea2632e4ac161b7b01a3af6026f8c3964d634fc5"
-      },
-      {
-        "expressionSha256": "603dc35eb8b56730b18cc1d24f409999875f7691c8d4d6352ba8c5948764ea37"
-      },
-      {
-        "expressionSha256": "00c91f87c6c2fe4b8cd419bad5658b5db5190489c7aeadc50ca7349737d81dd0"
-      }
-    ],
-    "factsDigest": "774af7a6b971a7b4e5b6591319995186af963fafc5b6ec645c7c749e04857669",
-    "authorityInputs": [],
-    "qualificationKind": "reviewed-documentation-consumer/v1",
-    "sourceSha256": "4d44afb56d88061d05f4f75397de4354885529a1bdc79329a967b3d68140166f",
-    "consumer": "Exact documentary local-chart renderer transport from docs-api-output-discovery: complete current regular chart membership with maintained ignore restrictions, original schema filtering/product branch instrumentation, isolated Python TAR plus Node gzip and sealed anonymous Linux RAM descriptor to fixed Helm template command with exact YAML stdin. No product API submission, runtime or arbitrary helper execution grant. Linux/Python memfd/fcntl/proc and current Helm are explicit fail-closed dependencies; no writable fallback.",
-    "purposeInputs": [
-      {
-        "path": "package.json",
-        "canonical": "package.json",
-        "sha256": "0a8f76c0a868d5b85467081f4c635421995b1792791b0acec05f80be9e93c4ef"
-      },
-      {
-        "path": "scripts/docs-api-output-discovery.mjs",
-        "canonical": "scripts/docs-api-output-discovery.mjs",
-        "sha256": "950c5285e744d42dff8d20bd41341430b6f2841ad79482dd353cd870f8e4bc4f"
-      },
-      {
-        "path": "scripts/docs-helm-memory-chart.mjs",
-        "canonical": "scripts/docs-helm-memory-chart.mjs",
-        "sha256": "4d44afb56d88061d05f4f75397de4354885529a1bdc79329a967b3d68140166f"
-      }
-    ]
-  },
+  "role": "documentation-consumer",
+  "selectors": [
+    {
+      "expressionSha256": "82a55b2ceecf1f5f6a1903986fc095f65198976e812a0bee6823fe5370377508"
+    },
+    {
+      "expressionSha256": "e747188458848f115636bbc7506ac5f55a1deccb7880dd83f205cf19d25226bd"
+    },
+    {
+      "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+    },
+    {
+      "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+    },
+    {
+      "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+    },
+    {
+      "expressionSha256": "3e5402543eb71fe9bde85752fe172f65732c8e475b4ecbb67a2be4233b0c7faa"
+    },
+    {
+      "expressionSha256": "09b1340d0a4d4dd72e22e768ea2632e4ac161b7b01a3af6026f8c3964d634fc5"
+    },
+    {
+      "expressionSha256": "603dc35eb8b56730b18cc1d24f409999875f7691c8d4d6352ba8c5948764ea37"
+    },
+    {
+      "expressionSha256": "00c91f87c6c2fe4b8cd419bad5658b5db5190489c7aeadc50ca7349737d81dd0"
+    }
+  ],
+  "factsDigest": "774af7a6b971a7b4e5b6591319995186af963fafc5b6ec645c7c749e04857669",
+  "authorityInputs": [],
+  "qualificationKind": "reviewed-documentation-consumer/v1",
+  "sourceSha256": "4d44afb56d88061d05f4f75397de4354885529a1bdc79329a967b3d68140166f",
+  "consumer": "Exact documentary local-chart renderer transport from docs-api-output-discovery: complete current regular chart membership with maintained ignore restrictions, original schema filtering/product branch instrumentation, isolated Python TAR plus Node gzip and sealed anonymous Linux RAM descriptor to fixed Helm template command with exact YAML stdin. No product API submission, runtime or arbitrary helper execution grant. Linux/Python memfd/fcntl/proc and current Helm are explicit fail-closed dependencies; no writable fallback.",
+  "purposeInputs": [
+    {
+      "path": "package.json",
+      "canonical": "package.json",
+      "sha256": "0a8f76c0a868d5b85467081f4c635421995b1792791b0acec05f80be9e93c4ef"
+    },
+    {
+      "path": "scripts/docs-api-output-discovery.mjs",
+      "canonical": "scripts/docs-api-output-discovery.mjs",
+      "sha256": "c6bcf7f4c3e015cfe91012dd423ffa2e769ff99e9f0d6e0c806e457b09d15f44"
+    },
+    {
+      "path": "scripts/docs-helm-memory-chart.mjs",
+      "canonical": "scripts/docs-helm-memory-chart.mjs",
+      "sha256": "4d44afb56d88061d05f4f75397de4354885529a1bdc79329a967b3d68140166f"
+    }
+  ]
+},
   "scripts/docs-memory-inputs.mjs": {
-    "role": "documentation-consumer",
-    "consumer": "Exact sealed anonymous-input relay used only by controlled documentary Ops/registry/continuous render observations in docs-api-output-discovery. It preserves actual command/argument/stdin/output/exit bytes and holds sealed descriptors through descendant completion. Actual Source caller closure and fixed input bytes are separately enforced; not arbitrary passed-command safety, runtime acquisition, API apply, subprocess or global helper execution authorization. Actual API renderer outputs remain classified at original consumer.",
-    "selectors": [
-      {
-        "expressionSha256": "d30990e5dea232df8f6a0314b46134d437aabcda2e910ea5cd59a8a088960535"
-      },
-      {
-        "expressionSha256": "127337b5eca8b86042bc16e676e7f0b3271cd809f700aa3953d67beeb489cf04"
-      },
-      {
-        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
-      },
-      {
-        "expressionSha256": "09b1340d0a4d4dd72e22e768ea2632e4ac161b7b01a3af6026f8c3964d634fc5"
-      },
-      {
-        "expressionSha256": "9f3fad083ae819cd1c8f1f72366901e672ce7b119d7aa0eea57f10a5bdeb41b6"
-      },
-      {
-        "expressionSha256": "81224079bff38a4eadd0838cdc3a3849721586588d3c7f6b4a8785c5c7ebe09d"
-      }
-    ],
-    "factsDigest": "97859e9c213cf24996899ccdb0c0b0dbe947c1677249fe82fce499cf1e630673",
-    "authorityInputs": [],
-    "qualificationKind": "reviewed-documentation-consumer/v1",
-    "sourceSha256": "fe8818c88971427495e86635a83dd62306d2d814a7596e9419d1f8d393fd2b01",
-    "purposeInputs": [
-      {
-        "path": "package.json",
-        "canonical": "package.json",
-        "sha256": "0a8f76c0a868d5b85467081f4c635421995b1792791b0acec05f80be9e93c4ef"
-      },
-      {
-        "path": "scripts/docs-api-output-discovery.mjs",
-        "canonical": "scripts/docs-api-output-discovery.mjs",
-        "sha256": "950c5285e744d42dff8d20bd41341430b6f2841ad79482dd353cd870f8e4bc4f"
-      },
-      {
-        "path": "scripts/docs-memory-inputs.mjs",
-        "canonical": "scripts/docs-memory-inputs.mjs",
-        "sha256": "fe8818c88971427495e86635a83dd62306d2d814a7596e9419d1f8d393fd2b01"
-      }
-    ]
-  }
+  "role": "documentation-consumer",
+  "consumer": "Exact sealed anonymous-input relay used only by controlled documentary Ops/registry/continuous renders and the exact offline Archviewer Secret client constructor in docs-api-output-discovery. It preserves actual command/argument/stdin/output/exit bytes and holds sealed descriptors through descendant completion. Actual Source caller closure and fixed input bytes are separately enforced; not arbitrary passed-command safety, runtime acquisition, API apply, subprocess or global helper execution authorization. Actual API renderer outputs remain classified at original consumer.",
+  "selectors": [
+    {
+      "expressionSha256": "d30990e5dea232df8f6a0314b46134d437aabcda2e910ea5cd59a8a088960535"
+    },
+    {
+      "expressionSha256": "bfed59c20238c67fae430212d8253298a96100cd932ab6c2e11f52d26a089aa5"
+    },
+    {
+      "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+    },
+    {
+      "expressionSha256": "09b1340d0a4d4dd72e22e768ea2632e4ac161b7b01a3af6026f8c3964d634fc5"
+    },
+    {
+      "expressionSha256": "9f3fad083ae819cd1c8f1f72366901e672ce7b119d7aa0eea57f10a5bdeb41b6"
+    },
+    {
+      "expressionSha256": "81224079bff38a4eadd0838cdc3a3849721586588d3c7f6b4a8785c5c7ebe09d"
+    }
+  ],
+  "factsDigest": "f86f4e5354d06e5f25686b6f93cf698cc229348a6b2dceec80f97ed2aedc3ce4",
+  "authorityInputs": [],
+  "qualificationKind": "reviewed-documentation-consumer/v1",
+  "sourceSha256": "ffcdac13863c9ff34db264435d4ea0811910e6235697bfc7089f3906c0a31587",
+  "purposeInputs": [
+    {
+      "path": "package.json",
+      "canonical": "package.json",
+      "sha256": "0a8f76c0a868d5b85467081f4c635421995b1792791b0acec05f80be9e93c4ef"
+    },
+    {
+      "path": "scripts/docs-api-output-discovery.mjs",
+      "canonical": "scripts/docs-api-output-discovery.mjs",
+      "sha256": "c6bcf7f4c3e015cfe91012dd423ffa2e769ff99e9f0d6e0c806e457b09d15f44"
+    },
+    {
+      "path": "scripts/docs-memory-inputs.mjs",
+      "canonical": "scripts/docs-memory-inputs.mjs",
+      "sha256": "ffcdac13863c9ff34db264435d4ea0811910e6235697bfc7089f3906c0a31587"
+    }
+  ]
+}
 };
 const syntaxSha256=syntax=>createHash('sha256').update(syntax).digest('hex');
 export const documentationSelectorReceipt=selectors=>selectors.map(({expression})=>({expressionSha256:syntaxSha256(expression)}));
@@ -10818,7 +10818,7 @@ const reviewedPublicationParserRecipe=frozenRecipes({
     },
     {
       "path": "scripts/docs-api-output-discovery.mjs",
-      "sha256": "950c5285e744d42dff8d20bd41341430b6f2841ad79482dd353cd870f8e4bc4f"
+      "sha256": "c6bcf7f4c3e015cfe91012dd423ffa2e769ff99e9f0d6e0c806e457b09d15f44"
     },
     {
       "path": "scripts/tests/api-output-publication-native-custody.test.mjs",

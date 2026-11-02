@@ -2,7 +2,19 @@ import assert from 'node:assert/strict';
 import { apiProductSelection, assertProductApiContexts, productMetadataReferences, productApiReceiverRecords } from './docs-api-product-scope.mjs';
 import { createHash } from 'node:crypto';
 import { apiResourceFieldBoundaries, apiSchemaUpstreamReference, isProductOwnedApi } from './docs-api-schema-authorities.mjs';
-import { discoverRejectedApiOutputProfiles } from './docs-api-output-discovery.mjs';
+import { discoverRejectedApiOutputProfiles, discoverShellExternalOutputBoundaries } from './docs-api-output-discovery.mjs';
+
+export function renderShellExternalOutputBoundaries(boundaries,sourceLink,sourceRoot) {
+  assert(Array.isArray(boundaries),'API_REFERENCE_EXTERNAL_BOUNDARY_INVENTORY_MISSING');
+  assert.deepEqual(boundaries,discoverShellExternalOutputBoundaries(sourceRoot),'API_REFERENCE_EXTERNAL_BOUNDARY_DRIFT');
+  if(!boundaries.length)return '';
+  return '## External Executable Output — UNKNOWN\n\n'+
+    'These procedures accept installed or supplied executable files. Offline discovery does not bind those files to a verified build. UNKNOWN is not a non-API classification or a report of successful execution. Authored API constructors and forwarding remain part of the catalogue.\n\n'+
+    boundaries.map(boundary=>`${sourceLink(boundary.source,boundary.sink.line)} selects ${code(boundary.sink.command)} with ${code(boundary.sink.args.join(' '))}.\n\n`+
+      `**Input authority:** ${text(boundary.inputAuthority)}. **Receiver:** ${text(boundary.receiver)}\n\n`+
+      `**Missing evidence:** ${text(boundary.missingIdentity)} **Owner:** ${text(boundary.owner)}.\n\n`+
+      `**Required check:** ${text(boundary.requiredVerification)}\n\n${text(boundary.limit)}\n`).join('\n');
+}
 
 export function renderRejectedApiOutputProfiles(profiles,sourceLink,sourceRoot) {
   assert(Array.isArray(profiles),'API_REFERENCE_REJECTED_PROFILE_INVENTORY_MISSING');

@@ -22,7 +22,8 @@ export function shellHeredocCustody(source,bytes) {
    let body='',atLineStart=true;const bodyPositions=[];
    for(let offset=0;offset<rawBody.length;offset++){const char=rawBody[offset];if(opening.operator==='<<-'&&atLineStart&&char==='\t')continue;body+=char;bodyPositions.push(bodyStart+offset);atLineStart=char==='\n';}
    bodyPositions.push(bodyStart+rawBody.length);
-   heredocs.push({...opening,body,bodyPositions,positions:bodyPositions,bodyStart,end:closeEnd});shell+=bytes.slice(bodyStart,closeEnd).replace(/[^\n]/gu,' ');
+   // Offsets index UTF-16 code units; mask each unit, not Unicode code points.
+   heredocs.push({...opening,body,bodyPositions,positions:bodyPositions,bodyStart,end:closeEnd});shell+=bytes.slice(bodyStart,closeEnd).replace(/[^\n]/g,' ');
   }
  }
  return {shell,heredocs};

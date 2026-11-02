@@ -28,7 +28,7 @@ export function runDocumentationInputs(command,args,files,{cwd,stdin=Buffer.allo
  assert(typeof command==='string'&&command&&Array.isArray(args)&&files instanceof Map,'DOCS_MEMORY_INPUTS_REQUEST_INVALID');
  const encoded={};
  for(const [name,bytes]of files){assert(/^[a-z][a-z0-9.-]*$/u.test(name)&&!name.includes('..')&&Buffer.isBuffer(bytes),'DOCS_MEMORY_INPUTS_MEMBER_INVALID');encoded[name]=bytes.toString('base64');}
- for(const argument of args)assert(typeof argument==='string'||(argument&&Object.keys(argument).every(key=>['file','prefix'].includes(key))&&files.has(argument.file)&&['','--discovery='].includes(argument.prefix??'')),'DOCS_MEMORY_INPUTS_ARGUMENT_INVALID');
+ for(const argument of args)assert(typeof argument==='string'||(argument&&Object.keys(argument).every(key=>['file','prefix'].includes(key))&&files.has(argument.file)&&['','--discovery=','--from-file=htpasswd='].includes(argument.prefix??'')),'DOCS_MEMORY_INPUTS_ARGUMENT_INVALID');
  assert(typeof cwd==='string'&&cwd.startsWith('/')&&Buffer.isBuffer(stdin),'DOCS_MEMORY_INPUTS_CONTEXT_INVALID');
  return spawnSync('python3',['-I','-B','-c',relay],{input:JSON.stringify({command,args,files:encoded,cwd,stdin:stdin.toString('base64'),timeout}),encoding:'utf8',maxBuffer,env,timeout:timeout?timeout+5000:0});
 }

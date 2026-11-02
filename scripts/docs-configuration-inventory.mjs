@@ -23,7 +23,7 @@ import {
 } from './docs-local-helm-authorities.mjs';
 import { apiFieldSchemaAuthority, apiFieldCollectionAuthority } from './docs-api-schema-authorities.mjs';
 import { apiProductSelection, discoverProductApiContexts, productMetadataReferences, productScopeLimits, productApiReceiverRecords } from './docs-api-product-scope.mjs';
-import { discoverRejectedApiOutputProfiles } from './docs-api-output-discovery.mjs';
+import { discoverRejectedApiOutputProfiles, discoverShellExternalOutputBoundaries } from './docs-api-output-discovery.mjs';
 import { apiReceiverCoverage } from './docs-api-receiver-coverage.mjs';
 import { receiverContracts as networkingReceiverContracts } from './docs-kubernetes-network-receiver-contracts.mjs';
 import { receiverContracts as admissionReceiverContracts } from './docs-kubernetes-admission-receiver-contracts.mjs';
@@ -3133,6 +3133,7 @@ function buildYamlInventory({ selectedYamlOnly = false } = {}) {
     files,
     apiResources,
     rejectedApiOutputProfiles: selectedYamlOnly ? [] : discoverRejectedApiOutputProfiles(root),
+    externalApiOutputBoundaries: selectedYamlOnly ? [] : discoverShellExternalOutputBoundaries(root),
     apiMetadataReferences: productMetadataReferences(apiResources),
     totals: {
       files: files.length,

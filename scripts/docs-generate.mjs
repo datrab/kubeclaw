@@ -16,8 +16,8 @@ import { publicationClaimsPurposeInputBytes,publicationClaimsPurposePhysicalInpu
 import { yamlFieldPathTokens } from './yaml-field-path.mjs';
 import { schemaSemanticText } from './plugin-registration-dependencies.mjs';
 import { stripMarkdownCodeAndRawHtml } from './lib/docs-markdown-anchors.mjs';
-import { renderApiResourceReference, renderRejectedApiOutputProfiles, upstreamApiReference } from './docs-api-reference.mjs';
-import { discoverRejectedApiOutputProfiles } from './docs-api-output-discovery.mjs';
+import { renderApiResourceReference, renderRejectedApiOutputProfiles, renderShellExternalOutputBoundaries, upstreamApiReference } from './docs-api-reference.mjs';
+import { discoverRejectedApiOutputProfiles, discoverShellExternalOutputBoundaries } from './docs-api-output-discovery.mjs';
 import { generateSdkReference } from './docs-sdk-reference.mjs';
 import { readVerifiedRetainedLanguageBundle } from './lib/docs-retained-language-bundle.mjs';
 import { loadRetainedConfigurationSnapshot, assertRetainedPageDestinations, writeRetainedPage } from './lib/docs-retained-source.mjs';
@@ -546,6 +546,7 @@ ${generatedEnd()}
 function renderHelmValues(configurationValues, configurationSchemas, { inventoryPath = 'docs/generated/inventory/configuration-values.json', currentSelected = false } = {}) {
   const valueFiles = configurationValues.files;
   const rejectedApiProfiles = renderRejectedApiOutputProfiles(currentSelected ? discoverRejectedApiOutputProfiles(root) : configurationValues.rejectedApiOutputProfiles,(source,line)=>`[${literalText(source)}](${pinnedSourceUrl(source,line,line)})`,root);
+  const externalApiBoundaries = renderShellExternalOutputBoundaries(currentSelected ? discoverShellExternalOutputBoundaries(root) : configurationValues.externalApiOutputBoundaries,(source,line)=>`[${literalText(source)}](${pinnedSourceUrl(source,line,line)})`,root);
   // The selected values artifact qualifies YAML inputs, not the global census
   // of programmatic API producers. Keep that separate publication boundary intact.
   const apiResourceSections = currentSelected ? null : renderApiResourceReference(configurationValues.apiResources,
@@ -748,6 +749,8 @@ Each field row separates the checked-in source from the runtime receiver. It fol
 ${fieldSections}
 
 ${rejectedApiProfiles}
+
+${externalApiBoundaries}
 
 ${currentSelected ? `## API Scope
 
