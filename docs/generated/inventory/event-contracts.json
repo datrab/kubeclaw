@@ -1,6 +1,6 @@
 {
   "schemaVersion": "event-contract-reference.v1",
-  "sourceSetSha256": "4cd98cf705bd2d3cb1fe60e110d47f7c05eae87088f13b6ffc603460d50e2500",
+  "sourceSetSha256": "ed7e8991ff7cfa3b80cd087fb502553a4110279da91847710cc4e14f0f937a93",
   "families": [
     {
       "id": "canonical-lifecycle-and-domain",
@@ -143844,8 +143844,8 @@
     },
     {
       "path": "scripts/docs-api-producer-adapter-authorities.json",
-      "sha256": "70652762243a41103324e9712dfbaf0b81a034dcd1206001d1473df34c315969",
-      "bytes": 5663217
+      "sha256": "4f07bde92afae4535659da0ad6e4c0cf028ff669c4b72f14acef090de2b9fd29",
+      "bytes": 5665353
     },
     {
       "path": "scripts/docs-api-product-scope.mjs",
@@ -154765,5 +154765,5 @@
       "bytes": 3220
     }
   ],
-  "combinedSourceVectorSha256": "c6eddc0018c0f3697fa96ab79eb5d9301bf9a255e6d75bec04620e6f8da1c8bc"
+  "combinedSourceVectorSha256": "60f91181e8de3273b40e6c22a874e2ddab578a4d79762e7abe2fe6becdc14c73"
 }
