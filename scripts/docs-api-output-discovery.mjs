@@ -3,7 +3,7 @@ import {preparedGoEnvironment,preparedGoParser,runPreparedGoParser} from './docs
 import {localHelmChartFiles, renderLocalHelmChart} from './docs-helm-memory-chart.mjs';
 import {checkedOriginalProbe39Output, selectedOriginalProbe39Output} from './docs-api-probe39-original-output.mjs';
 import {checkedVersionsMapOutputs,selectedVersionsMapOutput} from './docs-api-versions-map-output.mjs';
-import {checkedTopLevelScriptPurposes,selectedTopLevelScriptPurpose,checkedNodeTestFixturePurpose,selectedNodeTestFixturePurpose,selectedNodeTestFixtureNodePurpose,selectedRetainedDocumentaryReturnPurpose} from './docs-api-top-level-script-purpose.mjs';
+import {checkedTopLevelScriptPurposes,selectedTopLevelScriptPurpose,checkedNodeTestFixturePurpose,selectedNodeTestFixturePurpose,selectedNodeTestFixtureNodePurpose,selectedRetainedDocumentaryReturnPurpose,selectedStandaloneSerializedReceivingPurpose} from './docs-api-top-level-script-purpose.mjs';
 import {checkedStorageReceiverPurposes,selectedStorageReceiverPurpose} from './docs-api-storage-receiver-purpose.mjs';
 import {checkedPrismNativeRequestCapability,classifyPrismNativeRequestRoles,selectedPrismNativeRequestCapability} from './docs-api-prism-native-request-capability.mjs';
 import {assertDocumentationOwnerPurpose,assertDocumentationOwnerAncestry,documentationOwnerNativeEntryMatches,reviewedDocumentationOwnerPurposes,assertReaderArtifactExternalCiPurpose,addReaderArtifactExternalCiSeed,assertPublicationExampleChildPurpose,addPublicationExampleChildSeed,publicationClaimsPurposeInputBytes,publicationClaimsPurposePhysicalInputs} from './docs-documentation-owner-purpose-custody.mjs';
@@ -6146,7 +6146,8 @@ export function discoverScriptApiOutputs(root) {
       if(guarded)continue;
       for(const argument of publication.arguments) {
         const value=evaluate(argument);
-        if(value?.__docsDynamicExpression&&/apiVersion[\s\S]*kind|kind[\s\S]*apiVersion/u.test(value.__docsDynamicExpression))throw new Error(`API_PRODUCT_SCRIPT_SERIALIZED_OUTPUT_UNQUALIFIED: ${source}`);
+        if(value?.__docsDynamicExpression&&/apiVersion[\s\S]*kind|kind[\s\S]*apiVersion/u.test(value.__docsDynamicExpression)
+          &&!selectedStandaloneSerializedReceivingPurpose(source,tree,publication,argument,outputRoles,topLevelPurposes))throw new Error(`API_PRODUCT_SCRIPT_SERIALIZED_OUTPUT_UNQUALIFIED: ${source}`);
         if(typeof value==='string'&&/^[\s]*[\[{]/u.test(value)) {
           let parsed;try{parsed=JSON.parse(value);}catch{if(/apiVersion|"kind"/u.test(value))throw new Error(`API_PRODUCT_SCRIPT_SERIALIZED_JSON_INVALID: ${source}`);}
           for(const resource of Array.isArray(parsed)?parsed:[parsed])if(resource?.apiVersion&&resource?.kind)result.push({value:resource,context:{apiVersion:resource.apiVersion,kind:resource.kind,path:source,document:constructors.length+result.filter(output=>output.context.path===source&&output.context.profile==='serialized-json-literal').length,sourceDigest:hash(bytes),producer:'script-shape',profile:'serialized-json-literal',line:tree.getLineAndCharacterOfPosition(publication.getStart(tree)).line+1,outputDigest:hash(JSON.stringify(resource)),inputs:[],inputDigest:hash('[]'),expressions:[]}});

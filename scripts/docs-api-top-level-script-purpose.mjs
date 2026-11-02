@@ -215,6 +215,9 @@ function currentTopLevelPurposeAuthority(authority,fail) {
 }
 const hash = value => createHash('sha256').update(value).digest('hex');
 const receipts = new WeakSet();
+const standaloneSerializedReceipts = new WeakMap();
+const standaloneSerializedRoles = new WeakMap();
+const standaloneSerializedTrees = new WeakMap();
 const selectedSources = Object.freeze([
   'scripts/lint-baseline-update.mjs', 'scripts/observability-retirement-plan.mjs',
   'scripts/recover-openclaw-audit-input.mjs', 'scripts/render-kubernetes-api-probe.mjs',
@@ -531,7 +534,8 @@ export function checkedTopLevelScriptPurposes(root, graph, classify, sources, na
   const standaloneContextSources = standalone.contextSources;
   if (!Array.isArray(standaloneContextSources) || standaloneContextSources.length !== 85
     || !standaloneContextSources.every(source => authority.inputs.some(input => input.path === source))) fail('standalone assertion complete sealed caller inputs');
-  const rootPackage = JSON.parse(read('package.json'));
+  const rootPackageBytes = read('package.json');
+  const rootPackage = JSON.parse(rootPackageBytes);
   if (nativePackageEntries.filter(entry => standaloneContextSources.includes(entry.source))
     .some(entry => rootPackage.scripts?.[entry.name] !== entry.command)) fail('standalone assertion actual maintained command');
   const standaloneActual = {
@@ -624,6 +628,14 @@ export function checkedTopLevelScriptPurposes(root, graph, classify, sources, na
   if (observesDocumentaryReturn) retainedDocumentaryReturnReceipts.set(receipt, Object.freeze({root, inputDigest:hash(JSON.stringify([
     [documentaryReturn.source,documentaryReturn.sourceSha256], [documentaryReturn.caller,documentaryReturn.callerSha256]
   ]))}));
+  // Derivative capability of the already checked standalone Source/context.
+  // Store current overlay-adjusted physical Source/caller identities, not a
+  // new source list or a claim that contained fixture bytes are non-API.
+  const standaloneCurrentInputs = [...facts.filter(input => standaloneContextSources.includes(input.path)),
+    {path:'package.json',sha256:hash(rootPackageBytes)}];
+  if (!standaloneContextSources.every(source => standaloneCurrentInputs.some(input => input.path === source))) fail('standalone serialized current caller inputs');
+  standaloneSerializedReceipts.set(receipt, Object.freeze({root,
+    inputs:Object.freeze(standaloneCurrentInputs.map(input => Object.freeze({...input})))}));
   receipts.add(receipt);
   return receipt;
 }
@@ -652,11 +664,14 @@ export function selectedTopLevelScriptPurpose(source, role, receipt) {
       ? standaloneVerificationPurpose : null
     : purposes[`${source}:${role.line}`]);
   if (!purpose) return null; // Raw/API/mixed streams still need their own finite adapters.
-  return Object.freeze({purpose, canonicalRawRole: role.role, witnessDigest: receipt.witnessDigest, inputDigest: receipt.inputDigest,
+  const selected = Object.freeze({purpose, canonicalRawRole: role.role, witnessDigest: receipt.witnessDigest, inputDigest: receipt.inputDigest,
     currentPurposeInputBindingDigest: receipt.currentPurposeInputBindingDigest,
     currentProducerBindingDigest: receipt.currentProducerBindingDigest,
     runtimeExecutionAuthorized: false, apiApplyAuthorized: false,
     limit: 'Source-owned output purpose only; runtime inputs/results unobserved; arbitrary embedded tool/status bytes are not globally non-API.'});
+  if (standaloneVerificationSources.includes(source) && role.role === 'unknown' && role.sink === 'fs.writeFileSync')
+    standaloneSerializedRoles.set(role, Object.freeze({source,receipt,raw:JSON.stringify(role),purpose:selected}));
+  return selected;
 }
 
 // Builtin NodeTest receiving-context purpose only; never payload truth or an
@@ -955,4 +970,54 @@ export function selectedRetainedDocumentaryReturnPurpose(source, tree, publicati
     source, line:retainedDocumentaryReturn.line, targets:Object.freeze([...retainedDocumentaryReturn.targets]),
     inputDigest:custody.inputDigest,
     runtimeExecutionAuthorized:false, apiApplyAuthorized:false, apiExclusion:false});
+}
+
+// A controlled verification file-write receiving purpose, not contained API
+// validity or product emission. Only the opaque-expression guard consumes it.
+export function selectedStandaloneSerializedReceivingPurpose(source, tree, publication, argument, outputRoles, receipt) {
+  if (!standaloneVerificationSources.includes(source)
+    || !ts.isCallExpression(publication) || publication.expression.getText(tree) !== 'fs.writeFileSync'
+    || ![2,3].includes(publication.arguments.length) || publication.arguments[1] !== argument
+    || argument.parent !== publication) return null;
+  assert(receipt && receipts.has(receipt), 'API_PRODUCT_TOP_LEVEL_SOURCE_PURPOSE_UNQUALIFIED: unacquired standalone serialized receipt');
+  const custody = standaloneSerializedReceipts.get(receipt);
+  assert(custody && path.isAbsolute(custody.root) && fs.realpathSync(custody.root) === custody.root,
+    'API_PRODUCT_TOP_LEVEL_SOURCE_PURPOSE_UNQUALIFIED: missing standalone serialized root custody');
+  const sourceInput = custody.inputs.find(input => input.path === source);
+  if (!sourceInput || tree.fileName !== source || hash(tree.text) !== sourceInput.sha256) return null;
+  let root = publication; while (root.parent) root = root.parent;
+  let actualChild = false; if (publication.parent) ts.forEachChild(publication.parent, child => {if(child === publication) actualChild = true;});
+  if (root !== tree || !actualChild) return null;
+  // Compare this call's actual AST structure to a fresh native parse of the
+  // already sealed Source text; mutated AST fields cannot borrow old offsets.
+  const shape = node => {const children=[];ts.forEachChild(node,child=>{children.push(shape(child));});return [node.kind,typeof node.text === 'string' ? node.text : null,node.operator ?? null,children];};
+  let canonical = standaloneSerializedTrees.get(tree);
+  if (!canonical) {
+    const parsed=ts.createSourceFile(source,tree.text,ts.ScriptTarget.Latest,true,/\.[cm]?ts$/u.test(source)?ts.ScriptKind.TS:ts.ScriptKind.JS);
+    if(parsed.parseDiagnostics.length)return null;
+    canonical=new Map();
+    const visit=node=>{if(ts.isCallExpression(node))canonical.set(`${node.getStart(parsed)}:${node.end}`,JSON.stringify(shape(node)));ts.forEachChild(node,visit);};visit(parsed);
+    standaloneSerializedTrees.set(tree,canonical);
+  }
+  if (canonical.get(`${publication.getStart(tree)}:${publication.end}`) !== JSON.stringify(shape(publication))) return null;
+
+  const line = tree.getLineAndCharacterOfPosition(publication.getStart(tree)).line + 1;
+  const matches = outputRoles.filter(role => role.line === line && role.sink === 'fs.writeFileSync' && role.role === 'unknown'
+    && standaloneSerializedRoles.get(role)?.source === source
+    && standaloneSerializedRoles.get(role)?.receipt === receipt
+    && standaloneSerializedRoles.get(role)?.raw === JSON.stringify(role));
+  if (matches.length !== 1) return null;
+  const role = matches[0];
+  if (!receipt.standaloneVerificationSlots.some(slot => slot.source === source && slot.line === line && slot.sink === role.sink)
+    || !receipt.descriptors.some(expected => expected.source === source && JSON.stringify(descriptor(expected)) === JSON.stringify(descriptor(role)))) return null;
+  // No warm-cached capability can outlive its physical Source/caller package.
+  for (const input of custody.inputs) {
+    const file = path.join(custody.root,input.path);
+    assert(fs.existsSync(file) && fs.realpathSync(file) === file && fs.lstatSync(file).isFile() && hash(fs.readFileSync(file)) === input.sha256,
+      'API_PRODUCT_TOP_LEVEL_SOURCE_PURPOSE_UNQUALIFIED: changed standalone serialized Source/caller input');
+  }
+  return Object.freeze({...standaloneSerializedRoles.get(role).purpose,
+    kind:'standalone-verification-serialized-file-write-context', apiExclusion:false,
+    containedApiBytesQualified:false, supportedProductEmissionProven:false,
+    runtimeExecutionAuthorized:false, apiApplyAuthorized:false});
 }
