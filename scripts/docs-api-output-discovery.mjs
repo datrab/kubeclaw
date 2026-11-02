@@ -3,7 +3,7 @@ import {preparedGoEnvironment,preparedGoParser,runPreparedGoParser} from './docs
 import {localHelmChartFiles, renderLocalHelmChart} from './docs-helm-memory-chart.mjs';
 import {checkedOriginalProbe39Output, selectedOriginalProbe39Output} from './docs-api-probe39-original-output.mjs';
 import {checkedVersionsMapOutputs,selectedVersionsMapOutput} from './docs-api-versions-map-output.mjs';
-import {checkedTopLevelScriptPurposes,selectedTopLevelScriptPurpose,checkedNodeTestFixturePurpose,selectedNodeTestFixturePurpose,selectedNodeTestFixtureNodePurpose,selectedRetainedDocumentaryReturnPurpose,selectedStandaloneSerializedReceivingPurpose} from './docs-api-top-level-script-purpose.mjs';
+import {checkedTopLevelScriptPurposes,selectedTopLevelScriptPurpose,checkedNodeTestFixturePurpose,selectedNodeTestFixturePurpose,selectedNodeTestFixtureNodePurpose,selectedRetainedDocumentaryReturnPurpose,selectedStandaloneSerializedReceivingPurpose,selectedManifestValidationPublicationPurpose} from './docs-api-top-level-script-purpose.mjs';
 import {checkedStorageReceiverPurposes,selectedStorageReceiverPurpose} from './docs-api-storage-receiver-purpose.mjs';
 import {checkedPrismNativeRequestCapability,classifyPrismNativeRequestRoles,selectedPrismNativeRequestCapability} from './docs-api-prism-native-request-capability.mjs';
 import {assertDocumentationOwnerPurpose,assertDocumentationOwnerAncestry,documentationOwnerNativeEntryMatches,reviewedDocumentationOwnerPurposes,assertReaderArtifactExternalCiPurpose,addReaderArtifactExternalCiSeed,assertPublicationExampleChildPurpose,addPublicationExampleChildSeed,publicationClaimsPurposeInputBytes,publicationClaimsPurposePhysicalInputs} from './docs-documentation-owner-purpose-custody.mjs';
@@ -5928,6 +5928,7 @@ export function discoverScriptApiOutputs(root) {
     if(source==='scripts/updates/deployment-release.mjs'&&releaseRenderer){result.push(...releaseRenderer.outputs);continue;}
     if(!outputRoles.some(role=>role.role==='api')&&(!/apiVersion/u.test(bytes)||!/(?:kind\s*:|['"]kind['"]\s*:)/u.test(bytes)))continue;
     const tree=ts.createSourceFile(source,bytes,ts.ScriptTarget.Latest,true,/\.[cm]?ts$/u.test(source)?ts.ScriptKind.TS:ts.ScriptKind.JS);
+    const qualifiedInvalidVerificationInputRoles=new Set();
     assert(!tree.parseDiagnostics.length,`API_PRODUCT_PRODUCER_PARSE_FAILED: ${source}`);
     const declarations=new Map();const assignments=[];const constructors=[];const serializedInputs=new Set();
     const functions=[];const calls=[];const serializedPublications=[];const unsupportedMutations=[];
@@ -6209,21 +6210,27 @@ export function discoverScriptApiOutputs(root) {
       for(const argument of publication.arguments) {
         const value=evaluate(argument);
         if(value?.__docsDynamicExpression&&/apiVersion[\s\S]*kind|kind[\s\S]*apiVersion/u.test(value.__docsDynamicExpression)
-          &&!selectedStandaloneSerializedReceivingPurpose(source,tree,publication,argument,outputRoles,topLevelPurposes))throw new Error(`API_PRODUCT_SCRIPT_SERIALIZED_OUTPUT_UNQUALIFIED: ${source}`);
+          &&!selectedStandaloneSerializedReceivingPurpose(source,tree,publication,argument,outputRoles,topLevelPurposes)
+          &&!selectedManifestValidationPublicationPurpose(source,tree,publication,argument,outputRoles,topLevelPurposes,'opaque'))throw new Error(`API_PRODUCT_SCRIPT_SERIALIZED_OUTPUT_UNQUALIFIED: ${source}`);
         if(typeof value==='string'&&/^[\s]*[\[{]/u.test(value)) {
           let parsed;try{parsed=JSON.parse(value);}catch{if(/apiVersion|"kind"/u.test(value))throw new Error(`API_PRODUCT_SCRIPT_SERIALIZED_JSON_INVALID: ${source}`);}
           for(const resource of Array.isArray(parsed)?parsed:[parsed])if(resource?.apiVersion&&resource?.kind)result.push({value:resource,context:{apiVersion:resource.apiVersion,kind:resource.kind,path:source,document:constructors.length+result.filter(output=>output.context.path===source&&output.context.profile==='serialized-json-literal').length,sourceDigest:hash(bytes),producer:'script-shape',profile:'serialized-json-literal',line:tree.getLineAndCharacterOfPosition(publication.getStart(tree)).line+1,outputDigest:hash(JSON.stringify(resource)),inputs:[],inputDigest:hash('[]'),expressions:[]}});
         }
         if(typeof value!=='string'||!/(?:^|\n)apiVersion:\s/u.test(value)||!/(?:^|\n)kind:\s/u.test(value))continue;
         const documents=YAML.parseAllDocuments(value);
-        assert(documents.every(document=>!document.errors.length),`API_PRODUCT_SCRIPT_SERIALIZED_YAML_INVALID: ${source}`);
+        if(!documents.every(document=>!document.errors.length)) {
+          const invalidInputPurpose=selectedManifestValidationPublicationPurpose(source,tree,publication,argument,outputRoles,topLevelPurposes,'yaml-error');
+          assert(invalidInputPurpose&&invalidInputPurpose.boundRawRole&&outputRoles.includes(invalidInputPurpose.boundRawRole),`API_PRODUCT_SCRIPT_SERIALIZED_YAML_INVALID: ${source}`);
+          qualifiedInvalidVerificationInputRoles.add(invalidInputPurpose.boundRawRole);
+          continue; // Exact intentional-invalid verification input, never a parsed API resource.
+        }
         for(const document of documents) {
           const resource=document.toJS();if(!resource?.apiVersion||!resource?.kind)continue;
           result.push({value:resource,context:{apiVersion:resource.apiVersion,kind:resource.kind,path:source,document:constructors.length+result.filter(output=>output.context.path===source&&output.context.profile==='serialized-literal').length,sourceDigest:hash(bytes),producer:'script-shape',profile:'serialized-literal',line:tree.getLineAndCharacterOfPosition(publication.getStart(tree)).line+1,outputDigest:hash(JSON.stringify(resource)),inputs:[],inputDigest:hash('[]'),expressions:[]}});
         }
       }
     }
-    assert(!outputRoles.some(role=>role.role==='api'&&!selectedNodeTestFixturePurpose(source,role,nodeTestFixturePurpose,true))||result.some(output=>output.context.path===source),`API_PRODUCT_SCRIPT_OUTPUT_IDENTITY_UNQUALIFIED: ${source}`);
+    assert(!outputRoles.some(role=>role.role==='api'&&!qualifiedInvalidVerificationInputRoles.has(role)&&!selectedNodeTestFixturePurpose(source,role,nodeTestFixturePurpose,true))||result.some(output=>output.context.path===source),`API_PRODUCT_SCRIPT_OUTPUT_IDENTITY_UNQUALIFIED: ${source}`);
   }
   for(const output of result)for(const source of output.context.inputs??[])classifiedDependencies.add(source);
   // Entry aliases carry the canonical source's actual line/digest and inputs;

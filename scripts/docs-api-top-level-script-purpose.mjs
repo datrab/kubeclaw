@@ -218,6 +218,51 @@ const receipts = new WeakSet();
 const standaloneSerializedReceipts = new WeakMap();
 const standaloneSerializedRoles = new WeakMap();
 const standaloneSerializedTrees = new WeakMap();
+const manifestValidationRoles = new WeakMap();
+// Existing sealed manifest-verification family; not filename/test-directory authority.
+const manifestValidationPublicationContext = Object.freeze({
+  "sources": [
+    "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+    "tests/verification/contracts/support/manifest-lint-parity-fixture.mts",
+    "tests/verification/contracts/check-pipeline-manifest-lint-parity.mts"
+  ],
+  "nonApiWrites": [
+    [
+      "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      95
+    ],
+    [
+      "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      200
+    ],
+    [
+      "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      227
+    ],
+    [
+      "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      246
+    ],
+    [
+      "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      321
+    ],
+    [
+      "tests/verification/contracts/support/manifest-lint-parity-fixture.mts",
+      34
+    ]
+  ],
+  "helperReturn": {
+    "source": "tests/verification/contracts/support/manifest-lint-parity-fixture.mts",
+    "line": 78,
+    "owner": "workload",
+    "expressionSha256": "61783cb9137f5df2e65901f60b5127bb85ff6c9a83d7b3ca60b6ff4a76071db5"
+  },
+  "malformedYaml": {
+    "source": "tests/verification/contracts/check-pipeline-manifest-lint-parity.mts",
+    "line": 42
+  }
+});
 const selectedSources = Object.freeze([
   'scripts/lint-baseline-update.mjs', 'scripts/observability-retirement-plan.mjs',
   'scripts/recover-openclaw-audit-input.mjs', 'scripts/render-kubernetes-api-probe.mjs',
@@ -642,6 +687,15 @@ export function checkedTopLevelScriptPurposes(root, graph, classify, sources, na
 
 export function selectedTopLevelScriptPurpose(source, role, receipt) {
   if (!selectedSources.includes(source)) return null;
+  const manifestKind = role.sink === 'fs.writeFileSync'
+    && (role.role === 'non-api' && manifestValidationPublicationContext.nonApiWrites.some(([file,line])=>file===source&&line===role.line) ? 'opaque'
+      : role.role === 'api' && source===manifestValidationPublicationContext.malformedYaml.source&&role.line===manifestValidationPublicationContext.malformedYaml.line ? 'yaml-error' : null);
+  if (manifestKind) {
+    assert(receipt && receipts.has(receipt), 'API_PRODUCT_TOP_LEVEL_SOURCE_PURPOSE_UNQUALIFIED: unacquired manifest publication receipt');
+    const exact=receipt.descriptors.filter(item=>item.source===source&&JSON.stringify(descriptor(item))===JSON.stringify(descriptor(role)));
+    assert(exact.length===1, 'API_PRODUCT_TOP_LEVEL_SOURCE_PURPOSE_UNQUALIFIED: changed manifest canonical slot');
+    manifestValidationRoles.set(role,Object.freeze({source,receipt,raw:JSON.stringify(role),kind:manifestKind}));
+  }
   if (standaloneVerificationSources.includes(source) && role.role !== 'unknown') return null;
   if (declarationAndServerReceivingSources.includes(source) && role.role !== 'unknown') return null;
   assert(receipt && receipts.has(receipt), 'API_PRODUCT_TOP_LEVEL_SOURCE_PURPOSE_UNQUALIFIED: unacquired receipt');
@@ -996,7 +1050,7 @@ export function selectedStandaloneSerializedReceivingPurpose(source, tree, publi
     const parsed=ts.createSourceFile(source,tree.text,ts.ScriptTarget.Latest,true,/\.[cm]?ts$/u.test(source)?ts.ScriptKind.TS:ts.ScriptKind.JS);
     if(parsed.parseDiagnostics.length)return null;
     canonical=new Map();
-    const visit=node=>{if(ts.isCallExpression(node))canonical.set(`${node.getStart(parsed)}:${node.end}`,JSON.stringify(shape(node)));ts.forEachChild(node,visit);};visit(parsed);
+    const visit=node=>{if(ts.isCallExpression(node)||ts.isReturnStatement(node)||ts.isFunctionDeclaration(node))canonical.set(`${node.getStart(parsed)}:${node.end}`,JSON.stringify(shape(node)));ts.forEachChild(node,visit);};visit(parsed);
     standaloneSerializedTrees.set(tree,canonical);
   }
   if (canonical.get(`${publication.getStart(tree)}:${publication.end}`) !== JSON.stringify(shape(publication))) return null;
@@ -1020,4 +1074,54 @@ export function selectedStandaloneSerializedReceivingPurpose(source, tree, publi
     kind:'standalone-verification-serialized-file-write-context', apiExclusion:false,
     containedApiBytesQualified:false, supportedProductEmissionProven:false,
     runtimeExecutionAuthorized:false, apiApplyAuthorized:false});
+}
+
+// Three distinct current receiving contexts. Raw canonical roles are unchanged;
+// a helper return has no raw-role slot and cannot borrow a file-write proof.
+export function selectedManifestValidationPublicationPurpose(source, tree, publication, argument, outputRoles, receipt, phase) {
+  const family=manifestValidationPublicationContext;
+  if(!family.sources.includes(source)||!['opaque','yaml-error'].includes(phase))return null;
+  assert(receipt&&receipts.has(receipt),'API_PRODUCT_TOP_LEVEL_SOURCE_PURPOSE_UNQUALIFIED: unacquired manifest publication receipt');
+  const custody=standaloneSerializedReceipts.get(receipt);
+  assert(custody&&path.isAbsolute(custody.root)&&fs.realpathSync(custody.root)===custody.root,
+    'API_PRODUCT_TOP_LEVEL_SOURCE_PURPOSE_UNQUALIFIED: missing manifest publication root custody');
+  const input=custody.inputs.find(input=>input.path===source);
+  if(!input||tree.fileName!==source||hash(tree.text)!==input.sha256)return null;
+  let node,rawRole=null,helperOwner=null;
+  if(ts.isCallExpression(publication)) {
+    if(publication.expression.getText(tree)!=='fs.writeFileSync'||![2,3].includes(publication.arguments.length)
+      ||publication.arguments[1]!==argument||argument.parent!==publication)return null;
+    node=publication;
+    const line=tree.getLineAndCharacterOfPosition(node.getStart(tree)).line+1;
+    const matches=outputRoles.filter(role=>role.line===line&&role.sink==='fs.writeFileSync'
+      &&manifestValidationRoles.get(role)?.source===source&&manifestValidationRoles.get(role)?.receipt===receipt
+      &&manifestValidationRoles.get(role)?.kind===phase&&manifestValidationRoles.get(role)?.raw===JSON.stringify(role));
+    if(matches.length!==1)return null;
+    rawRole=matches[0];
+    if(!receipt.descriptors.some(expected=>expected.source===source&&JSON.stringify(descriptor(expected))===JSON.stringify(descriptor(rawRole))))return null;
+  } else {
+    if(phase!=='opaque'||source!==family.helperReturn.source||publication.arguments?.length!==1
+      ||publication.arguments[0]!==argument||!ts.isReturnStatement(argument.parent)||argument.parent.expression!==argument)return null;
+    node=argument.parent;
+    if(publication.parent!==node.parent||publication.getStart(tree)!==node.getStart(tree)
+      ||tree.getLineAndCharacterOfPosition(node.getStart(tree)).line+1!==family.helperReturn.line
+      ||hash(argument.getText(tree))!==family.helperReturn.expressionSha256)return null;
+    let owner=node.parent;while(owner&&!ts.isFunctionLike(owner))owner=owner.parent;
+    if(!owner||!ts.isFunctionDeclaration(owner)||owner.name?.text!==family.helperReturn.owner
+      ||owner.parent!==tree||!owner.modifiers?.some(modifier=>modifier.kind===ts.SyntaxKind.ExportKeyword))return null;
+    helperOwner=owner;
+  }
+  let root=node;while(root.parent)root=root.parent;
+  let actualChild=false;if(node.parent)ts.forEachChild(node.parent,child=>{if(child===node)actualChild=true;});
+  if(root!==tree||!actualChild)return null;
+  const shape=node=>{const children=[];ts.forEachChild(node,child=>{children.push(shape(child));});return[node.kind,typeof node.text==='string'?node.text:null,node.operator??null,children];};
+  let canonical=standaloneSerializedTrees.get(tree);
+  if(!canonical){const parsed=ts.createSourceFile(source,tree.text,ts.ScriptTarget.Latest,true,/\.[cm]?ts$/u.test(source)?ts.ScriptKind.TS:ts.ScriptKind.JS);if(parsed.parseDiagnostics.length)return null;canonical=new Map();const visit=node=>{if(ts.isCallExpression(node)||ts.isReturnStatement(node)||ts.isFunctionDeclaration(node))canonical.set(`${node.getStart(parsed)}:${node.end}`,JSON.stringify(shape(node)));ts.forEachChild(node,visit);};visit(parsed);standaloneSerializedTrees.set(tree,canonical);}
+  if(canonical.get(`${node.getStart(tree)}:${node.end}`)!==JSON.stringify(shape(node)))return null;
+  if(helperOwner&&canonical.get(`${helperOwner.getStart(tree)}:${helperOwner.end}`)!==JSON.stringify(shape(helperOwner)))return null;
+  for(const fact of custody.inputs){const file=path.join(custody.root,fact.path);assert(fs.existsSync(file)&&fs.realpathSync(file)===file&&fs.lstatSync(file).isFile()&&hash(fs.readFileSync(file))===fact.sha256,
+    'API_PRODUCT_TOP_LEVEL_SOURCE_PURPOSE_UNQUALIFIED: changed manifest publication Source/caller input');}
+  return Object.freeze({purpose:standaloneVerificationPurpose,kind:rawRole?(phase==='yaml-error'?'intentional-invalid-yaml-verification-input':'canonical-verification-file-input'):'closed-verification-api-text-helper-return',
+    boundRawRole:rawRole,canonicalRawRole:rawRole?.role??null,rawRoleSlotExists:Boolean(rawRole),witnessDigest:receipt.witnessDigest,inputDigest:receipt.inputDigest,
+    payloadValidityProven:false,supportedProductEmissionProven:false,apiExclusion:false,runtimeExecutionAuthorized:false,apiApplyAuthorized:false});
 }
