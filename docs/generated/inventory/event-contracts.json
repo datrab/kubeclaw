@@ -1,6 +1,6 @@
 {
   "schemaVersion": "event-contract-reference.v1",
-  "sourceSetSha256": "5f1212921af3dfc66be6459dfc9db85b476ce6222ea13a1b5b99d09069cfe917",
+  "sourceSetSha256": "974bf001cf961db8cedc9d81070754b0f2f2b9f71b3a4c02f3b943dce47426fa",
   "families": [
     {
       "id": "canonical-lifecycle-and-domain",
@@ -143789,7 +143789,7 @@
     },
     {
       "path": "scripts/docs-api-documentation-role-custody.mjs",
-      "sha256": "a23108dfdb8189ef74d9a94ee633d04e8ee8eeacb59ce118531a701b88e51f98",
+      "sha256": "22f6ad6d696fd418045f5a1827a9380b803e98f5c639b528d95b4fc209e78159",
       "bytes": 1319633
     },
     {
@@ -143819,8 +143819,8 @@
     },
     {
       "path": "scripts/docs-api-output-discovery.mjs",
-      "sha256": "7c81c02d8b8cc16620d37d7774bb6023d42cec4babc7e6117b6821c5725d6a1e",
-      "bytes": 636227
+      "sha256": "3c9a8b19aab88ce122af5489826b8d1372c00a5d85b899207d77e02afafb434b",
+      "bytes": 636370
     },
     {
       "path": "scripts/docs-api-output-role-classification.mjs",
@@ -143899,8 +143899,8 @@
     },
     {
       "path": "scripts/docs-api-top-level-script-purpose.mjs",
-      "sha256": "ec1ea792599fb188c2071758e8593207909ba4265b2e7291860581eeab89aaa2",
-      "bytes": 63355
+      "sha256": "910d96afb8dd8c5257237cb3e645392dec51ecea64ea0eccf7ab03e42c68c808",
+      "bytes": 68517
     },
     {
       "path": "scripts/docs-api-versions-map-output-authority.json",
@@ -143974,7 +143974,7 @@
     },
     {
       "path": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
-      "sha256": "626bc6818c0943fe5c8cfa0c8b8d613aa80b9748682ef63efaf5a0a53cb9747d",
+      "sha256": "578df756c72203f89259ed037cf100034b2af8e428558415d2c85895c7ed43a5",
       "bytes": 7604
     },
     {
@@ -154765,5 +154765,5 @@
       "bytes": 3220
     }
   ],
-  "combinedSourceVectorSha256": "77d76060f4a2edd0b87c297c055f6aaa2e9ecf8b539e48b9ff4f8a795152d382"
+  "combinedSourceVectorSha256": "05467ff24221cc305fffd8dce7aa852a3b2825460d448050b0ccccb64c7a47be"
 }
