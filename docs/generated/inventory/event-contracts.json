@@ -1,6 +1,6 @@
 {
   "schemaVersion": "event-contract-reference.v1",
-  "sourceSetSha256": "974bf001cf961db8cedc9d81070754b0f2f2b9f71b3a4c02f3b943dce47426fa",
+  "sourceSetSha256": "f6ae67dc207130b795341fbf3217c28a2e9b0a9b2fcc34f3d3e279d8869a2433",
   "families": [
     {
       "id": "canonical-lifecycle-and-domain",
@@ -143844,7 +143844,7 @@
     },
     {
       "path": "scripts/docs-api-producer-adapter-authorities.json",
-      "sha256": "4f07bde92afae4535659da0ad6e4c0cf028ff669c4b72f14acef090de2b9fd29",
+      "sha256": "07c68b994c958b9e64624068312feb3786e93e4cf88f1c1b69372751bd494953",
       "bytes": 5665353
     },
     {
@@ -145589,8 +145589,8 @@
     },
     {
       "path": "scripts/tests/documentation-variable-child-custody.test.mjs",
-      "sha256": "f0af7dac1af420ee92841bd0c0a0faba35be38a13fa82e371a65787deb39ecd3",
-      "bytes": 9888
+      "sha256": "9bc11cba94b13ca7e9890567eacebc95661e814c3c6a92f4c584fd567c78f6dc",
+      "bytes": 11021
     },
     {
       "path": "scripts/tests/environment-custody-boundaries.test.mjs",
@@ -154765,5 +154765,5 @@
       "bytes": 3220
     }
   ],
-  "combinedSourceVectorSha256": "05467ff24221cc305fffd8dce7aa852a3b2825460d448050b0ccccb64c7a47be"
+  "combinedSourceVectorSha256": "9bef3979512416361b8234a0971a53a145e49a4c2e46a1225825a2de1c396146"
 }
