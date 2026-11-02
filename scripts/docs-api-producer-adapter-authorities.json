@@ -136,7 +136,7 @@
           "{",
           "echo",
           "-e",
-          "${GREEN}[\u2713]${NC} $1",
+          "${GREEN}[✓]${NC} $1",
           ";",
           "}",
           "warn",
@@ -152,7 +152,7 @@
           "{",
           "echo",
           "-e",
-          "${RED}[\u2717]${NC} $1",
+          "${RED}[✗]${NC} $1",
           ">&",
           "2",
           ";",
@@ -170,13 +170,13 @@
           "{",
           "echo",
           "-e",
-          "\\n${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}",
+          "\\n${BLUE}═══════════════════════════════════════${NC}",
           "echo",
           "-e",
           "${BLUE} $1${NC}",
           "echo",
           "-e",
-          "${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}",
+          "${BLUE}═══════════════════════════════════════${NC}",
           "}",
           "require_command",
           "()",
@@ -2820,7 +2820,7 @@
           "--no-headers",
           "|",
           "awk",
-          "{print \"  \" $1 \" \u2192 \" $3}",
+          "{print \"  \" $1 \" → \" $3}",
           "}",
           "reconcile_nova_retired_trust_mount",
           "()",
@@ -3600,7 +3600,7 @@
           "--no-headers",
           "|",
           "awk",
-          "{print \"  \" $1 \" \u2192 \" $3}",
+          "{print \"  \" $1 \" → \" $3}",
           "}",
           "cmd_image",
           "()",
@@ -5998,7 +5998,7 @@
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster BuildKit Production Preflight",
+          "Nova → Buster BuildKit Production Preflight",
           "require_command",
           "kubectl",
           "run_nova_production_receipt_preflight",
@@ -6007,13 +6007,13 @@
           "\n",
           "$REPO_DIR/dist/verification/container-build-production-receipt.json",
           "log",
-          "Nova \u2192 Buster BuildKit production preflight passed",
+          "Nova → Buster BuildKit production preflight passed",
           "}",
           "cmd_nova_unit_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster Unit Production Preflight",
+          "Nova → Buster Unit Production Preflight",
           "require_command",
           "kubectl",
           "run_nova_production_receipt_preflight",
@@ -6022,13 +6022,13 @@
           "\n",
           "$REPO_DIR/dist/verification/unit-production-receipt.json",
           "log",
-          "Nova \u2192 Buster unit production preflight passed",
+          "Nova → Buster unit production preflight passed",
           "}",
           "cmd_nova_kubernetes_fixture_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster Kubernetes Fixture Production Preflight",
+          "Nova → Buster Kubernetes Fixture Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -6453,13 +6453,13 @@
           "$receipt_tmp",
           "$receipt_unsigned",
           "log",
-          "Nova \u2192 Buster Kubernetes fixture production preflight passed",
+          "Nova → Buster Kubernetes fixture production preflight passed",
           "}",
           "cmd_nova_http_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster HTTP Production Preflight",
+          "Nova → Buster HTTP Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -6874,13 +6874,13 @@
           "log",
           "Stored production receipt at $receipt_file",
           "log",
-          "Nova \u2192 Buster HTTP production preflight passed",
+          "Nova → Buster HTTP production preflight passed",
           "}",
           "cmd_nova_api_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster API Production Preflight",
+          "Nova → Buster API Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -7179,13 +7179,13 @@
           "$receipt_tmp",
           "$receipt_unsigned",
           "log",
-          "Nova \u2192 Buster API production preflight passed",
+          "Nova → Buster API production preflight passed",
           "}",
           "cmd_nova_a11y_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster Accessibility Production Preflight",
+          "Nova → Buster Accessibility Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -7484,13 +7484,13 @@
           "$receipt_tmp",
           "$receipt_unsigned",
           "log",
-          "Nova \u2192 Buster accessibility production preflight passed",
+          "Nova → Buster accessibility production preflight passed",
           "}",
           "cmd_nova_lighthouse_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster Lighthouse Production Preflight",
+          "Nova → Buster Lighthouse Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -7789,13 +7789,13 @@
           "$receipt_tmp",
           "$receipt_unsigned",
           "log",
-          "Nova \u2192 Buster Lighthouse production preflight passed",
+          "Nova → Buster Lighthouse production preflight passed",
           "}",
           "cmd_nova_visual_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster Visual Regression Production Preflight",
+          "Nova → Buster Visual Regression Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -8071,13 +8071,13 @@
           "$receipt_unsigned",
           ";",
           "log",
-          "Nova \u2192 Buster visual production preflight passed",
+          "Nova → Buster visual production preflight passed",
           "}",
           "cmd_nova_e2e_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster End-to-End Production Preflight",
+          "Nova → Buster End-to-End Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -8353,13 +8353,13 @@
           "$receipt_unsigned",
           ";",
           "log",
-          "Nova \u2192 Buster end-to-end production preflight passed",
+          "Nova → Buster end-to-end production preflight passed",
           "}",
           "cmd_nova_security_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster Security Production Preflight",
+          "Nova → Buster Security Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -8635,13 +8635,13 @@
           "$receipt_unsigned",
           ";",
           "log",
-          "Nova \u2192 Buster security production preflight passed",
+          "Nova → Buster security production preflight passed",
           "}",
           "cmd_nova_tailscale_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster Tailscale Production Preflight",
+          "Nova → Buster Tailscale Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -9039,13 +9039,13 @@
           "log",
           "Stored production receipt at $receipt_file",
           "log",
-          "Nova \u2192 Buster Tailscale production preflight passed",
+          "Nova → Buster Tailscale production preflight passed",
           "}",
           "cmd_nova_production_preflights",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster Production Suite Preflights",
+          "Nova → Buster Production Suite Preflights",
           "require_command",
           "node",
           "local",
@@ -10137,7 +10137,7 @@
           "Unknown deployment command: $1",
           "fi",
           "echo",
-          "KubeClaw \u2014 Deployment CLI",
+          "KubeClaw — Deployment CLI",
           "echo",
           "",
           "echo",
@@ -10211,7 +10211,7 @@
           "echo",
           "  buster-buildkit-smoke Deprecated alias for nova-buildkit-preflight",
           "echo",
-          "  buster-infra-smoke  Test Redis \u2192 deployed Buster \u2192 BuildKit \u2192 deploy \u2192 completion",
+          "  buster-infra-smoke  Test Redis → deployed Buster → BuildKit → deploy → completion",
           "echo",
           "  agents             Deploy agents (Nova + Buster) using image/runtime values",
           "echo",
@@ -12744,7 +12744,7 @@
           },
           {
             "kind": "FunctionDeclaration",
-            "syntax": "function conciseSignalValue(value, maximum = 180) {\n  const original = String(value ?? '');\n  const oneLine = original.replaceAll(/\\s+/gu, ' ').trim();\n  if (oneLine.length <= maximum) return oneLine;\n  const digest = createHash('sha256').update(original).digest('hex').slice(0, 12);\n  return `${oneLine.slice(0, maximum - 35).trimEnd()}\u2026 [${original.length} chars sha256:${digest}]`;\n}"
+            "syntax": "function conciseSignalValue(value, maximum = 180) {\n  const original = String(value ?? '');\n  const oneLine = original.replaceAll(/\\s+/gu, ' ').trim();\n  if (oneLine.length <= maximum) return oneLine;\n  const digest = createHash('sha256').update(original).digest('hex').slice(0, 12);\n  return `${oneLine.slice(0, maximum - 35).trimEnd()}… [${original.length} chars sha256:${digest}]`;\n}"
           },
           {
             "kind": "FunctionDeclaration",
@@ -15217,7 +15217,7 @@
           },
           {
             "kind": "ExpressionStatement",
-            "syntax": "assert.match(\n  deploy,\n  /Unknown deployment command: \\$1[\\s\\S]*KubeClaw \u2014 Deployment CLI/,\n  'unknown deployment targets must produce an explicit error instead of a full-stack heading',\n);"
+            "syntax": "assert.match(\n  deploy,\n  /Unknown deployment command: \\$1[\\s\\S]*KubeClaw — Deployment CLI/,\n  'unknown deployment targets must produce an explicit error instead of a full-stack heading',\n);"
           },
           {
             "kind": "ExpressionStatement",
@@ -22557,7 +22557,7 @@
         {
           "expression": "json.NewEncoder(w).Encode(result)",
           "function": "productHandler",
-          "operationDigest": "e6207009937c85a6c20f24b4c4325afec71d8674fcfd37a442f4ff89cb6f7905",
+          "operationDigest": "98f42951bd6d7bbac348e6e2522e6c6aa06f8274d4d0e8a2f7cdf2ec11078bd4",
           "consumer": {
             "source": "cmd/buster-namespace-controller/demo-product.go",
             "purpose": "fixed native demo response to authenticated HTTP route; not a Kubernetes object publication",
@@ -22704,8 +22704,18 @@
             },
             {
               "path": "cmd/buster-namespace-controller/demo-product.go",
+              "symbol": "productErrorCode",
+              "sha256": "c2eec19f3ee99bee0cd4d628c9c4d276b38f89b59635e0b71c4e3ceeff778805"
+            },
+            {
+              "path": "cmd/buster-namespace-controller/demo-product.go",
+              "symbol": "productErrorToken",
+              "sha256": "83bba674dae0f474d0522aa7f446f74b626466d606d9a51a06b6e5524d48fabe"
+            },
+            {
+              "path": "cmd/buster-namespace-controller/demo-product.go",
               "symbol": "productHandler",
-              "sha256": "e6207009937c85a6c20f24b4c4325afec71d8674fcfd37a442f4ff89cb6f7905"
+              "sha256": "98f42951bd6d7bbac348e6e2522e6c6aa06f8274d4d0e8a2f7cdf2ec11078bd4"
             },
             {
               "path": "cmd/buster-namespace-controller/demo-product.go",
@@ -23333,12 +23343,12 @@
               "sha256": "cfc02fe76ba47aadcb622e3d6fc7acaba6358b8d5d8a950b7dc5d67bb2d5c91f"
             }
           ],
-          "dependencyFactsDigest": "a2d1fb8d43bebec697cf977a06c8cac546957b2a1842dcc491d8800f70a5831a"
+          "dependencyFactsDigest": "db71ffe5efe69e0ebfd535ef1eb1dee0309c473d34ae523b8c5d3e9bd2e325c4"
         },
         {
           "expression": "json.NewEncoder(w)",
           "function": "productHandler",
-          "operationDigest": "e6207009937c85a6c20f24b4c4325afec71d8674fcfd37a442f4ff89cb6f7905",
+          "operationDigest": "98f42951bd6d7bbac348e6e2522e6c6aa06f8274d4d0e8a2f7cdf2ec11078bd4",
           "consumer": {
             "source": "cmd/buster-namespace-controller/demo-product.go",
             "purpose": "fixed native demo response to authenticated HTTP route; not a Kubernetes object publication",
@@ -23485,8 +23495,18 @@
             },
             {
               "path": "cmd/buster-namespace-controller/demo-product.go",
+              "symbol": "productErrorCode",
+              "sha256": "c2eec19f3ee99bee0cd4d628c9c4d276b38f89b59635e0b71c4e3ceeff778805"
+            },
+            {
+              "path": "cmd/buster-namespace-controller/demo-product.go",
+              "symbol": "productErrorToken",
+              "sha256": "83bba674dae0f474d0522aa7f446f74b626466d606d9a51a06b6e5524d48fabe"
+            },
+            {
+              "path": "cmd/buster-namespace-controller/demo-product.go",
               "symbol": "productHandler",
-              "sha256": "e6207009937c85a6c20f24b4c4325afec71d8674fcfd37a442f4ff89cb6f7905"
+              "sha256": "98f42951bd6d7bbac348e6e2522e6c6aa06f8274d4d0e8a2f7cdf2ec11078bd4"
             },
             {
               "path": "cmd/buster-namespace-controller/demo-product.go",
@@ -24114,7 +24134,7 @@
               "sha256": "cfc02fe76ba47aadcb622e3d6fc7acaba6358b8d5d8a950b7dc5d67bb2d5c91f"
             }
           ],
-          "dependencyFactsDigest": "a2d1fb8d43bebec697cf977a06c8cac546957b2a1842dcc491d8800f70a5831a"
+          "dependencyFactsDigest": "db71ffe5efe69e0ebfd535ef1eb1dee0309c473d34ae523b8c5d3e9bd2e325c4"
         }
       ]
     },
@@ -25396,8 +25416,18 @@
             },
             {
               "path": "cmd/buster-namespace-controller/demo-product.go",
+              "symbol": "productErrorCode",
+              "sha256": "c2eec19f3ee99bee0cd4d628c9c4d276b38f89b59635e0b71c4e3ceeff778805"
+            },
+            {
+              "path": "cmd/buster-namespace-controller/demo-product.go",
+              "symbol": "productErrorToken",
+              "sha256": "83bba674dae0f474d0522aa7f446f74b626466d606d9a51a06b6e5524d48fabe"
+            },
+            {
+              "path": "cmd/buster-namespace-controller/demo-product.go",
               "symbol": "productHandler",
-              "sha256": "e6207009937c85a6c20f24b4c4325afec71d8674fcfd37a442f4ff89cb6f7905"
+              "sha256": "98f42951bd6d7bbac348e6e2522e6c6aa06f8274d4d0e8a2f7cdf2ec11078bd4"
             },
             {
               "path": "cmd/buster-namespace-controller/demo-product.go",
@@ -26085,7 +26115,7 @@
               "sha256": "cfc02fe76ba47aadcb622e3d6fc7acaba6358b8d5d8a950b7dc5d67bb2d5c91f"
             }
           ],
-          "dependencyFactsDigest": "a5754dd81c7c82b2dfb7cdf6ca19c081ce9e3eec53ddded4d5707771b3f6f786"
+          "dependencyFactsDigest": "34c9086556e71b2bb9498a2d52f320982354c17414b09b68b8c33ef6bef6ccf6"
         },
         {
           "expression": "json.NewEncoder(w)",
@@ -26237,8 +26267,18 @@
             },
             {
               "path": "cmd/buster-namespace-controller/demo-product.go",
+              "symbol": "productErrorCode",
+              "sha256": "c2eec19f3ee99bee0cd4d628c9c4d276b38f89b59635e0b71c4e3ceeff778805"
+            },
+            {
+              "path": "cmd/buster-namespace-controller/demo-product.go",
+              "symbol": "productErrorToken",
+              "sha256": "83bba674dae0f474d0522aa7f446f74b626466d606d9a51a06b6e5524d48fabe"
+            },
+            {
+              "path": "cmd/buster-namespace-controller/demo-product.go",
               "symbol": "productHandler",
-              "sha256": "e6207009937c85a6c20f24b4c4325afec71d8674fcfd37a442f4ff89cb6f7905"
+              "sha256": "98f42951bd6d7bbac348e6e2522e6c6aa06f8274d4d0e8a2f7cdf2ec11078bd4"
             },
             {
               "path": "cmd/buster-namespace-controller/demo-product.go",
@@ -26926,7 +26966,7 @@
               "sha256": "cfc02fe76ba47aadcb622e3d6fc7acaba6358b8d5d8a950b7dc5d67bb2d5c91f"
             }
           ],
-          "dependencyFactsDigest": "a5754dd81c7c82b2dfb7cdf6ca19c081ce9e3eec53ddded4d5707771b3f6f786"
+          "dependencyFactsDigest": "34c9086556e71b2bb9498a2d52f320982354c17414b09b68b8c33ef6bef6ccf6"
         }
       ]
     },
@@ -27894,8 +27934,18 @@
             },
             {
               "path": "cmd/buster-namespace-controller/demo-product.go",
+              "symbol": "productErrorCode",
+              "sha256": "c2eec19f3ee99bee0cd4d628c9c4d276b38f89b59635e0b71c4e3ceeff778805"
+            },
+            {
+              "path": "cmd/buster-namespace-controller/demo-product.go",
+              "symbol": "productErrorToken",
+              "sha256": "83bba674dae0f474d0522aa7f446f74b626466d606d9a51a06b6e5524d48fabe"
+            },
+            {
+              "path": "cmd/buster-namespace-controller/demo-product.go",
               "symbol": "productHandler",
-              "sha256": "e6207009937c85a6c20f24b4c4325afec71d8674fcfd37a442f4ff89cb6f7905"
+              "sha256": "98f42951bd6d7bbac348e6e2522e6c6aa06f8274d4d0e8a2f7cdf2ec11078bd4"
             },
             {
               "path": "cmd/buster-namespace-controller/demo-product.go",
@@ -29073,7 +29123,7 @@
               "sha256": "cfc02fe76ba47aadcb622e3d6fc7acaba6358b8d5d8a950b7dc5d67bb2d5c91f"
             }
           ],
-          "dependencyFactsDigest": "f168407b202194282a7cdfb6598539785186f63412f638de176b46fd7990e5ca"
+          "dependencyFactsDigest": "2f7f21c09f7122f59251f30773a3410db99ec353ef4de889d0c70ecedbaefe71"
         },
         {
           "expression": "json.Marshal(body)",
@@ -29245,8 +29295,18 @@
             },
             {
               "path": "cmd/buster-namespace-controller/demo-product.go",
+              "symbol": "productErrorCode",
+              "sha256": "c2eec19f3ee99bee0cd4d628c9c4d276b38f89b59635e0b71c4e3ceeff778805"
+            },
+            {
+              "path": "cmd/buster-namespace-controller/demo-product.go",
+              "symbol": "productErrorToken",
+              "sha256": "83bba674dae0f474d0522aa7f446f74b626466d606d9a51a06b6e5524d48fabe"
+            },
+            {
+              "path": "cmd/buster-namespace-controller/demo-product.go",
               "symbol": "productHandler",
-              "sha256": "e6207009937c85a6c20f24b4c4325afec71d8674fcfd37a442f4ff89cb6f7905"
+              "sha256": "98f42951bd6d7bbac348e6e2522e6c6aa06f8274d4d0e8a2f7cdf2ec11078bd4"
             },
             {
               "path": "cmd/buster-namespace-controller/demo-product.go",
@@ -30424,7 +30484,7 @@
               "sha256": "cfc02fe76ba47aadcb622e3d6fc7acaba6358b8d5d8a950b7dc5d67bb2d5c91f"
             }
           ],
-          "dependencyFactsDigest": "f168407b202194282a7cdfb6598539785186f63412f638de176b46fd7990e5ca"
+          "dependencyFactsDigest": "2f7f21c09f7122f59251f30773a3410db99ec353ef4de889d0c70ecedbaefe71"
         },
         {
           "expression": "json.Marshal(spec)",
@@ -31719,324 +31779,6 @@
             ],
             "kind": "python-systemd-unit"
           }
-        }
-      ]
-    },
-    {
-      "source": "tools/native-worker-nri/main.go",
-      "language": "Go",
-      "basis": "original-native-diagnostic-consumer-role",
-      "roleConsumerEvidence": {
-        "review": "AUTHOR original source/consumer qualification; independent Source review pending",
-        "consumer": "Original NRI entrypoint stderr error diagnostics from readConfiguration/check-policy or run()/stub Run errors, each followed by exit 1; full original module operation enforced, native configuration input is validated and no serialized resource/file output is written.",
-        "sinkLines": [
-          153,
-          164
-        ]
-      },
-      "outputs": [
-        {
-          "expression": "fmt.Fprintln(os.Stderr, err)",
-          "function": "main",
-          "operationDigest": "edd56307156b6db62bd5c5b5ce3d926c8a11f68b85a3f90726174b397e6e6b1f",
-          "consumer": {
-            "source": "tools/native-worker-nri/main.go",
-            "purpose": "error diagnostic from the actual guarded command/configuration result; no stdout forwarding",
-            "evidence": [
-              "fmt.Fprintln(os.Stderr, err)"
-            ],
-            "kind": "go-error-stderr",
-            "errorOrigins": [
-              "readConfiguration(os.Args[2])",
-              "run()"
-            ]
-          },
-          "dependencyFacts": [
-            {
-              "path": "tools/native-worker-nri/go.mod",
-              "symbol": "module-authority:go.mod",
-              "sha256": "2e4ff78b7fb9a5cd83284d4b002104d7035c67d404de25082c3681945419bd73"
-            },
-            {
-              "path": "tools/native-worker-nri/go.sum",
-              "symbol": "module-authority:go.sum",
-              "sha256": "7d1026a3af798fcf9b05a7339fa460abf72ac8d6a63f6582ccd92b89cb24d662"
-            },
-            {
-              "path": "tools/native-worker-nri/main.go",
-              "symbol": "api",
-              "sha256": "7d2c5e189984b5dfa517e782ae9bd5bbf03021f721ede9ba04f61f110fd4d403"
-            },
-            {
-              "path": "tools/native-worker-nri/main.go",
-              "symbol": "configuration",
-              "sha256": "5aac1d36a061e5879a3ea1c04b640133ed81384c9bc148aa9faf06142c2b528e"
-            },
-            {
-              "path": "tools/native-worker-nri/main.go",
-              "symbol": "context",
-              "sha256": "28b8c501c87f18578903305c7401cd4442a59d22af37a90fc558e694189456fc"
-            },
-            {
-              "path": "tools/native-worker-nri/main.go",
-              "symbol": "errors",
-              "sha256": "2af1a21f27599575cfde83c5270782de287338d14ee3677f2f1417a16a128847"
-            },
-            {
-              "path": "tools/native-worker-nri/main.go",
-              "symbol": "fmt",
-              "sha256": "4a829123137dd0f0247cac32033fcb516bf9b5581044a790840864e46c03e136"
-            },
-            {
-              "path": "tools/native-worker-nri/main.go",
-              "symbol": "io",
-              "sha256": "eb1352f51398cb2bb54432b03292505e19b74bd07aa3116bd841f5678159c1f1"
-            },
-            {
-              "path": "tools/native-worker-nri/main.go",
-              "symbol": "json",
-              "sha256": "d7c3d8973f963c30a43267a7e14b1e76c98ce287d08c660ac1c91e4f0c3ec263"
-            },
-            {
-              "path": "tools/native-worker-nri/main.go",
-              "symbol": "main",
-              "sha256": "edd56307156b6db62bd5c5b5ce3d926c8a11f68b85a3f90726174b397e6e6b1f"
-            },
-            {
-              "path": "tools/native-worker-nri/main.go",
-              "symbol": "newPluginStub",
-              "sha256": "27557ed510701a26e2a0a19e48419e9825ddc8eb76988f84f5f743838fcc6868"
-            },
-            {
-              "path": "tools/native-worker-nri/main.go",
-              "symbol": "os",
-              "sha256": "f29ed2551293cc18bc648da5c2b49c603e6c5f654e3cac66955c91cd66d51546"
-            },
-            {
-              "path": "tools/native-worker-nri/main.go",
-              "symbol": "plugin",
-              "sha256": "339f071d79d268c970948e0af83dc38932d9135404f3fd80529cfda939556a52"
-            },
-            {
-              "path": "tools/native-worker-nri/main.go",
-              "symbol": "readConfiguration",
-              "sha256": "38909f942d43e8eed4f42daac56f5824b472fb9923ad458150fe9406750e0347"
-            },
-            {
-              "path": "tools/native-worker-nri/main.go",
-              "symbol": "regexp",
-              "sha256": "302548a259b6e9cd1c81ec8a8974928f34c6ac1e568f012eac5b7832a9bf8dc3"
-            },
-            {
-              "path": "tools/native-worker-nri/main.go",
-              "symbol": "run",
-              "sha256": "6c6c713deb6cd22e4cf36ea1db96e5665b600d615c18a9d3e63e0419f7e0e2ad"
-            },
-            {
-              "path": "tools/native-worker-nri/main.go",
-              "symbol": "selection",
-              "sha256": "0ba5e879dc379bd4cd57cdd5cdeb89bf16d0a7998deb03db0382bf523a03743a"
-            },
-            {
-              "path": "tools/native-worker-nri/main.go",
-              "symbol": "stub",
-              "sha256": "f7227695f258bc71c84e41f0da43a094ba3dd8c25fc08d473e0cde057d5b0009"
-            },
-            {
-              "path": "tools/native-worker-nri/main.go",
-              "symbol": "syscall",
-              "sha256": "a3ae50105d3877d2538e130cfbc92b1e301fdfa92332659f72f012083bb5129e"
-            },
-            {
-              "path": "tools/native-worker-nri/main.go",
-              "symbol": "validateConfiguration",
-              "sha256": "69dc4d0010499c57b6398b6b08e2ac6496e64b65fa13bbd80d44a7a80d53182b"
-            }
-          ],
-          "dependencyFactsDigest": "d9a512107a8fb897ab987b9df6d40dde24a4fb4a1c6f5f8a7e6e943fb7c964fa"
-        },
-        {
-          "expression": "fmt.Fprintln(os.Stderr, err)",
-          "function": "main",
-          "operationDigest": "edd56307156b6db62bd5c5b5ce3d926c8a11f68b85a3f90726174b397e6e6b1f",
-          "consumer": {
-            "source": "tools/native-worker-nri/main.go",
-            "purpose": "error diagnostic from the actual guarded command/configuration result; no stdout forwarding",
-            "evidence": [
-              "fmt.Fprintln(os.Stderr, err)"
-            ],
-            "kind": "go-error-stderr",
-            "errorOrigins": [
-              "readConfiguration(os.Args[2])",
-              "run()"
-            ]
-          },
-          "dependencyFacts": [
-            {
-              "path": "tools/native-worker-nri/go.mod",
-              "symbol": "module-authority:go.mod",
-              "sha256": "2e4ff78b7fb9a5cd83284d4b002104d7035c67d404de25082c3681945419bd73"
-            },
-            {
-              "path": "tools/native-worker-nri/go.sum",
-              "symbol": "module-authority:go.sum",
-              "sha256": "7d1026a3af798fcf9b05a7339fa460abf72ac8d6a63f6582ccd92b89cb24d662"
-            },
-            {
-              "path": "tools/native-worker-nri/main.go",
-              "symbol": "api",
-              "sha256": "7d2c5e189984b5dfa517e782ae9bd5bbf03021f721ede9ba04f61f110fd4d403"
-            },
-            {
-              "path": "tools/native-worker-nri/main.go",
-              "symbol": "configuration",
-              "sha256": "5aac1d36a061e5879a3ea1c04b640133ed81384c9bc148aa9faf06142c2b528e"
-            },
-            {
-              "path": "tools/native-worker-nri/main.go",
-              "symbol": "context",
-              "sha256": "28b8c501c87f18578903305c7401cd4442a59d22af37a90fc558e694189456fc"
-            },
-            {
-              "path": "tools/native-worker-nri/main.go",
-              "symbol": "errors",
-              "sha256": "2af1a21f27599575cfde83c5270782de287338d14ee3677f2f1417a16a128847"
-            },
-            {
-              "path": "tools/native-worker-nri/main.go",
-              "symbol": "fmt",
-              "sha256": "4a829123137dd0f0247cac32033fcb516bf9b5581044a790840864e46c03e136"
-            },
-            {
-              "path": "tools/native-worker-nri/main.go",
-              "symbol": "io",
-              "sha256": "eb1352f51398cb2bb54432b03292505e19b74bd07aa3116bd841f5678159c1f1"
-            },
-            {
-              "path": "tools/native-worker-nri/main.go",
-              "symbol": "json",
-              "sha256": "d7c3d8973f963c30a43267a7e14b1e76c98ce287d08c660ac1c91e4f0c3ec263"
-            },
-            {
-              "path": "tools/native-worker-nri/main.go",
-              "symbol": "main",
-              "sha256": "edd56307156b6db62bd5c5b5ce3d926c8a11f68b85a3f90726174b397e6e6b1f"
-            },
-            {
-              "path": "tools/native-worker-nri/main.go",
-              "symbol": "newPluginStub",
-              "sha256": "27557ed510701a26e2a0a19e48419e9825ddc8eb76988f84f5f743838fcc6868"
-            },
-            {
-              "path": "tools/native-worker-nri/main.go",
-              "symbol": "os",
-              "sha256": "f29ed2551293cc18bc648da5c2b49c603e6c5f654e3cac66955c91cd66d51546"
-            },
-            {
-              "path": "tools/native-worker-nri/main.go",
-              "symbol": "plugin",
-              "sha256": "339f071d79d268c970948e0af83dc38932d9135404f3fd80529cfda939556a52"
-            },
-            {
-              "path": "tools/native-worker-nri/main.go",
-              "symbol": "readConfiguration",
-              "sha256": "38909f942d43e8eed4f42daac56f5824b472fb9923ad458150fe9406750e0347"
-            },
-            {
-              "path": "tools/native-worker-nri/main.go",
-              "symbol": "regexp",
-              "sha256": "302548a259b6e9cd1c81ec8a8974928f34c6ac1e568f012eac5b7832a9bf8dc3"
-            },
-            {
-              "path": "tools/native-worker-nri/main.go",
-              "symbol": "run",
-              "sha256": "6c6c713deb6cd22e4cf36ea1db96e5665b600d615c18a9d3e63e0419f7e0e2ad"
-            },
-            {
-              "path": "tools/native-worker-nri/main.go",
-              "symbol": "selection",
-              "sha256": "0ba5e879dc379bd4cd57cdd5cdeb89bf16d0a7998deb03db0382bf523a03743a"
-            },
-            {
-              "path": "tools/native-worker-nri/main.go",
-              "symbol": "stub",
-              "sha256": "f7227695f258bc71c84e41f0da43a094ba3dd8c25fc08d473e0cde057d5b0009"
-            },
-            {
-              "path": "tools/native-worker-nri/main.go",
-              "symbol": "syscall",
-              "sha256": "a3ae50105d3877d2538e130cfbc92b1e301fdfa92332659f72f012083bb5129e"
-            },
-            {
-              "path": "tools/native-worker-nri/main.go",
-              "symbol": "validateConfiguration",
-              "sha256": "69dc4d0010499c57b6398b6b08e2ac6496e64b65fa13bbd80d44a7a80d53182b"
-            }
-          ],
-          "dependencyFactsDigest": "d9a512107a8fb897ab987b9df6d40dde24a4fb4a1c6f5f8a7e6e943fb7c964fa"
-        }
-      ]
-    },
-    {
-      "source": "tools/ops-mcp/hubble/main.go",
-      "language": "Go",
-      "basis": "original-native-diagnostic-consumer-role",
-      "roleConsumerEvidence": {
-        "review": "AUTHOR original source/consumer qualification; independent Source review pending",
-        "consumer": "Original pinned Cilium Hubble entrypoint emits cmd.Execute rejected error.Error() to stderr then exits 1; full original entrypoint syntax enforced, no API resource serialization here.",
-        "sinkLines": [
-          15
-        ]
-      },
-      "outputs": [
-        {
-          "expression": "fmt.Fprintln(os.Stderr, err.Error())",
-          "function": "main",
-          "operationDigest": "00e63fff3f5c2a5e488829840476ca6461e8004c367aff6f580da38114155c5a",
-          "consumer": {
-            "source": "tools/ops-mcp/hubble/main.go",
-            "purpose": "error diagnostic from the actual guarded command/configuration result; no stdout forwarding",
-            "evidence": [
-              "fmt.Fprintln(os.Stderr, err.Error())"
-            ],
-            "kind": "go-error-stderr",
-            "errorOrigins": [
-              "cmd.Execute()"
-            ]
-          },
-          "dependencyFacts": [
-            {
-              "path": "tools/ops-mcp/hubble/go.mod",
-              "symbol": "module-authority:go.mod",
-              "sha256": "d18d5bf7be502b9ac2d2a714a9004859b6f13dab981775f5cadbc2a9034d5fdb"
-            },
-            {
-              "path": "tools/ops-mcp/hubble/go.sum",
-              "symbol": "module-authority:go.sum",
-              "sha256": "c49647aa3a2f0d9fe3b7b631171adda45a1f87c0cc1c30d27b779b51fe2ae354"
-            },
-            {
-              "path": "tools/ops-mcp/hubble/main.go",
-              "symbol": "cmd",
-              "sha256": "bf41c5422fd20163e37106883ae59c586b110d2105e2da008f9eaa5a3cdebe96"
-            },
-            {
-              "path": "tools/ops-mcp/hubble/main.go",
-              "symbol": "fmt",
-              "sha256": "4a829123137dd0f0247cac32033fcb516bf9b5581044a790840864e46c03e136"
-            },
-            {
-              "path": "tools/ops-mcp/hubble/main.go",
-              "symbol": "main",
-              "sha256": "00e63fff3f5c2a5e488829840476ca6461e8004c367aff6f580da38114155c5a"
-            },
-            {
-              "path": "tools/ops-mcp/hubble/main.go",
-              "symbol": "os",
-              "sha256": "f29ed2551293cc18bc648da5c2b49c603e6c5f654e3cac66955c91cd66d51546"
-            }
-          ],
-          "dependencyFactsDigest": "00f5cc0f8edccd90034d7aad730c448587ae19f5019f5298054f21dd7a7f0330"
         }
       ]
     },
@@ -37750,7 +37492,7 @@
           "command": "echo",
           "args": [
             "-e",
-            "${GREEN}[\u2713]${NC} $1"
+            "${GREEN}[✓]${NC} $1"
           ]
         },
         {
@@ -37766,7 +37508,7 @@
           "command": "echo",
           "args": [
             "-e",
-            "${RED}[\u2717]${NC} $1"
+            "${RED}[✗]${NC} $1"
           ]
         },
         {
@@ -37782,7 +37524,7 @@
           "command": "echo",
           "args": [
             "-e",
-            "n${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}"
+            "n${BLUE}═══════════════════════════════════════${NC}"
           ]
         },
         {
@@ -37798,7 +37540,7 @@
           "command": "echo",
           "args": [
             "-e",
-            "${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}"
+            "${BLUE}═══════════════════════════════════════${NC}"
           ]
         },
         {
@@ -38221,14 +37963,14 @@
           "line": 1232,
           "command": "awk",
           "args": [
-            "{print \"  \" $1 \" \u2192 \" $3}"
+            "{print \"  \" $1 \" → \" $3}"
           ]
         },
         {
           "line": 1469,
           "command": "awk",
           "args": [
-            "{print \"  \" $1 \" \u2192 \" $3}"
+            "{print \"  \" $1 \" → \" $3}"
           ]
         },
         {
@@ -40367,7 +40109,7 @@
           "source": "scripts/deploy.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original deployment branch invokes the qualified Helm/infrastructure/pure renderer adapters and resource constructors. Other operations select paths, bools, digests and credentials, inspect live API objects/tables, or print framed operator diagnostics. Live API reads are external observations, not new source-owned resource constructors.",
-          "sourceEvidence": "NC='\\033[0m'\nlog() { echo -e \"${GREEN}[\u2713]${NC} $1\"; }\nwarn() { echo -e \"${YELLOW}[!]${NC} $1\"; }"
+          "sourceEvidence": "NC='\\033[0m'\nlog() { echo -e \"${GREEN}[✓]${NC} $1\"; }\nwarn() { echo -e \"${YELLOW}[!]${NC} $1\"; }"
         },
         {
           "line": 140,
@@ -40377,7 +40119,7 @@
           "source": "scripts/deploy.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original deployment branch invokes the qualified Helm/infrastructure/pure renderer adapters and resource constructors. Other operations select paths, bools, digests and credentials, inspect live API objects/tables, or print framed operator diagnostics. Live API reads are external observations, not new source-owned resource constructors.",
-          "sourceEvidence": "log() { echo -e \"${GREEN}[\u2713]${NC} $1\"; }\nwarn() { echo -e \"${YELLOW}[!]${NC} $1\"; }\nerr() { echo -e \"${RED}[\u2717]${NC} $1\" >&2; }"
+          "sourceEvidence": "log() { echo -e \"${GREEN}[✓]${NC} $1\"; }\nwarn() { echo -e \"${YELLOW}[!]${NC} $1\"; }\nerr() { echo -e \"${RED}[✗]${NC} $1\" >&2; }"
         },
         {
           "line": 141,
@@ -40387,7 +40129,7 @@
           "source": "scripts/deploy.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original deployment branch invokes the qualified Helm/infrastructure/pure renderer adapters and resource constructors. Other operations select paths, bools, digests and credentials, inspect live API objects/tables, or print framed operator diagnostics. Live API reads are external observations, not new source-owned resource constructors.",
-          "sourceEvidence": "warn() { echo -e \"${YELLOW}[!]${NC} $1\"; }\nerr() { echo -e \"${RED}[\u2717]${NC} $1\" >&2; }\ninfo() { echo -e \"${BLUE}[i]${NC} $1\"; }"
+          "sourceEvidence": "warn() { echo -e \"${YELLOW}[!]${NC} $1\"; }\nerr() { echo -e \"${RED}[✗]${NC} $1\" >&2; }\ninfo() { echo -e \"${BLUE}[i]${NC} $1\"; }"
         },
         {
           "line": 142,
@@ -40397,7 +40139,7 @@
           "source": "scripts/deploy.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original deployment branch invokes the qualified Helm/infrastructure/pure renderer adapters and resource constructors. Other operations select paths, bools, digests and credentials, inspect live API objects/tables, or print framed operator diagnostics. Live API reads are external observations, not new source-owned resource constructors.",
-          "sourceEvidence": "err() { echo -e \"${RED}[\u2717]${NC} $1\" >&2; }\ninfo() { echo -e \"${BLUE}[i]${NC} $1\"; }\nheader() {"
+          "sourceEvidence": "err() { echo -e \"${RED}[✗]${NC} $1\" >&2; }\ninfo() { echo -e \"${BLUE}[i]${NC} $1\"; }\nheader() {"
         },
         {
           "line": 144,
@@ -40407,7 +40149,7 @@
           "source": "scripts/deploy.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original deployment branch invokes the qualified Helm/infrastructure/pure renderer adapters and resource constructors. Other operations select paths, bools, digests and credentials, inspect live API objects/tables, or print framed operator diagnostics. Live API reads are external observations, not new source-owned resource constructors.",
-          "sourceEvidence": "header() {\n  echo -e \"\\n${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}\"\n  echo -e \"${BLUE} $1${NC}\""
+          "sourceEvidence": "header() {\n  echo -e \"\\n${BLUE}═══════════════════════════════════════${NC}\"\n  echo -e \"${BLUE} $1${NC}\""
         },
         {
           "line": 145,
@@ -40417,7 +40159,7 @@
           "source": "scripts/deploy.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original deployment branch invokes the qualified Helm/infrastructure/pure renderer adapters and resource constructors. Other operations select paths, bools, digests and credentials, inspect live API objects/tables, or print framed operator diagnostics. Live API reads are external observations, not new source-owned resource constructors.",
-          "sourceEvidence": "  echo -e \"\\n${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}\"\n  echo -e \"${BLUE} $1${NC}\"\n  echo -e \"${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}\""
+          "sourceEvidence": "  echo -e \"\\n${BLUE}═══════════════════════════════════════${NC}\"\n  echo -e \"${BLUE} $1${NC}\"\n  echo -e \"${BLUE}═══════════════════════════════════════${NC}\""
         },
         {
           "line": 146,
@@ -40427,7 +40169,7 @@
           "source": "scripts/deploy.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original deployment branch invokes the qualified Helm/infrastructure/pure renderer adapters and resource constructors. Other operations select paths, bools, digests and credentials, inspect live API objects/tables, or print framed operator diagnostics. Live API reads are external observations, not new source-owned resource constructors.",
-          "sourceEvidence": "  echo -e \"${BLUE} $1${NC}\"\n  echo -e \"${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}\"\n}"
+          "sourceEvidence": "  echo -e \"${BLUE} $1${NC}\"\n  echo -e \"${BLUE}═══════════════════════════════════════${NC}\"\n}"
         },
         {
           "line": 166,
@@ -40957,7 +40699,7 @@
           "source": "scripts/deploy.sh",
           "kind": "native-tool-or-selected-stream",
           "purpose": "Original deployment branch invokes the qualified Helm/infrastructure/pure renderer adapters and resource constructors. Other operations select paths, bools, digests and credentials, inspect live API objects/tables, or print framed operator diagnostics. Live API reads are external observations, not new source-owned resource constructors.",
-          "sourceEvidence": "  log \"Infrastructure deployed. Pods:\"\n  kubectl get pods -n \"$NAMESPACE\" --no-headers | awk '{print \"  \" $1 \" \u2192 \" $3}'\n}"
+          "sourceEvidence": "  log \"Infrastructure deployed. Pods:\"\n  kubectl get pods -n \"$NAMESPACE\" --no-headers | awk '{print \"  \" $1 \" → \" $3}'\n}"
         },
         {
           "line": 1469,
@@ -40967,7 +40709,7 @@
           "source": "scripts/deploy.sh",
           "kind": "native-tool-or-selected-stream",
           "purpose": "Original deployment branch invokes the qualified Helm/infrastructure/pure renderer adapters and resource constructors. Other operations select paths, bools, digests and credentials, inspect live API objects/tables, or print framed operator diagnostics. Live API reads are external observations, not new source-owned resource constructors.",
-          "sourceEvidence": "  kubectl get pods -n \"$NAMESPACE\" -l app.kubernetes.io/name=kubeclaw --no-headers |\n    awk '{print \"  \" $1 \" \u2192 \" $3}'\n}"
+          "sourceEvidence": "  kubectl get pods -n \"$NAMESPACE\" -l app.kubernetes.io/name=kubeclaw --no-headers |\n    awk '{print \"  \" $1 \" → \" $3}'\n}"
         },
         {
           "line": 1599,
@@ -41822,7 +41564,7 @@
           "{",
           "echo",
           "-e",
-          "${GREEN}[\u2713]${NC} $1",
+          "${GREEN}[✓]${NC} $1",
           ";",
           "}",
           "warn",
@@ -41838,7 +41580,7 @@
           "{",
           "echo",
           "-e",
-          "${RED}[\u2717]${NC} $1",
+          "${RED}[✗]${NC} $1",
           ">&",
           "2",
           ";",
@@ -41856,13 +41598,13 @@
           "{",
           "echo",
           "-e",
-          "\\n${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}",
+          "\\n${BLUE}═══════════════════════════════════════${NC}",
           "echo",
           "-e",
           "${BLUE} $1${NC}",
           "echo",
           "-e",
-          "${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}",
+          "${BLUE}═══════════════════════════════════════${NC}",
           "}",
           "require_command",
           "()",
@@ -44430,7 +44172,7 @@
           "--no-headers",
           "|",
           "awk",
-          "{print \"  \" $1 \" \u2192 \" $3}",
+          "{print \"  \" $1 \" → \" $3}",
           "}",
           "reconcile_nova_retired_trust_mount",
           "()",
@@ -45148,7 +44890,7 @@
           "--no-headers",
           "|",
           "awk",
-          "{print \"  \" $1 \" \u2192 \" $3}",
+          "{print \"  \" $1 \" → \" $3}",
           "}",
           "cmd_image",
           "()",
@@ -47226,7 +46968,7 @@
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster BuildKit Production Preflight",
+          "Nova → Buster BuildKit Production Preflight",
           "require_command",
           "kubectl",
           "run_nova_production_receipt_preflight",
@@ -47235,13 +46977,13 @@
           "\n",
           "$REPO_DIR/dist/verification/container-build-production-receipt.json",
           "log",
-          "Nova \u2192 Buster BuildKit production preflight passed",
+          "Nova → Buster BuildKit production preflight passed",
           "}",
           "cmd_nova_unit_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster Unit Production Preflight",
+          "Nova → Buster Unit Production Preflight",
           "require_command",
           "kubectl",
           "run_nova_production_receipt_preflight",
@@ -47250,13 +46992,13 @@
           "\n",
           "$REPO_DIR/dist/verification/unit-production-receipt.json",
           "log",
-          "Nova \u2192 Buster unit production preflight passed",
+          "Nova → Buster unit production preflight passed",
           "}",
           "cmd_nova_kubernetes_fixture_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster Kubernetes Fixture Production Preflight",
+          "Nova → Buster Kubernetes Fixture Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -47681,13 +47423,13 @@
           "$receipt_tmp",
           "$receipt_unsigned",
           "log",
-          "Nova \u2192 Buster Kubernetes fixture production preflight passed",
+          "Nova → Buster Kubernetes fixture production preflight passed",
           "}",
           "cmd_nova_http_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster HTTP Production Preflight",
+          "Nova → Buster HTTP Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -48102,13 +47844,13 @@
           "log",
           "Stored production receipt at $receipt_file",
           "log",
-          "Nova \u2192 Buster HTTP production preflight passed",
+          "Nova → Buster HTTP production preflight passed",
           "}",
           "cmd_nova_api_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster API Production Preflight",
+          "Nova → Buster API Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -48407,13 +48149,13 @@
           "$receipt_tmp",
           "$receipt_unsigned",
           "log",
-          "Nova \u2192 Buster API production preflight passed",
+          "Nova → Buster API production preflight passed",
           "}",
           "cmd_nova_a11y_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster Accessibility Production Preflight",
+          "Nova → Buster Accessibility Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -48712,13 +48454,13 @@
           "$receipt_tmp",
           "$receipt_unsigned",
           "log",
-          "Nova \u2192 Buster accessibility production preflight passed",
+          "Nova → Buster accessibility production preflight passed",
           "}",
           "cmd_nova_lighthouse_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster Lighthouse Production Preflight",
+          "Nova → Buster Lighthouse Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -49017,13 +48759,13 @@
           "$receipt_tmp",
           "$receipt_unsigned",
           "log",
-          "Nova \u2192 Buster Lighthouse production preflight passed",
+          "Nova → Buster Lighthouse production preflight passed",
           "}",
           "cmd_nova_visual_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster Visual Regression Production Preflight",
+          "Nova → Buster Visual Regression Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -49299,13 +49041,13 @@
           "$receipt_unsigned",
           ";",
           "log",
-          "Nova \u2192 Buster visual production preflight passed",
+          "Nova → Buster visual production preflight passed",
           "}",
           "cmd_nova_e2e_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster End-to-End Production Preflight",
+          "Nova → Buster End-to-End Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -49581,13 +49323,13 @@
           "$receipt_unsigned",
           ";",
           "log",
-          "Nova \u2192 Buster end-to-end production preflight passed",
+          "Nova → Buster end-to-end production preflight passed",
           "}",
           "cmd_nova_security_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster Security Production Preflight",
+          "Nova → Buster Security Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -49863,13 +49605,13 @@
           "$receipt_unsigned",
           ";",
           "log",
-          "Nova \u2192 Buster security production preflight passed",
+          "Nova → Buster security production preflight passed",
           "}",
           "cmd_nova_tailscale_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster Tailscale Production Preflight",
+          "Nova → Buster Tailscale Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -50267,13 +50009,13 @@
           "log",
           "Stored production receipt at $receipt_file",
           "log",
-          "Nova \u2192 Buster Tailscale production preflight passed",
+          "Nova → Buster Tailscale production preflight passed",
           "}",
           "cmd_nova_production_preflights",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster Production Suite Preflights",
+          "Nova → Buster Production Suite Preflights",
           "require_command",
           "node",
           "local",
@@ -51156,7 +50898,7 @@
           "Unknown deployment command: $1",
           "fi",
           "echo",
-          "KubeClaw \u2014 Deployment CLI",
+          "KubeClaw — Deployment CLI",
           "echo",
           "",
           "echo",
@@ -51230,7 +50972,7 @@
           "echo",
           "  buster-buildkit-smoke Deprecated alias for nova-buildkit-preflight",
           "echo",
-          "  buster-infra-smoke  Test Redis \u2192 deployed Buster \u2192 BuildKit \u2192 deploy \u2192 completion",
+          "  buster-infra-smoke  Test Redis → deployed Buster → BuildKit → deploy → completion",
           "echo",
           "  agents             Deploy agents (Nova + Buster) using image/runtime values",
           "echo",
@@ -61740,7 +61482,7 @@
           "command": "echo",
           "args": [
             "-e",
-            "${GREEN}[\u2713]${NC} $1"
+            "${GREEN}[✓]${NC} $1"
           ]
         },
         {
@@ -61756,7 +61498,7 @@
           "command": "echo",
           "args": [
             "-e",
-            "${RED}[\u2717]${NC} $1"
+            "${RED}[✗]${NC} $1"
           ]
         },
         {
@@ -61956,7 +61698,7 @@
           "source": "scripts/setup.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Legacy opt-in repository Git setup; human git status/commit/push diagnostics and path/remote helpers. Git and user URL are external input authorities; no resource construction.",
-          "sourceEvidence": "NC='\\033[0m'\nlog() { echo -e \"${GREEN}[\u2713]${NC} $1\"; }\nwarn() { echo -e \"${YELLOW}[!]${NC} $1\"; }"
+          "sourceEvidence": "NC='\\033[0m'\nlog() { echo -e \"${GREEN}[✓]${NC} $1\"; }\nwarn() { echo -e \"${YELLOW}[!]${NC} $1\"; }"
         },
         {
           "line": 26,
@@ -61966,7 +61708,7 @@
           "source": "scripts/setup.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Legacy opt-in repository Git setup; human git status/commit/push diagnostics and path/remote helpers. Git and user URL are external input authorities; no resource construction.",
-          "sourceEvidence": "log() { echo -e \"${GREEN}[\u2713]${NC} $1\"; }\nwarn() { echo -e \"${YELLOW}[!]${NC} $1\"; }\nerr() { echo -e \"${RED}[\u2717]${NC} $1\" >&2; }"
+          "sourceEvidence": "log() { echo -e \"${GREEN}[✓]${NC} $1\"; }\nwarn() { echo -e \"${YELLOW}[!]${NC} $1\"; }\nerr() { echo -e \"${RED}[✗]${NC} $1\" >&2; }"
         },
         {
           "line": 27,
@@ -61976,7 +61718,7 @@
           "source": "scripts/setup.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Legacy opt-in repository Git setup; human git status/commit/push diagnostics and path/remote helpers. Git and user URL are external input authorities; no resource construction.",
-          "sourceEvidence": "warn() { echo -e \"${YELLOW}[!]${NC} $1\"; }\nerr() { echo -e \"${RED}[\u2717]${NC} $1\" >&2; }\n"
+          "sourceEvidence": "warn() { echo -e \"${YELLOW}[!]${NC} $1\"; }\nerr() { echo -e \"${RED}[✗]${NC} $1\" >&2; }\n"
         },
         {
           "line": 30,
@@ -62016,7 +61758,7 @@
           "source": "scripts/setup.sh",
           "kind": "native-tool-or-selected-stream",
           "purpose": "Legacy opt-in repository Git setup; human git status/commit/push diagnostics and path/remote helpers. Git and user URL are external input authorities; no resource construction.",
-          "sourceEvidence": "# \u2500\u2500\u2500 Step 2: Verify repository hygiene \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\nif [[ -f .dockerignore ]] && grep -qxF \"my-values/\" .dockerignore; then\n  log \".dockerignore excludes my-values/ from runtime image build contexts\""
+          "sourceEvidence": "# ─── Step 2: Verify repository hygiene ───────────────────────────────────\nif [[ -f .dockerignore ]] && grep -qxF \"my-values/\" .dockerignore; then\n  log \".dockerignore excludes my-values/ from runtime image build contexts\""
         },
         {
           "line": 60,
@@ -62172,7 +61914,7 @@
           "{",
           "echo",
           "-e",
-          "${GREEN}[\u2713]${NC} $1",
+          "${GREEN}[✓]${NC} $1",
           ";",
           "}",
           "warn",
@@ -62188,7 +61930,7 @@
           "{",
           "echo",
           "-e",
-          "${RED}[\u2717]${NC} $1",
+          "${RED}[✗]${NC} $1",
           ">&",
           "2",
           ";",
@@ -62234,7 +61976,7 @@
           ";",
           "then",
           "warn",
-          "Git already initialized \u2014 skipping init",
+          "Git already initialized — skipping init",
           "else",
           "git",
           "init",
@@ -64755,7 +64497,7 @@
           "command": "echo",
           "args": [
             "-e",
-            "${GREEN}[\u2713]${NC} $1"
+            "${GREEN}[✓]${NC} $1"
           ]
         },
         {
@@ -64771,7 +64513,7 @@
           "command": "echo",
           "args": [
             "-e",
-            "${RED}[\u2717]${NC} $1"
+            "${RED}[✗]${NC} $1"
           ]
         },
         {
@@ -64787,7 +64529,7 @@
           "command": "echo",
           "args": [
             "-e",
-            "n${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}"
+            "n${BLUE}═══════════════════════════════════════${NC}"
           ]
         },
         {
@@ -64803,7 +64545,7 @@
           "command": "echo",
           "args": [
             "-e",
-            "${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}"
+            "${BLUE}═══════════════════════════════════════${NC}"
           ]
         },
         {
@@ -65691,7 +65433,7 @@
           "source": "my-values/setup-secrets.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original credential scalar helpers/from-file input and fixed Secret GET -> jq .data.DATABASE_URL field update -> apply; Secret constructors are independently adapted. Existing objects are external live reads; credentials remain private inputs.",
-          "sourceEvidence": "NC='\\033[0m'\nlog() { echo -e \"${GREEN}[\u2713]${NC} $1\"; }\nwarn() { echo -e \"${YELLOW}[!]${NC} $1\"; }"
+          "sourceEvidence": "NC='\\033[0m'\nlog() { echo -e \"${GREEN}[✓]${NC} $1\"; }\nwarn() { echo -e \"${YELLOW}[!]${NC} $1\"; }"
         },
         {
           "line": 48,
@@ -65701,7 +65443,7 @@
           "source": "my-values/setup-secrets.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original credential scalar helpers/from-file input and fixed Secret GET -> jq .data.DATABASE_URL field update -> apply; Secret constructors are independently adapted. Existing objects are external live reads; credentials remain private inputs.",
-          "sourceEvidence": "log() { echo -e \"${GREEN}[\u2713]${NC} $1\"; }\nwarn() { echo -e \"${YELLOW}[!]${NC} $1\"; }\nerr() { echo -e \"${RED}[\u2717]${NC} $1\" >&2; }"
+          "sourceEvidence": "log() { echo -e \"${GREEN}[✓]${NC} $1\"; }\nwarn() { echo -e \"${YELLOW}[!]${NC} $1\"; }\nerr() { echo -e \"${RED}[✗]${NC} $1\" >&2; }"
         },
         {
           "line": 49,
@@ -65711,7 +65453,7 @@
           "source": "my-values/setup-secrets.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original credential scalar helpers/from-file input and fixed Secret GET -> jq .data.DATABASE_URL field update -> apply; Secret constructors are independently adapted. Existing objects are external live reads; credentials remain private inputs.",
-          "sourceEvidence": "warn() { echo -e \"${YELLOW}[!]${NC} $1\"; }\nerr() { echo -e \"${RED}[\u2717]${NC} $1\" >&2; }\ninfo() { echo -e \"${BLUE}[i]${NC} $1\"; }"
+          "sourceEvidence": "warn() { echo -e \"${YELLOW}[!]${NC} $1\"; }\nerr() { echo -e \"${RED}[✗]${NC} $1\" >&2; }\ninfo() { echo -e \"${BLUE}[i]${NC} $1\"; }"
         },
         {
           "line": 50,
@@ -65721,7 +65463,7 @@
           "source": "my-values/setup-secrets.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original credential scalar helpers/from-file input and fixed Secret GET -> jq .data.DATABASE_URL field update -> apply; Secret constructors are independently adapted. Existing objects are external live reads; credentials remain private inputs.",
-          "sourceEvidence": "err() { echo -e \"${RED}[\u2717]${NC} $1\" >&2; }\ninfo() { echo -e \"${BLUE}[i]${NC} $1\"; }\nheader() {"
+          "sourceEvidence": "err() { echo -e \"${RED}[✗]${NC} $1\" >&2; }\ninfo() { echo -e \"${BLUE}[i]${NC} $1\"; }\nheader() {"
         },
         {
           "line": 52,
@@ -65731,7 +65473,7 @@
           "source": "my-values/setup-secrets.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original credential scalar helpers/from-file input and fixed Secret GET -> jq .data.DATABASE_URL field update -> apply; Secret constructors are independently adapted. Existing objects are external live reads; credentials remain private inputs.",
-          "sourceEvidence": "header() {\n  echo -e \"\\n${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}\"\n  echo -e \"${BLUE} $1${NC}\""
+          "sourceEvidence": "header() {\n  echo -e \"\\n${BLUE}═══════════════════════════════════════${NC}\"\n  echo -e \"${BLUE} $1${NC}\""
         },
         {
           "line": 53,
@@ -65741,7 +65483,7 @@
           "source": "my-values/setup-secrets.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original credential scalar helpers/from-file input and fixed Secret GET -> jq .data.DATABASE_URL field update -> apply; Secret constructors are independently adapted. Existing objects are external live reads; credentials remain private inputs.",
-          "sourceEvidence": "  echo -e \"\\n${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}\"\n  echo -e \"${BLUE} $1${NC}\"\n  echo -e \"${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}\""
+          "sourceEvidence": "  echo -e \"\\n${BLUE}═══════════════════════════════════════${NC}\"\n  echo -e \"${BLUE} $1${NC}\"\n  echo -e \"${BLUE}═══════════════════════════════════════${NC}\""
         },
         {
           "line": 54,
@@ -65751,7 +65493,7 @@
           "source": "my-values/setup-secrets.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original credential scalar helpers/from-file input and fixed Secret GET -> jq .data.DATABASE_URL field update -> apply; Secret constructors are independently adapted. Existing objects are external live reads; credentials remain private inputs.",
-          "sourceEvidence": "  echo -e \"${BLUE} $1${NC}\"\n  echo -e \"${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}\"\n}"
+          "sourceEvidence": "  echo -e \"${BLUE} $1${NC}\"\n  echo -e \"${BLUE}═══════════════════════════════════════${NC}\"\n}"
         },
         {
           "line": 79,
@@ -66063,7 +65805,7 @@
           "{",
           "echo",
           "-e",
-          "${GREEN}[\u2713]${NC} $1",
+          "${GREEN}[✓]${NC} $1",
           ";",
           "}",
           "warn",
@@ -66079,7 +65821,7 @@
           "{",
           "echo",
           "-e",
-          "${RED}[\u2717]${NC} $1",
+          "${RED}[✗]${NC} $1",
           ">&",
           "2",
           ";",
@@ -66097,13 +65839,13 @@
           "{",
           "echo",
           "-e",
-          "\\n${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}",
+          "\\n${BLUE}═══════════════════════════════════════${NC}",
           "echo",
           "-e",
           "${BLUE} $1${NC}",
           "echo",
           "-e",
-          "${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}",
+          "${BLUE}═══════════════════════════════════════${NC}",
           "}",
           "TMP_FILES=",
           "()",
@@ -68259,7 +68001,7 @@
           ">",
           "/dev/null",
           "log",
-          "Fixed DATABASE_URL: ${SRC_NS} \u2192 ${NAMESPACE}",
+          "Fixed DATABASE_URL: ${SRC_NS} → ${NAMESPACE}",
           "else",
           "log",
           "DATABASE_URL already correct (no ${SRC_NS} reference)",
@@ -96434,7 +96176,7 @@
             },
             {
               "kind": "FirstStatement",
-              "syntax": "const markdown = `# Plugin System Inventory\n\nStatus: generated canonical v2 inventory\n\nGenerated by \\`scripts/plugin-system-inventory.mjs\\`.\n\n## Summary\n\n- Pipeline packages: ${counts.packages}\n- Discovered package roots: ${counts.packageRoots}\n- Registrations: ${counts.registrations}\n  - Stages: ${counts.stages}\n  - Observers: ${counts.observers}\n  - Adapters: ${counts.adapters}\n  - Test providers: ${counts.testProviders}\n  - Report adapters: ${counts.reportAdapters}\n- Runtime and package files: ${counts.files}\n\n## Packages\n\n${packages.map((pluginPackage) =>\n  `- \\`${pluginPackage.id}\\` (${pluginPackage.kind}, ${pluginPackage.registrations.length} registrations) \u2014 \\`${pluginPackage.root}\\``).join('\\n')}\n`;"
+              "syntax": "const markdown = `# Plugin System Inventory\n\nStatus: generated canonical v2 inventory\n\nGenerated by \\`scripts/plugin-system-inventory.mjs\\`.\n\n## Summary\n\n- Pipeline packages: ${counts.packages}\n- Discovered package roots: ${counts.packageRoots}\n- Registrations: ${counts.registrations}\n  - Stages: ${counts.stages}\n  - Observers: ${counts.observers}\n  - Adapters: ${counts.adapters}\n  - Test providers: ${counts.testProviders}\n  - Report adapters: ${counts.reportAdapters}\n- Runtime and package files: ${counts.files}\n\n## Packages\n\n${packages.map((pluginPackage) =>\n  `- \\`${pluginPackage.id}\\` (${pluginPackage.kind}, ${pluginPackage.registrations.length} registrations) — \\`${pluginPackage.root}\\``).join('\\n')}\n`;"
             },
             {
               "kind": "FunctionDeclaration",
@@ -106063,7 +105805,7 @@
             },
             {
               "kind": "FunctionDeclaration",
-              "syntax": "function shell({ title, body, nav, toc = '', prefix, revision }) {\n  return `<!doctype html>\n<html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n<title>${escape(title)} \u00b7 KubeClaw Documentation</title><link rel=\"stylesheet\" href=\"${prefix}reader.css\">\n<script src=\"${prefix}reader.js\" defer></script></head><body>\n<a class=\"skip\" href=\"#main\">Skip to content</a>\n<header><a class=\"brand\" href=\"${prefix}README.html\">KubeClaw <span>Documentation</span></a><a href=\"${prefix}search.html\">Search documentation</a></header>\n<div class=\"layout\"><details class=\"navigation\" open><summary>Documentation navigation</summary><nav aria-label=\"Documentation\">${nav}</nav></details>\n<main id=\"main\" tabindex=\"-1\"><article>${body}</article><footer>Documentation source <code>${escape(revision.slice(0, 12))}</code> \u00b7 <a href=\"${prefix}README.html\">Documentation home</a></footer></main>\n${toc ? `<aside aria-label=\"On this page\"><strong>On this page</strong>${toc}</aside>` : ''}</div></body></html>\\n`;\n}"
+              "syntax": "function shell({ title, body, nav, toc = '', prefix, revision }) {\n  return `<!doctype html>\n<html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n<title>${escape(title)} · KubeClaw Documentation</title><link rel=\"stylesheet\" href=\"${prefix}reader.css\">\n<script src=\"${prefix}reader.js\" defer></script></head><body>\n<a class=\"skip\" href=\"#main\">Skip to content</a>\n<header><a class=\"brand\" href=\"${prefix}README.html\">KubeClaw <span>Documentation</span></a><a href=\"${prefix}search.html\">Search documentation</a></header>\n<div class=\"layout\"><details class=\"navigation\" open><summary>Documentation navigation</summary><nav aria-label=\"Documentation\">${nav}</nav></details>\n<main id=\"main\" tabindex=\"-1\"><article>${body}</article><footer>Documentation source <code>${escape(revision.slice(0, 12))}</code> · <a href=\"${prefix}README.html\">Documentation home</a></footer></main>\n${toc ? `<aside aria-label=\"On this page\"><strong>On this page</strong>${toc}</aside>` : ''}</div></body></html>\\n`;\n}"
             },
             {
               "kind": "FunctionDeclaration",
@@ -106083,7 +105825,7 @@
             },
             {
               "kind": "FirstStatement",
-              "syntax": "const readerScript = `'use strict';\nconst searchReaderPages=${searchReaderPages.toString()};\nif (matchMedia('(max-width:700px)').matches) document.querySelector('.navigation').open=false;\nconst form=document.getElementById('search-form');\nif(form){\n const input=document.getElementById('query'),status=document.getElementById('search-status'),results=document.getElementById('search-results');\n let loading;\n const load=()=>loading??=(new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='search-index.js';script.onload=()=>resolve(window.kubeclawSearchIndex);script.onerror=()=>reject(new Error('index unavailable'));document.head.append(script);}));\n let sequence=0;\n async function search(){const current=++sequence;const query=input.value.trim();results.replaceChildren();if(!query){status.textContent='Enter words or an exact identifier.';return;}status.textContent='Loading documentation index\u2026';\n try{const index=await load();if(current!==sequence)return;const words=query.toLocaleLowerCase('en-US').split(/\\\\s+/u);const matches=searchReaderPages(index,query);status.textContent=matches.length?matches.length+' pages found. Showing up to 50.':'No results. Try fewer words or a configuration name.';\n for(const page of matches.slice(0,50)){const li=document.createElement('li'),link=document.createElement('a'),snippet=document.createElement('p');link.href=page.route;link.textContent=page.title;const at=Math.max(0,page.text.toLocaleLowerCase('en-US').indexOf(words[0])-80);snippet.textContent=(at?'\u2026':'')+page.text.slice(at,at+240)+'\u2026';li.append(link,snippet);results.append(li);}\n }catch{if(current===sequence)status.textContent='Search index could not be loaded. Use the documentation navigation or retry after reloading.';}}\n form.addEventListener('submit',event=>{event.preventDefault();const url=new URL(location.href);url.searchParams.set('q',input.value.trim());history.replaceState(null,'',url);search();});input.value=new URLSearchParams(location.search).get('q')??'';if(input.value)search();\n}\\n`;"
+              "syntax": "const readerScript = `'use strict';\nconst searchReaderPages=${searchReaderPages.toString()};\nif (matchMedia('(max-width:700px)').matches) document.querySelector('.navigation').open=false;\nconst form=document.getElementById('search-form');\nif(form){\n const input=document.getElementById('query'),status=document.getElementById('search-status'),results=document.getElementById('search-results');\n let loading;\n const load=()=>loading??=(new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='search-index.js';script.onload=()=>resolve(window.kubeclawSearchIndex);script.onerror=()=>reject(new Error('index unavailable'));document.head.append(script);}));\n let sequence=0;\n async function search(){const current=++sequence;const query=input.value.trim();results.replaceChildren();if(!query){status.textContent='Enter words or an exact identifier.';return;}status.textContent='Loading documentation index…';\n try{const index=await load();if(current!==sequence)return;const words=query.toLocaleLowerCase('en-US').split(/\\\\s+/u);const matches=searchReaderPages(index,query);status.textContent=matches.length?matches.length+' pages found. Showing up to 50.':'No results. Try fewer words or a configuration name.';\n for(const page of matches.slice(0,50)){const li=document.createElement('li'),link=document.createElement('a'),snippet=document.createElement('p');link.href=page.route;link.textContent=page.title;const at=Math.max(0,page.text.toLocaleLowerCase('en-US').indexOf(words[0])-80);snippet.textContent=(at?'…':'')+page.text.slice(at,at+240)+'…';li.append(link,snippet);results.append(li);}\n }catch{if(current===sequence)status.textContent='Search index could not be loaded. Use the documentation navigation or retry after reloading.';}}\n form.addEventListener('submit',event=>{event.preventDefault();const url=new URL(location.href);url.searchParams.set('q',input.value.trim());history.replaceState(null,'',url);search();});input.value=new URLSearchParams(location.search).get('q')??'';if(input.value)search();\n}\\n`;"
             }
           ]
         },
@@ -106886,7 +106628,7 @@
             },
             {
               "kind": "FunctionDeclaration",
-              "syntax": "export function generateSdkReference({root,revision,repositoryUrl='https://github.com/datrab/kubeclaw',semantics=sdkSemantics,bindings=semanticSourceBindings}) {\n  if (!/^[a-f0-9]{40}$/u.test(revision??'')) throw new Error('SDK_SOURCE_REVISION_REQUIRED');\n  const surface=discoverSdkSurface({root});\n  const actualNames=new Set(surface.exports.map(x=>x.name));\n  const extra=Object.keys(semantics).filter(x=>!actualNames.has(x));\n  const missing=surface.exports.filter(x=>!Object.hasOwn(semantics,x.name)||!Array.isArray(semantics[x.name])||semantics[x.name].length!==2||semantics[x.name].some(y=>typeof y!=='string'||!y.trim()));\n  if(extra.length||missing.length)throw new Error(`SDK_SEMANTIC_COVERAGE_DRIFT:missing=${missing.map(x=>`${x.entrypoint}:${x.name}`).join(',')};removed=${extra.join(',')}`);\n  for(const [source,expected] of Object.entries(bindings)) {\n    if(!fs.existsSync(path.join(root,source))||digest(fs.readFileSync(path.join(root,source)))!==expected)throw new Error(`SDK_SEMANTIC_SOURCE_DRIFT:${source}:review scripts/docs-sdk-semantics.mjs and docs/site/reference/sdk.md; affected generated page docs/site/reference/sdk-exports.md; do not rebind without semantic review`);\n  }\n  const sdkSources=fs.readdirSync(path.join(root,sdkPath,'src'),{recursive:true}).filter(x=>x.endsWith('.ts')).map(x=>`${sdkPath}/src/${x.split(path.sep).join('/')}`);\n  for(const source of [...new Set([...sdkSources,...surface.entrypoints.map(x=>x.source),`${sdkPath}/package.json`,`${sdkPath}/tsconfig.build.json`,schemaPath,'scripts/generate-plugin-sdk-types.mjs'])])if(!Object.hasOwn(bindings,source))throw new Error(`SDK_SEMANTIC_SOURCE_UNBOUND:${source}`);\n  const schema=JSON.parse(fs.readFileSync(path.join(root,schemaPath),'utf8'));\n  const require=createRequire(path.join(path.resolve(root),'package.json'));const ts=require('typescript');\n  function owningFacts(source,owningSchema){\n    const jsonTree=ts.parseJsonText(source,fs.readFileSync(path.join(root,source),'utf8'));const locations=new Map();\n    function visit(node,pointer){\n      locations.set(pointer,{source,symbol:pointer,line:jsonTree.getLineAndCharacterOfPosition(node.getStart(jsonTree)).line+1,endLine:jsonTree.getLineAndCharacterOfPosition(node.end).line+1});\n      if(ts.isObjectLiteralExpression(node))for(const property of node.properties){if(!ts.isPropertyAssignment(property)||!ts.isStringLiteral(property.name))throw new Error(`SDK_SCHEMA_JSON_AST_UNSUPPORTED:${source}:${pointer}`);visit(property.initializer,`${pointer}/${pointerToken(property.name.text)}`);}\n      else if(ts.isArrayLiteralExpression(node))node.elements.forEach((child,index)=>visit(child,`${pointer}/${index}`));\n    }\n    const expression=jsonTree.statements[0]?.expression;if(!expression)throw new Error(`SDK_SCHEMA_JSON_AST_UNSUPPORTED:${source}:#`);visit(expression,'#');\n    return schemaFacts(owningSchema).map(fact=>({...fact,source:locations.get(fact.pointer)}));\n  }\n  const facts=owningFacts(schemaPath,schema);\n  const callbackSchemaPath='contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json';\n  let callbackContracts=null;\n  if(surface.supportTypes.some(x=>x.source.source==='contracts/pipeline-test-gate/v1/src/types.ts')){\n    if(!Object.hasOwn(bindings,callbackSchemaPath))throw new Error(`SDK_SEMANTIC_SOURCE_UNBOUND:${callbackSchemaPath}`);\n    const owningSchema=JSON.parse(fs.readFileSync(path.join(root,callbackSchemaPath),'utf8'));\n    const roots=['providerInvocation','providerResult','reportAdapterResult'];const reachable=new Set();const pending=[...roots];\n    while(pending.length){const name=pending.shift();if(reachable.has(name))continue;if(!Object.hasOwn(owningSchema.$defs,name))throw new Error(`SDK_CALLBACK_SCHEMA_DEFINITION_MISSING:${name}`);reachable.add(name);\n      function refs(value){if(!value||typeof value!=='object')return;if(typeof value.$ref==='string'){if(!/^#\\/\\$defs\\/[^/]+$/u.test(value.$ref))throw new Error(`SDK_CALLBACK_SCHEMA_REFERENCE_UNSUPPORTED:${value.$ref}`);pending.push(value.$ref.slice('#/$defs/'.length));}for(const child of Object.values(value))refs(child);}refs(owningSchema.$defs[name]);\n    }\n    const definitions=[...reachable].sort(sort);\n    // Apply keyword-domain checking only to the reachable KubeClaw callback boundary.\n    const selected={$defs:Object.fromEntries(definitions.map(name=>[name,owningSchema.$defs[name]]))};\n    const callbackFacts=owningFacts(callbackSchemaPath,selected).filter(fact=>fact.pointer!=='#');\n    const validatorSource='contracts/pipeline-test-gate/v1/src/validation.ts';\n    if(!Object.hasOwn(bindings,validatorSource))throw new Error(`SDK_SEMANTIC_SOURCE_UNBOUND:${validatorSource}`);\n    callbackContracts={source:callbackSchemaPath,roots,definitions,schemaFacts:callbackFacts,validation:{source:{source:validatorSource,symbol:'reportAdapterResultErrors',line:100,endLine:145},consumerSemantics:\"Owning validation first applies the selected JSON Schema without default insertion or coercion. providerInvocation and providerResult have no extra semantic branch in checkPipelineTestGateContract. reportAdapterResult additionally requires outcome counts to sum to total and unique case IDs. Complete cases require zero omittedCaseCount, exact total length and exact outcome counts. Truncated cases require positive omittedCaseCount, listed plus omitted equal total, and listed outcomes no greater than exact counts. Report and case findingsTruncated must be true exactly when omittedFindingCount is positive.\\n\\nBuster supplies adapter/sourceArtifact provenance before this validation. Failure returns errors from checkPipelineTestGateContract. `validatePipelineTestGateContract` throws PipelineTestGateContractError. Shape acceptance does not authorize provider execution.\"}};\n  }\n  if(callbackContracts){\n    const e2eSource='contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json';\n    if(!Object.hasOwn(bindings,e2eSource))throw new Error(`SDK_SEMANTIC_SOURCE_UNBOUND:${e2eSource}`);\n    callbackContracts.providerDetails={selection:'Buster selects these extra rules for kubeclaw.playwright@1, or whenever providerDetails.schemaId is kubeclaw.e2e-result.v1. Other provider-specific details remain governed by their owning provider contract, not a universal E2E requirement.',source:{source:'contracts/pipeline-test-gate/v1/src/validation.ts',symbol:'validateE2eProviderDetails',line:56,endLine:69},consumerSemantics:\"Require the exact E2E schema ID and SHA-256 of the owning schema bytes, then validate values against that schema. Total must equal passed plus failed plus skipped plus unexecuted and the number of test cases. IDs must be unique. The number of cases with each status must equal its count. Failure throws TEST_PROVIDER_E2E_DETAILS_INVALID.\",schemaFacts:owningFacts(e2eSource,JSON.parse(fs.readFileSync(path.join(root,e2eSource),'utf8')))};\n    callbackContracts.consumerValidation=[\n      {source:{source:'skills/buster/engine/test-gates/runner.ts',symbol:'validateCounts / validateEvidenceDeclarations / validateProviderReports',line:326,endLine:373},consumerSemantics:\"After providerResult schema validation, Buster requires total = passed + failed + skipped, and a passed outcome cannot have failed > 0. Evidence IDs and file paths must each be unique. `runner-log` is reserved. Evidence types must be registered. Report evidence IDs must be unique, report formats registered, and each report must refer to declared test-report evidence.\"},\n      {source:{source:'skills/buster/engine/test-gates/runner.ts',symbol:'provider result admission',line:1224,endLine:1253},consumerSemantics:'Before admission, native JSON.stringify output must fit the configured provider-result UTF-8 byte budget. Buster applies schema, counts, selected details, evidence and report checks before freezing a clone. Artifact outputs must refer to declared evidence IDs. These runtime checks do not run merely because a callback has the TypeScript signature.'}\n    ];\n  }\n  for(const item of surface.supportTypes){\n    const callbackName=item.name.replace(/V1$/u,'');const definition=callbackName[0].toLowerCase()+callbackName.slice(1);\n    const inlinePointers={PlanNodeKind:'#/$defs/providerInvocation/properties/nodeKind',ReportCaseOutcome:'#/$defs/reportCase/properties/outcome'};\n    const pointer=item.source.source==='contracts/pipeline-test-gate/v1/src/types.ts'?(callbackContracts?.definitions.includes(definition)?`#/$defs/${definition}`:inlinePointers[item.name]):item.name==='CapabilityInvocation'?'#/$defs/capabilityInvocation':null;\n    item.owningSchema=pointer?{source:item.source.source==='contracts/pipeline-test-gate/v1/src/types.ts'?callbackSchemaPath:schemaPath,pointer}:null;\n    item.fieldConstraints=pointer?(item.owningSchema.source===callbackSchemaPath?callbackContracts.schemaFacts:facts).filter(fact=>fact.pointer===pointer||fact.pointer.startsWith(`${pointer}/`)):[];\n  }\n  const definitionFor=name=> name==='PluginManifest1'?'pluginManifest':name==='CURRENT_RUNTIME_DISPATCH_PROFILE'?'runtimeDispatchProfile':name==='CURRENT_REVIEW_CACHE_PROFILE'?'reviewCacheProfile':name[0].toLowerCase()+name.slice(1);\n  const inventory={schemaVersion:'sdk-reference-inventory.v1',purpose:'Compiler-discovered public SDK facts and finite owning callback closure; consumer explanations are authored in the documentation scripts. Not content acceptance.',sourceRevision:revision,owner:'documentation automation',canonicalTarget:'docs/site/reference/sdk.md',generatedTarget:'docs/site/reference/sdk-exports.md',discoveryScope:{entrypoints:'This scope includes all exports in the SDK package-export map, with export-star and named export overrides. It includes no other exports.',parser:'Installed TypeScript compiler with SDK tsconfig.build.json; JSON Schema recursive keyword extraction with explicit unsupported-keyword failures.',sourceRoots:[`${sdkPath}/src`,`${sdkPath}/package.json`,`${sdkPath}/tsconfig.build.json`,schemaPath,'scripts/generate-plugin-sdk-types.mjs',...(callbackContracts?[callbackSchemaPath,'contracts/pipeline-test-gate/v1/src/types.ts','contracts/pipeline-test-gate/v1/src/validation.ts','contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json']:[])],exclusions:[{surface:'Internal types outside the public reachable closure',reason:'Not selected by this SDK contract boundary. All compiler-resolved reachable KubeClaw support declarations are inventoried separately without adding named exports; newly reached unsupported local source shapes fail explicitly.'},{surface:'Node, TypeScript and dependency implementation internals',reason:'Referenced types and relevant selected consumers are linked; SDK enumeration does not duplicate all upstream APIs.'}],check:'generateSdkReference / checkSdkReference and scripts/docs-sdk-reference.mjs --check',readerTask:'Select an SDK entrypoint. Use its consumer meaning. Obey all its field/codec rules. Use the bounded pure JSON example.'},package:surface.package,private:surface.private,compilerVersion:surface.compilerVersion,entrypoints:surface.entrypoints,sourceDependencies:Object.entries(bindings).map(([source,sourceDigest])=>({source,sourceDigest})),exports:surface.exports.map(item=>{\n    const key=definitionFor(item.name);const schemaPointer=Object.hasOwn(schema.$defs,key)?`#/$defs/${key}`:null;\n    return {...item,sourceId:`sdk:${item.entrypoint}:${item.name}`,canonicalPage:'docs/site/reference/sdk.md',generatedPage:'docs/site/reference/sdk-exports.md',owner:'documentation automation',schemaPointers:schemaPointer?[schemaPointer]:[],fieldConstraints:schemaPointer?facts.filter(x=>x.pointer===schemaPointer||x.pointer.startsWith(`${schemaPointer}/`)):[],semanticAnnotationSource:{source:'scripts/docs-sdk-semantics.mjs',symbol:`sdkSemantics.${item.name}`},consumerSemantics:semantics[item.name][0],example:semantics[item.name][1],exampleStatus:'source-only; illustrative fragment; not executed'};\n  }),supportTypes:surface.supportTypes,callbackContracts,schemaFacts:facts};\n  const sourceLink = location => `[${location.symbol??location.source}](${repositoryUrl}/blob/${revision}/${location.source}#L${location.line}-L${location.endLine})`;\n  const content=['# SDK export and contract inventory','', 'Status: generated current SDK reference', 'Audience: plugin author, runtime maintainer', 'Owner: documentation automation', `Evidence: ${Object.keys(bindings).join('; ')}`, 'Applies to: current private workspace SDK entrypoints and plugin-system v2 schema', `Last verified: generated from source revision ${revision}`, 'Generator: scripts/docs-sdk-reference.mjs', '', '<!-- BEGIN GENERATED: source-backed reference -->', '', 'Mechanical signatures and field rules come from the TypeScript compiler and the owning JSON Schema. Consumer explanations are authored separately. A TypeScript declaration does not execute validation. Use the [SDK reference](sdk.md) for the request path, compatibility rules, JSON domain and error handling.','','Every example below is a source-only fragment. It is not a claim of activation, external effects, live deployment or successful end-to-end execution. Supply the variables shown in each fragment from the owning runtime or contract.','','Source revision: `'+revision+'`. Package: `'+surface.package+'` (private workspace package).','','## Entrypoints','',table(['Import','Source'],surface.entrypoints.map(x=>[x.entrypoint==='.'?'`@kubeclaw/plugin-sdk`':'`@kubeclaw/plugin-sdk/testing`',sourceLink({...x,line:1,endLine:fs.readFileSync(path.join(root,x.source),'utf8').split('\\n').length-1,symbol:x.entrypoint})])),''];\n  // Derive every named-entry destination using the same heading rules as refs checks.\n  const exportAnchors=markdownAnchorEntries([...content,'## Export index',...inventory.exports.map(item=>`## ${item.name}`)].join('\\n')).slice(-inventory.exports.length).map(entry=>entry.anchor);\n  content.push('## Export index','', \"Select an exact name below. Every named export from the discovered package entrypoints is included. Support declarations remain in their separate section. Examples in each entry are source-only fragments. An own property belongs directly to an object, not its prototype. A dense array has an own property at each index from zero to length minus one. A truthy value is a value that JavaScript treats as true in a condition.\",'',table(['Export','Import','Kind'],inventory.exports.map((item,index)=>['[`'+item.name+'`](#'+exportAnchors[index]+')',item.entrypoint==='.'?'`@kubeclaw/plugin-sdk`':'`@kubeclaw/plugin-sdk/testing`',item.kind])),'');\n  for(const item of inventory.exports){\n    content.push(`## ${item.name}`, '', `Import: \\`${item.entrypoint==='.'?'@kubeclaw/plugin-sdk':'@kubeclaw/plugin-sdk/testing'}\\`. Kind: ${item.kind}.`, '', item.consumerSemantics,'', '```ts',item.signature,'```','', '**Consumer example \u2014 source-only fragment:**','','```ts',item.example,'```','','Source: '+item.declarations.map(sourceLink).join(', ')+'.');\n    if(item.members.length)content.push('',table(['Member path','Optional','Readonly','TypeScript shape','Source'],item.members.map(x=>[x.path,x.optional?'yes':'no',x.readonly?'yes':'no','`'+x.signature+'`',sourceLink(x)])));\n    if(item.unionVariants.length)content.push('', '**Union variants \u2014 read required/optional members within each branch, not only the merged member list:**','',...item.unionVariants.flatMap((branch,index)=>[`Branch ${index+1}:`, '', '```typescript', branch.signature, '```', '',table(['Member','Optional in this branch','Type','Source'],branch.members.map(x=>[x.name,x.optional?'yes':'no','`'+x.signature+'`',sourceLink(x)])), '']));\n    if(item.schemaPointers.length)content.push('',`Owning schema: [${item.schemaPointers[0]}](${repositoryUrl}/blob/${revision}/${schemaPath}). The rules below are schema facts, not checks performed by this TypeScript type.`,'',table(['JSON pointer','Declared rules','Source'],item.fieldConstraints.map(x=>[x.pointer,'`'+JSON.stringify(x.rule)+'`',sourceLink(x.source)])));\n    else content.push('','No one-to-one plugin-system schema definition owns this export. Its declaration and implementation set its local behavior.');\n    if(item.referencedTypes.length)content.push('','Referenced types:', '', ...item.referencedTypes.map(x=>'- `'+x+'`'));\n    content.push('');\n  }\n  content.push('## Reachable support types','',\"These finite KubeClaw-owned declarations are reachable through the public callback and wrapper types. Source-qualified names distinguish identically named declarations. They are not additional named SDK exports. Use qualified references to other support rows or the exact-source public export above. Upstream Node and TypeScript utility APIs are not reproduced.\",'');\n  for(const item of inventory.supportTypes){content.push(`### ${item.name} \u2014 ${item.source.source}`,'',`Qualified declaration: \\`${item.qualifiedName}\\`.`, '',sourceLink(item.source),'','```ts',item.signature,'```','');if(item.members.length)content.push(table(['Resolved member','Optional','Readonly','Type','Source'],item.members.map(x=>[x.name,x.optional?'yes':'no',x.readonly?'yes':'no','`'+x.signature+'`',sourceLink(x)])),'');if(item.owningSchema)content.push('Owning schema: `'+item.owningSchema.pointer+'` in ['+item.owningSchema.source+']('+repositoryUrl+'/blob/'+revision+'/'+item.owningSchema.source+'). Read its rows in the owning rule index below.','');else content.push('No one-to-one owning schema definition: read this TypeScript support declaration and the schema at its consuming field. For example, ProviderResultV1 narrows TestOutcome with Exclude<TestOutcome, null>.','');if(item.referencedSupport.length)content.push('Qualified local references: '+item.referencedSupport.map(x=>'`'+x+'`').join(', ')+'.','');}\n  if(callbackContracts)content.push('## Callback contract rules','', 'These owning test-gate schemas cover provider invocation, provider result and the assembled report result. Callback ReportAdapterOutput selects only its declared fields; Buster adds adapter and sourceArtifact. `$ref` targets are included recursively, including JSON value recursion. Parent required arrays, unions, defaults/absence and bounds apply independently of TypeScript. JSON Schema string lengths measure Unicode code points.','',callbackContracts.validation.consumerSemantics,'','Semantic validator: '+sourceLink(callbackContracts.validation.source)+'.','',table(['Owning JSON pointer','Declared rules','Source'],callbackContracts.schemaFacts.map(x=>[x.pointer,'`'+JSON.stringify(x.rule)+'`',sourceLink(x.source)])),'');\n  if(callbackContracts){\n    content.push('### Provider result admission','');\n    for(const item of callbackContracts.consumerValidation)content.push(item.consumerSemantics,'','Source: '+sourceLink(item.source)+'.','');\n    content.push('### Selected provider-details rules','',callbackContracts.providerDetails.selection,'',callbackContracts.providerDetails.consumerSemantics,'','Source: '+sourceLink(callbackContracts.providerDetails.source)+'.','',table(['Owning E2E JSON pointer','Declared rules','Source'],callbackContracts.providerDetails.schemaFacts.map(x=>[x.pointer,'`'+JSON.stringify(x.rule)+'`',sourceLink(x.source)])),'');\n  }\n  content.push('## Complete schema rule index','',\"This index includes recursive property, item, alternative and conditional rules. A `$ref` points to another row. Read the two rules. An absent `default` is not an SDK default. Parent `required` arrays determine which properties must be present. Conditional `if`/`then` and `not` rows retain rules that TypeScript cannot express.\",'',''+table(['JSON pointer','Declared rules','Source'],facts.map(x=>[x.pointer,'`'+JSON.stringify(x.rule)+'`',sourceLink(x.source)])),'');\n  content.push('<!-- END GENERATED -->', '');\n  return {inventory,generatedMarkdown:content.join('\\n')};\n}"
+              "syntax": "export function generateSdkReference({root,revision,repositoryUrl='https://github.com/datrab/kubeclaw',semantics=sdkSemantics,bindings=semanticSourceBindings}) {\n  if (!/^[a-f0-9]{40}$/u.test(revision??'')) throw new Error('SDK_SOURCE_REVISION_REQUIRED');\n  const surface=discoverSdkSurface({root});\n  const actualNames=new Set(surface.exports.map(x=>x.name));\n  const extra=Object.keys(semantics).filter(x=>!actualNames.has(x));\n  const missing=surface.exports.filter(x=>!Object.hasOwn(semantics,x.name)||!Array.isArray(semantics[x.name])||semantics[x.name].length!==2||semantics[x.name].some(y=>typeof y!=='string'||!y.trim()));\n  if(extra.length||missing.length)throw new Error(`SDK_SEMANTIC_COVERAGE_DRIFT:missing=${missing.map(x=>`${x.entrypoint}:${x.name}`).join(',')};removed=${extra.join(',')}`);\n  for(const [source,expected] of Object.entries(bindings)) {\n    if(!fs.existsSync(path.join(root,source))||digest(fs.readFileSync(path.join(root,source)))!==expected)throw new Error(`SDK_SEMANTIC_SOURCE_DRIFT:${source}:review scripts/docs-sdk-semantics.mjs and docs/site/reference/sdk.md; affected generated page docs/site/reference/sdk-exports.md; do not rebind without semantic review`);\n  }\n  const sdkSources=fs.readdirSync(path.join(root,sdkPath,'src'),{recursive:true}).filter(x=>x.endsWith('.ts')).map(x=>`${sdkPath}/src/${x.split(path.sep).join('/')}`);\n  for(const source of [...new Set([...sdkSources,...surface.entrypoints.map(x=>x.source),`${sdkPath}/package.json`,`${sdkPath}/tsconfig.build.json`,schemaPath,'scripts/generate-plugin-sdk-types.mjs'])])if(!Object.hasOwn(bindings,source))throw new Error(`SDK_SEMANTIC_SOURCE_UNBOUND:${source}`);\n  const schema=JSON.parse(fs.readFileSync(path.join(root,schemaPath),'utf8'));\n  const require=createRequire(path.join(path.resolve(root),'package.json'));const ts=require('typescript');\n  function owningFacts(source,owningSchema){\n    const jsonTree=ts.parseJsonText(source,fs.readFileSync(path.join(root,source),'utf8'));const locations=new Map();\n    function visit(node,pointer){\n      locations.set(pointer,{source,symbol:pointer,line:jsonTree.getLineAndCharacterOfPosition(node.getStart(jsonTree)).line+1,endLine:jsonTree.getLineAndCharacterOfPosition(node.end).line+1});\n      if(ts.isObjectLiteralExpression(node))for(const property of node.properties){if(!ts.isPropertyAssignment(property)||!ts.isStringLiteral(property.name))throw new Error(`SDK_SCHEMA_JSON_AST_UNSUPPORTED:${source}:${pointer}`);visit(property.initializer,`${pointer}/${pointerToken(property.name.text)}`);}\n      else if(ts.isArrayLiteralExpression(node))node.elements.forEach((child,index)=>visit(child,`${pointer}/${index}`));\n    }\n    const expression=jsonTree.statements[0]?.expression;if(!expression)throw new Error(`SDK_SCHEMA_JSON_AST_UNSUPPORTED:${source}:#`);visit(expression,'#');\n    return schemaFacts(owningSchema).map(fact=>({...fact,source:locations.get(fact.pointer)}));\n  }\n  const facts=owningFacts(schemaPath,schema);\n  const callbackSchemaPath='contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json';\n  let callbackContracts=null;\n  if(surface.supportTypes.some(x=>x.source.source==='contracts/pipeline-test-gate/v1/src/types.ts')){\n    if(!Object.hasOwn(bindings,callbackSchemaPath))throw new Error(`SDK_SEMANTIC_SOURCE_UNBOUND:${callbackSchemaPath}`);\n    const owningSchema=JSON.parse(fs.readFileSync(path.join(root,callbackSchemaPath),'utf8'));\n    const roots=['providerInvocation','providerResult','reportAdapterResult'];const reachable=new Set();const pending=[...roots];\n    while(pending.length){const name=pending.shift();if(reachable.has(name))continue;if(!Object.hasOwn(owningSchema.$defs,name))throw new Error(`SDK_CALLBACK_SCHEMA_DEFINITION_MISSING:${name}`);reachable.add(name);\n      function refs(value){if(!value||typeof value!=='object')return;if(typeof value.$ref==='string'){if(!/^#\\/\\$defs\\/[^/]+$/u.test(value.$ref))throw new Error(`SDK_CALLBACK_SCHEMA_REFERENCE_UNSUPPORTED:${value.$ref}`);pending.push(value.$ref.slice('#/$defs/'.length));}for(const child of Object.values(value))refs(child);}refs(owningSchema.$defs[name]);\n    }\n    const definitions=[...reachable].sort(sort);\n    // Apply keyword-domain checking only to the reachable KubeClaw callback boundary.\n    const selected={$defs:Object.fromEntries(definitions.map(name=>[name,owningSchema.$defs[name]]))};\n    const callbackFacts=owningFacts(callbackSchemaPath,selected).filter(fact=>fact.pointer!=='#');\n    const validatorSource='contracts/pipeline-test-gate/v1/src/validation.ts';\n    if(!Object.hasOwn(bindings,validatorSource))throw new Error(`SDK_SEMANTIC_SOURCE_UNBOUND:${validatorSource}`);\n    callbackContracts={source:callbackSchemaPath,roots,definitions,schemaFacts:callbackFacts,validation:{source:{source:validatorSource,symbol:'reportAdapterResultErrors',line:100,endLine:145},consumerSemantics:\"Owning validation first applies the selected JSON Schema without default insertion or coercion. providerInvocation and providerResult have no extra semantic branch in checkPipelineTestGateContract. reportAdapterResult additionally requires outcome counts to sum to total and unique case IDs. Complete cases require zero omittedCaseCount, exact total length and exact outcome counts. Truncated cases require positive omittedCaseCount, listed plus omitted equal total, and listed outcomes no greater than exact counts. Report and case findingsTruncated must be true exactly when omittedFindingCount is positive.\\n\\nBuster supplies adapter/sourceArtifact provenance before this validation. Failure returns errors from checkPipelineTestGateContract. `validatePipelineTestGateContract` throws PipelineTestGateContractError. Shape acceptance does not authorize provider execution.\"}};\n  }\n  if(callbackContracts){\n    const e2eSource='contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json';\n    if(!Object.hasOwn(bindings,e2eSource))throw new Error(`SDK_SEMANTIC_SOURCE_UNBOUND:${e2eSource}`);\n    callbackContracts.providerDetails={selection:'Buster selects these extra rules for kubeclaw.playwright@1, or whenever providerDetails.schemaId is kubeclaw.e2e-result.v1. Other provider-specific details remain governed by their owning provider contract, not a universal E2E requirement.',source:{source:'contracts/pipeline-test-gate/v1/src/validation.ts',symbol:'validateE2eProviderDetails',line:56,endLine:69},consumerSemantics:\"Require the exact E2E schema ID and SHA-256 of the owning schema bytes, then validate values against that schema. Total must equal passed plus failed plus skipped plus unexecuted and the number of test cases. IDs must be unique. The number of cases with each status must equal its count. Failure throws TEST_PROVIDER_E2E_DETAILS_INVALID.\",schemaFacts:owningFacts(e2eSource,JSON.parse(fs.readFileSync(path.join(root,e2eSource),'utf8')))};\n    callbackContracts.consumerValidation=[\n      {source:{source:'skills/buster/engine/test-gates/runner.ts',symbol:'validateCounts / validateEvidenceDeclarations / validateProviderReports',line:326,endLine:373},consumerSemantics:\"After providerResult schema validation, Buster requires total = passed + failed + skipped, and a passed outcome cannot have failed > 0. Evidence IDs and file paths must each be unique. `runner-log` is reserved. Evidence types must be registered. Report evidence IDs must be unique, report formats registered, and each report must refer to declared test-report evidence.\"},\n      {source:{source:'skills/buster/engine/test-gates/runner.ts',symbol:'provider result admission',line:1224,endLine:1253},consumerSemantics:'Before admission, native JSON.stringify output must fit the configured provider-result UTF-8 byte budget. Buster applies schema, counts, selected details, evidence and report checks before freezing a clone. Artifact outputs must refer to declared evidence IDs. These runtime checks do not run merely because a callback has the TypeScript signature.'}\n    ];\n  }\n  for(const item of surface.supportTypes){\n    const callbackName=item.name.replace(/V1$/u,'');const definition=callbackName[0].toLowerCase()+callbackName.slice(1);\n    const inlinePointers={PlanNodeKind:'#/$defs/providerInvocation/properties/nodeKind',ReportCaseOutcome:'#/$defs/reportCase/properties/outcome'};\n    const pointer=item.source.source==='contracts/pipeline-test-gate/v1/src/types.ts'?(callbackContracts?.definitions.includes(definition)?`#/$defs/${definition}`:inlinePointers[item.name]):item.name==='CapabilityInvocation'?'#/$defs/capabilityInvocation':null;\n    item.owningSchema=pointer?{source:item.source.source==='contracts/pipeline-test-gate/v1/src/types.ts'?callbackSchemaPath:schemaPath,pointer}:null;\n    item.fieldConstraints=pointer?(item.owningSchema.source===callbackSchemaPath?callbackContracts.schemaFacts:facts).filter(fact=>fact.pointer===pointer||fact.pointer.startsWith(`${pointer}/`)):[];\n  }\n  const definitionFor=name=> name==='PluginManifest1'?'pluginManifest':name==='CURRENT_RUNTIME_DISPATCH_PROFILE'?'runtimeDispatchProfile':name==='CURRENT_REVIEW_CACHE_PROFILE'?'reviewCacheProfile':name[0].toLowerCase()+name.slice(1);\n  const inventory={schemaVersion:'sdk-reference-inventory.v1',purpose:'Compiler-discovered public SDK facts and finite owning callback closure; consumer explanations are authored in the documentation scripts. Not content acceptance.',sourceRevision:revision,owner:'documentation automation',canonicalTarget:'docs/site/reference/sdk.md',generatedTarget:'docs/site/reference/sdk-exports.md',discoveryScope:{entrypoints:'This scope includes all exports in the SDK package-export map, with export-star and named export overrides. It includes no other exports.',parser:'Installed TypeScript compiler with SDK tsconfig.build.json; JSON Schema recursive keyword extraction with explicit unsupported-keyword failures.',sourceRoots:[`${sdkPath}/src`,`${sdkPath}/package.json`,`${sdkPath}/tsconfig.build.json`,schemaPath,'scripts/generate-plugin-sdk-types.mjs',...(callbackContracts?[callbackSchemaPath,'contracts/pipeline-test-gate/v1/src/types.ts','contracts/pipeline-test-gate/v1/src/validation.ts','contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json']:[])],exclusions:[{surface:'Internal types outside the public reachable closure',reason:'Not selected by this SDK contract boundary. All compiler-resolved reachable KubeClaw support declarations are inventoried separately without adding named exports; newly reached unsupported local source shapes fail explicitly.'},{surface:'Node, TypeScript and dependency implementation internals',reason:'Referenced types and relevant selected consumers are linked; SDK enumeration does not duplicate all upstream APIs.'}],check:'generateSdkReference / checkSdkReference and scripts/docs-sdk-reference.mjs --check',readerTask:'Select an SDK entrypoint. Use its consumer meaning. Obey all its field/codec rules. Use the bounded pure JSON example.'},package:surface.package,private:surface.private,compilerVersion:surface.compilerVersion,entrypoints:surface.entrypoints,sourceDependencies:Object.entries(bindings).map(([source,sourceDigest])=>({source,sourceDigest})),exports:surface.exports.map(item=>{\n    const key=definitionFor(item.name);const schemaPointer=Object.hasOwn(schema.$defs,key)?`#/$defs/${key}`:null;\n    return {...item,sourceId:`sdk:${item.entrypoint}:${item.name}`,canonicalPage:'docs/site/reference/sdk.md',generatedPage:'docs/site/reference/sdk-exports.md',owner:'documentation automation',schemaPointers:schemaPointer?[schemaPointer]:[],fieldConstraints:schemaPointer?facts.filter(x=>x.pointer===schemaPointer||x.pointer.startsWith(`${schemaPointer}/`)):[],semanticAnnotationSource:{source:'scripts/docs-sdk-semantics.mjs',symbol:`sdkSemantics.${item.name}`},consumerSemantics:semantics[item.name][0],example:semantics[item.name][1],exampleStatus:'source-only; illustrative fragment; not executed'};\n  }),supportTypes:surface.supportTypes,callbackContracts,schemaFacts:facts};\n  const sourceLink = location => `[${location.symbol??location.source}](${repositoryUrl}/blob/${revision}/${location.source}#L${location.line}-L${location.endLine})`;\n  const content=['# SDK export and contract inventory','', 'Status: generated current SDK reference', 'Audience: plugin author, runtime maintainer', 'Owner: documentation automation', `Evidence: ${Object.keys(bindings).join('; ')}`, 'Applies to: current private workspace SDK entrypoints and plugin-system v2 schema', `Last verified: generated from source revision ${revision}`, 'Generator: scripts/docs-sdk-reference.mjs', '', '<!-- BEGIN GENERATED: source-backed reference -->', '', 'Mechanical signatures and field rules come from the TypeScript compiler and the owning JSON Schema. Consumer explanations are authored separately. A TypeScript declaration does not execute validation. Use the [SDK reference](sdk.md) for the request path, compatibility rules, JSON domain and error handling.','','Every example below is a source-only fragment. It is not a claim of activation, external effects, live deployment or successful end-to-end execution. Supply the variables shown in each fragment from the owning runtime or contract.','','Source revision: `'+revision+'`. Package: `'+surface.package+'` (private workspace package).','','## Entrypoints','',table(['Import','Source'],surface.entrypoints.map(x=>[x.entrypoint==='.'?'`@kubeclaw/plugin-sdk`':'`@kubeclaw/plugin-sdk/testing`',sourceLink({...x,line:1,endLine:fs.readFileSync(path.join(root,x.source),'utf8').split('\\n').length-1,symbol:x.entrypoint})])),''];\n  // Derive every named-entry destination using the same heading rules as refs checks.\n  const exportAnchors=markdownAnchorEntries([...content,'## Export index',...inventory.exports.map(item=>`## ${item.name}`)].join('\\n')).slice(-inventory.exports.length).map(entry=>entry.anchor);\n  content.push('## Export index','', \"Select an exact name below. Every named export from the discovered package entrypoints is included. Support declarations remain in their separate section. Examples in each entry are source-only fragments. An own property belongs directly to an object, not its prototype. A dense array has an own property at each index from zero to length minus one. A truthy value is a value that JavaScript treats as true in a condition.\",'',table(['Export','Import','Kind'],inventory.exports.map((item,index)=>['[`'+item.name+'`](#'+exportAnchors[index]+')',item.entrypoint==='.'?'`@kubeclaw/plugin-sdk`':'`@kubeclaw/plugin-sdk/testing`',item.kind])),'');\n  for(const item of inventory.exports){\n    content.push(`## ${item.name}`, '', `Import: \\`${item.entrypoint==='.'?'@kubeclaw/plugin-sdk':'@kubeclaw/plugin-sdk/testing'}\\`. Kind: ${item.kind}.`, '', item.consumerSemantics,'', '```ts',item.signature,'```','', '**Consumer example — source-only fragment:**','','```ts',item.example,'```','','Source: '+item.declarations.map(sourceLink).join(', ')+'.');\n    if(item.members.length)content.push('',table(['Member path','Optional','Readonly','TypeScript shape','Source'],item.members.map(x=>[x.path,x.optional?'yes':'no',x.readonly?'yes':'no','`'+x.signature+'`',sourceLink(x)])));\n    if(item.unionVariants.length)content.push('', '**Union variants — read required/optional members within each branch, not only the merged member list:**','',...item.unionVariants.flatMap((branch,index)=>[`Branch ${index+1}:`, '', '```typescript', branch.signature, '```', '',table(['Member','Optional in this branch','Type','Source'],branch.members.map(x=>[x.name,x.optional?'yes':'no','`'+x.signature+'`',sourceLink(x)])), '']));\n    if(item.schemaPointers.length)content.push('',`Owning schema: [${item.schemaPointers[0]}](${repositoryUrl}/blob/${revision}/${schemaPath}). The rules below are schema facts, not checks performed by this TypeScript type.`,'',table(['JSON pointer','Declared rules','Source'],item.fieldConstraints.map(x=>[x.pointer,'`'+JSON.stringify(x.rule)+'`',sourceLink(x.source)])));\n    else content.push('','No one-to-one plugin-system schema definition owns this export. Its declaration and implementation set its local behavior.');\n    if(item.referencedTypes.length)content.push('','Referenced types:', '', ...item.referencedTypes.map(x=>'- `'+x+'`'));\n    content.push('');\n  }\n  content.push('## Reachable support types','',\"These finite KubeClaw-owned declarations are reachable through the public callback and wrapper types. Source-qualified names distinguish identically named declarations. They are not additional named SDK exports. Use qualified references to other support rows or the exact-source public export above. Upstream Node and TypeScript utility APIs are not reproduced.\",'');\n  for(const item of inventory.supportTypes){content.push(`### ${item.name} — ${item.source.source}`,'',`Qualified declaration: \\`${item.qualifiedName}\\`.`, '',sourceLink(item.source),'','```ts',item.signature,'```','');if(item.members.length)content.push(table(['Resolved member','Optional','Readonly','Type','Source'],item.members.map(x=>[x.name,x.optional?'yes':'no',x.readonly?'yes':'no','`'+x.signature+'`',sourceLink(x)])),'');if(item.owningSchema)content.push('Owning schema: `'+item.owningSchema.pointer+'` in ['+item.owningSchema.source+']('+repositoryUrl+'/blob/'+revision+'/'+item.owningSchema.source+'). Read its rows in the owning rule index below.','');else content.push('No one-to-one owning schema definition: read this TypeScript support declaration and the schema at its consuming field. For example, ProviderResultV1 narrows TestOutcome with Exclude<TestOutcome, null>.','');if(item.referencedSupport.length)content.push('Qualified local references: '+item.referencedSupport.map(x=>'`'+x+'`').join(', ')+'.','');}\n  if(callbackContracts)content.push('## Callback contract rules','', 'These owning test-gate schemas cover provider invocation, provider result and the assembled report result. Callback ReportAdapterOutput selects only its declared fields; Buster adds adapter and sourceArtifact. `$ref` targets are included recursively, including JSON value recursion. Parent required arrays, unions, defaults/absence and bounds apply independently of TypeScript. JSON Schema string lengths measure Unicode code points.','',callbackContracts.validation.consumerSemantics,'','Semantic validator: '+sourceLink(callbackContracts.validation.source)+'.','',table(['Owning JSON pointer','Declared rules','Source'],callbackContracts.schemaFacts.map(x=>[x.pointer,'`'+JSON.stringify(x.rule)+'`',sourceLink(x.source)])),'');\n  if(callbackContracts){\n    content.push('### Provider result admission','');\n    for(const item of callbackContracts.consumerValidation)content.push(item.consumerSemantics,'','Source: '+sourceLink(item.source)+'.','');\n    content.push('### Selected provider-details rules','',callbackContracts.providerDetails.selection,'',callbackContracts.providerDetails.consumerSemantics,'','Source: '+sourceLink(callbackContracts.providerDetails.source)+'.','',table(['Owning E2E JSON pointer','Declared rules','Source'],callbackContracts.providerDetails.schemaFacts.map(x=>[x.pointer,'`'+JSON.stringify(x.rule)+'`',sourceLink(x.source)])),'');\n  }\n  content.push('## Complete schema rule index','',\"This index includes recursive property, item, alternative and conditional rules. A `$ref` points to another row. Read the two rules. An absent `default` is not an SDK default. Parent `required` arrays determine which properties must be present. Conditional `if`/`then` and `not` rows retain rules that TypeScript cannot express.\",'',''+table(['JSON pointer','Declared rules','Source'],facts.map(x=>[x.pointer,'`'+JSON.stringify(x.rule)+'`',sourceLink(x.source)])),'');\n  content.push('<!-- END GENERATED -->', '');\n  return {inventory,generatedMarkdown:content.join('\\n')};\n}"
             },
             {
               "kind": "FunctionDeclaration",

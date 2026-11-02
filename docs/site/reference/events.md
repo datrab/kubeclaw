@@ -267,9 +267,9 @@ Syntax extraction does not prove live delivery or recovery.
 
 Source contracts and configured paths do not prove live delivery. Declaration, construction, validation and consumption are separate facts.
 
-Primary executable/delivered Source vector SHA-256: <code>99b10c6ce66930bc7e24ea964b398bb35aa16abf9d1aeabb8e687b9ba2186844</code>.
+Primary executable/delivered Source vector SHA-256: <code>6ccceddbc4f6171bd6dfd123e1ec1462a8a47487ea4c51d7b4e20970d4e2d3a4</code>.
 
-Combined primary and supplementary authority vector SHA-256: <code>df9db992105e7a55601cd78f97cc83a030b3670e8222afd48b67ab8782a442ee</code>.
+Combined primary and supplementary authority vector SHA-256: <code>bc76833ada4f0615143933e870b758e11653ee388fedbdceda681958682bdfe6</code>.
 
 Supplementary authority [<code>contracts/telemetry/v1/README.md</code>:1](../../../contracts/telemetry/v1/README.md) — SHA-256 <code>557bb4c6b35df61f1dc31a964953d62c035905790fec1dd06db33248deaef892</code>.
 
@@ -4497,7 +4497,7 @@ Version/discriminator (exact source syntax): No common version asserted for this
 | supporting-record | [<code>skills/worker/core/worker/native-worker-launcher.c</code>:83](../../../skills/worker/core/worker/native-worker-launcher.c#L83) (SHA-256 <code>dfccd80f747faa7139cf7033150f0731b22c0de3da31a99f3223beea94d263c7</code>) | This is a command/query, state, platform synchronization or verification boundary; no new event bus/version is inferred from its name. |
 | supporting-record | [<code>ops/pod/bootstrap.py</code>:33](../../../ops/pod/bootstrap.py#L33) (SHA-256 <code>f12b2fdf8b87c5a0ee1f6a643acfd6110a12698dfb908ea713a79f71f2bd990e</code>) | This is a command/query, state, platform synchronization or verification boundary; no new event bus/version is inferred from its name. |
 | supporting-record | [<code>ops/pod/bootstrap.py</code>:56](../../../ops/pod/bootstrap.py#L56) (SHA-256 <code>f12b2fdf8b87c5a0ee1f6a643acfd6110a12698dfb908ea713a79f71f2bd990e</code>) | This is a command/query, state, platform synchronization or verification boundary; no new event bus/version is inferred from its name. |
-| supporting-record | [<code>tools/ops-mcp/hubble/main.go</code>:14](../../../tools/ops-mcp/hubble/main.go#L14) (SHA-256 <code>df89cb21264c42c7bbc7a3b3b9501581e5877a2a50db2459c509329f7f2c52c4</code>) | This is a command/query, state, platform synchronization or verification boundary; no new event bus/version is inferred from its name. |
+| supporting-record | [<code>tools/ops-mcp/hubble/main.go</code>:14](../../../tools/ops-mcp/hubble/main.go#L14) (SHA-256 <code>8bdc283ae1027d4ee5823eccc8309147bdedf6dbdf1a6463b9a3b907d498739c</code>) | This is a command/query, state, platform synchronization or verification boundary; no new event bus/version is inferred from its name. |
 | supporting-record | [<code>ops/pod/supervisor.py</code>:17](../../../ops/pod/supervisor.py#L17) (SHA-256 <code>e8000383c5736777562bf805cfd9d3b4e1dce4f0e720be264231b0ab91e3cf99</code>) | This is a command/query, state, platform synchronization or verification boundary; no new event bus/version is inferred from its name. |
 | supporting-record | [<code>skills/common/plugin-runtime/foundation/isolation/sandbox.c</code>:163](../../../skills/common/plugin-runtime/foundation/isolation/sandbox.c#L163) (SHA-256 <code>2102536656c01e861f612eb18967d7881b2993629de63b6d93e0ae8b70b70376</code>) | This is a command/query, state, platform synchronization or verification boundary; no new event bus/version is inferred from its name. |
 | supporting-record | [<code>skills/common/plugin-runtime/foundation/isolation/sandbox.c</code>:202](../../../skills/common/plugin-runtime/foundation/isolation/sandbox.c#L202) (SHA-256 <code>2102536656c01e861f612eb18967d7881b2993629de63b6d93e0ae8b70b70376</code>) | This is a command/query, state, platform synchronization or verification boundary; no new event bus/version is inferred from its name. |
@@ -7075,10 +7075,10 @@ Version/discriminator (exact source syntax): No common version asserted for this
 | transformer | [<code>tools/ops-mcp/src/server.mjs</code>:107](../../../tools/ops-mcp/src/server.mjs#L107) (SHA-256 <code>a4fef1a5e66a45ea2885cc9a1715aba5835d77cb5219e39ac35a5f50b5bab65d</code>) | Only the local adapter/projection/callback is shipped here. Upstream producer schemas and live completeness are not reconstructed. |
 | transformer | [<code>tools/ops-mcp/src/server.mjs</code>:397](../../../tools/ops-mcp/src/server.mjs#L397) (SHA-256 <code>a4fef1a5e66a45ea2885cc9a1715aba5835d77cb5219e39ac35a5f50b5bab65d</code>) | Only the local adapter/projection/callback is shipped here. Upstream producer schemas and live completeness are not reconstructed. |
 | transformer | [<code>tools/ops-mcp/src/server.mjs</code>:380](../../../tools/ops-mcp/src/server.mjs#L380) (SHA-256 <code>a4fef1a5e66a45ea2885cc9a1715aba5835d77cb5219e39ac35a5f50b5bab65d</code>) | Only the local adapter/projection/callback is shipped here. Upstream producer schemas and live completeness are not reconstructed. |
-| consumer | [<code>tools/native-worker-nri/main.go</code>:93](../../../tools/native-worker-nri/main.go#L93) (SHA-256 <code>3d0c3149fc703f6c8e2fd3392b7f8e2e1bbd1df1b18215c2857cb2cddf417531</code>) | Only the local adapter/projection/callback is shipped here. Upstream producer schemas and live completeness are not reconstructed. |
-| consumer | [<code>tools/native-worker-nri/main.go</code>:90](../../../tools/native-worker-nri/main.go#L90) (SHA-256 <code>3d0c3149fc703f6c8e2fd3392b7f8e2e1bbd1df1b18215c2857cb2cddf417531</code>) | Only the local adapter/projection/callback is shipped here. Upstream producer schemas and live completeness are not reconstructed. |
+| consumer | [<code>tools/native-worker-nri/main.go</code>:93](../../../tools/native-worker-nri/main.go#L93) (SHA-256 <code>63bc5b5a25666f9166214c9ff2fd91596c2ab818c3eec2db99857af192e4e8e5</code>) | Only the local adapter/projection/callback is shipped here. Upstream producer schemas and live completeness are not reconstructed. |
+| consumer | [<code>tools/native-worker-nri/main.go</code>:90](../../../tools/native-worker-nri/main.go#L90) (SHA-256 <code>63bc5b5a25666f9166214c9ff2fd91596c2ab818c3eec2db99857af192e4e8e5</code>) | Only the local adapter/projection/callback is shipped here. Upstream producer schemas and live completeness are not reconstructed. |
 
-**Go construction / callback declaration** — [<code>tools/native-worker-nri/main.go</code>:93](../../../tools/native-worker-nri/main.go#L93) (SHA-256 <code>3d0c3149fc703f6c8e2fd3392b7f8e2e1bbd1df1b18215c2857cb2cddf417531</code>)
+**Go construction / callback declaration** — [<code>tools/native-worker-nri/main.go</code>:93](../../../tools/native-worker-nri/main.go#L93) (SHA-256 <code>63bc5b5a25666f9166214c9ff2fd91596c2ab818c3eec2db99857af192e4e8e5</code>)
 
 ```text
 func (p *plugin) CreateContainer(_ context.Context, pod *api.PodSandbox, container *api.Container) (*api.ContainerAdjustment, []*api.ContainerUpdate, error) {

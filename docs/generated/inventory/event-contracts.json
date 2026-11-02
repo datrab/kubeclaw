@@ -1,6 +1,6 @@
 {
   "schemaVersion": "event-contract-reference.v1",
-  "sourceSetSha256": "99b10c6ce66930bc7e24ea964b398bb35aa16abf9d1aeabb8e687b9ba2186844",
+  "sourceSetSha256": "6ccceddbc4f6171bd6dfd123e1ec1462a8a47487ea4c51d7b4e20970d4e2d3a4",
   "families": [
     {
       "id": "canonical-lifecycle-and-domain",
@@ -97032,7 +97032,7 @@
           "selector": "func (p *plugin) CreateContainer",
           "source": {
             "path": "tools/native-worker-nri/main.go",
-            "sourceSha256": "3d0c3149fc703f6c8e2fd3392b7f8e2e1bbd1df1b18215c2857cb2cddf417531",
+            "sourceSha256": "63bc5b5a25666f9166214c9ff2fd91596c2ab818c3eec2db99857af192e4e8e5",
             "start": 3305,
             "end": 3337,
             "line": 93
@@ -97044,7 +97044,7 @@
           "selector": "return 0, nil",
           "source": {
             "path": "tools/native-worker-nri/main.go",
-            "sourceSha256": "3d0c3149fc703f6c8e2fd3392b7f8e2e1bbd1df1b18215c2857cb2cddf417531",
+            "sourceSha256": "63bc5b5a25666f9166214c9ff2fd91596c2ab818c3eec2db99857af192e4e8e5",
             "start": 3208,
             "end": 3221,
             "line": 90
@@ -104820,7 +104820,7 @@
         {
           "source": {
             "path": "tools/native-worker-nri/main.go",
-            "sourceSha256": "3d0c3149fc703f6c8e2fd3392b7f8e2e1bbd1df1b18215c2857cb2cddf417531",
+            "sourceSha256": "63bc5b5a25666f9166214c9ff2fd91596c2ab818c3eec2db99857af192e4e8e5",
             "start": 3305,
             "end": 4164,
             "line": 93,
@@ -134191,7 +134191,7 @@
           "selector": "cmd.Execute()",
           "source": {
             "path": "tools/ops-mcp/hubble/main.go",
-            "sourceSha256": "df89cb21264c42c7bbc7a3b3b9501581e5877a2a50db2459c509329f7f2c52c4",
+            "sourceSha256": "8bdc283ae1027d4ee5823eccc8309147bdedf6dbdf1a6463b9a3b907d498739c",
             "start": 232,
             "end": 245,
             "line": 14
@@ -139363,14 +139363,19 @@
       "bytes": 4322
     },
     {
+      "path": "cmd/buster-namespace-controller/demo-product-error_test.go",
+      "sha256": "cdc8eedae6eef2b49f5c9ce3ce913ffe861bf9353039471094991ebbe499bfdf",
+      "bytes": 821
+    },
+    {
       "path": "cmd/buster-namespace-controller/demo-product-native_test.go",
       "sha256": "0aab5821defb70732461302c56dd976b76ba2e3fefa1f9b2786cc9d209ea2983",
       "bytes": 16963
     },
     {
       "path": "cmd/buster-namespace-controller/demo-product.go",
-      "sha256": "127c82f150c8277a931ae9fba701b7a1c6cc368d9e8290f9fb2082efd74cc49c",
-      "bytes": 17019
+      "sha256": "73a7772b69a9b43688628f5ff84f5ca8d770e5a8e39fe65f4502dff17d826355",
+      "bytes": 17310
     },
     {
       "path": "cmd/buster-namespace-controller/demo-product_test.go",
@@ -143789,7 +143794,7 @@
     },
     {
       "path": "scripts/docs-api-documentation-role-custody.mjs",
-      "sha256": "f914d2c890766ab8481787a3505f28a248f26b87a7629a25f32834527f7a1fee",
+      "sha256": "387dcf1befb208a985a549c917ebc7669604cbe752b85e52f37cb0c14324b3ea",
       "bytes": 1320025
     },
     {
@@ -143799,8 +143804,8 @@
     },
     {
       "path": "scripts/docs-api-go-output-role-adapter.go",
-      "sha256": "a519b565ac0f821489d9c31743f3febefd065ba3e95e767909a7e9caeef792d4",
-      "bytes": 63476
+      "sha256": "652c05d25fb524612e792e474ce770fb0a3785fce087a98c054e11ed985ebdda",
+      "bytes": 68042
     },
     {
       "path": "scripts/docs-api-go-output-shapes.go",
@@ -143819,7 +143824,7 @@
     },
     {
       "path": "scripts/docs-api-output-discovery.mjs",
-      "sha256": "afbe80df538bc67a236fb431fda826eb241d45481e509b21b20c32d7f6c5a3c3",
+      "sha256": "984a0ec2f2735f1a8f150a9fe2a9900f1751a082ae462c70e2d78aea233cb287",
       "bytes": 660849
     },
     {
@@ -143844,8 +143849,8 @@
     },
     {
       "path": "scripts/docs-api-producer-adapter-authorities.json",
-      "sha256": "a6306d19587b303b4d769ae643e3b394bd24a2cd528f4a7e325ec3059b20e0e0",
-      "bytes": 5770343
+      "sha256": "ad5cf9785db70a70be5f58cd1d070640f1986ff6cb8fb0a01074be3af30321c8",
+      "bytes": 5757234
     },
     {
       "path": "scripts/docs-api-product-scope.mjs",
@@ -143974,7 +143979,7 @@
     },
     {
       "path": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
-      "sha256": "4597954ba023b375f060f5994af100e6b060ac1384dca159769b8d23bb2d5c1e",
+      "sha256": "e62a45da84e99d463119f634b3cc4110d532e4829317ff43ac43a7034764ca4a",
       "bytes": 7604
     },
     {
@@ -144179,7 +144184,7 @@
     },
     {
       "path": "scripts/docs-prepared-go-parsers.mjs",
-      "sha256": "10fec14b8198ce16f91ec085a0160c393dd83ade8cb9b11e7ce388264b574e39",
+      "sha256": "a7eafbe5840316d77622284f604dad72fc06529484711eb5516f13f1ad83c9ad",
       "bytes": 5891
     },
     {
@@ -145669,8 +145674,8 @@
     },
     {
       "path": "scripts/tests/native-output-adapter-custody.test.py",
-      "sha256": "89dd426a2de171f80fb104f4a791ebac2608f55fc87ebe66cf11d416d7045d01",
-      "bytes": 38126
+      "sha256": "10e75eacaf1ebc088ed4251defc6cc301f2076bdc2fbb4fe21d16eca7f5327c1",
+      "bytes": 43635
     },
     {
       "path": "scripts/tests/node-root-metadata-receiver.test.mjs",
@@ -154649,8 +154654,8 @@
     },
     {
       "path": "tools/native-worker-nri/main.go",
-      "sha256": "3d0c3149fc703f6c8e2fd3392b7f8e2e1bbd1df1b18215c2857cb2cddf417531",
-      "bytes": 5682
+      "sha256": "63bc5b5a25666f9166214c9ff2fd91596c2ab818c3eec2db99857af192e4e8e5",
+      "bytes": 5726
     },
     {
       "path": "tools/native-worker-nri/main_test.go",
@@ -154659,8 +154664,8 @@
     },
     {
       "path": "tools/ops-mcp/hubble/main.go",
-      "sha256": "df89cb21264c42c7bbc7a3b3b9501581e5877a2a50db2459c509329f7f2c52c4",
-      "bytes": 317
+      "sha256": "8bdc283ae1027d4ee5823eccc8309147bdedf6dbdf1a6463b9a3b907d498739c",
+      "bytes": 336
     },
     {
       "path": "tools/ops-mcp/package-lock.json",
@@ -154765,5 +154770,5 @@
       "bytes": 3220
     }
   ],
-  "combinedSourceVectorSha256": "df9db992105e7a55601cd78f97cc83a030b3670e8222afd48b67ab8782a442ee"
+  "combinedSourceVectorSha256": "bc76833ada4f0615143933e870b758e11653ee388fedbdceda681958682bdfe6"
 }

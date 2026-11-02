@@ -739,17 +739,32 @@ func main() {
 							record.Role = "non-api"
 						}
 					}
-					// Original selected dynamic codes have an actual fixed
-					// allowlist guard. Bind caller and every needed helper;
+					// Selected dynamic codes require a closed token constructor or
+					// an actual fixed allowlist. Bind caller and every helper;
 					// this is not approval of error strings or HTTP in general.
 					sum := sha256.Sum256([]byte(record.Operation))
 					digest := hex.EncodeToString(sum[:])
-					if record.Function == "productHandler" && syntax(call.Args[1]) == "code" {
-						// Current API-read failures can forward the server's
-						// message through apiError.Error. DEMO_PRODUCT_ alone
-						// is not a closed error-text/root authority.
-						record.AuthorityQualified = false
-						record.AuthorityIssues = append(record.AuthorityIssues, in.Path+": unsupported API-read error-result authority for productHandler http.Error(code)")
+					if record.Function == "productHandler" && record.Role != "non-api" {
+						// API-read failures remain untrusted. Only the exact
+						// reviewed complete-token constructor qualifies; the
+						// former prefix-only code must still be refused.
+						qualified := syntax(call.Args[1]) == "productErrorCode(err)" && digest == "98f42951bd6d7bbac348e6e2522e6c6aa06f8274d4d0e8a2f7cdf2ec11078bd4"
+						wanted := map[string]string{"productErrorCode": "c2eec19f3ee99bee0cd4d628c9c4d276b38f89b59635e0b71c4e3ceeff778805", "productErrorToken": "83bba674dae0f474d0522aa7f446f74b626466d606d9a51a06b6e5524d48fabe"}
+						for symbol, expected := range wanted {
+							count := 0
+							for _, fact := range record.Dependencies {
+								if fact.Symbol == symbol && fact.SHA256 == expected {
+									count++
+								}
+							}
+							qualified = qualified && count == 1
+						}
+						if qualified {
+							record.Role = "non-api"
+						} else {
+							record.AuthorityQualified = false
+							record.AuthorityIssues = append(record.AuthorityIssues, in.Path+": unsupported API-read error-result authority for productHandler http.Error(code)")
+						}
 					}
 					if record.Function == "readinessHandler" && digest == "fc9bb294ed751512a810cde45e4e329da27e0f4a5dc637a69dffe59d6b71d73e" && syntax(call.Args[1]) == "readyErrorCode(err)" {
 						helpers := map[string]string{"readyErrorCode": "73861f7a9077f2207486187e04382bf594bf08098f61178a9c8848534b00e77f", "contains": "861da2e513e9f6eac81b2d7f2850e1d2fb00de159176b703abf40803ad59e744"}
@@ -776,7 +791,7 @@ func main() {
 						}
 						bytes, _ := json.Marshal(facts)
 						sum := sha256.Sum256(bytes)
-						qualified = qualified && hex.EncodeToString(sum[:]) == "ff16b31675d9cfc96af023968286b57e54593730a49e09985124bdb736704e3a"
+						qualified = qualified && hex.EncodeToString(sum[:]) == "d8e6d8c6bde0c4fc87b3ed05f1a14290983c19c13c2239834ae973923063b646"
 						if qualified {
 							record.Role = "non-api"
 						}
@@ -858,6 +873,28 @@ func main() {
 				return true
 			}
 			if owner, ok := sel.X.(*ast.Ident); ok && owner.Name == fmtName {
+				// fmt.Sprint first constructs a string; the sole %q directive
+				// escapes it as one scalar even for arbitrary external errors.
+				// Reject raw %s, extra arguments, dynamic formats and shadowed
+				// package capabilities; stderr itself supplies no role proof.
+				if sel.Sel.Name == "Fprintf" && len(call.Args) == 3 {
+					destination, dstOK := call.Args[0].(*ast.SelectorExpr)
+					formatLiteral, fmtOK := call.Args[1].(*ast.BasicLit)
+					stringCall, strOK := call.Args[2].(*ast.CallExpr)
+					if dstOK && fmtOK && strOK && formatLiteral.Kind == token.STRING && len(stringCall.Args) == 1 {
+						formatText, quoteErr := strconv.Unquote(formatLiteral.Value)
+						dstOwner, dstPkg := destination.X.(*ast.Ident)
+						stringSelector, strSel := stringCall.Fun.(*ast.SelectorExpr)
+						if strSel {
+							stringOwner, strPkg := stringSelector.X.(*ast.Ident)
+							fmtOwner, fmtPkg := sel.X.(*ast.Ident)
+							if quoteErr == nil && formatText == "%q\n" && dstPkg && dstOwner.Name == osName && dstOwner.Obj == nil && destination.Sel.Name == "Stderr" && strPkg && stringOwner.Name == fmtName && stringOwner.Obj == nil && stringSelector.Sel.Name == "Sprint" && fmtPkg && fmtOwner.Obj == nil {
+								out = append(out, result(n, "non-api", ""))
+								return true
+							}
+						}
+					}
+				}
 				staticText := ""
 				unknown := false
 				for _, value := range call.Args[arg:] {
@@ -1473,12 +1510,47 @@ func importAuthority(source string, file *ast.File) (bool, []string) {
 		"github.com/cyberphone/json-canonicalization/go/src/webpki.org/jsoncanonicalizer": "github.com/cyberphone/json-canonicalization v0.0.0-20241213102144-19d51d7fe467",
 		"kubeclaw.dev/pipeline-observability/go":                                          "",
 	}
+	// Only this complete reviewed CLI entrypoint may select these module
+	// imports. This is import identity, not an inferred upstream API schema,
+	// producer execution permission or a role for arbitrary external output.
+	var kubectlSyntax bytes.Buffer
+	format.Node(&kubectlSyntax, token.NewFileSet(), file)
+	kubectlHash := sha256.Sum256(kubectlSyntax.Bytes())
+	kubectlEntrypoint := hex.EncodeToString(kubectlHash[:]) == "63647c8af265052c740309d412850d770c6b79b60a77d99509cba9d46ffacbc2"
+	kubectlImports := map[string]string{
+		"k8s.io/client-go/plugin/pkg/client/auth": "k8s.io/client-go v0.34.11",
+		"k8s.io/component-base/cli":               "k8s.io/component-base v0.34.11",
+		"k8s.io/component-base/logs":              "k8s.io/component-base v0.34.11",
+		"k8s.io/kubectl/pkg/cmd":                  "k8s.io/kubectl v0.34.11",
+		"k8s.io/kubectl/pkg/cmd/util":             "k8s.io/kubectl v0.34.11",
+	}
+	kubectlSums := []string{
+		"k8s.io/client-go v0.34.11 h1:ibO8IP6RMp6JImv47JIW6ZUcZky98zLnzaGIsD6yQWM=",
+		"k8s.io/client-go v0.34.11/go.mod h1:MxE93lNP2kK12JL4S74ddZctG0Pt6JVLiK8nLwlMxyY=",
+		"k8s.io/component-base v0.34.11 h1:50VIebvKt44VqhHryaLSlrOZjYXgco6fAZh/Nmohdi0=",
+		"k8s.io/component-base v0.34.11/go.mod h1:5dkfKHMhdWss0P2VMzqZydFxybctuvyXmwUvY3pJyIM=",
+		"k8s.io/kubectl v0.34.11 h1:dm6FLTY4vo5XuRoVF/jaGGmk8toFrqDqovmp7/raN6g=",
+		"k8s.io/kubectl v0.34.11/go.mod h1:rbI56zBVPU11FZSAT4NgbKTqbhPB3RwI8harSnluq2Q=",
+	}
+	kubectlModuleFiles := map[string]string{
+		"go.mod": "2309520fa42fde6534232916f409fe57bed4ab76087fb6b47753ce87e6afd6eb",
+		"go.sum": "5f2540b23f39ab075d594c8f2a827637e3e12a715ad8e6515342f0b55119f21c",
+	}
+	kubectlObservedFiles := map[string]bool{}
+	sums := ""
 	module := ""
 	for _, path := range moduleAuthorityPaths(source) {
 		data, err := os.ReadFile(path)
 		if err != nil {
 			issues = append(issues, path+": unreadable authority")
 			continue
+		}
+		if expected, selected := kubectlModuleFiles[filepath.Base(path)]; selected {
+			digest := sha256.Sum256(data)
+			kubectlObservedFiles[filepath.Base(path)] = hex.EncodeToString(digest[:]) == expected
+		}
+		if filepath.Base(path) == "go.sum" {
+			sums = "\n" + string(data) + "\n"
 		}
 		if filepath.Base(path) == "go.mod" {
 			moduleLines := []string{}
@@ -1525,6 +1597,17 @@ func importAuthority(source string, file *ast.File) (bool, []string) {
 			continue
 		}
 		pin, ok := approved[path]
+		if selectedPin, selected := kubectlImports[path]; selected {
+			pin, ok = selectedPin, true
+			if !kubectlEntrypoint || !kubectlObservedFiles["go.mod"] || !kubectlObservedFiles["go.sum"] || !strings.Contains(module, "\nmodule kubeclaw.local/ops-kubectl\n") {
+				issues = append(issues, source+": unreviewed kubectl entrypoint/import authority")
+			}
+			for _, selectedSum := range kubectlSums {
+				if !strings.Contains(sums, "\n"+selectedSum+"\n") {
+					issues = append(issues, source+": missing or changed kubectl selected checksum authority: "+selectedSum)
+				}
+			}
+		}
 		if !ok {
 			issues = append(issues, source+": unsupported imported authority "+path)
 			continue

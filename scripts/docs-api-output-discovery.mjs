@@ -940,7 +940,7 @@ const reviewedCliStaticAstProtocols = Object.freeze({
     },
     {
       "path": "scripts/docs-api-go-output-role-adapter.go",
-      "sha256": "a519b565ac0f821489d9c31743f3febefd065ba3e95e767909a7e9caeef792d4"
+      "sha256": "652c05d25fb524612e792e474ce770fb0a3785fce087a98c054e11ed985ebdda"
     },
     {
       "path": "scripts/lib/cli/python_cli_ast.py",
@@ -952,7 +952,7 @@ const reviewedCliStaticAstProtocols = Object.freeze({
     },
     {
       "path": "scripts/docs-prepared-go-parsers.mjs",
-      "sha256": "10fec14b8198ce16f91ec085a0160c393dd83ade8cb9b11e7ce388264b574e39"
+      "sha256": "a7eafbe5840316d77622284f604dad72fc06529484711eb5516f13f1ad83c9ad"
     },
     {
       "path": "scripts/docs-prepare-go-parsers.mjs",
@@ -1545,7 +1545,7 @@ export function nativeOutputConsumerMatches(output,contracts,root) {
   // product-subjects envelope, or the persisted decision receipt. A refreshed
   // registry digest cannot authorize a replacement constructor or new route.
   if(output.function==='productHandler')assertNativeProductResponseSchemaAuthority(root);
-  const routers={productHandler:'e6207009937c85a6c20f24b4c4325afec71d8674fcfd37a442f4ff89cb6f7905',readinessHandler:'fc9bb294ed751512a810cde45e4e329da27e0f4a5dc637a69dffe59d6b71d73e'};
+  const routers={productHandler:'98f42951bd6d7bbac348e6e2522e6c6aa06f8274d4d0e8a2f7cdf2ec11078bd4',readinessHandler:'fc9bb294ed751512a810cde45e4e329da27e0f4a5dc637a69dffe59d6b71d73e'};
   const constructors={commitProduct:'9db306489982efa4fcb213ee4caa1bfef05175192f077394afa91ba94bc7785d',productReceipt:'093407fbd5fa71a9de7898572aea6a12558779a0782c8c8fcd9cea0502716a3e',productRecords:'53b4c7b8218adbf86e8812eccc803314c5376925c7ab51e6afcf26a2bb3ff1bd',productSubject:'d6ae13944edccd2862149794296a5f0424f9fc69d6863c4e34da06dfcf687da1'};
   if(output.function==='readinessHandler')constructors.readyResponse='c337ca7727f6328352cf424c29e619f67b6d009806a7789de10a7048b4bd04c1';
   return routers[output.function]===hash(output.operation)&&Object.entries(constructors).every(([symbol,sha256])=>output.dependencies?.some(fact=>fact.symbol===symbol&&fact.sha256===sha256));

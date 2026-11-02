@@ -24,6 +24,18 @@ const productMaxDecisions = 128
 
 var productDecisionID = regexp.MustCompile(`^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$`)
 
+// API read errors are untrusted text; only a complete single-line code may
+// cross the public product-error boundary. A prefix alone permits payloads.
+var productErrorToken = regexp.MustCompile(`\ADEMO_PRODUCT_[A-Z_]+\z`)
+
+func productErrorCode(err error) string {
+	code := err.Error()
+	if !productErrorToken.MatchString(code) {
+		return "DEMO_PRODUCT_EVIDENCE_UNAVAILABLE"
+	}
+	return code
+}
+
 type productConfig struct {
 	Audience, Producer, Issuer string
 	PublicKey                  ed25519.PublicKey
@@ -415,11 +427,7 @@ func (c *controller) productHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	if err != nil {
-		code := err.Error()
-		if !strings.HasPrefix(code, "DEMO_PRODUCT_") {
-			code = "DEMO_PRODUCT_EVIDENCE_UNAVAILABLE"
-		}
-		http.Error(w, code, 409)
+		http.Error(w, productErrorCode(err), 409)
 		return
 	}
 	_ = json.NewEncoder(w).Encode(result)

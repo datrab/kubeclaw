@@ -19,10 +19,10 @@ const locks={
   },
   "roles": {
     "source": "scripts/docs-api-go-output-role-adapter.go",
-    "sourceSha256": "a519b565ac0f821489d9c31743f3febefd065ba3e95e767909a7e9caeef792d4",
+    "sourceSha256": "652c05d25fb524612e792e474ce770fb0a3785fce087a98c054e11ed985ebdda",
     "targets": {
-      "linux/amd64": "6e07979915851d937ac1e71a1079f868096a5b7cba6aa828936ce0a9c101a853",
-      "linux/arm64": "338300c4b59ef75c9e62f5d296b296bae07eafb9b85f1aa46ccb8cab3d539443"
+      "linux/amd64": "47fcd8a9b0649e29f9f7b4d44ce32374ce7274893586b8fbed2c3df14ae83da7",
+      "linux/arm64": "997d01fd17d221738440e574b510d2c1670f0be24a35273babf292fb4a1bf38f"
     }
   },
   "shapes": {

@@ -474,4 +474,86 @@ class NativeCustody(unittest.TestCase):
         mutated='import json\noptions={"indent":2}\noptions["cls"]=other\nprint(json.dumps({"report":True},**options))'
         self.assertTrue(all(r['role']=='unknown' for r in self.python(mutated)))
 
+
+    def test_go_quoted_diagnostic_scalar_and_raw_counterexamples(self):
+        quoted = 'package main\nimport("fmt";"os")\nfunc main(){var err error;fmt.Fprintf(os.Stderr,"%q\\n",fmt.Sprint(err))}'
+        records = self.go_records(quoted)
+        self.assertEqual(len(records), 1)
+        self.assertEqual(records[0]['role'], 'non-api')
+        self.assertTrue(records[0]['authorityQualified'])
+        for changed in [quoted.replace('%q\\n','%s\\n'),
+                        quoted.replace('%q\\n','%q\\n%s'),
+                        quoted.replace('fmt.Sprint(err)','err'),
+                        quoted.replace('fmt.Sprint(err))','fmt.Sprint(err), err)')]:
+            self.assertTrue(any(r['role'] == 'unknown' for r in self.go_records(changed)), changed)
+
+    def test_go_quoted_terminal_error_runtime_roundtrip(self):
+        if not self.go: self.skipTest('actual Go binary unavailable')
+        directory = Path(tempfile.mkdtemp(dir=self.base))
+        source = directory / 'main.go'
+        source.write_text('package main\nimport("fmt";"os";"io";"errors")\nfunc main(){raw,e:=io.ReadAll(os.Stdin);if e!=nil{panic(e)};err:=errors.New(string(raw));fmt.Fprintf(os.Stderr,"%q\\n",fmt.Sprint(err));os.Exit(1)}')
+        binary = directory / 'error-frame'
+        built = subprocess.run([self.go,'build','-o',str(binary),str(source)],capture_output=True,text=True)
+        self.assertEqual(built.returncode,0,built.stderr)
+        for payload in ['{"apiVersion":"v1","kind":"Secret"}',
+                        '---\napiVersion: v1\nkind: Secret\n---\napiVersion: v1\nkind: Pod',
+                        'DEMO_PRODUCT_BAD\n---\napiVersion: v1\nkind: Secret',
+                        'quotes " and backslash \\ plus newline\nend']:
+            result = subprocess.run([str(binary)],input=payload,capture_output=True,text=True)
+            self.assertEqual(result.returncode,1)
+            self.assertEqual(result.stdout,'')
+            self.assertEqual(result.stderr.count('\n'),1)
+            self.assertEqual(json.loads(result.stderr),payload)
+
+    def test_go_kubectl_import_authority_is_complete_source_and_sums_scoped(self):
+        base = ROOT / 'ops/pod/kubectl-build'
+        text, module, sums = [(base / name).read_text() for name in ['main.go','go.mod','go.sum']]
+        self.assertEqual(self.go_records(text, module, {'go.sum': sums}), [])
+        for changed_text, changed_mod, changed_sum in [
+                (text+'\nfunc unreviewed(){}\n', module, sums),
+                (text, module.replace('k8s.io/kubectl v0.34.11','k8s.io/kubectl v0.34.10'), sums),
+                (text, module, ''),
+                (text, module+'\nrequire k8s.io/apimachinery v0.99.0\n', sums),
+                (text, module, sums+'\nunreviewed.example/module v1.0.0 h1:unreviewed\n'),
+                (text, module+'\nreplace k8s.io/kubectl => ../other\n', sums)]:
+            records = self.go_records(changed_text, changed_mod, {'go.sum': changed_sum})
+            self.assertTrue(any(r.get('authorityQualified') is False for r in records))
+
+    def test_go_readiness_error_closure_rejects_changed_stateful_error_source(self):
+        if not self.go: self.skipTest('actual Go binary unavailable')
+        directory = Path(tempfile.mkdtemp(dir=self.base))
+        package = directory / 'cmd/buster-namespace-controller'
+        package.mkdir(parents=True)
+        (directory / 'go.mod').write_bytes((ROOT / 'go.mod').read_bytes())
+        sources = []
+        for original in sorted((ROOT / 'cmd/buster-namespace-controller').glob('*.go')):
+            if original.name.endswith('_test.go'): continue
+            target = package / original.name
+            target.write_bytes(original.read_bytes())
+            sources.append({'path':str(target)})
+        def error_record():
+            result = subprocess.run([str(self.binary)],input=json.dumps(sources),capture_output=True,text=True,env={**os.environ,'GOWORK':'off','GOFLAGS':''})
+            self.assertEqual(result.returncode,0,result.stderr)
+            return next(r for r in json.loads(result.stdout) if r.get('expression') == 'http.Error(w, readyErrorCode(err), 409)')
+        self.assertEqual(error_record()['role'],'non-api')
+        main = package / 'main.go'
+        before = main.read_text()
+        old = 'func (e *apiError) Error() string {\n\treturn e.message\n}'
+        changed = 'func (e *apiError) Error() string {\n\te.code++\n\tif e.code % 2 == 0 {return "{\\"apiVersion\\":\\"v1\\",\\"kind\\":\\"Secret\\"}"}\n\treturn e.message\n}'
+        self.assertIn(old,before)
+        main.write_text(before.replace(old,changed,1))
+        self.assertEqual(error_record()['role'],'unknown')
+
+    def test_go_product_error_complete_token_constructor_preserves_refusals(self):
+        text = (ROOT / 'cmd/buster-namespace-controller/demo-product.go').read_text()
+        target = lambda records: next(r for r in records if r.get('expression') == 'http.Error(w, productErrorCode(err), 409)')
+        actual = target(self.go_records(text))
+        self.assertEqual(actual['role'], 'non-api')
+        self.assertTrue(actual['authorityQualified'])
+        for changed in [text.replace(r'\ADEMO_PRODUCT_[A-Z_]+\z',r'\ADEMO_PRODUCT_.*\z'),
+                        text.replace(r'\ADEMO_PRODUCT_[A-Z_]+\z',r'\ADEMO_PRODUCT_[A-Z_]+'),
+                        text.replace('return code\n}', 'return err.Error()\n}', 1)]:
+            self.assertNotEqual(changed, text)
+            self.assertFalse(target(self.go_records(changed))['authorityQualified'])
+
 if __name__ == '__main__': unittest.main(verbosity=2)
