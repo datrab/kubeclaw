@@ -64,6 +64,7 @@ export class FileBusterPlanJobStore {
   readonly #maximumArchiveBytes: number;
   readonly #maximumResultBytes: number;
   readonly #maximumResultStoreBytes: number;
+  readonly #resultBlobRoot: string;
   readonly #admissionLock: string;
   #admissionQueue: Promise<unknown> = Promise.resolve();
   readonly #trustedSourceAuthority: string;
@@ -78,6 +79,7 @@ export class FileBusterPlanJobStore {
     }
     this.#admissionLock = path.join(path.resolve(root), 'job-admission');
     this.#maximumResultStoreBytes = options.maximumResultStoreBytes;
+    this.#resultBlobRoot = path.join(path.resolve(root), 'results', 'blobs');
     this.#records = new FileDurableRecordStore(root, options.recordLimits);
     this.#results = new FileDurableBlobStore(path.join(root, 'results'), options.maximumResultBytes, options.maximumResultStoreBytes);
     this.#maximumArchiveBytes = options.maximumArchiveBytes;
@@ -144,7 +146,10 @@ export class FileBusterPlanJobStore {
       }
       return structuredClone(existingRecord.payload.status);
     }
-    const reservedBytes = records.reduce((sum, record) => sum + (record.payload.status.result?.sizeBytes ?? this.#maximumResultBytes), 0);
+    // Completed and orphaned immutable blobs consume real bytes. Only active jobs
+    // can still create a result; failed/cancelled jobs cannot complete later.
+    const reservedBytes = this.#storedResultBytes(this.#resultBlobRoot) + records.reduce((sum, record) =>
+      sum + (['accepted', 'running', 'cancelling'].includes(record.payload.status.state) ? this.#maximumResultBytes : 0), 0);
     if (!Number.isSafeInteger(reservedBytes) || reservedBytes + this.#maximumResultBytes > this.#maximumResultStoreBytes) {
       throw new Error('BUSTER_REMOTE_RESULT_CAPACITY_EXCEEDED');
     }
@@ -173,6 +178,24 @@ export class FileBusterPlanJobStore {
       throw new Error('BUSTER_REMOTE_JOB_CONFLICT');
     }
     return structuredClone(accepted.status);
+  }
+
+  // Called under the cross-process admission fence shared with complete().
+  // Count unreferenced blobs too: a crash after put() may precede its status write.
+  #storedResultBytes(directory: string, depth = 0): number {
+    if (depth > 3) throw new Error('BUSTER_REMOTE_RESULT_STORE_INVALID');
+    let entries: fs.Dirent[];
+    try { entries = fs.readdirSync(directory, { withFileTypes: true }); }
+    catch (error) { if ((error as NodeJS.ErrnoException).code === 'ENOENT') return 0; throw error; }
+    let bytes = 0;
+    for (const entry of entries) {
+      const file = path.join(directory, entry.name);
+      if (entry.isDirectory()) bytes += this.#storedResultBytes(file, depth + 1);
+      else if (entry.isFile()) bytes += fs.lstatSync(file).size;
+      else throw new Error('BUSTER_REMOTE_RESULT_STORE_INVALID');
+      if (!Number.isSafeInteger(bytes) || bytes > this.#maximumResultStoreBytes) throw new Error('BUSTER_REMOTE_RESULT_CAPACITY_EXCEEDED');
+    }
+    return bytes;
   }
 
   async records(): Promise<ReadonlyArray<DurableRecord<StoredPlanJob>>> {
