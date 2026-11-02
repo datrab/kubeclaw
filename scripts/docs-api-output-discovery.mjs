@@ -6101,6 +6101,67 @@ export function discoverScriptApiOutputs(root) {
       // reject unresolved collections rather than pretend their children known.
       return {__docsDynamicExpression:node.getText(tree)};
     }
+    // A JSON Schema properties dictionary describes API fields; it is not
+    // itself an API resource constructor. This recognizes only that map node,
+    // never its descendants or arbitrary objects carrying a schema marker.
+    function isJsonSchemaPropertyMapConstructor(node, value) {
+      const property=node.parent;
+      if(!property||!ts.isPropertyAssignment(property)||property.initializer!==node
+        ||ts.isComputedPropertyName(property.name)
+        ||property.name.getText(tree).replace(/^['"]|['"]$/gu,'')!=='properties'
+        ||!ts.isObjectLiteralExpression(property.parent))return false;
+      const record=item=>item!==null&&typeof item==='object'&&!Array.isArray(item);
+      if(!record(value)||!record(value.apiVersion)||!record(value.kind))return false;
+      // The original constructor has already cleared its own provenance and
+      // selected terminalPosition. Resolve this immediate owner's schema
+      // namespace with fresh seen state, restoring all diagnostic accumulators.
+      const previousOpaque=[...opaque],previousInputs=[...serializedInputs];
+      try {
+        const ownerNode=property.parent;
+        let initializer=ownerNode;
+        for(;;) {
+          const parent=initializer.parent;
+          if(parent&&((ts.isParenthesizedExpression(parent)||ts.isAsExpression(parent)||ts.isTypeAssertionExpression(parent)||ts.isNonNullExpression(parent))&&parent.expression===initializer
+            ||ts.isConditionalExpression(parent)&&(parent.whenTrue===initializer||parent.whenFalse===initializer)))initializer=parent;
+          else break;
+        }
+        const binding=initializer.parent;
+        let ownerExpression;
+        if(ts.isVariableDeclaration(binding)&&binding.initializer===initializer&&ts.isIdentifier(binding.name))ownerExpression=binding.name;
+        else if(ts.isCallExpression(binding)&&binding.arguments[0]===initializer
+          &&ts.isPropertyAccessExpression(binding.expression)&&ts.isIdentifier(binding.expression.expression)
+          &&binding.expression.expression.text==='JSON'&&binding.expression.name.text==='stringify'
+          &&!declarationFor(binding.expression.expression)) {
+          // Refuse lexical bindings, bare escapes and writes of JSON anywhere
+          // in this Source. Only ordinary parse/stringify reads are supported.
+          let intrinsic=true;
+          const inspect=part=>{
+            if(ts.isIdentifier(part)&&part.text==='JSON') {
+              const access=part.parent, use=access?.parent;
+              if(!access||!ts.isPropertyAccessExpression(access)||access.expression!==part
+                ||!['parse','stringify'].includes(access.name.text)
+                ||use&&(ts.isBinaryExpression(use)&&use.left===access&&use.operatorToken.kind>=ts.SyntaxKind.FirstAssignment&&use.operatorToken.kind<=ts.SyntaxKind.LastAssignment
+                  ||ts.isDeleteExpression(use)||ts.isPostfixUnaryExpression(use)||ts.isPrefixUnaryExpression(use)))intrinsic=false;
+            }
+            ts.forEachChild(part,inspect);
+          };
+          inspect(tree);
+          if(!intrinsic)return false;
+          ownerExpression=initializer;
+        }
+        else return false; // Assignment, destructuring and escaped owners are unproved.
+        const owner=evaluate(ownerExpression,new Set());
+        return record(owner)
+          &&owner.$schema==='http://json-schema.org/draft-04/schema#'
+          &&owner.type==='object'&&record(owner.properties)
+          &&!Object.hasOwn(owner,'apiVersion')&&!Object.hasOwn(owner,'kind');
+      } catch {
+        return false; // Unproved schema context retains the original API guard.
+      } finally {
+        opaque.clear();for(const [key,item]of previousOpaque)opaque.set(key,item);
+        serializedInputs.clear();for(const item of previousInputs)serializedInputs.add(item);
+      }
+    }
     constructors.forEach((node,index)=>{
       if(selectedNodeTestFixtureNodePurpose(source,tree,node,nodeTestFixturePurpose))return;
       for(let parent=node.parent;parent;parent=parent.parent)if(ts.isFunctionLike(parent)){if(guardedTestFunctions.has(parent))return;break;}
@@ -6112,6 +6173,7 @@ export function discoverScriptApiOutputs(root) {
         const name=binding.text;
         assert(!unsupportedMutations.filter(mutation=>!ts.isDeleteExpression(mutation)).some(mutation=>new RegExp(`\\b${name}\\b`,'u').test(mutation.getText(tree))),`API_PRODUCT_SCRIPT_MUTATION_UNQUALIFIED: ${source}:${name}`);
       }
+      if(isJsonSchemaPropertyMapConstructor(node,value))return;
       // A proved ordered deletion can turn an initial API constructor into a
       // published native object. Preserve the final emitted identity.
       if(publications.length&&value&&typeof value==='object'&&(!Object.hasOwn(value,'apiVersion')||!Object.hasOwn(value,'kind'))&&outputRoles.some(role=>role.role==='non-api'&&role.line===tree.getLineAndCharacterOfPosition(publications[0].getStart(tree)).line+1))return;
