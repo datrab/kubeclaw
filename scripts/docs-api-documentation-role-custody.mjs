@@ -7088,7 +7088,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/docs-configuration-inventory.mjs",
         "canonical": "scripts/docs-configuration-inventory.mjs",
-        "sha256": "6cc3470a8bbfdc96c12628f89b474aeef6e325f605a844da1d93278cf2684211"
+        "sha256": "d07b890d817f59b87b4b2b2cc7bb15f8f24c4889e0ccce8cc473b52c5e0c6f30"
       }
     ],
     "purposeInputs": [
@@ -7135,7 +7135,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/docs-configuration-inventory.mjs",
         "canonical": "scripts/docs-configuration-inventory.mjs",
-        "sha256": "6cc3470a8bbfdc96c12628f89b474aeef6e325f605a844da1d93278cf2684211"
+        "sha256": "d07b890d817f59b87b4b2b2cc7bb15f8f24c4889e0ccce8cc473b52c5e0c6f30"
       },
       {
         "path": "scripts/lint-baseline-prune.mjs",
@@ -7543,7 +7543,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/docs-configuration-inventory.mjs",
         "canonical": "scripts/docs-configuration-inventory.mjs",
-        "sha256": "6cc3470a8bbfdc96c12628f89b474aeef6e325f605a844da1d93278cf2684211"
+        "sha256": "d07b890d817f59b87b4b2b2cc7bb15f8f24c4889e0ccce8cc473b52c5e0c6f30"
       },
       {
         "path": "scripts/docs-external-helm-authority-lock.json",
@@ -7553,7 +7553,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/docs-generate.mjs",
         "canonical": "scripts/docs-generate.mjs",
-        "sha256": "41a30fba96b6ecab94926ff54ed840ec7a3c08b983c31c2840fdf0999e1f7e4c"
+        "sha256": "2dce49bd5089d37ef65849645c6698b281b7e454059837726c292bd2472214c4"
       },
       {
         "path": "scripts/docs-local-helm-field-authorities.json",
@@ -9486,7 +9486,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/docs-configuration-inventory.mjs",
         "canonical": "scripts/docs-configuration-inventory.mjs",
-        "sha256": "6cc3470a8bbfdc96c12628f89b474aeef6e325f605a844da1d93278cf2684211"
+        "sha256": "d07b890d817f59b87b4b2b2cc7bb15f8f24c4889e0ccce8cc473b52c5e0c6f30"
       }
     ],
     "purposeInputs": [
@@ -9523,7 +9523,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/docs-configuration-inventory.mjs",
         "canonical": "scripts/docs-configuration-inventory.mjs",
-        "sha256": "6cc3470a8bbfdc96c12628f89b474aeef6e325f605a844da1d93278cf2684211"
+        "sha256": "d07b890d817f59b87b4b2b2cc7bb15f8f24c4889e0ccce8cc473b52c5e0c6f30"
       },
       {
         "path": "scripts/docs-local-helm-field-authorities.json",
@@ -10483,7 +10483,7 @@ export const documentationExecutableRoleRecipes = {
     {
       "path": "scripts/docs-api-output-discovery.mjs",
       "canonical": "scripts/docs-api-output-discovery.mjs",
-      "sha256": "c6bcf7f4c3e015cfe91012dd423ffa2e769ff99e9f0d6e0c806e457b09d15f44"
+      "sha256": "d529b1323d67d98502a154b5f8efcab16c51b4aee2d17fb5b10f749efe906838"
     },
     {
       "path": "scripts/docs-helm-memory-chart.mjs",
@@ -10528,7 +10528,7 @@ export const documentationExecutableRoleRecipes = {
     {
       "path": "scripts/docs-api-output-discovery.mjs",
       "canonical": "scripts/docs-api-output-discovery.mjs",
-      "sha256": "c6bcf7f4c3e015cfe91012dd423ffa2e769ff99e9f0d6e0c806e457b09d15f44"
+      "sha256": "d529b1323d67d98502a154b5f8efcab16c51b4aee2d17fb5b10f749efe906838"
     },
     {
       "path": "scripts/docs-memory-inputs.mjs",
@@ -10818,7 +10818,7 @@ const reviewedPublicationParserRecipe=frozenRecipes({
     },
     {
       "path": "scripts/docs-api-output-discovery.mjs",
-      "sha256": "c6bcf7f4c3e015cfe91012dd423ffa2e769ff99e9f0d6e0c806e457b09d15f44"
+      "sha256": "d529b1323d67d98502a154b5f8efcab16c51b4aee2d17fb5b10f749efe906838"
     },
     {
       "path": "scripts/tests/api-output-publication-native-custody.test.mjs",
@@ -11723,7 +11723,7 @@ const reviewedRootSelectedCompilerRecipe=frozenRecipes({
 });
 const reviewedSdkGeneratorRecipe=frozenRecipes({
   "source": "scripts/docs-generate.mjs",
-  "sourceSha256": "41a30fba96b6ecab94926ff54ed840ec7a3c08b983c31c2840fdf0999e1f7e4c",
+  "sourceSha256": "2dce49bd5089d37ef65849645c6698b281b7e454059837726c292bd2472214c4",
   "importSyntax": "import { generateSdkReference } from './docs-sdk-reference.mjs';",
   "importSha256": "e15b85ac5924f3161910eefb87c17408769991d84095ccba953a05da09af2e12",
   "targetSourceSha256": "d04f9cba922825061989086c80890c50ff2e8b283f9d2fe4279ed70de9499cf0",
