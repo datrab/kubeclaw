@@ -1747,3 +1747,16 @@ Inspect startup Doctor diagnostics, progress and restart counts before
 classifying a slow startup as a connector failure. No measured database-size
 or rollout-time observation is established here; do not infer a timeout or
 skip integrity checks.
+
+## Specialized host, storage and scan procedures
+
+Use the [native host procedure](native-worker-hosts.md) before activating native
+workers; [AX41](ax41-host-rollout.md) is an explicitly host-specific rollout, not
+a default installation. Use [Redis migration](redis-migration.md) or
+[PostgreSQL migration](postgresql-migration.md) for data/version transitions.
+For a local immutable-image check use [image scanning](image-security.md); for
+client projections and image lifetime use [registry clients](registry-clients.md).
+The [Ops environment procedure](ops-environment.md) covers administrator tooling,
+credentials, upgrade and removal independently of runtime-role deployment.
+
+For the upstream release-scoped normal GitOps path, use [continuous GitOps](continuous-gitops.md). For image/bundle authority, host runners and selected build/release inputs, use [runtime versions and releases](runtime-releases.md). These guides identify their source release separately from the older pinned procedures above.

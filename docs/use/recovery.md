@@ -1153,3 +1153,13 @@ At the irreversible point, record:
 - For Nova, original run/platform identities, writer-fence proof, verified raw
   run and adapter copies, manifests, strict inspection results, and every
   authorized repair command with its actual changes.
+
+## Component-specific recovery routes
+
+A failed OpenClaw configuration-audit import has a narrow
+[offline recovery procedure](openclaw-audit-recovery.md); do not substitute generic
+log deletion or invented checkpoints. For a native host transition use the
+[host-specific rollout/recovery boundary](ax41-host-rollout.md). For administrator
+access and persistent Ops state use [Ops environment recovery](ops-environment.md).
+Keep the selected release and original data identities from the canonical
+procedure above when selecting any of these routes.

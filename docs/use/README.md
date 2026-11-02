@@ -160,3 +160,30 @@ hand-written digest.
 Read [Current Status](../status/current.md) and
 [Open Implementation Work](../status/open-issues.md) before a production
 change.
+
+## Specialized operating procedures
+
+Start with the canonical task map above, then use the relevant procedure below.
+Each guide states its source/release scope; confirm that the deployed components
+provide the named commands and schema fields before changing anything.
+
+- **Host preparation:** [native worker pools](native-worker-hosts.md) and the
+  explicitly host-specific [AX41 rollout and recovery](ax41-host-rollout.md).
+- **Stateful changes:** [Redis data migration](redis-migration.md) and
+  [PostgreSQL version/storage migration](postgresql-migration.md); use the
+  [backup and restore procedure](recovery.md) first.
+- **Images and clients:** [local immutable-image scans](image-security.md) and
+  [registry client configuration and image lifetime](registry-clients.md).
+- **Administrator environment:** [Ops Pod installation, login, maintenance and
+  recovery](ops-environment.md), [OpenClaw audit-import recovery](openclaw-audit-recovery.md),
+  [Nova to Argo access](nova-argocd-access.md) and [Nova to Prism Control access](prism-control-access.md).
+- **Buster extensions:** [full-stack fixture configuration and rollout](workflows/full-stack-fixtures.md).
+- **External application integration:** [FamilyClaw Argo registration](integrations/familyclaw-argo.md)
+  and [first initialization with existing Paperless](integrations/familyclaw-initialization.md).
+
+For data retirement, [capacity and retention](capacity.md#narrow-local-projection-controls)
+explains the existing narrow controls and the required owner/fencing boundaries.
+The existence of an old cleanup script does not grant permission for general
+history, evidence, PVC or database deletion.
+
+For the routine release path use [continuous GitOps](continuous-gitops.md) and [runtime versions and images](runtime-releases.md). Diagnose slow image builds through [rootless BuildKit cache storage](buildkit-storage.md), without erasing registry images or archived job results.

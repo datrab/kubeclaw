@@ -1101,3 +1101,7 @@ and extended in a few clear steps without hiding authority or recovery costs.
 - [Pipeline Dependencies](pipeline-dependencies.md) explains stage-level dependency effects.
 - [Install and Bootstrap](../use/install.md) gives the supported deployment procedure.
 - [Recovery](../use/recovery.md) gives the operator recovery sequence.
+
+## Release-specific operational details
+
+The [operator task map](../use/README.md#specialized-operating-procedures) links host preparation, storage migration, image scanning and access recovery. [Continuous GitOps](../use/continuous-gitops.md) explains routine source-to-deployment promotion; [BuildKit storage](../use/buildkit-storage.md) separates builder cache from images and results. Each procedure names its own source/release scope.

@@ -493,6 +493,47 @@ an issued report.
 > **Pack evidence:** [Admission binds path, bytes, digest, ID, version, and rules](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/kubernetes-policy-pack.ts#L67-L115),
 > and [execution preserves manifest and pack evidence](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/kubernetes-policy-tools.ts#L135-L155).
 
+### Kubernetes manifest pack format
+
+A smallest pack file has the following closed shape. This is a format example,
+not proof that the deployment copies the pack beside the runtime policy; keep
+that delivery limitation above.
+
+```json
+{
+  "schema_version": "kubernetes_lint_policy_pack.v1",
+  "id": "company-default",
+  "version": "1.0.0",
+  "rules": [
+    {
+      "id": "limits",
+      "type": "resource-limits",
+      "severity": "error",
+      "parameters": { "cpu": true, "memory": true }
+    }
+  ]
+}
+```
+
+| Type | Parameters and purpose |
+| --- | --- |
+| `required-env` | Nonempty unique `names`; require the named variables. |
+| `secret-ref` | No parameters; inspect direct and `envFrom` Secret references. |
+| `private-registry-pull-secret` | Nonempty unique `registries`; identify exact registry hosts/prefixes. |
+| `readiness-probe` | No parameters; require readiness probes on regular containers. |
+| `liveness-probe` | No parameters; require liveness probes on regular containers. |
+| `resource-limits` | Boolean `cpu` and `memory`, defaulting to true; at least one must remain true. |
+
+Rules require unique lowercase stable IDs and severity `error` or `warning`.
+The pack is nonempty and bounded to 1 MiB/256 rules. Unknown keys/types are
+rejected. Store it inside the operator-owned policy directory. A
+`kubernetes_policy_packs` entry binds `id`, semantic `version`, relative `path`
+and exact lowercase `sha256`; the project selects only installed approved IDs
+through its Kubernetes `policy_packs` list. Packs are declarative data, not
+commands, network clients or self-installing plugins. See the existing
+[pack admission source](https://github.com/datrab/kubeclaw/blob/0f5ffa1bf7c9ce9482785721f69bd3ad9d09def6/skills/nova/plugins/lint/src/engine/kubernetes-policy-pack.ts)
+for the actual byte, reference and parameter validation boundaries.
+
 ## Add A Policy-Pack Rule Type
 
 A new type adds executable meaning and needs wider proof than a new rule instance.

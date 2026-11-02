@@ -59,3 +59,26 @@ define that separate execution boundary.
 - [Open issues](status/open-issues.md) lists remaining implementation work and completion criteria.
 - [Roadmap](status/roadmap.md) explains planned platform improvements and why they matter.
 - [Decisions](decisions/README.md) records enduring constraints, their rationale and approval evidence.
+
+## Find the former documentation sections
+
+The subjects were regrouped; they were not all renamed to “Reference”. Use these
+entry points instead of looking for the former directory names.
+
+| Previous subject | Current reader route |
+| --- | --- |
+| Architecture, pipeline, component design | [Architecture and system behavior](understand/README.md) |
+| Deployment and infrastructure | [Install](use/install.md), [platform architecture](understand/platform-and-operations.md), [native worker hosts](use/native-worker-hosts.md) |
+| Operators, operations and runbooks | [Operator task map](use/README.md), [diagnosis](use/diagnose.md), [recovery](use/recovery.md) |
+| Stateful service migration | [Redis migration](use/redis-migration.md), [PostgreSQL migration](use/postgresql-migration.md) |
+| Developers and contributing | [Developer handbook](extend/developer-handbook.md), [extension choice](extend/README.md) |
+| Testing and fixture extensions | [Extension testing](extend/testing.md), [Buster](extend/buster.md), [full-stack fixtures](use/workflows/full-stack-fixtures.md) |
+| Security and worker trust | [Security architecture](understand/security-and-trust.md), [worker trust procedure](use/worker-trust.md), [image scanning](use/image-security.md) |
+| Ops Pod and access recovery | [Ops environment](use/ops-environment.md), [Nova to Argo](use/nova-argocd-access.md), [Nova to Prism](use/prism-control-access.md) |
+| Prism user guides and data model | [Prism architecture](understand/prism.md), [Studio](use/prism-studio.md), [Prism data](understand/prism-data.md) |
+| Diagrams and examples | Diagrams remain with their explanations; runnable examples remain beside their reader tasks. |
+
+Specialized operating guides state their selected source/release boundary. Newer
+features documented from upstream `main` are not implicitly available in an older
+PR13 example or deployed image. Historical plans and audit transcripts remain in
+Git history; they are not another current documentation track.

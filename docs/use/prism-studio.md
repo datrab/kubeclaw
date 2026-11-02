@@ -3104,3 +3104,17 @@ A Prism operator journey is complete only when all statements below are true:
 
 If one item is unknown, state that limit.
 Do not convert missing evidence into a successful claim.
+
+## Release-specific access and mobile changes
+
+The newer [Nova to Prism Control access guide](prism-control-access.md) records
+a targeted network fix and its dated recovery scope. It does not replace the
+source/release checks or authorize a second design job.
+
+The upstream [mobile repair record](https://github.com/datrab/kubeclaw/blob/f821e4357e074c0d6c3e0ddd4749b5cc5324a89f/docs/ops/prism-studio-mobile-20261031.md)
+describes a newer editor that keeps the brief collapsed in the workspace and
+uses explicit 390/768/1280px design viewports with local horizontal scrolling.
+It also records the non-Home-view canvas fix. Those changes have their own
+source and release boundary: do not assume an older installed Studio or the
+pinned local sample above contains them. The record does not establish live
+Samsung acceptance or authorize publication of a design baseline.

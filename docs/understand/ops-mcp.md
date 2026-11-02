@@ -443,3 +443,11 @@ Buster gateway behavior, Hubble Relay availability, mobile pairing, arbitrary-
 cluster portability and production acceptance need their own scoped evidence.
 The implementation alone does not prove production readiness or clear the
 installation guide's release-verification stop.
+
+## Operate the administrator environment
+
+The [Ops environment guide](../use/ops-environment.md) contains installation,
+login/pairing, persistence, credential rotation, recovery and removal procedures.
+Use [Nova to Argo access](../use/nova-argocd-access.md) for the release-specific
+network path. Tool availability, namespace authorization, network access and
+credential authority remain independent boundaries.

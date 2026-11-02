@@ -500,3 +500,11 @@ and drain/startup state
 ([implementation](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/charts/kubeclaw/templates/deployment.yaml#L880-L915)),
 while the workload defines separate startup, readiness, and liveness probes
 ([probe wiring](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/charts/kubeclaw/templates/deployment.yaml#L1479-L1513)).
+
+## Prepare the native host separately
+
+[Native worker host pools](native-worker-hosts.md) describes host policy, capacity
+withholding, generated preparation files, NRI and read-only node preflight. The
+[AX41 runbook](ax41-host-rollout.md) is for its explicitly described host state.
+A working SPIFFE connection or a rendered workload does not prepare these host
+resources. Do not restart the pool service as routine worker recovery.

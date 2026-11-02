@@ -899,3 +899,7 @@ They define where operators need additional production controls or live proof.
 - [Plugin Runtime](plugin-runtime.md) explains package trust, activation, grants, and isolation.
 - [Secret Inventory](../reference/secrets.md) lists exact secret producers and consumers without secret values.
 - [Core and plugin decisions](../decisions/core-and-plugins.md) and [runtime and operations decisions](../decisions/runtime-and-operations.md) record the enduring trust choices and their trade-offs.
+
+## Deferred Redis and registry transport migration
+
+Worker mTLS does not by itself protect Redis or registry traffic. The earlier transport-migration proposal required a complete consumer inventory, dedicated service identities, explicit peer allowlists, proxy-only backend access and real Redis/push/scan/CRI-pull checks before cutover. It was not a completed rollout. Do not treat a rendered Envoy sidecar, an inventory count or the existence of SPIRE as proof that these data-plane paths are protected. Use the selected release and actual transport observations; retain the anonymous HTTP lab-registry limitation above until a reviewed migration changes it.

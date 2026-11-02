@@ -217,3 +217,7 @@ promoting it to a completed node-consumer workflow.
 - [Wrapper checks runtime identity then signs/verifies only after remote execution](https://github.com/datrab/kubeclaw/blob/24a3fa0b316160187f23b02aeac8b2c60bb6e527/scripts/deploy.sh#L1990-L2042).
 - [Node example explicitly does not select/install registry routing](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/my-values/infra/k3s-registries.yaml#L1-L7).
 - [Node inspector reports source configuration, not effective runtime or CRI pulls](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/scripts/inspect-node-registry.mjs#L15-L46).
+
+## Build cache and snapshotter
+
+For the release-specific worker data-volume cache layout, ownership and snapshotter diagnosis, read [BuildKit storage](../buildkit-storage.md). A disposable builder cache, registry images and archived results have separate lifetimes. Do not add host privileges or remove retained image data to force a faster snapshotter.

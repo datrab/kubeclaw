@@ -708,3 +708,13 @@ Before you accept a Buster extension, verify:
 - Evidence names, types, reports, counts, and limits agree
 - Package digest and exact adapter identity survive plan transport
 - No test result is inferred from absence, process exit alone, or report count alone.
+
+## Release-specific fixture extensions
+
+The original single-image fixture path above remains separate from the newer
+[full-stack fixture extension](../use/workflows/full-stack-fixtures.md). That
+extension requires matching broker schema/controller/runtime versions and has
+its own opt-in image inventory, policy and replacement boundaries.
+[Fixture failure diagnosis](buster-fixture-diagnosis.md) explains the newer
+Buster-owned diagnostic-agent hook and mandatory cleanup order. Neither guide
+claims that those features exist in the older pinned examples on this page.

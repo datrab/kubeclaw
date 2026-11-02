@@ -129,3 +129,11 @@ and [the apply and cleanup boundary](https://github.com/datrab/kubeclaw/blob/28e
 are the source authorities. These procedures require target-cluster observations.
 Local package checks establish only their declared boundaries.
 
+
+## Multiple images and controlled replacement
+
+For the newer opt-in multi-image path, read [full-stack fixtures](full-stack-fixtures.md).
+Use it only with the matching CRD, controller and runtime; an old single-image
+release must not receive unsupported `fullStack` or replacement fields. The
+[diagnostic hook](../../extend/buster-fixture-diagnosis.md) is likewise a separate
+versioned capability, not proof that an earlier failed fixture was diagnosed.
