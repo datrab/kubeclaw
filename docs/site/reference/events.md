@@ -267,9 +267,9 @@ Syntax extraction does not prove live delivery or recovery.
 
 Source contracts and configured paths do not prove live delivery. Declaration, construction, validation and consumption are separate facts.
 
-Primary executable/delivered Source vector SHA-256: <code>b010e567987a312690637aa53f7228d924f85140e862d8f24cc184d65116e5c0</code>.
+Primary executable/delivered Source vector SHA-256: <code>99b10c6ce66930bc7e24ea964b398bb35aa16abf9d1aeabb8e687b9ba2186844</code>.
 
-Combined primary and supplementary authority vector SHA-256: <code>b5b0e91dcbe3f2e35cedaa4f7573d0588326d007c09557ab6c41356191a22459</code>.
+Combined primary and supplementary authority vector SHA-256: <code>df9db992105e7a55601cd78f97cc83a030b3670e8222afd48b67ab8782a442ee</code>.
 
 Supplementary authority [<code>contracts/telemetry/v1/README.md</code>:1](../../../contracts/telemetry/v1/README.md) — SHA-256 <code>557bb4c6b35df61f1dc31a964953d62c035905790fec1dd06db33248deaef892</code>.
 

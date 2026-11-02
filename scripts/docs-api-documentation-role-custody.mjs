@@ -657,7 +657,7 @@ export const documentationExecutableRoleRecipes = {
     "expressionSha256": "23f8ffe64b7fa6557f778121a6c050adfea672efeffdef0ee17768d219793389"
   }
 ],
-    "factsDigest": "d470ec782c7ef12c96c0672dff67cdebfb0a26bdb911b5d5deae791cf4dd0b9a",
+    "factsDigest": "cc3157d299280df9263831fdd35ad3f1bcd6ebcbeb4cca2ae0308d6854aae64a",
     "authorityInputs": [
       {
         "path": "scripts/docs-api-go-output-role-adapter.go",
@@ -884,7 +884,7 @@ export const documentationExecutableRoleRecipes = {
     "expressionSha256": "188f43ca0bcbe2410b2793c635a8cb3e83a1f53d7387582be7c40ee4c5aac39e"
   }
 ],
-    "factsDigest": "7b84313cc1e32d73e649bd2754a0fe1c2f67e850974b6cdfaba5c6c742d94f54",
+    "factsDigest": "802385a45b39dc048955b056a44f5766def7660373e0fe622e577eaef79f0764",
     "authorityInputs": []
   },
   "scripts/docs-api-python-output-adapter.py": {
@@ -1163,7 +1163,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "9efac25cb0d8a53fc3a31aec649afa2cd99102c34366428833c403eccaef3fbe"
       }
     ],
-    "factsDigest": "4400240045cb33be7a522ca5ebfdf93c69d512b53f9ed6294d3c5c07b1199063",
+    "factsDigest": "0190e0f78d717466fb2a9e47858d543fadb1954ead0d1af19c8ea30aa7edcf81",
     "authorityInputs": []
   },
   "scripts/docs-api-schema-authorities.mjs": {
@@ -2010,7 +2010,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "7602a8f927b47cd0b4b4f2501bccd41bb8e4e4ea43e571cf4bce62f3c3717191"
       }
     ],
-    "factsDigest": "1042456f8c50f6a5279384e9fd72e771a99aeb9fc56a582a35ea621debb9e284",
+    "factsDigest": "3ac7ad51597fb52403d621edb83a41e5ed83a260b777efb9f35aeed32da3c10c",
     "authorityInputs": [
       {
         "path": "scripts/vendor-external-helm-authorities.mjs",
@@ -2161,7 +2161,7 @@ export const documentationExecutableRoleRecipes = {
     "expressionSha256": "cba76d80649d6ce8d92897a224d01ee9877a1807a9de9e765cdad79d29f912ce"
   }
 ],
-    "factsDigest": "685de79692dc7268fb3529f9b51fee17f80b2a05de0aec1cda886c419c2d0d10",
+    "factsDigest": "afc2c6a0add4626bc1de1bd39aa254c7ec6c949c35a2d02bf02ab6f0c6ea3db2",
     "authorityInputs": []
   },
   "scripts/docs-governance.mjs": {

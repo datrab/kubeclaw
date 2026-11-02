@@ -917,7 +917,7 @@ export function checkedTopLevelScriptPurposes(root, graph, classify, sources, na
   const observedClientHttp=originalClientHttpProfiles.filter(profile=>sources.includes(profile.source));
   const clientHttpFacts=[];
   for(const profile of observedClientHttp){
-    const actual={incomingEdges:graph.edges.filter(e=>e.target===profile.source),outgoingEdges:graph.edges.filter(e=>e.source===profile.source),publicEntries:graph.publicEntries.filter(e=>e.source===profile.source||e.canonicalSource===profile.source),dynamicOperations:graph.dynamicOperations.filter(e=>e.source===profile.source),packageEntries:graph.packageEntries.filter(e=>[profile.source,...profile.callers.map(c=>c.source)].includes(e.source)),aliases:graph.aliases};
+    const actual={incomingEdges:graph.edges.filter(e=>e.target===profile.source),outgoingEdges:graph.edges.filter(e=>e.source===profile.source),publicEntries:graph.publicEntries.filter(e=>e.source===profile.source||e.canonicalSource===profile.source),dynamicOperations:graph.dynamicOperations.filter(e=>e.source===profile.source),packageEntries:nativePackageEntries.filter(e=>[profile.source,...profile.callers.map(c=>c.source)].includes(e.source)),aliases:graph.aliases};
     assert(JSON.stringify(actual)===JSON.stringify(profile.context),'API_PRODUCT_CLIENT_HTTP_RECEIVER_UNQUALIFIED: caller/native/public context');
     for(const fact of [{source:profile.source,sha256:profile.sourceSha256},...profile.callers]){assert(hash(read(fact.source))===fact.sha256,'API_PRODUCT_CLIENT_HTTP_RECEIVER_UNQUALIFIED: Source/consumer');clientHttpFacts.push({path:fact.source,sha256:fact.sha256});}
   }
