@@ -3,7 +3,7 @@ import {preparedGoEnvironment,preparedGoParser,runPreparedGoParser} from './docs
 import {localHelmChartFiles, renderLocalHelmChart} from './docs-helm-memory-chart.mjs';
 import {checkedOriginalProbe39Output, selectedOriginalProbe39Output} from './docs-api-probe39-original-output.mjs';
 import {checkedVersionsMapOutputs,selectedVersionsMapOutput} from './docs-api-versions-map-output.mjs';
-import {checkedTopLevelScriptPurposes,selectedTopLevelScriptPurpose,checkedNodeTestFixturePurpose,selectedNodeTestFixturePurpose,selectedNodeTestFixtureNodePurpose,selectedRetainedDocumentaryReturnPurpose,selectedStandaloneSerializedReceivingPurpose,selectedManifestValidationPublicationPurpose} from './docs-api-top-level-script-purpose.mjs';
+import {checkedTopLevelScriptPurposes,selectedTopLevelScriptPurpose,checkedNodeTestFixturePurpose,selectedNodeTestFixturePurpose,selectedNodeTestFixtureNodePurpose,selectedRetainedDocumentaryReturnPurpose,selectedStandaloneSerializedReceivingPurpose,selectedManifestValidationPublicationPurpose,selectedOriginalClientHttpReceiverPurpose,isQualifiedOriginalClientWireResponseProof} from './docs-api-top-level-script-purpose.mjs';
 import {checkedStorageReceiverPurposes,selectedStorageReceiverPurpose} from './docs-api-storage-receiver-purpose.mjs';
 import {checkedPrismNativeRequestCapability,classifyPrismNativeRequestRoles,selectedPrismNativeRequestCapability} from './docs-api-prism-native-request-capability.mjs';
 import {assertDocumentationOwnerPurpose,assertDocumentationOwnerAncestry,documentationOwnerNativeEntryMatches,reviewedDocumentationOwnerPurposes,assertReaderArtifactExternalCiPurpose,addReaderArtifactExternalCiSeed,assertPublicationExampleChildPurpose,addPublicationExampleChildSeed,publicationClaimsPurposeInputBytes,publicationClaimsPurposePhysicalInputs} from './docs-documentation-owner-purpose-custody.mjs';
@@ -1643,6 +1643,23 @@ export function nativeOutputConsumerMatches(output,contracts,root) {
  return contracts.some(contract=>contract.expression===output.expression&&contract.function===output.function&&contract.operationDigest===hash(output.operation)&&(!dependencyFacts||contract.dependencyFactsDigest===hash(JSON.stringify(dependencyFacts)))&&contract.consumer?.source&&contract.consumer?.purpose&&contract.consumer?.evidence?.length&&contract.consumer.evidence.every(expression=>output.operation.includes(expression))&&semanticConsumer(contract.consumer));
 }
 const syntheticImage = `example.invalid/discovery@sha256:${syntheticDigest}`;
+// Grouped candidate helper. No authority grant: real calls retain adapter guard.
+export function scriptHasLiteralHelmInvocation(tree) {
+  let found=false;
+  function visit(node) {
+    if(ts.isCallExpression(node)) {
+      const callee=node.expression;
+      const name=ts.isIdentifier(callee)?callee.text:
+        ts.isPropertyAccessExpression(callee)?callee.name.text:null;
+      if(['spawnSync','execFileSync','execFile','spawn'].includes(name)
+        &&node.arguments[0]&&ts.isStringLiteralLike(node.arguments[0])
+        &&node.arguments[0].text==='helm')found=true;
+    }
+    ts.forEachChild(node,visit);
+  }
+  visit(tree);return found;
+}
+
 export function producerAdapterOperationRecipe(source,bytes) {
   if(source.endsWith('.sh')){
     const parsed=spawnSync('python3',['-c',"import json,shlex,sys; lexer=shlex.shlex(sys.stdin.read(),posix=True,punctuation_chars=True); lexer.whitespace_split=True; print(json.dumps(list(lexer)))"],{input:bytes,encoding:'utf8',env:{PATH:process.env.PATH}});
@@ -5779,6 +5796,10 @@ function selectedPublicationNativeValidation(source,role,receipt) {
  return slot;
 }
 
+const originalClientWireResponseContexts=new WeakMap();
+export function isQualifiedOriginalClientWireResponseContext(root,context){
+ const record=context&&originalClientWireResponseContexts.get(context);return Boolean(record&&record.root===root&&record.contextSha256===hash(JSON.stringify(context))&&isQualifiedOriginalClientWireResponseProof(root,record.proof));
+}
 export function discoverScriptApiOutputs(root) {
   assertReviewedDiagnosticOutputSources(root);
   // Qualification includes graph metadata (for example directory symlinks)
@@ -5890,7 +5911,9 @@ export function discoverScriptApiOutputs(root) {
   for(const source of sources) {
     const bytes=fs.readFileSync(path.join(root,source),'utf8');
     assert(!/(?:from\s*|(?:require|import)\(\s*)['"]@kubernetes\/client-node['"]/u.test(bytes),`API_PRODUCT_SCRIPT_TYPED_SDK_UNQUALIFIED: ${source}; documentation output adapter maintainers must classify the typed emitter`);
-    if(/\b(?:spawnSync|execFileSync|execFile|spawn)\(\s*['"]helm['"]/u.test(bytes)&&!(source===reviewedPublicationNativeValidation.source&&publicationNative&&publicationNativeValidationReceipts.has(publicationNative)))assertProducerAdapterAuthority(root,[source]);
+    const nativeInvocationTree=ts.createSourceFile(source,bytes,ts.ScriptTarget.Latest,true,/\.[cm]?ts$/u.test(source)?ts.ScriptKind.TS:ts.ScriptKind.JS);
+    assert(!nativeInvocationTree.parseDiagnostics.length,`API_PRODUCT_ADAPTER_OPERATION_PARSE_FAILED: ${source}`);
+    if(scriptHasLiteralHelmInvocation(nativeInvocationTree)&&!(source===reviewedPublicationNativeValidation.source&&publicationNative&&publicationNativeValidationReceipts.has(publicationNative)))assertProducerAdapterAuthority(root,[source]);
     const witness=source===reviewedArgocdArtifactProfile.source?checkedArtifact:null;
     const outputRoles=classifyPrismNativeRequestRoles(source,classifyOutputRoles,prismRequestCapability).map(role=>{const purpose=selectedStorageReceiverPurpose(source,role,storageReceiverPurposes);if(purpose)storagePurposeByRole.set(role,purpose);return role;}).map(role=>checkedArtifactRole(role,witness)).map(role=>gitOpsOutputProfileRole(source,role,gitOpsProfile)).map(role=>runtimeBundleCopyRole(role,source===bundleSource?bundleCopy:null)).map(role=>deploymentConfigOutputRole(role,source===configSource?configOutput:null)).map(role=>minimalPluginFixtureOutputRole(role,source===minimalPluginSource?minimalPlugin:null));
     for(const role of outputRoles)for(const dependency of role.dependencies??[])classifiedDependencies.add(dependency);
@@ -5928,6 +5951,7 @@ export function discoverScriptApiOutputs(root) {
     if(source==='scripts/updates/deployment-release.mjs'&&releaseRenderer){result.push(...releaseRenderer.outputs);continue;}
     if(!outputRoles.some(role=>role.role==='api')&&(!/apiVersion/u.test(bytes)||!/(?:kind\s*:|['"]kind['"]\s*:)/u.test(bytes)))continue;
     const tree=ts.createSourceFile(source,bytes,ts.ScriptTarget.Latest,true,/\.[cm]?ts$/u.test(source)?ts.ScriptKind.TS:ts.ScriptKind.JS);
+    const qualifiedClientConfigurationRoles=new Set();
     const qualifiedInvalidVerificationInputRoles=new Set();
     assert(!tree.parseDiagnostics.length,`API_PRODUCT_PRODUCER_PARSE_FAILED: ${source}`);
     const declarations=new Map();const assignments=[];const constructors=[];const serializedInputs=new Set();
@@ -5983,8 +6007,125 @@ export function discoverScriptApiOutputs(root) {
       return invocations.length&&invocations.every(isExplicitSelfTestCall);
     }));
     const opaque=new Map();let terminalPosition=Infinity;
+    // Exact serialization is deliberately separate from the broader shape
+    // evaluator: conditional/map/spread approximations must never become bytes.
+    const exactUnknown=Symbol('unproved serialized value');
+    // Lexical proof only: reject protocol mutation/escape spellings rather
+    // than replacing the runtime object's inherited serialization protocol.
+    const exactSerializationProtocol=()=>{
+      let valid=true;
+      const forbidden=new Set(['toJSON','prototype','__proto__','constructor','__defineGetter__','__defineSetter__']);
+      const visit=part=>{
+        if(ts.isIdentifier(part)&&['globalThis','global','Reflect','eval','Function'].includes(part.text))valid=false;
+        if(ts.isPropertyAccessExpression(part)&&forbidden.has(part.name.text))valid=false;
+        if(ts.isElementAccessExpression(part)){
+          const key=part.argumentExpression;
+          if(!key||!ts.isStringLiteralLike(key)&&!ts.isNumericLiteral(key)||ts.isStringLiteralLike(key)&&forbidden.has(key.text))valid=false;
+        }
+        if(ts.isStringLiteralLike(part)&&forbidden.has(part.text))valid=false;
+        if(ts.isIdentifier(part)&&['Object','Array'].includes(part.text)){
+          const access=part.parent,use=access?.parent;
+          const allowed=part.text==='Object'?['entries','keys','values','hasOwn']:['isArray'];
+          if(!access||!ts.isPropertyAccessExpression(access)||access.expression!==part||!allowed.includes(access.name.text)
+            ||!use||!ts.isCallExpression(use)||use.expression!==access)valid=false;
+        }
+        ts.forEachChild(part,visit);
+      };visit(tree);return valid;
+    };
+    const exactIntrinsic=name=>{
+      let valid=true;
+      const visit=part=>{
+        if(ts.isIdentifier(part)&&part.text===name){
+          const access=part.parent,use=access?.parent;
+          if(!access||!ts.isPropertyAccessExpression(access)||access.expression!==part
+            ||!(name==='JSON'?['parse','stringify']:[]).includes(access.name.text)
+            ||use&&(ts.isBinaryExpression(use)&&use.left===access&&use.operatorToken.kind>=ts.SyntaxKind.FirstAssignment&&use.operatorToken.kind<=ts.SyntaxKind.LastAssignment
+              ||ts.isDeleteExpression(use)||ts.isPostfixUnaryExpression(use)||ts.isPrefixUnaryExpression(use)))valid=false;
+        }
+        // globalThis.JSON assignment/escape is not an intrinsic proof either.
+        if(ts.isPropertyAccessExpression(part)&&part.name.text===name&&part.expression.getText(tree)==='globalThis')valid=false;
+        ts.forEachChild(part,visit);
+      };visit(tree);return valid;
+    };
+    function exactSerializedValue(node,seen=new Set()) {
+      if(!node)return exactUnknown;
+      if(ts.isParenthesizedExpression(node)||ts.isAsExpression(node)||ts.isTypeAssertionExpression(node)||ts.isNonNullExpression(node))return exactSerializedValue(node.expression,seen);
+      if(ts.isStringLiteralLike(node))return node.text;
+      if(ts.isNumericLiteral(node)){const value=Number(node.text);return Number.isFinite(value)?value:exactUnknown;}
+      if(node.kind===ts.SyntaxKind.TrueKeyword)return true;
+      if(node.kind===ts.SyntaxKind.FalseKeyword)return false;
+      if(node.kind===ts.SyntaxKind.NullKeyword)return null;
+      if(ts.isPrefixUnaryExpression(node)&&[ts.SyntaxKind.MinusToken,ts.SyntaxKind.PlusToken].includes(node.operator)){
+        const value=exactSerializedValue(node.operand,seen);return typeof value==='number'?(node.operator===ts.SyntaxKind.MinusToken?-value:value):exactUnknown;
+      }
+      if(ts.isIdentifier(node)){
+        const chosen=declarationFor(node),declaration=chosen?.parent;
+        if(!chosen||seen.has(chosen)||!ts.isVariableDeclaration(declaration)||declaration.initializer!==chosen
+          ||!ts.isIdentifier(declaration.name)||!(declaration.parent.flags&ts.NodeFlags.Const))return exactUnknown;
+        const value=exactSerializedValue(chosen,new Set([...seen,chosen]));if(value===exactUnknown)return value;
+        let unsafe=false;
+        const inspect=part=>{
+          if(ts.isIdentifier(part)&&part!==declaration.name&&declarationFor(part)===chosen){
+            const parent=part.parent;
+            if(ts.isBinaryExpression(parent)&&parent.left===part&&parent.operatorToken.kind>=ts.SyntaxKind.FirstAssignment&&parent.operatorToken.kind<=ts.SyntaxKind.LastAssignment
+              ||ts.isPrefixUnaryExpression(parent)||ts.isPostfixUnaryExpression(parent))unsafe=true;
+            // Aggregate aliases, mutation, method calls and external escapes are
+            // not interpreted by this finite exact serializer.
+            if(value!==null&&typeof value==='object'){
+              let access=part;while(access.parent&&(ts.isPropertyAccessExpression(access.parent)||ts.isElementAccessExpression(access.parent))&&access.parent.expression===access)access=access.parent;
+              const use=access.parent;
+              const directSerializer=access===part&&ts.isCallExpression(use)&&use.arguments[0]===part&&use.expression.getText(tree)==='JSON.stringify';
+              const directJoin=ts.isPropertyAccessExpression(access)&&access.expression===part&&access.name.text==='join'&&ts.isCallExpression(use)&&use.expression===access;
+              if(!directSerializer&&!directJoin)unsafe=true;
+              if(ts.isDeleteExpression(use)||ts.isBinaryExpression(use)&&use.left===access&&use.operatorToken.kind>=ts.SyntaxKind.FirstAssignment&&use.operatorToken.kind<=ts.SyntaxKind.LastAssignment
+                ||ts.isPrefixUnaryExpression(use)||ts.isPostfixUnaryExpression(use)||ts.isVariableDeclaration(use)&&use.initializer===access
+                ||ts.isCallExpression(use)&&!(use.expression===access&&ts.isPropertyAccessExpression(access)&&access.name.text==='join')
+                  &&!(use.arguments.includes(access)&&use.expression.getText(tree)==='JSON.stringify'))unsafe=true;
+            }
+          }ts.forEachChild(part,inspect);
+        };inspect(tree);return unsafe?exactUnknown:value;
+      }
+      if(ts.isArrayLiteralExpression(node)){
+        const values=[];for(const item of node.elements){if(ts.isSpreadElement(item)||ts.isOmittedExpression(item))return exactUnknown;const value=exactSerializedValue(item,seen);if(value===exactUnknown)return value;values.push(value);}return values;
+      }
+      if(ts.isObjectLiteralExpression(node)){
+        const value=Object.create(null);
+        for(const property of node.properties){
+          if(!ts.isPropertyAssignment(property)&&!ts.isShorthandPropertyAssignment(property)||ts.isComputedPropertyName(property.name))return exactUnknown;
+          const key=ts.isIdentifier(property.name)||ts.isStringLiteralLike(property.name)?property.name.text:ts.isNumericLiteral(property.name)?property.name.text:null;
+          if(key===null||['__proto__','toJSON'].includes(key))return exactUnknown;
+          const item=exactSerializedValue(ts.isPropertyAssignment(property)?property.initializer:property.name,seen);if(item===exactUnknown)return item;
+          Object.defineProperty(value,key,{value:item,enumerable:true,writable:true,configurable:true});
+        }return value;
+      }
+      if(ts.isTemplateExpression(node)){
+        let text=node.head.text;
+        for(const span of node.templateSpans){const value=exactSerializedValue(span.expression,seen);if(value===exactUnknown||value!==null&&typeof value==='object')return exactUnknown;text+=String(value)+span.literal.text;}return text;
+      }
+      if(ts.isCallExpression(node)&&ts.isPropertyAccessExpression(node.expression)){
+        if(node.expression.getText(tree)==='JSON.stringify'&&exactSerializationProtocol()&&exactIntrinsic('JSON')&&node.arguments.length>=1&&node.arguments.length<=3){
+          if(node.arguments[1]&&node.arguments[1].kind!==ts.SyntaxKind.NullKeyword)return exactUnknown;
+          const value=exactSerializedValue(node.arguments[0],seen);if(value===exactUnknown)return value;
+          const space=node.arguments[2]?exactSerializedValue(node.arguments[2],seen):undefined;
+          if(space!==undefined&&typeof space!=='string'&&typeof space!=='number')return exactUnknown;
+          return JSON.stringify(value,null,space);
+        }
+        if(node.expression.name.text==='join'&&node.arguments.length<=1&&exactSerializationProtocol()){
+          let nativeArray=true;const inspect=part=>{if(ts.isIdentifier(part)&&part.text==='Array'||ts.isPropertyAccessExpression(part)&&['__proto__','prototype','constructor'].includes(part.name.text))nativeArray=false;ts.forEachChild(part,inspect);};inspect(tree);if(!nativeArray)return exactUnknown;
+          // Literal/const arrays only; arbitrary objects and overridden methods
+          // cannot supply a serialization protocol.
+          const value=exactSerializedValue(node.expression.expression,seen),separator=node.arguments.length?exactSerializedValue(node.arguments[0],seen):',';
+          if(!Array.isArray(value)||typeof separator!=='string'||value.some(item=>item!==null&&typeof item==='object'))return exactUnknown;
+          return value.join(separator);
+        }
+      }
+      return exactUnknown;
+    }
     function evaluate(node,seen=new Set()) {
       if(!node)return null;
+      if(ts.isTemplateExpression(node)||ts.isCallExpression(node)&&ts.isPropertyAccessExpression(node.expression)&&(node.expression.getText(tree)==='JSON.stringify'||node.expression.name.text==='join')){
+        const exact=exactSerializedValue(node);if(exact!==exactUnknown)return exact;
+      }
       if(node.__docsBindingExpression) {
         const value=evaluate(node.__docsBindingExpression,seen);
         return value&&typeof value==='object'&&Object.hasOwn(value,node.__docsBindingKey)?value[node.__docsBindingKey]:{__docsDynamicExpression:`${node.__docsBindingExpression.getText(tree)}.${node.__docsBindingKey}`};
@@ -6164,6 +6305,8 @@ export function discoverScriptApiOutputs(root) {
       }
     }
     constructors.forEach((node,index)=>{
+      if(selectedOriginalClientHttpReceiverPurpose(source,tree,node,node,topLevelPurposes,'client-config-constructor'))return;
+      const wireResponsePurpose=selectedOriginalClientHttpReceiverPurpose(source,tree,node,node,topLevelPurposes,'wire-response-body');
       if(selectedNodeTestFixtureNodePurpose(source,tree,node,nodeTestFixturePurpose))return;
       for(let parent=node.parent;parent;parent=parent.parent)if(ts.isFunctionLike(parent)){if(guardedTestFunctions.has(parent))return;break;}
       opaque.clear();serializedInputs.clear();const binding=ts.isVariableDeclaration(node.parent)&&ts.isIdentifier(node.parent.name)?node.parent.name:null;const publications=binding?serializedPublications.filter(publication=>{let found=false;const visit=part=>{if(ts.isIdentifier(part)&&declarationFor(part)===node)found=true;ts.forEachChild(part,visit);};publication.arguments.forEach(visit);return found;}):[];
@@ -6197,9 +6340,96 @@ export function discoverScriptApiOutputs(root) {
       assert(typeof value.apiVersion==='string'&&typeof value.kind==='string',`API_PRODUCT_SCRIPT_IDENTITY_UNRESOLVED: ${source}:${tree.getLineAndCharacterOfPosition(node.getStart(tree)).line+1}`);
       if(!/(?:^|\/)v[0-9]/u.test(value.apiVersion))return;
       const line=tree.getLineAndCharacterOfPosition(node.getStart(tree)).line+1;
-      result.push({value,context:{apiVersion:value.apiVersion,kind:value.kind,path:source,document:index,sourceDigest:hash(bytes),producer:'script-shape',line,...(identityWitness?{identityWitness}:{}),
-        outputDigest:hash(JSON.stringify(value)),inputs:[...serializedInputs].sort(),inputDigest:hash(JSON.stringify([...serializedInputs].sort().map(input=>[input,hash(fs.readFileSync(path.join(root,input)))]))),expressions:[...opaque.values()]}});
+      const output={value,context:{apiVersion:value.apiVersion,kind:value.kind,path:source,document:index,sourceDigest:hash(bytes),producer:'script-shape',line,...(identityWitness?{identityWitness}:{}),
+        ...(wireResponsePurpose?{protocolResponse:{direction:'response',receiver:'loopback-http-response.end',fixtureOnly:true,runtimeExecutionAuthorized:false,apiApplyAuthorized:false}}:{}),
+        outputDigest:hash(JSON.stringify(value)),inputs:[...serializedInputs].sort(),inputDigest:hash(JSON.stringify([...serializedInputs].sort().map(input=>[input,hash(fs.readFileSync(path.join(root,input)))]))),expressions:[...opaque.values()]}};
+      if(wireResponsePurpose)originalClientWireResponseContexts.set(output.context,{root,proof:wireResponsePurpose,contextSha256:hash(JSON.stringify(output.context))});result.push(output);
     });
+    // Finite Source-qualified supported-schema publications, not evaluated
+    // environment bytes. The parser scaffold is removed before any result.
+    const immutableImagePublicationSources={
+  "tests/verification/e2e/nova-a11y-production-preflight.mts": {
+    "sourceSha256": "942e0efd7bcdc5b4e9e52c78d12f8790e07935919f88ec51e17d5729c12e1914",
+    "expression": "immutableImage",
+    "environmentExpression": "process.env.KUBECLAW_A11Y_PREFLIGHT_IMAGE",
+    "validationRegex": "/^(?:[A-Za-z0-9.-]+(?::[0-9]{1,5})?\\/[a-z0-9]+(?:[._\\/-][a-z0-9]+)*)@(sha256:[a-f0-9]{64})$/u",
+    "validationMeaning": "Same actual const image=immutableImage?REGEX.exec(immutableImage):null; preceding if(!image)throw, before exact serialization in same try branch. Whole reviewed Source seals binding/guard order and no reassignment; no generic regex-name inference."
+  },
+  "tests/verification/e2e/nova-http-production-preflight.mts": {
+    "sourceSha256": "71e5a87027f0286e851c9bd05d66372b0f07d240b63aaaf16634b8884a383ad2",
+    "expression": "immutableImage",
+    "environmentExpression": "process.env.KUBECLAW_HTTP_PREFLIGHT_IMAGE",
+    "validationRegex": "/^(?:[A-Za-z0-9.-]+(?::[0-9]{1,5})?\\/[a-z0-9]+(?:[._/-][a-z0-9]+)*)@(sha256:[a-f0-9]{64})$/u",
+    "validationMeaning": "Same actual const image=immutableImage?REGEX.exec(immutableImage):null; preceding if(!image)throw, before exact serialization in same try branch. Whole reviewed Source seals binding/guard order and no reassignment; no generic regex-name inference."
+  },
+  "tests/verification/e2e/nova-kubernetes-fixture-production-preflight.mts": {
+    "sourceSha256": "573850e7b8eacfc9dfdc59abf5d8426261c1f63fd07b920077a7171d5d2a7615",
+    "expression": "immutableImage",
+    "environmentExpression": "process.env.KUBECLAW_KUBERNETES_PREFLIGHT_IMAGE",
+    "validationRegex": "/^(?:[A-Za-z0-9.-]+(?::[0-9]{1,5})?\\/[a-z0-9]+(?:[._/-][a-z0-9]+)*)@(sha256:[a-f0-9]{64})$/u",
+    "validationMeaning": "Same actual const image=immutableImage?REGEX.exec(immutableImage):null; preceding if(!image)throw, before exact serialization in same try branch. Whole reviewed Source seals binding/guard order and no reassignment; no generic regex-name inference."
+  },
+  "tests/verification/e2e/nova-lighthouse-production-preflight.mts": {
+    "sourceSha256": "4c6586657d5f00fac906af9dcd03fa0f7e98330f1b4ffd1bc74d2489357936d2",
+    "expression": "immutableImage",
+    "environmentExpression": "process.env.KUBECLAW_LIGHTHOUSE_PREFLIGHT_IMAGE",
+    "validationRegex": "/^(?:[A-Za-z0-9.-]+(?::[0-9]{1,5})?\\/[a-z0-9]+(?:[._\\/-][a-z0-9]+)*)@(sha256:[a-f0-9]{64})$/u",
+    "validationMeaning": "Same actual const image=immutableImage?REGEX.exec(immutableImage):null; preceding if(!image)throw, before exact serialization in same try branch. Whole reviewed Source seals binding/guard order and no reassignment; no generic regex-name inference."
+  },
+  "tests/verification/e2e/nova-security-production-preflight.mts": {
+    "sourceSha256": "23fda5ee402cefae2e402c16b7dd823eadf473ce7805443ce4e1ec614b7ad2b3",
+    "expression": "immutableImage",
+    "environmentExpression": "process.env.KUBECLAW_SECURITY_PREFLIGHT_IMAGE",
+    "validationRegex": "/^(?:[A-Za-z0-9.-]+(?::[0-9]{1,5})?\\/[a-z0-9]+(?:[._\\/-][a-z0-9]+)*)@(sha256:[a-f0-9]{64})$/u",
+    "validationMeaning": "Same actual const image=immutableImage?REGEX.exec(immutableImage):null; preceding if(!image)throw, before exact serialization in same try branch. Whole reviewed Source seals binding/guard order and no reassignment; no generic regex-name inference."
+  },
+  "tests/verification/e2e/nova-tailscale-production-preflight.mts": {
+    "sourceSha256": "0301c3d4e7cc7e15d2a5e58f103a92cd782d4d17ce3675cc57f36a024650f370",
+    "expression": "immutableImage",
+    "environmentExpression": "process.env.KUBECLAW_TAILSCALE_PREFLIGHT_IMAGE",
+    "validationRegex": "/^(?:[A-Za-z0-9.-]+(?::[0-9]{1,5})?\\/[a-z0-9]+(?:[._/-][a-z0-9]+)*)@(sha256:[a-f0-9]{64})$/u",
+    "validationMeaning": "Same actual const image=immutableImage?REGEX.exec(immutableImage):null; preceding if(!image)throw, before exact serialization in same try branch. Whole reviewed Source seals binding/guard order and no reassignment; no generic regex-name inference."
+  }
+};
+    function symbolicImmutableImagePublications(publication,argument){
+      const authority=immutableImagePublicationSources[source];
+      if(!authority||hash(bytes)!==authority.sourceSha256||!ts.isCallExpression(publication)
+        ||publication.expression.getText(tree)!=='fs.writeFileSync'||publication.arguments[1]!==argument
+        ||!ts.isCallExpression(argument)||!ts.isPropertyAccessExpression(argument.expression)
+        ||argument.expression.name.text!=='join'||argument.arguments.length!==1
+        ||!ts.isStringLiteralLike(argument.arguments[0])||argument.arguments[0].text!=='\n'
+        ||!ts.isArrayLiteralExpression(argument.expression.expression))return null;
+      const scaffold='kubeclaw-internal-symbolic-image-scaffold';let holes=0;const lines=[];
+      for(const item of argument.expression.expression.elements){
+        if(ts.isStringLiteralLike(item)){if(item.text.includes(scaffold))return null;lines.push(item.text);continue;}
+        if(!ts.isTemplateExpression(item)||item.head.text!=='          image: '||item.templateSpans.length!==1
+          ||item.templateSpans[0].literal.text!==''||!ts.isIdentifier(item.templateSpans[0].expression)
+          ||item.templateSpans[0].expression.text!==authority.expression)return null;
+        holes++;lines.push(item.head.text+scaffold);
+      }
+      if(holes!==1)return null;
+      const documents=YAML.parseAllDocuments(lines.join('\n'));if(documents.some(document=>document.errors.length))return null;
+      const resources=documents.map(document=>document.toJS());let replaced=0;
+      for(const resource of resources){
+        if(typeof resource?.apiVersion!=='string'||typeof resource?.kind!=='string')return null;
+        for(const container of resource?.spec?.template?.spec?.containers??[]){
+          if(container.image===scaffold){container.image={__docsDynamicExpression:authority.expression,
+            __docsDynamicScalarProvenance:{type:'string',pattern:authority.validationRegex,
+              source:source,environmentExpression:authority.environmentExpression,
+              validation:'Source-qualified immutable image rejection before publication',
+              serializedScalarOnly:true,actualValueObserved:false}};replaced++;}
+        }
+      }
+      if(replaced!==1||JSON.stringify(resources).includes(scaffold))return null;
+      return resources.map((resource,index)=>({value:resource,context:{apiVersion:resource.apiVersion,kind:resource.kind,path:source,
+        document:constructors.length+index,sourceDigest:hash(bytes),producer:'script-shape',profile:'source-qualified-symbolic-image-yaml',
+        line:tree.getLineAndCharacterOfPosition(publication.getStart(tree)).line+1,
+        outputDigest:hash(JSON.stringify(resource)),outputDigestMeaning:'symbolic-supported-schema-model-not-emitted-bytes',
+        actualSerializedBytesObserved:false,inputs:[],inputDigest:hash('[]'),expressions:[authority.expression],
+        identityWitness:{profile:'source-qualified-immutable-image-scalar',sourceSha256:authority.sourceSha256,
+          environmentExpression:authority.environmentExpression,validationRegex:authority.validationRegex,
+          runtimeExecutionAuthorized:false,apiApplyAuthorized:false}}}));
+    }
     for(const publication of serializedPublications) {
       if(selectedRetainedDocumentaryReturnPurpose(source,tree,publication,topLevelPurposes))continue;
       if(selectedNodeTestFixtureNodePurpose(source,tree,publication,nodeTestFixturePurpose))continue;
@@ -6208,7 +6438,10 @@ export function discoverScriptApiOutputs(root) {
       for(let parent=publication.parent;parent;parent=parent.parent)if(ts.isFunctionLike(parent)){guarded=guardedTestFunctions.has(parent);break;}
       if(guarded)continue;
       for(const argument of publication.arguments) {
+        const clientReceiverPurpose=selectedOriginalClientHttpReceiverPurpose(source,tree,publication,argument,topLevelPurposes,'serialized');
+        if(clientReceiverPurpose){if(clientReceiverPurpose.kind==='client-config-write'){const line=tree.getLineAndCharacterOfPosition(publication.getStart(tree)).line+1;const roles=outputRoles.filter(role=>role.line===line&&role.sink==='fs.writeFileSync');assert(roles.length===1,'API_PRODUCT_CLIENT_HTTP_RECEIVER_UNQUALIFIED: actual client-config slot');qualifiedClientConfigurationRoles.add(roles[0]);}continue;}
         const value=evaluate(argument);
+        if(value?.__docsDynamicExpression){const symbolic=symbolicImmutableImagePublications(publication,argument);if(symbolic){result.push(...symbolic);continue;}}
         if(value?.__docsDynamicExpression&&/apiVersion[\s\S]*kind|kind[\s\S]*apiVersion/u.test(value.__docsDynamicExpression)
           &&!selectedStandaloneSerializedReceivingPurpose(source,tree,publication,argument,outputRoles,topLevelPurposes)
           &&!selectedManifestValidationPublicationPurpose(source,tree,publication,argument,outputRoles,topLevelPurposes,'opaque'))throw new Error(`API_PRODUCT_SCRIPT_SERIALIZED_OUTPUT_UNQUALIFIED: ${source}`);
@@ -6230,7 +6463,7 @@ export function discoverScriptApiOutputs(root) {
         }
       }
     }
-    assert(!outputRoles.some(role=>role.role==='api'&&!qualifiedInvalidVerificationInputRoles.has(role)&&!selectedNodeTestFixturePurpose(source,role,nodeTestFixturePurpose,true))||result.some(output=>output.context.path===source),`API_PRODUCT_SCRIPT_OUTPUT_IDENTITY_UNQUALIFIED: ${source}`);
+    assert(!outputRoles.some(role=>role.role==='api'&&!qualifiedClientConfigurationRoles.has(role)&&!qualifiedInvalidVerificationInputRoles.has(role)&&!selectedNodeTestFixturePurpose(source,role,nodeTestFixturePurpose,true))||result.some(output=>output.context.path===source),`API_PRODUCT_SCRIPT_OUTPUT_IDENTITY_UNQUALIFIED: ${source}`);
   }
   for(const output of result)for(const source of output.context.inputs??[])classifiedDependencies.add(source);
   // Entry aliases carry the canonical source's actual line/digest and inputs;

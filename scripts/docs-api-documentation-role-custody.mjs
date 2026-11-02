@@ -303,6 +303,9 @@ export const documentationExecutableRoleRecipes = {
     "expressionSha256": "da98220756a28c19859ca3c3c759869119494d7261890a0228f2a584f40a6209"
   },
   {
+    "expressionSha256": "d02782c52bc0619d70896671013066c6596a6c842093fbe6a17786d4a703bde8"
+  },
+  {
     "expressionSha256": "e59f5079dd39b96b2fc399f5abb3d1aad44c50b4e256681eb8397e7a797ab277"
   },
   {
@@ -310,6 +313,9 @@ export const documentationExecutableRoleRecipes = {
   },
   {
     "expressionSha256": "a425255e6954737a5ed90e409739ef8efc40eb2b223eeb0d654d52a219ac9fef"
+  },
+  {
+    "expressionSha256": "d01ecd7d7170b884339fb37e7e59970635071a51ab650302fc1fa370413761e2"
   },
   {
     "expressionSha256": "43a22af5e43cb9ca5fac1b9f0c1646f270c8cc45ce542dbd3b544b40e2490124"
@@ -399,7 +405,7 @@ export const documentationExecutableRoleRecipes = {
     "expressionSha256": "5a61aace8ba69be1179466f6c1b6ff69114de4d3bc786724ce21f78f06627702"
   },
   {
-    "expressionSha256": "59eb708c500ec69dc2a9663ddaf9f2454702643b2e1224d58e8e22bd08ea1aa9"
+    "expressionSha256": "884518d7b7adceba6e42d86722794622b6226464570870dadcbf9dac6c8c0b21"
   },
   {
     "expressionSha256": "45043f5d31a5a9b7b9d18fc901567cf91d9a706938a43a3ed888a67f4064b7df"
@@ -423,6 +429,9 @@ export const documentationExecutableRoleRecipes = {
     "expressionSha256": "d49a629bc278a7cc186e0fcc5da921a8dd1c8423a81a756b48767d648dfc0af8"
   },
   {
+    "expressionSha256": "c7a152d8c46b821469f6cf31c917458fce6f8217ae22c4aed45772f7a5bd0433"
+  },
+  {
     "expressionSha256": "b29272df3280199dc8709c5717c8f8afda3d8351d22731d54ccc6e7eef682618"
   },
   {
@@ -430,6 +439,9 @@ export const documentationExecutableRoleRecipes = {
   },
   {
     "expressionSha256": "afa50dac1f1a47017ef620757042c42f4547168377a9f89bf523963268fd8858"
+  },
+  {
+    "expressionSha256": "b2ed9e56c62f7d4d01984da705c97ae6e85f56e2872eca42584004a33a6ef5f5"
   },
   {
     "expressionSha256": "0e7a01f32d92374cb3b3eba2b24a1143b61575cffb58b411c19fb7053ce82870"
@@ -454,6 +466,9 @@ export const documentationExecutableRoleRecipes = {
   },
   {
     "expressionSha256": "8cd45800f408ec06e454958444a20ca9aa569d291a1df22d6c317d0dcc690b9e"
+  },
+  {
+    "expressionSha256": "85370e00f08202a58ac900eac265943d420257fb61a7889db87d27e85092c5dc"
   },
   {
     "expressionSha256": "2f47cf142a1c3fc2fde3794044c22f4b59dcc4c31d481d35e964c5da096ed827"
@@ -528,7 +543,7 @@ export const documentationExecutableRoleRecipes = {
     "expressionSha256": "9c8f9e57deb9483f68e5f75fc59e5794c4cc618d935e1be2c1fe1536945581aa"
   },
   {
-    "expressionSha256": "6c6db18a5ef0db2f17f8f5a9508c1729f8539bf9a9c58480b49ab0094a8548c0"
+    "expressionSha256": "11fc373d0f956262894cbf48f0701cfec92cdf27a3858999acded6cf089a17c0"
   },
   {
     "expressionSha256": "76d7338c29c7149ddaff1061573f03f59f63c2085d7f4de6c8248de84017dfca"
@@ -559,6 +574,12 @@ export const documentationExecutableRoleRecipes = {
   },
   {
     "expressionSha256": "549e5fdeb7f66f24dd2a41184b6fa99c7389dbfa01f5403bfc00c63a80722f05"
+  },
+  {
+    "expressionSha256": "234ab6782ec206550f4fcc89b48360312a84c87c298e5ed6bc116be9b71295d6"
+  },
+  {
+    "expressionSha256": "2aa0b967afcfb002745c9dc2a76b4917a0bdd3dc22e13fc006fc0e45210a5b26"
   },
   {
     "expressionSha256": "3312a17003efb2483be700b067d6575ffda1831dd046fea519d33aaf173e32c0"
@@ -636,7 +657,7 @@ export const documentationExecutableRoleRecipes = {
     "expressionSha256": "23f8ffe64b7fa6557f778121a6c050adfea672efeffdef0ee17768d219793389"
   }
 ],
-    "factsDigest": "c3b11d59ef62209e71dc6e5927492b3ffb4f4a9db20ad6ffc9af73178b3dd24f",
+    "factsDigest": "d470ec782c7ef12c96c0672dff67cdebfb0a26bdb911b5d5deae791cf4dd0b9a",
     "authorityInputs": [
       {
         "path": "scripts/docs-api-go-output-role-adapter.go",
@@ -730,134 +751,140 @@ export const documentationExecutableRoleRecipes = {
     "role": "documentation-consumer",
     "consumer": "Selected API documentation scope/receiver/field join and reference rendering; output is documentation descriptors or rendered reader text.",
     "selectors": [
-      {
-        "expressionSha256": "01e362a0dfcb5937837002f538e20e0342f6519861103f1c2a86ad06f2447c49"
-      },
-      {
-        "expressionSha256": "2ab4e57d1746e6d6386b6986a30a3684629d8ed8788c5a74aca3bdcb4615b8b6"
-      },
-      {
-        "expressionSha256": "b112b4d4497eb3f9d42bf9159268f55b8af69a5a38638bae09aaa490f986e885"
-      },
-      {
-        "expressionSha256": "4fd0ac82ee963ce8286ddc6ef3c91f8b512deb719b7bab15ca8cece76468c90a"
-      },
-      {
-        "expressionSha256": "712d2de631a3b6334a65cd1049d286c5ef16ee27e4dab4e8395e270d9f432a5b"
-      },
-      {
-        "expressionSha256": "1b8960389a3bd04c7ae042cf22e81e7f838eb1cad84ef39ea8e8f61d125891cd"
-      },
-      {
-        "expressionSha256": "c2b2a842cee7877415820857f8ba83cd238c719b04d81b9d7fd58b70a183e4e0"
-      },
-      {
-        "expressionSha256": "59fef79cb6d9901916f7e85aa63715bfdd54cbf19b76ff9409277e0b0b6e9a77"
-      },
-      {
-        "expressionSha256": "a0f9ec13340c20ac6b7893579665b5f6f1aeecbd1c93024a48ca3e7a42e8b847"
-      },
-      {
-        "expressionSha256": "024da74dcd044c35ed335347868f7750e7874f2ffdc96b8aec5e29c5af97d4a8"
-      },
-      {
-        "expressionSha256": "b2b20a6c3ad5d81d77d283df09e832aebbef4ddd3008e06d742730db654aacbe"
-      },
-      {
-        "expressionSha256": "1730a414448a0c2d6e932810b752d19d531b70b25527a107e6e90cb44bc9a0ff"
-      },
-      {
-        "expressionSha256": "f4682bf3b57a08ce4c7af4b605fc3d1717933e4d708672c76e3880e952809955"
-      },
-      {
-        "expressionSha256": "3ef9a780a699b15c4908ef64826e5d613a6b43f89004d7a92a1ab035a1910a29"
-      },
-      {
-        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
-      },
-      {
-        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
-      },
-      {
-        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
-      },
-      {
-        "expressionSha256": "144ba97479b807ced66b58fc4d78a1dfad2782794a3b6ab85b84d1c835e73c72"
-      },
-      {
-        "expressionSha256": "7ad4d795eb4ad45d7b9221c31552ac7d1ba4ca6471947872ed78e731604e4ae8"
-      },
-      {
-        "expressionSha256": "43738ff82bf3282fbc84b4f3db0c4763291dc6d8e750fe892c3d5f6014bbce05"
-      },
-      {
-        "expressionSha256": "9d196a1875159c508cfac6bfb2060ff64a56d5d38cb28623767e3b75870fba67"
-      },
-      {
-        "expressionSha256": "4862c424d119d1ffa90988cf1c966584822526b60b3ac0052ea5c294b1381c7e"
-      },
-      {
-        "expressionSha256": "6e6a87ea1c7a3764d04535a294cfc46a4a2d3b9be5ae1dde60ec53985a082a88"
-      },
-      {
-        "expressionSha256": "e921fe9e3fdd0592a0d551bf7f0c58c27ce7bb48e1def5826ece90def1f3ee3d"
-      },
-      {
-        "expressionSha256": "670bcabd2c502876bee4b2dbfe6c7398dc5cb6b7201bf394054940e64f299884"
-      },
-      {
-        "expressionSha256": "d2fd72303a19d3d0b69fb1aa0b0b1574fe244500f8d884133ab1b5ab902befc6"
-      },
-      {
-        "expressionSha256": "d2914dab8358b1ac97c65a910fa15bf183b20d97318a4a2ce1babf5df398e674"
-      },
-      {
-        "expressionSha256": "2010e63b1032752c5c6137c1551c9876cdcb53afd36b5f8c13c268a56c1b92cc"
-      },
-      {
-        "expressionSha256": "a3bcd860a475af4204da1d87ef014cf1d30cb2ba9a1c8cbf61afb8ed3752daab"
-      },
-      {
-        "expressionSha256": "0006f17878f27f6b85eb07d98747c2e4ea2d945aad3df6649e215ce351630d78"
-      },
-      {
-        "expressionSha256": "8f1ffdbe9f0cf0b40a2c8a8b125b197366a2f1585a902b184f3ad6dda4ba9606"
-      },
-      {
-        "expressionSha256": "bb5fd9548963166fb1851e62c8da790cc5e81633f222e58acf530e07832273b3"
-      },
-      {
-        "expressionSha256": "e998c51cff84f6ffae1b4a8649b97f98c5bf92ee53c700d361302a9c903386f9"
-      },
-      {
-        "expressionSha256": "f05129a8d7fd809c97818e997b3b2d508ac913f964f0d3eeac4a151d6d1e159a"
-      },
-      {
-        "expressionSha256": "2ce878734058f6bebecd5d398f9b4e7d71c20ca7122dc040721fbc1723be52fc"
-      },
-      {
-        "expressionSha256": "aefe8f22936701746d10a07f18e10ee0427ef55b4cafb2c90ddfab41e68effda"
-      },
-      {
-        "expressionSha256": "0ede978a18bcb8c2f09a4214ea64d9bb4bc70a91fd39a8692c7983fe84ab6989"
-      },
-      {
-        "expressionSha256": "273e359b2a2973a812d662ae3ae55fb89a49e114b6b91a134fc04248c6d2dbca"
-      },
-      {
-        "expressionSha256": "8581e104e4898c74b663e6aaf632df67a422db459afb1b72b3de255081558630"
-      },
-      {
-        "expressionSha256": "af009207176b5043a601a27995ca399687a9918f7c427a6ccd5f446595a516be"
-      },
-      {
-        "expressionSha256": "ae169e482bfda58acde811a83296166819b6a237d5a1b25cfbc0df1edc60b12a"
-      },
-      {
-        "expressionSha256": "041aa7206a41cf5c3bdd66f61797f9b67c06085f6d0076ce1f84e2a9c8d57db8"
-      }
-    ],
-    "factsDigest": "9c632e55298bbbf34c467740ac91ae63bd0b188695ab184519f166a8b8a9ab05",
+  {
+    "expressionSha256": "01e362a0dfcb5937837002f538e20e0342f6519861103f1c2a86ad06f2447c49"
+  },
+  {
+    "expressionSha256": "2ab4e57d1746e6d6386b6986a30a3684629d8ed8788c5a74aca3bdcb4615b8b6"
+  },
+  {
+    "expressionSha256": "16adffbc0b137ad9024bc974bf08568b5c677f07eff82a3171644b01c50b8637"
+  },
+  {
+    "expressionSha256": "4fd0ac82ee963ce8286ddc6ef3c91f8b512deb719b7bab15ca8cece76468c90a"
+  },
+  {
+    "expressionSha256": "712d2de631a3b6334a65cd1049d286c5ef16ee27e4dab4e8395e270d9f432a5b"
+  },
+  {
+    "expressionSha256": "1b8960389a3bd04c7ae042cf22e81e7f838eb1cad84ef39ea8e8f61d125891cd"
+  },
+  {
+    "expressionSha256": "c2b2a842cee7877415820857f8ba83cd238c719b04d81b9d7fd58b70a183e4e0"
+  },
+  {
+    "expressionSha256": "59fef79cb6d9901916f7e85aa63715bfdd54cbf19b76ff9409277e0b0b6e9a77"
+  },
+  {
+    "expressionSha256": "39f0c5f918ded805ff5b39d0ce2b1c6f1b5dc5e319c257ee8647e32da12605a1"
+  },
+  {
+    "expressionSha256": "024da74dcd044c35ed335347868f7750e7874f2ffdc96b8aec5e29c5af97d4a8"
+  },
+  {
+    "expressionSha256": "b2b20a6c3ad5d81d77d283df09e832aebbef4ddd3008e06d742730db654aacbe"
+  },
+  {
+    "expressionSha256": "1730a414448a0c2d6e932810b752d19d531b70b25527a107e6e90cb44bc9a0ff"
+  },
+  {
+    "expressionSha256": "f4682bf3b57a08ce4c7af4b605fc3d1717933e4d708672c76e3880e952809955"
+  },
+  {
+    "expressionSha256": "42301787ba3d64b79da17edce17fbcba8d49c9092267e5bc6535c13555ca580b"
+  },
+  {
+    "expressionSha256": "3ef9a780a699b15c4908ef64826e5d613a6b43f89004d7a92a1ab035a1910a29"
+  },
+  {
+    "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+  },
+  {
+    "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+  },
+  {
+    "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+  },
+  {
+    "expressionSha256": "144ba97479b807ced66b58fc4d78a1dfad2782794a3b6ab85b84d1c835e73c72"
+  },
+  {
+    "expressionSha256": "7ad4d795eb4ad45d7b9221c31552ac7d1ba4ca6471947872ed78e731604e4ae8"
+  },
+  {
+    "expressionSha256": "43738ff82bf3282fbc84b4f3db0c4763291dc6d8e750fe892c3d5f6014bbce05"
+  },
+  {
+    "expressionSha256": "9d196a1875159c508cfac6bfb2060ff64a56d5d38cb28623767e3b75870fba67"
+  },
+  {
+    "expressionSha256": "45f4560c428826e0fab1f63dc40ef22b111daabfc8154d7ed7e6e695976df938"
+  },
+  {
+    "expressionSha256": "6e6a87ea1c7a3764d04535a294cfc46a4a2d3b9be5ae1dde60ec53985a082a88"
+  },
+  {
+    "expressionSha256": "e921fe9e3fdd0592a0d551bf7f0c58c27ce7bb48e1def5826ece90def1f3ee3d"
+  },
+  {
+    "expressionSha256": "670bcabd2c502876bee4b2dbfe6c7398dc5cb6b7201bf394054940e64f299884"
+  },
+  {
+    "expressionSha256": "d2fd72303a19d3d0b69fb1aa0b0b1574fe244500f8d884133ab1b5ab902befc6"
+  },
+  {
+    "expressionSha256": "d2914dab8358b1ac97c65a910fa15bf183b20d97318a4a2ce1babf5df398e674"
+  },
+  {
+    "expressionSha256": "2010e63b1032752c5c6137c1551c9876cdcb53afd36b5f8c13c268a56c1b92cc"
+  },
+  {
+    "expressionSha256": "a3bcd860a475af4204da1d87ef014cf1d30cb2ba9a1c8cbf61afb8ed3752daab"
+  },
+  {
+    "expressionSha256": "0006f17878f27f6b85eb07d98747c2e4ea2d945aad3df6649e215ce351630d78"
+  },
+  {
+    "expressionSha256": "8f1ffdbe9f0cf0b40a2c8a8b125b197366a2f1585a902b184f3ad6dda4ba9606"
+  },
+  {
+    "expressionSha256": "bb5fd9548963166fb1851e62c8da790cc5e81633f222e58acf530e07832273b3"
+  },
+  {
+    "expressionSha256": "e998c51cff84f6ffae1b4a8649b97f98c5bf92ee53c700d361302a9c903386f9"
+  },
+  {
+    "expressionSha256": "f05129a8d7fd809c97818e997b3b2d508ac913f964f0d3eeac4a151d6d1e159a"
+  },
+  {
+    "expressionSha256": "2ce878734058f6bebecd5d398f9b4e7d71c20ca7122dc040721fbc1723be52fc"
+  },
+  {
+    "expressionSha256": "aefe8f22936701746d10a07f18e10ee0427ef55b4cafb2c90ddfab41e68effda"
+  },
+  {
+    "expressionSha256": "0ede978a18bcb8c2f09a4214ea64d9bb4bc70a91fd39a8692c7983fe84ab6989"
+  },
+  {
+    "expressionSha256": "273e359b2a2973a812d662ae3ae55fb89a49e114b6b91a134fc04248c6d2dbca"
+  },
+  {
+    "expressionSha256": "8581e104e4898c74b663e6aaf632df67a422db459afb1b72b3de255081558630"
+  },
+  {
+    "expressionSha256": "af009207176b5043a601a27995ca399687a9918f7c427a6ccd5f446595a516be"
+  },
+  {
+    "expressionSha256": "ae169e482bfda58acde811a83296166819b6a237d5a1b25cfbc0df1edc60b12a"
+  },
+  {
+    "expressionSha256": "041aa7206a41cf5c3bdd66f61797f9b67c06085f6d0076ce1f84e2a9c8d57db8"
+  },
+  {
+    "expressionSha256": "188f43ca0bcbe2410b2793c635a8cb3e83a1f53d7387582be7c40ee4c5aac39e"
+  }
+],
+    "factsDigest": "7b84313cc1e32d73e649bd2754a0fe1c2f67e850974b6cdfaba5c6c742d94f54",
     "authorityInputs": []
   },
   "scripts/docs-api-python-output-adapter.py": {
@@ -1136,7 +1163,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "9efac25cb0d8a53fc3a31aec649afa2cd99102c34366428833c403eccaef3fbe"
       }
     ],
-    "factsDigest": "5ef9cc6191ff926d360bfca977e9eb50480a64f4534193adec60495be90f4787",
+    "factsDigest": "4400240045cb33be7a522ca5ebfdf93c69d512b53f9ed6294d3c5c07b1199063",
     "authorityInputs": []
   },
   "scripts/docs-api-schema-authorities.mjs": {
@@ -1983,7 +2010,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "7602a8f927b47cd0b4b4f2501bccd41bb8e4e4ea43e571cf4bce62f3c3717191"
       }
     ],
-    "factsDigest": "4b30b246004b99b4f9936eb32681c4fc7be16401dc0eaf81e0beda3e4c1c582e",
+    "factsDigest": "1042456f8c50f6a5279384e9fd72e771a99aeb9fc56a582a35ea621debb9e284",
     "authorityInputs": [
       {
         "path": "scripts/vendor-external-helm-authorities.mjs",
@@ -2134,7 +2161,7 @@ export const documentationExecutableRoleRecipes = {
     "expressionSha256": "cba76d80649d6ce8d92897a224d01ee9877a1807a9de9e765cdad79d29f912ce"
   }
 ],
-    "factsDigest": "bc79c8bfe99e5633913bedf2f5a07a1ac3dcd09e76c88992c0bec5c61ec11f7e",
+    "factsDigest": "685de79692dc7268fb3529f9b51fee17f80b2a05de0aec1cda886c419c2d0d10",
     "authorityInputs": []
   },
   "scripts/docs-governance.mjs": {
@@ -10456,7 +10483,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/docs-api-output-discovery.mjs",
         "canonical": "scripts/docs-api-output-discovery.mjs",
-        "sha256": "f64abf7e3628cd48fd6859866d0b32008cba4ea6eb6cc24e5093f3b75f229e60"
+        "sha256": "afbe80df538bc67a236fb431fda826eb241d45481e509b21b20c32d7f6c5a3c3"
       },
       {
         "path": "scripts/docs-helm-memory-chart.mjs",
@@ -10501,7 +10528,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/docs-api-output-discovery.mjs",
         "canonical": "scripts/docs-api-output-discovery.mjs",
-        "sha256": "f64abf7e3628cd48fd6859866d0b32008cba4ea6eb6cc24e5093f3b75f229e60"
+        "sha256": "afbe80df538bc67a236fb431fda826eb241d45481e509b21b20c32d7f6c5a3c3"
       },
       {
         "path": "scripts/docs-memory-inputs.mjs",
@@ -10791,7 +10818,7 @@ const reviewedPublicationParserRecipe=frozenRecipes({
     },
     {
       "path": "scripts/docs-api-output-discovery.mjs",
-      "sha256": "f64abf7e3628cd48fd6859866d0b32008cba4ea6eb6cc24e5093f3b75f229e60"
+      "sha256": "afbe80df538bc67a236fb431fda826eb241d45481e509b21b20c32d7f6c5a3c3"
     },
     {
       "path": "scripts/tests/api-output-publication-native-custody.test.mjs",

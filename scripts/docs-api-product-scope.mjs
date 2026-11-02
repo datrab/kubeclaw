@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 import YAML from 'yaml';
-import { discoverHelmApiOutputs, discoverScriptApiOutputs, discoverGoApiOutputs, discoverShellApiOutputs, discoverTransformedApiOutputs, discoverInfrastructureApiOutputs, discoverExternalChartApiOutputs } from './docs-api-output-discovery.mjs';
+import { isQualifiedOriginalClientWireResponseContext, discoverHelmApiOutputs, discoverScriptApiOutputs, discoverGoApiOutputs, discoverShellApiOutputs, discoverTransformedApiOutputs, discoverInfrastructureApiOutputs, discoverExternalChartApiOutputs } from './docs-api-output-discovery.mjs';
 import { receiverContracts as clusterConfigurationContracts, clusterConfigurationReceiverContracts } from './docs-kubernetes-cluster-configuration-receiver-contracts.mjs';
 import { receiverContracts as identitySecretContracts, identitySecretReceiverContracts } from './docs-kubernetes-identity-secret-receiver-contracts.mjs';
 import { receiverContracts as prometheusContracts, prometheusSelectedReceiverContracts } from './docs-prometheus-selected-receiver-contracts.mjs';
@@ -493,7 +493,104 @@ export function jsonSecretFieldSelection(apiVersion, kind, transfer) {
 
 // Re-read source documents, not a stored totals/selected-path assertion. Each
 // context digest binds changes, removals and renames to the maintenance gate.
+// Exact authored loopback wire-response fields, not stored-resource requests.
+const wireResponseFieldPaths={
+  "v1/APIVersions": [
+    "$",
+    "$.apiVersion",
+    "$.kind",
+    "$.versions",
+    "$.versions[]"
+  ],
+  "v1/APIGroupList": [
+    "$",
+    "$.apiVersion",
+    "$.kind",
+    "$.groups",
+    "$.groups[]",
+    "$.groups[].name",
+    "$.groups[].versions",
+    "$.groups[].versions[]",
+    "$.groups[].versions[].groupVersion",
+    "$.groups[].versions[].version",
+    "$.groups[].preferredVersion",
+    "$.groups[].preferredVersion.groupVersion",
+    "$.groups[].preferredVersion.version"
+  ],
+  "v1/APIResourceList": [
+    "$",
+    "$.apiVersion",
+    "$.kind",
+    "$.groupVersion",
+    "$.resources",
+    "$.resources[]",
+    "$.resources[].name",
+    "$.resources[].singularName",
+    "$.resources[].namespaced",
+    "$.resources[].kind",
+    "$.resources[].verbs",
+    "$.resources[].verbs[]"
+  ],
+  "v1/Status": [
+    "$",
+    "$.apiVersion",
+    "$.kind",
+    "$.status",
+    "$.reason",
+    "$.code",
+    "$.message"
+  ],
+  "authorization.k8s.io/v1/SelfSubjectAccessReview": [
+    "$",
+    "$.apiVersion",
+    "$.kind",
+    "$.status",
+    "$.status.allowed"
+  ]
+};
+const wireResponseSource='tests/verification/reliability/tailscale-api-fixture.mjs';
+const wireResponseSourceSha256='c2366885ea90e2fc1680608a512db3cad1bf0a45ec0d58c2d242e9edcda37d34';
+const wireResponseLines=Object.freeze({21:'v1/APIVersions',22:'v1/APIGroupList',25:'v1/APIResourceList',26:'v1/APIResourceList',28:'v1/APIResourceList',30:'authorization.k8s.io/v1/SelfSubjectAccessReview',41:'v1/Status',60:'v1/Status'});
+function isWireResponseKind(apiVersion,kind){return Object.hasOwn(wireResponseFieldPaths,`${apiVersion}/${kind}`);}
+function qualifyWireResponseContexts(apiVersion,kind,contexts,root){
+  if(!isWireResponseKind(apiVersion,kind))return;
+  const file=path.join(root,wireResponseSource);
+  assert(path.isAbsolute(root)&&fs.realpathSync(root)===root&&fs.realpathSync(file)===file&&fs.lstatSync(file).isFile()
+    &&digest(fs.readFileSync(file))===wireResponseSourceSha256,'API_PRODUCT_WIRE_RESPONSE_SOURCE_UNQUALIFIED');
+  assert(contexts.length&&contexts.every(context=>context.path===wireResponseSource&&context.sourceDigest===wireResponseSourceSha256
+    &&context.producer==='script-shape'&&wireResponseLines[context.line]===`${apiVersion}/${kind}`
+    &&context.protocolResponse?.direction==='response'&&context.protocolResponse.receiver==='loopback-http-response.end'
+    &&context.protocolResponse.fixtureOnly===true&&context.protocolResponse.runtimeExecutionAuthorized===false
+    &&context.protocolResponse.apiApplyAuthorized===false),'API_PRODUCT_WIRE_RESPONSE_CONTEXT_UNQUALIFIED');
+}
+export function wireResponseReceiverContracts(apiVersion,kind,selectedPaths=null){
+  const paths=wireResponseFieldPaths[`${apiVersion}/${kind}`];if(!paths)return [];
+  const wanted=selectedPaths??paths;
+  return wanted.map(boundary=>{
+    const fieldPath=typeof boundary==='string'?boundary:boundary.fieldPath,normalized=fieldPath.replace(/\[\d+\]/gu,'[]');
+    assert(paths.includes(normalized),`API_PRODUCT_WIRE_RESPONSE_FIELD_UNQUALIFIED: ${apiVersion}/${kind}:${fieldPath}`);
+    const schema=apiFieldSchemaAuthority(apiVersion,kind,fieldPath,{includeCollectionContract:true});
+    assert(schema.authoritySha256==='483500149ee52ce5753d75f5639101d985bb4f5e902cc05b1ba7627465d62446','API_PRODUCT_WIRE_RESPONSE_SCHEMA_UNQUALIFIED');
+    const observed='This is an authored JSON response member of the local loopback Kubernetes wire fixture. It is not a resource create/update request or a live server observation.';
+    const omitted='No general omitted-field behavior is exercised: only the exact selected response branches are authored. Absence in another response does not invoke request defaulting or prove a consumer fallback.';
+    const nullValue='No null variant is exercised for this field. The fixture JSON serializer is not a typed Kubernetes response validator; no acceptance, rejection or default is inferred.';
+    const emptyValue='Only the literal empty strings/collections present in the sealed response branches are authored. Other empty variants and downstream consumer outcomes are unobserved.';
+    const invalidValue='This fixture has no general schema-validation rejection at send(); malformed or incompatible variants are not qualified. The pinned OpenAPI type is schema authority, not observed runtime validation.';
+    const effect='The callback serializes to the current loopback HTTP response. It performs no cluster create/update/apply through this response; client discovery/authorization handling and the lease PATCH branch remain separate Source contracts.';
+    return {kind,fieldPath,authoritySelector:{apiVersion,kind,fieldPath},purpose:observed,
+      receiver:'Exact Source-qualified loopback response.end(JSON.stringify(value)) and its actual reliability-test callers; standard Kubernetes wire response type.',
+      operationScope:'Response direction only; not a stored-resource request, live API conformance assertion or authorization proof.',
+      omitted,nullValue,emptyValue,invalidValue,changeImpact:effect,
+      crossFieldConditions:['apiVersion/kind select this exact pinned wire type and Source response branch.','An allowed=true fixture response is a test input, not actual authorization.','Schema defaults, request omission behavior and runtime server effects are not observed.'],
+      cases:[{name:'authored response',condition:'The exact sealed callback branch serializes the selected field.',sourceOutcome:observed},{name:'omission limits',condition:'A field is absent in a different authored response branch.',sourceOutcome:omitted},{name:'null/invalid limits',condition:'An untested null or incompatible variant is proposed.',sourceOutcome:nullValue+' '+invalidValue}],
+      evidence:[{url:'https://github.com/datrab/kubeclaw/blob/684822ae08e584dbe135e93d0d6ac55a18c7ddc0/tests/verification/reliability/tailscale-api-fixture.mjs#L17-L60',claim:'Pinned original loopback callback routes, JSON response forwarding, literal wire identities and explicit mutable lease behavior; not native execution evidence.'}],
+      qualificationLimits:['Source-qualified exact fixture receiving context only; no live cluster, upstream decoder, authorization or complete controller acceptance claim.','Pinned original OpenAPI supplies field shape; no unobserved response defaults or request semantics are invented.'],
+      responseProvenance:{direction:'response',fixtureOnly:true,source:wireResponseSource,sourceSha256:wireResponseSourceSha256,schemaAuthoritySha256:schema.authoritySha256,runtimeExecutionAuthorized:false,apiApplyAuthorized:false}};
+  });
+}
+
 export function apiProductSelection(apiVersion, kind, contexts, receivers, root = process.cwd()) {
+  qualifyWireResponseContexts(apiVersion,kind,contexts,root);
   const authority = apiResourceFieldBoundaries(apiVersion, kind);
   const records = new Map(receivers.filter(record => record.kind === kind).map(record => [canonical(record.fieldPath), record]));
   const selected = new Map();
@@ -523,18 +620,20 @@ export function apiProductSelection(apiVersion, kind, contexts, receivers, root 
     }
     const bytes = fs.readFileSync(path.resolve(root, context.canonicalSource??context.path), 'utf8');
     assert.equal(digest(bytes), context.sourceDigest, `API_PRODUCT_SOURCE_DRIFT: ${context.path}`);
-    let value;
+    let value;let qualifiedWireResponse=false;
     if (context.producer) {
       const outputs=context.producer==='helm'?discoverHelmApiOutputs(root):context.producer==='go-shape'?discoverGoApiOutputs(root):context.producer==='shell-shape'?discoverShellApiOutputs(root):context.producer==='script-render'?discoverTransformedApiOutputs(root):context.producer==='infrastructure-helm'?discoverInfrastructureApiOutputs(root):context.producer==='external-helm'?discoverExternalChartApiOutputs(root):discoverScriptApiOutputs(root);
       const output=outputs.find(item=>item.context.path===context.path && item.context.document===context.document && item.context.profile===context.profile && item.context.canonicalSource===context.canonicalSource && item.context.entrySource===context.entrySource && item.context.apiVersion===apiVersion && item.context.kind===kind);
       assert(output, `API_PRODUCT_OUTPUT_MISSING: ${context.path} ${context.profile}#${context.document}`);
       assert.deepEqual({...context,owner:undefined,apiVersion,kind},{...output.context,owner:undefined}, `API_PRODUCT_OUTPUT_DRIFT: ${context.path} ${context.profile}`);
+      if(isWireResponseKind(apiVersion,kind)){assert(isQualifiedOriginalClientWireResponseContext(root,output.context),'API_PRODUCT_WIRE_RESPONSE_PRIVATE_CUSTODY_UNQUALIFIED');qualifiedWireResponse=true;}
       value=output.value;
     } else {
       const document = YAML.parseAllDocuments(bytes)[context.document];
       assert(document && !document.errors.length, `API_PRODUCT_DOCUMENT_MISSING: ${context.path}#${context.document}`);
       value = document.toJS();
     }
+    assert(!isWireResponseKind(apiVersion,kind)||qualifiedWireResponse,'API_PRODUCT_WIRE_RESPONSE_PRIVATE_CUSTODY_UNQUALIFIED');
     // Native Go discovery retains net/http constant names as source evidence.
     // Compare their wire values when applying request-specific schema behavior.
     const requestMethod = new Map([
@@ -730,6 +829,8 @@ export function apiProductSelection(apiVersion, kind, contexts, receivers, root 
       continue;
     }
     visit(value);
+    // Exact acquired response fields are not request/default opportunities.
+    if(qualifiedWireResponse)continue;
     if (requestMethod === 'PATCH') continue;
     // Presence is local to the actual object, before array indices become a
     // coverage identity. One item cannot suppress another item's default.
@@ -799,6 +900,7 @@ for (const [apiVersion, records] of versionedApiReceiverRegistries) {
 
 
 export function productApiReceiverRecords(apiVersion, kind, selectedPaths = null) {
+  if(isWireResponseKind(apiVersion,kind))return wireResponseReceiverContracts(apiVersion,kind,selectedPaths);
   const records=versionedApiReceiverRegistries.get(apiVersion)??[];
   if(selectedPaths&&['MutatingWebhookConfiguration','ValidatingWebhookConfiguration'].includes(kind)&&apiVersion==='admissionregistration.k8s.io/v1')return [...records.filter(record=>record.kind!==kind||/^\$\.(metadata(?:\.|\[|$)|apiVersion$|kind$)/.test(record.fieldPath)),...webhookSelectedReceiverContracts(apiVersion,kind,selectedPaths.filter(row=>!/^\$\.(metadata(?:\.|\[|$)|apiVersion$|kind$)/.test(typeof row==='string'?row:row.fieldPath)))];
   if(selectedPaths&&['ServiceAccount','Secret'].includes(kind)&&apiVersion==='v1')return [...records.filter(record=>record.kind!==kind||/^\$\.(metadata(?:\.|\[|$)|apiVersion$|kind$)/.test(record.fieldPath)),...identitySecretReceiverContracts(apiVersion,kind,selectedPaths)];

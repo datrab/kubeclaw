@@ -14347,6 +14347,1306 @@
           }
         ]
       }
+    },
+    "tests/verification/contracts/check-pipeline-security-implementation.mts": {
+      "sha256": "ab51c9a424d0381026a2bf7a876c748f1b091f41d773375d827d03fe7f3eaacc",
+      "operation": "Source-owned security verification consumer: one local charts/kubeclaw Helm template selects Buster/broker settings and asserts rendered CRD fields/RBAC; remaining checks read maintained security/provider/controller sources and call existing pure observation/path/accounting helpers. No cluster/apply operation in this Source; actual chart/API payloads and helpers retain independent guards. Not execution success or runtime safety.",
+      "operationDigest": "ab51c9a424d0381026a2bf7a876c748f1b091f41d773375d827d03fe7f3eaacc",
+      "invocations": [
+        "const rendered = execFileSync('helm', ['template', 'security-proof', 'charts/kubeclaw', '--set', 'agentRole=buster', '--set', 'busterNamespaceBroker.enabled=true'], { encoding: 'utf8' });"
+      ],
+      "operationRecipe": {
+        "language": "TypeScript",
+        "statements": [
+          {
+            "kind": "ImportDeclaration",
+            "syntax": "import assert from 'node:assert/strict';"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntax": "import { execFileSync } from 'node:child_process';"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntax": "import fs from 'node:fs';"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntax": "import path from 'node:path';"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntax": "import { buildRegistry, discoverPackages } from '@kubeclaw/nova-core';"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntax": "import { containedRuntimeSecurityManifest, runtimeSecurityObservationHasValidAccounting, runtimeSecurityObservationIsFresh, runtimeSecurityResultDigest } from '../../../skills/buster/engine/test-gates/kubernetes-runtime-security.ts';"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const root = path.resolve('skills/buster/plugins');"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const registry = buildRegistry(discoverPackages({ installationRoots: [root], trustPolicy: {\n  trustedBuiltinRoots: [root], allowedSourceDigests: new Map(), verifiedAttestations: new Map(), verifierId: 'security-implementation',\n} }));"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const expected = new Map([\n  ['kubeclaw.security-headers@1', ['network.http']],\n  ['kubeclaw.dependency-scan-trivy@1', ['security.scan']],\n  ['kubeclaw.image-scan-trivy@1', ['security.scan']],\n  ['kubeclaw.kubernetes-policy-security@1', ['security.scan']],\n  ['kubeclaw.kubernetes-runtime-security@1', ['kubernetes.runtime-security']],\n]);"
+          },
+          {
+            "kind": "ForOfStatement",
+            "syntax": "for (const [id, capabilities] of expected) {\n  const entry = registry.testProviderContracts.get(id);\n  assert.ok(entry, id);\n  assert.deepEqual(entry.registration.capabilities, capabilities);\n}"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const suite = JSON.parse(fs.readFileSync('contracts/pipeline-test-gate/v1/suites/security.v1.json', 'utf8'));"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.deepEqual(Object.keys(suite.tests), ['security-headers', 'dependency-security', 'image-security', 'kubernetes-policy-security', 'kubernetes-runtime-security']);"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const common = fs.readFileSync('skills/buster/plugins/security-providers/src/common.js', 'utf8');"
+          },
+          {
+            "kind": "ForOfStatement",
+            "syntax": "for (const token of [\"profile: 'strict-v1'\", 'blockingSeverities', 'blockActiveThreats', 'blockMissingFixes', 'expiredAcceptances', 'unusedAcceptances', 'installedVersion', 'fixedVersion', 'reachability']) {\n  assert.match(common, new RegExp(token));\n}"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const scan = fs.readFileSync('skills/buster/engine/test-gates/security-scan-runtime.ts', 'utf8');"
+          },
+          {
+            "kind": "ForOfStatement",
+            "syntax": "for (const token of ['--offline-scan', '--skip-db-update', '--skip-java-db-update', 'SECURITY_SCAN_IMAGE_DENIED', 'SECURITY_SCAN_MANIFEST_DIGEST_MISMATCH']) {\n  assert.match(scan, new RegExp(token));\n}"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const rendered = execFileSync('helm', ['template', 'security-proof', 'charts/kubeclaw', '--set', 'agentRole=buster', '--set', 'busterNamespaceBroker.enabled=true'], { encoding: 'utf8' });"
+          },
+          {
+            "kind": "ForOfStatement",
+            "syntax": "for (const field of ['serviceTargetPort:', 'verifiedImage:', 'manifestDigest:', 'runtimeSecurity:']) {\n  assert.match(rendered, new RegExp(field), `rendered CRD omits ${field}`);\n}"
+          },
+          {
+            "kind": "ForOfStatement",
+            "syntax": "for (const rule of [\n  /resources: \\[\"pods\", \"services\"\\][\\s\\S]{0,100}verbs: \\[\"get\", \"list\"\\]/u,\n  /resources: \\[\"ingresses\"\\][\\s\\S]{0,120}verbs: \\[\"create\", \"get\", \"list\", \"delete\", \"patch\"\\]/u,\n  /resources: \\[\"roles\", \"rolebindings\"\\][\\s\\S]{0,120}verbs: \\[\"create\", \"get\", \"list\", \"delete\", \"patch\"\\]/u,\n]) assert.match(rendered, rule, 'rendered controller RBAC omits required collection read');"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const controller = fs.readFileSync('cmd/buster-namespace-controller/main.go', 'utf8');"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(controller, /inspectRuntimeSecurityState/u);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(controller, /runtimeSecurityStatus/u);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(fs.readFileSync('cmd/buster-namespace-controller/main_test.go', 'utf8'), /TestInspectRuntimeSecurityStateUsesProductionControllerRules/u);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(controller, /runtimeSecurityRefreshDue/u);"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const docker = fs.readFileSync('docker/Dockerfile.buster-runtime', 'utf8');"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(docker, /--download-java-db-only[\\s\\S]*java-db\\/trivy-java\\.db/u);"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const now = Date.parse('2026-09-04T05:00:00.000Z');"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.equal(runtimeSecurityObservationIsFresh('2026-09-04T04:59:55.000Z', now, 10_000), true);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.equal(runtimeSecurityObservationIsFresh('2026-09-04T04:59:49.999Z', now, 10_000), false);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.equal(runtimeSecurityObservationIsFresh('2026-09-04T05:00:06.000Z', now, 10_000), false);"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const manifestPath = path.resolve('tests/verification/e2e/fixtures/nginx-project/k8s/deployment.yaml');"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.equal(containedRuntimeSecurityManifest(path.resolve('.'), manifestPath), manifestPath);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.throws(() => containedRuntimeSecurityManifest(path.resolve('.'), '/etc/hosts'), /KUBERNETES_RUNTIME_SECURITY_PATH_DENIED/u);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.equal(runtimeSecurityResultDigest({ findings: [{ severity: 'high', id: 'runtime:test' }],\n  totalFindingCount: 1, omittedFindingCount: 0, podCount: 1, serviceCount: 1 }),\n  'sha256:acd84670aa1116d19fd0c754654f945113aa5eef220f80a0f9ada5514a1b2d08');"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.equal(runtimeSecurityObservationHasValidAccounting({ findings: [], totalFindingCount: 0, omittedFindingCount: 0 }), true);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.equal(runtimeSecurityObservationHasValidAccounting({ findings: [], totalFindingCount: 1, omittedFindingCount: 1 }), false);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.equal(runtimeSecurityObservationHasValidAccounting({ findings: [{ id: 'runtime:findings:overflow', severity: 'critical' }],\n  totalFindingCount: 1, omittedFindingCount: 1 }), true);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "console.log(JSON.stringify({ ok: true, phase: 'security-implementation', providers: 5, policy: 'strict-v1', realTools: ['trivy', 'http', 'kubernetes-controller'], mocks: 0, emulators: 0 }));"
+          }
+        ]
+      }
+    },
+    "tests/verification/deployment/check-deployment-truth.mjs": {
+      "sha256": "69ba694c5e8ec3a64cc1ced7903bbb69fe549ae19c505351afa038d167fab693",
+      "operation": "Source-owned deployment truth verification: local charts/kubeclaw Helm template default/Buster/Nova/numeric provider profiles are inspected, invalid role/port profiles must fail. ENOENT skips optional Helm section; source-root is explicit CLI selection, not arbitrary-root authority. Additional optional kubeconform may resolve schemas externally; temporary rendered-file write and main-guarded setup-secrets shell probe with local kubectl/patch overrides remain separate native obligations. Regex mentions of deploy/apply/upgrade are assertions over Source text, not executed Helm operations. No remote apply permission or universal offline/read-only claim.",
+      "operationDigest": "69ba694c5e8ec3a64cc1ced7903bbb69fe549ae19c505351afa038d167fab693",
+      "invocations": [
+        "const chart = read('charts/kubeclaw/templates/deployment.yaml');",
+        "const gatewayConfig = read('charts/kubeclaw/templates/configmap-gateway.yaml');",
+        "const swarmConfig = read('charts/kubeclaw/files/config/swarm.config.json');",
+        "const prismWorkloads = read('charts/prism/templates/workloads.yaml');",
+        "const prismJobs = read('charts/prism/templates/jobs.yaml');",
+        "const prismValues = read('charts/prism/values.yaml');",
+        "const prismNetworkPolicies = read('charts/prism/templates/networkpolicy.yaml');",
+        "const values = read('charts/kubeclaw/values.yaml');",
+        "read('charts/kubeclaw/templates/_worker-trust-readiness.tpl'),",
+        "assert.ok(renderPosition>=0 && renderOnlyPosition>renderPosition && cleanupPosition>renderOnlyPosition && upgradePosition>cleanupPosition,'render-only must precede role-specific cleanup, which must precede Helm upgrade');",
+        "const helm = spawnSync(",
+        "'helm',",
+        "['template', 'kubeclaw', path.join(sourceRoot, 'charts/kubeclaw')],",
+        "assert.equal(helm.status, 0, `helm template failed:\\n${helm.stderr}`);",
+        "'helm',",
+        "path.join(sourceRoot, 'charts/kubeclaw'),",
+        "`Buster runtime helm template failed:\\n${busterHelm.stderr}`,",
+        "'helm',",
+        "path.join(sourceRoot, 'charts/kubeclaw'),",
+        "`Nova provider-role helm template failed:\\n${novaHelm.stderr}`,",
+        "'helm',",
+        "path.join(sourceRoot, 'charts/kubeclaw'),",
+        "'helm',",
+        "['template', 'invalid-provider', path.join(sourceRoot, 'charts/kubeclaw'), ...overrides],",
+        "const registryTemplate = read('charts/kubeclaw/templates/_registry-clients.tpl');"
+      ],
+      "operationRecipe": {
+        "language": "TypeScript",
+        "statements": [
+          {
+            "kind": "ImportDeclaration",
+            "syntax": "import assert from 'node:assert/strict';"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntax": "import fs from 'node:fs';"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntax": "import { isImageInput } from '../../../scripts/updates/runtime-inputs.mjs';"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntax": "import os from 'node:os';"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntax": "import path from 'node:path';"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntax": "import { spawnSync } from 'node:child_process';"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntax": "import { loadAll } from 'js-yaml';"
+          },
+          {
+            "kind": "FunctionDeclaration",
+            "syntax": "function sourceRootFromArgs() {\n  const index = process.argv.indexOf('--source-root');\n  return path.resolve(index >= 0 ? process.argv[index + 1] : process.cwd());\n}"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const sourceRoot = sourceRootFromArgs();"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const read = (relativePath) =>\n  fs.readFileSync(path.join(sourceRoot, relativePath), 'utf8');"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const exists = (relativePath) =>\n  fs.existsSync(path.join(sourceRoot, relativePath));"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const chart = read('charts/kubeclaw/templates/deployment.yaml');"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const gatewayConfig = read('charts/kubeclaw/templates/configmap-gateway.yaml');"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const swarmConfig = read('charts/kubeclaw/files/config/swarm.config.json');"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const prismWorkloads = read('charts/prism/templates/workloads.yaml');"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const prismJobs = read('charts/prism/templates/jobs.yaml');"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const prismValues = read('charts/prism/values.yaml');"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const prismNetworkPolicies = read('charts/prism/templates/networkpolicy.yaml');"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const novaDockerfile = read('docker/Dockerfile.nova');"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const busterGatewayDockerfile = read('docker/Dockerfile.buster-gateway');"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const busterRuntimeDockerfile = read('docker/Dockerfile.buster-runtime');"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const prismControlDockerfile = read('docker/Dockerfile.prism-control');"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const prismStudioDockerfile = read('docker/Dockerfile.prism-studio');"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const prismWorkerDockerfile = read('docker/Dockerfile.prism-worker');"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const busterRuntimeEntrypoint = read('docker/buster-runtime-entrypoint.sh');"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const values = read('charts/kubeclaw/values.yaml');"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const novaValues = read('my-values/nova-values.yaml');"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const busterValues = read('my-values/buster-values.yaml');"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const prismAgentValues = read('my-values/prism-agent-values.yaml');"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const litellmConfig = read('my-values/infra/litellm-config.yaml');"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const litellmDeployment = read('my-values/infra/litellm-deployment.yaml');"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const workflow = read('.github/workflows/build-images.yaml');"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const deploy = read('scripts/deploy.sh');"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const dockerignore = read('.dockerignore');"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const networkPolicies = read('my-values/infra/network-policies.yaml');"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const versions = JSON.parse(read('versions.json'));"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const expectedOpenClawVersion = versions.openclaw.version;"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const expectedOpenClawDigest = versions.openclaw.digest;"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const prismAgentDockerfile = read('docker/Dockerfile.prism-agent');"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(prismValues, /kubeclaw-prism-(?:control|studio|worker|ingestion)[^\\n]*tag:|pullPolicy:\\s*Always/,\n  'Prism chart must use digest references without forced pulls');"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  litellmDeployment,\n  /image:\\s*ghcr\\.io\\/berriai\\/litellm@sha256:[a-f0-9]{64}/u,\n  'LiteLLM receives credentials and must use an immutable image digest',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(\n  litellmDeployment,\n  /imagePullPolicy:\\s*Always/u,\n  'digest-pinned LiteLLM must not force redundant image pulls',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(prismWorkloads, /control\\.replicas must be 1 while prism-artifacts uses ReadWriteOnce storage/,\n  'Prism control must not scale a shared ReadWriteOnce artifact volume across nodes');"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(prismNetworkPolicies,\n  /name:\\s*prism-openclaw-agent[\\s\\S]*ternary 8443 8080 \\.Values\\.workerTrust\\.spiffe\\.enabled/,\n  'Prism agent egress must reach control with and without SPIFFE');"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(networkPolicies,\n  /name:\\s*kubeclaw-agents-ingress[\\s\\S]*cidr:\\s*0\\.0\\.0\\.0\\/0[\\s\\S]*port:\\s*18789/,\n  'agent gateway ports must not be open to arbitrary ingress');"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const clusterPolicies = loadAll(read('my-values/infra/cilium-cluster-policies.yaml'));"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const dnsPolicy = clusterPolicies.find(policy => policy?.metadata?.name === 'dtlabs-workload-allow-dns');"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.equal(dnsPolicy?.kind, 'CiliumClusterwideNetworkPolicy');"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.deepEqual(dnsPolicy.spec.endpointSelector, {\n  matchExpressions: [{ key: 'io.kubernetes.pod.namespace', operator: 'NotIn',\n    values: ['kube-system', 'cilium', 'tailscale', 'argocd', 'paperless'] }],\n}, 'the central DNS baseline must select KubeClaw and shared Buster worker namespaces');"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.deepEqual(dnsPolicy.spec.egress, [{\n  toEndpoints: [{ matchLabels: { 'k8s:io.kubernetes.pod.namespace': 'kube-system', 'k8s-app': 'kube-dns' } }],\n  toPorts: [{ ports: [{ port: '53', protocol: 'UDP' }, { port: '53', protocol: 'TCP' }] }],\n}], 'shared workers must retain TCP and UDP DNS egress to the cluster resolver');"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(busterValues, /name:\\s*buster-browser-cgroup[\\s\\S]*mountPath:\\s*\\/var\\/run\\/kubeclaw-browser-cgroup/,\n  'Buster must mount the dedicated browser cgroup subtree');"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(busterValues, /name:\\s*buster-browser-cgroup[\\s\\S]*path:\\s*\\/sys\\/fs\\/cgroup\\/kubeclaw-buster-browser/,\n  'Buster must use the narrow host browser cgroup subtree');"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  busterRuntimeEntrypoint,\n  /canonical_browser_playwright_cgroup_root=\"\\$\\(realpath \"\\$browser_playwright_cgroup_root\"\\)\"[\\s\\S]*expected_browser_playwright_cgroup_root=\"\\$\\(realpath -m \\/var\\/run\\/kubeclaw-browser-cgroup\\)\"[\\s\\S]*canonical_browser_playwright_cgroup_root\" != \"\\$expected_browser_playwright_cgroup_root/,\n  'Buster must compare canonical cgroup paths so the Debian /var/run symlink cannot reject the approved mount',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(busterValues, /mountPath:\\s*\\/sys\\/fs\\/cgroup\\s*$/m,\n  'Buster must not mount the host cgroup root');"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const sharedEgress = loadAll(networkPolicies).find(policy => policy?.metadata?.name === 'kubeclaw-agents-egress').spec.egress;"
+          },
+          {
+            "kind": "ForOfStatement",
+            "syntax": "for (const [label, value, port] of [['app.kubernetes.io/name', 'redis', '6379'], ['app', 'litellm', '4000']]) {\n  assert.ok(sharedEgress.some(rule => rule.toEndpoints?.some(endpoint => endpoint.matchLabels?.[label] === value)\n    && rule.toPorts?.some(group => group.ports?.some(entry => entry.port === port && entry.protocol === 'TCP'))),\n  'lease policies must remain additive to the shared ' + value + ' service egress baseline');\n}"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(networkPolicies, /qdrant|port:\\s*[\"']?633[34]/i, 'retired Qdrant must not retain network access');"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(deploy, /Prism \\$\\{kind\\} image digest is missing or invalid; set PRISM_\\$\\{upper\\}_IMAGE_DIGEST or images\\.\\$\\{kind\\}\\.digest/,\n  'Prism deployment must require immutable image digests from an override or production values');"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(deploy, /rollout restart deployment\\/\"\\$prism_workload\"/,\n  'Prism deployment must not restart immutable workloads to pull mutable tags');"
+          },
+          {
+            "kind": "ForOfStatement",
+            "syntax": "for (const [label, source] of [\n  ['chart', chart],\n  ['values', values],\n  ['image workflow', workflow],\n  ['deploy script', deploy],\n  ['dockerignore', dockerignore],\n]) {\n  assert.doesNotMatch(\n    source,\n    /busterPipeline|buster-pipeline/i,\n    `${label} must not retain the deleted v1 Buster worker`,\n  );\n}"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.equal(\n  exists('docker/Dockerfile.buster-pipeline'),\n  false,\n  'the deleted v1 Buster worker image must stay absent',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.equal(\n  exists('docker/buster-pipeline-entrypoint.sh'),\n  false,\n  'the deleted v1 Buster worker entrypoint must stay absent',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.equal(\n  exists('skills/buster/pipeline'),\n  false,\n  'the deleted v1 Buster runtime must stay absent',\n);"
+          },
+          {
+            "kind": "ForOfStatement",
+            "syntax": "for (const relativePath of [\n  'docker/Dockerfile.nova',\n  'docker/Dockerfile.buster-gateway',\n  'docker/Dockerfile.buster-runtime',\n  'docker/buster-runtime-entrypoint.sh',\n  'docker/Dockerfile.namespace-controller',\n  'docker/Dockerfile.archviewer',\n  'docker/Dockerfile.prism-control',\n  'docker/Dockerfile.prism-studio',\n  'docker/Dockerfile.prism-worker',\n  'docker/Dockerfile.prism-ingestion',\n  'skills/nova/pipeline.ts',\n  'skills/nova/core/cli.ts',\n  'skills/nova/core/src/index.ts',\n  'skills/worker/core/src/index.ts',\n  'skills/buster/engine/src/index.ts',\n  'packaging/runtime/roles/nova.json',\n  'packaging/runtime/roles/buster.json',\n  'scripts/build-runtime-role-bundle.mjs',\n]) {\n  assert.equal(exists(relativePath), true, `${relativePath} must exist`);\n}"
+          },
+          {
+            "kind": "ForOfStatement",
+            "syntax": "for (const buildInput of [\n  'tsconfig.base.json',\n  'docker/Dockerfile.buster-runtime',\n  'docker/buster-runtime-entrypoint.sh',\n  'skills/common/plugin-runtime/sdk/**',\n]) {\n  assert.match(\n    dockerignore,\n    new RegExp(`^!${buildInput.replaceAll('.', '\\\\.').replaceAll('**', '\\\\*\\\\*')}$`, 'm'),\n    `${buildInput} must be present in the narrowed Docker build context`,\n  );\n}"
+          },
+          {
+            "kind": "ForOfStatement",
+            "syntax": "for (const [label, dockerfile] of [\n  ['Nova image', novaDockerfile],\n  ['Buster gateway image', busterGatewayDockerfile],\n  ['Prism agent image', prismAgentDockerfile],\n]) {\n  assert.match(\n    dockerfile,\n    /COPY tsconfig\\.base\\.json \\/tmp\\/tsconfig\\.base\\.json/,\n    `${label} must copy the shared TypeScript configuration before compiling the observer`,\n  );\n}"
+          },
+          {
+            "kind": "ForOfStatement",
+            "syntax": "for (const [label, dockerfile] of [\n  ['Nova image', novaDockerfile],\n  ['Buster gateway image', busterGatewayDockerfile],\n  ['Prism agent image', prismAgentDockerfile],\n]) {\n  const baseVersion = dockerfile.match(/^ARG OPENCLAW_BASE=ghcr\\.io\\/openclaw\\/openclaw:([^@\\s]+)/mu)?.[1];\n  const baseDigest = dockerfile.match(/^ARG OPENCLAW_BASE=ghcr\\.io\\/openclaw\\/openclaw:[^@\\s]+@(sha256:[a-f0-9]{64})/mu)?.[1];\n  const pluginVersion = dockerfile.match(/^ARG OPENCLAW_PLUGIN_VERSION=([^\\s]+)/mu)?.[1];\n  assert.ok(baseVersion, `${label} must pin an OpenClaw base version`);\n  assert.equal(baseVersion, expectedOpenClawVersion, `${label} must use the approved OpenClaw release`);\n  assert.equal(baseDigest, expectedOpenClawDigest, `${label} must pin the verified OpenClaw OCI index`);\n  assert.equal(\n    pluginVersion,\n    baseVersion,\n    `${label} must bake external plugins at the same version as the OpenClaw base`,\n  );\n  assert.match(\n    dockerfile,\n    /require\\('openclaw\\/plugin-sdk\\/diagnostic-runtime'\\)[^\\n]*onDiagnosticEvent/,\n    `${label} must verify the focused observer diagnostics SDK contract against its OpenClaw base`,\n  );\n  assert.match(\n    dockerfile,\n    /NPM_CONFIG_CACHE=\\/tmp\\/openclaw-plugin-npm-cache[^\\n]*openclaw plugins install \"npm:@openclaw\\/acpx@\\$\\{OPENCLAW_PLUGIN_VERSION\\}\" --force --accept-capabilities[\\s\\S]*openclaw plugins install \"npm:@openclaw\\/discord@\\$\\{OPENCLAW_PLUGIN_VERSION\\}\" --force --accept-capabilities[\\s\\S]*npm pack[\\s\\S]*openclaw-plugin-home\\/packs[\\s\\S]*openclaw-plugin-home\\/npm-cache/,\n    `${label} must package pinned plugins and their npm cache for offline runtime installation`,\n  );\n  assert.match(\n    dockerfile,\n    /ARG TARGETARCH[\\s\\S]*keep_codex=codex-acp-linux-x64[\\s\\S]*keep_claude=claude-agent-sdk-linux-x64[\\s\\S]*keep_esbuild=linux-x64[\\s\\S]*keep_codex=codex-acp-linux-arm64[\\s\\S]*keep_claude=claude-agent-sdk-linux-arm64[\\s\\S]*keep_esbuild=linux-arm64/,\n    `${label} must discard ACP binaries for platforms other than the image target`,\n  );\n  assert.doesNotMatch(\n    dockerfile,\n    /cp -a \\/tmp\\/openclaw-plugin-home/,\n    `${label} must not duplicate the multi-gigabyte plugin seed during the build`,\n  );\n}"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  chart,\n  /mountPath:\\s*\\/home\\/node\\/\\.openclaw/,\n  'the setup container must mount plugin state at the same canonical path used by the gateway',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  chart,\n  /name: tmp-permissions[\\s\\S]*chmod 1777 \\/tmp[\\s\\S]*capabilities:[\\s\\S]*add:[\\s\\S]*- FOWNER[\\s\\S]*name: openclaw-state-migration[\\s\\S]*name: init-setup[\\s\\S]*stdin: true[\\s\\S]*tty: true[\\s\\S]*PLUGIN_INSTALL_MODE=\\{\\{ \\.Values\\.pluginSeed\\.installMode \\| quote \\}\\}[\\s\\S]*kubeclaw-plugin-install-mode[\\s\\S]*openclaw plugins uninstall \"\\$plugin_id\" --keep-files --force[\\s\\S]*reset-managed-plugin-projects\\.mjs \\/config\\/npm\\/projects[\\s\\S]*openclaw plugins install \"\\$\\{plugin_spec\\}\" --force --pin --no-enable --accept-capabilities[\\s\\S]*restore-managed-plugin-config\\.mjs[\\s\\S]*openclaw doctor --fix --non-interactive[\\s\\S]*openclaw plugins registry --refresh/,\n  'the setup container must reset stale managed locks before installing official plugins from the authoritative offline cache',\n);"
+          },
+          {
+            "kind": "ForOfStatement",
+            "syntax": "for (const plugin of ['acpx', 'discord']) {\n  assert.ok(values.includes(`\"npm:@openclaw/${plugin}@${expectedOpenClawVersion}\"`),\n    'offline plugin specifications must match the central gateway release');\n}"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(\n  chart,\n  /rm -rf \\/config\\/state|openclaw-plugin-home\\/state/,\n  'plugin cache refresh must preserve the persistent OpenClaw SQLite state',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  busterRuntimeDockerfile,\n  /mkdir -p \\/app \\/home\\/builder/,\n  'the Buster runtime must create /app before assigning its ownership',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  busterGatewayDockerfile,\n  /COPY docker\\/openclaw-tools\\/package\\.json docker\\/openclaw-tools\\/package-lock\\.json \\/opt\\/kubeclaw-tools\\//u,\n  'the Buster gateway JavaScript tools must be installed from a committed lockfile',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.equal(\n  exists('docker/openclaw-tools/package-lock.json'),\n  true,\n  'the Buster gateway JavaScript tool lockfile must be committed',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  busterGatewayDockerfile,\n  /npm ci --prefix \\/opt\\/kubeclaw-tools --ignore-scripts --no-audit --no-fund/u,\n  'the Buster gateway must use the committed JavaScript tool lockfile',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(\n  busterGatewayDockerfile,\n  /npm install -g/u,\n  'the Buster gateway must not resolve global JavaScript tools outside a lockfile',\n);"
+          },
+          {
+            "kind": "ForOfStatement",
+            "syntax": "for (const [label, dockerfile] of [\n  ['Buster runtime image', busterRuntimeDockerfile],\n  ['Prism worker image', prismWorkerDockerfile],\n]) {\n  assert.match(\n    dockerfile,\n    /node \\.?\\/?(?:app\\/)?node_modules\\/playwright\\/cli\\.js install --with-deps chromium/,\n    `${label} must invoke the production Playwright CLI without the pruned dev-dependency symlink`,\n  );\n}"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  dockerignore,\n  /^!tests\\/verification\\/live\\/\\*\\*$/m,\n  'Prism live verification assets must be available to the control image build',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  prismControlDockerfile,\n  /COPY --from=build \\/build\\/tests\\/verification\\/live \\/app\\/prism\\/tests\\/verification\\/live/,\n  'the Prism control image must package its live verification assets',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  prismStudioDockerfile,\n  /COPY --from=build \\/build\\/skills\\/prism\\/server \\/app\\/prism\\/server/,\n  'the Prism Studio image must package every imported server module',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  prismStudioDockerfile,\n  /USER node[\\s\\S]*RUN --mount=type=bind,source=skills\\/prism\\/tests\\/studio-service\\.test\\.mts,target=\\/app\\/prism\\/tests\\/studio-service\\.test\\.mts\\s*\\\\\\n\\s*node --test \\/app\\/prism\\/tests\\/studio-service\\.test\\.mts/,\n  'the final Studio image must pass HTTP regression tests as its runtime user',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  chart,\n  /app-skills-package-set[\\s\\S]*packages\\|packages\\/\\*[\\s\\S]*plugins\\|plugins\\/\\*/,\n  'the chart must accept package-set bundles and protect package roots',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  deploy,\n  /nova-buildkit-preflight[\\s\\S]*kubectl exec[\\s\\S]*deployment\\/agent-nova[\\s\\S]*nova-buildkit-production-preflight\\.mts/,\n  'the live BuildKit proof must execute from Nova through the v2 capability graph',\n);"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const productionPreflights = deploy.match(\n  /cmd_nova_production_preflights\\(\\) \\{[\\s\\S]*?\\r?\\n\\}\\r?\\n\\r?\\ncmd_worker_trust_e2e/u,\n)?.[0];"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.ok(productionPreflights, 'the combined production suite preflight command must exist');"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  productionPreflights,\n  /expectedSuiteIds[\\s\\S]*actualSuiteIds[\\s\\S]*sourceCutover[\\s\\S]*JSON\\.stringify\\(actualSuiteIds\\) !== JSON\\.stringify\\(expectedSuiteIds\\)[\\s\\S]*cmd_nova_unit_preflight[\\s\\S]*cmd_nova_buildkit_preflight[\\s\\S]*cmd_nova_kubernetes_fixture_preflight[\\s\\S]*cmd_nova_http_preflight[\\s\\S]*cmd_nova_tailscale_preflight/u,\n  'the combined preflight must require all source cutovers and run every production-required suite in order',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  productionPreflights,\n  /JSON\\.stringify\\(required\\) !== JSON\\.stringify\\(orchestrated\\)/u,\n  'the combined preflight must fail if a production-required suite has no orchestrated proof',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(\n  deploy,\n  /tests\\/verification\\/live\\/buster-buildkit-production-smoke\\.mjs/,\n  'the BuildKit command must not reference the retired direct-container smoke script',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.ok(isImageInput('.dockerignore'), 'Docker context policy changes must trigger image builds');"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.ok(isImageInput('tsconfig.base.json'), 'shared TypeScript configuration changes must trigger image builds');"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(chart, /execution-buildkit|execution-api-token|executionRuntime/);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(values, /executionRuntime|moby\\/buildkit/);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(novaValues, /BUILDKIT_HOST|executionRuntime|moby\\/buildkit/);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(\n  novaValues,\n  /https?:\\/\\/agent-buster(?::|\\/)/,\n  'Nova must derive Buster endpoints from its configured provider role',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  novaValues,\n  /capabilityProviders:\\s*\\n\\s+buster:\\s*\\n\\s+agentRole:\\s*buster\\s*\\n\\s+capabilities:[\\s\\S]*runtime\\.dispatch:[\\s\\S]*adapter:\\s*openclaw[\\s\\S]*port:\\s*18789[\\s\\S]*test\\.plan\\.execute:[\\s\\S]*adapter:\\s*buster-plan-v1[\\s\\S]*port:\\s*18891/,\n  'Nova must identify Buster through the provider-role contract',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  chart,\n  /KUBECLAW_CAPABILITY_PROVIDERS[\\s\\S]*toJson \\$catalog/,\n  'the chart must render the neutral capability-provider catalog',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(chart, /BUSTER_V2_ENDPOINT|BUSTER_GATEWAY_ORIGIN|busterGateway/);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  busterRuntimeDockerfile,\n  /ARG BUILDKIT_BASE=moby\\/buildkit:v[\\w.-]+-rootless@sha256:[a-f0-9]{64}[\\s\\S]*FROM \\$\\{BUILDKIT_BASE\\} AS buildkit/,\n  'Buster must own a digest-pinned rootless BuildKit runtime',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  busterRuntimeDockerfile,\n  /dist\\/src\\/worker\\.js|buster-runtime-entrypoint/,\n  'the Buster image must run the v2 suite worker',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  busterRuntimeEntrypoint,\n  /--otel-socket-path\\s+\"\\$otel_socket\"/,\n  'rootless BuildKit must place its OTEL trace socket in the writable runtime directory',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  gatewayConfig,\n  /\"kubeclaw-agent-observer\"[\\s\\S]*\"config\"\\s*:\\s*\\{[\\s\\S]*\"enabled\"[\\s\\S]*\"maxEventBytes\"[\\s\\S]*\"maxQueuePerStream\"[\\s\\S]*\"hookTimeoutMs\"/,\n  'the host-native observer must receive its required runtime configuration',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(busterValues, /name:\\s*buster-v2-runtime/);"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const busterRuntimePortBlock = busterValues.match(\n  /extraContainers:[\\s\\S]*?\\n    ports:\\s*\\n(?<ports>[\\s\\S]*?)\\n    startupProbe:/u,\n)?.groups?.ports;"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.ok(busterRuntimePortBlock, 'Buster runtime port block is missing');"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const busterRuntimePortNames = [...busterRuntimePortBlock.matchAll(/^\\s+- name:\\s*(\\S+)\\s*$/gmu)]\n  .map((match) => match[1]);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.deepEqual(busterRuntimePortNames, ['plan-runtime']);"
+          },
+          {
+            "kind": "ForOfStatement",
+            "syntax": "for (const portName of busterRuntimePortNames) {\n  assert.ok(portName.length <= 15, `Buster runtime port name exceeds Kubernetes limit: ${portName}`);\n}"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  chart,\n  /name:\\s*envoy-health,\\s*containerPort:\\s*19000[\\s\\S]*?readinessProbe:\\s*\\n\\s*httpGet:\\s*\\{\\s*path:\\s*\\/ready,\\s*port:\\s*envoy-health\\s*\\}[\\s\\S]*?livenessProbe:\\s*\\n\\s*httpGet:\\s*\\{\\s*path:\\s*\\/health,\\s*port:\\s*envoy-health\\s*\\}/u,\n  'agent Envoy probes must use the dedicated kubelet health listener',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(\n  chart,\n  /name:\\s*worker-trust-proxy[\\s\\S]*?(?:\\/bin\\/bash|\\/dev\\/tcp\\/127\\.0\\.0\\.1\\/9901)[\\s\\S]*?securityContext:/u,\n  'agent Envoy probes must not depend on shell utilities in the proxy image',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  read('charts/kubeclaw/templates/_worker-trust-readiness.tpl'),\n  /name:\\s*kubelet-health[\\s\\S]*address:\\s*0\\.0\\.0\\.0,\\s*port_value:\\s*19000[\\s\\S]*direct_response:\\s*\\{\\s*status:\\s*200\\s*\\}/u,\n  'agent Envoy must expose a separate process-health listener',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  prismWorkloads,\n  /name:\\s*worker-trust-proxy[\\s\\S]*readinessProbe:\\s*\\n\\s*httpGet:\\s*\\{\\s*path:\\s*\\/ready,\\s*port:\\s*envoy-health\\s*\\}[\\s\\S]*livenessProbe:\\s*\\n\\s*httpGet:\\s*\\{\\s*path:\\s*\\/health,\\s*port:\\s*envoy-health\\s*\\}/u,\n  'Prism Envoy must separate functional readiness and process liveness without shell dependencies',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(\n  prismWorkloads,\n  /\\/bin\\/bash|\\/dev\\/tcp\\/127\\.0\\.0\\.1\\/9901/u,\n  'Prism Envoy probes must not depend on shell utilities in the proxy image',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  prismWorkloads,\n  /readinessProbe:\\s*\\{\\s*httpGet:\\s*\\{\\s*path:\\s*\\{\\{\\s*ternary \"\\/bootstrap\" \"\\/ready\" \\(eq \\$name \"worker\"\\)/u,\n  'worker readiness must not deadlock the post-install schema migration',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  prismJobs,\n  /name:\\s*prism-migrate[\\s\\S]*\"helm\\.sh\\/hook\":\\s*post-install,pre-upgrade[\\s\\S]*before-hook-creation,hook-succeeded/u,\n  'Prism migrations must finish initial installation and run before upgraded workloads',\n);"
+          },
+          {
+            "kind": "ForOfStatement",
+            "syntax": "for (const [label, source] of [['artifacts', prismWorkloads], ['backups', prismJobs]]) {\n  assert.match(source, /kind:\\s*PersistentVolumeClaim[\\s\\S]*helm\\.sh\\/resource-policy:\\s*keep/u,\n    `Prism ${label} PVC must survive release recovery`);\n}"
+          },
+          {
+            "kind": "FunctionDeclaration",
+            "syntax": "function deployFunction(name) {\n  const start=deploy.indexOf(`${name}() {`); const end=deploy.indexOf('\\n}',start);\n  assert.ok(start>=0 && end>start,`${name} must exist`);return deploy.slice(start,end+2);\n}"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const novaReconcile=deployFunction('reconcile_nova_retired_trust_mount');"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const strategicPatch=novaReconcile.match(/--type=strategic --patch \\\\\\n\\s*'([^']+)'/u);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.ok(strategicPatch);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.deepEqual(JSON.parse(strategicPatch[1]),{spec:{template:{spec:{containers:[{name:'kubeclaw',env:[{name:'NODE_EXTRA_CA_CERTS',$patch:'delete'}],volumeMounts:[{mountPath:'/var/run/buster-plan-trust',$patch:'delete'}]}],volumes:[{name:'buster-plan-trust',$patch:'delete'}]}}}});"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const busterReconcile=deployFunction('reconcile_buster_runtime_ports');"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(busterReconcile,/go-template=[\\s\\S]*?runtime_index[\\s\\S]*?--type=json[\\s\\S]*?\\\\\"op\\\\\":\\\\\"test[\\s\\S]*?buster-v2-runtime[\\s\\S]*?\\\\\"op\\\\\":\\\\\"replace[\\s\\S]*?plan-runtime[\\s\\S]*?28891/u);"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const roleDeploy=deployFunction('deploy_agent');"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const renderPosition=roleDeploy.indexOf('render_selected_role');"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const renderOnlyPosition=roleDeploy.indexOf('KUBECLAW_DEPLOY_RENDER_ONLY', renderPosition);"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const cleanupPosition=roleDeploy.indexOf('if [[ $role == nova ]]; then reconcile_nova_retired_trust_mount; else reconcile_buster_runtime_ports; fi');"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const upgradePosition=roleDeploy.indexOf('helm_args=(upgrade --install');"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.ok(renderPosition>=0 && renderOnlyPosition>renderPosition && cleanupPosition>renderOnlyPosition && upgradePosition>cleanupPosition,'render-only must precede role-specific cleanup, which must precede Helm upgrade');"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(roleDeploy.slice(renderOnlyPosition,cleanupPosition),/return 0/u);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  deploy,\n  /verify_buster_port_routing[\\s\\S]*?expected_runtime[\\s\\S]*?expected_proxy[\\s\\S]*?expected_service[\\s\\S]*?Buster port routing invariant failed[\\s\\S]*?if \\[\\[ \\$role == \"buster\" \\]\\]; then\\s+verify_buster_port_routing/u,\n  'Buster deploy must verify runtime, proxy, and Service port routing after Helm upgrades',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  deploy,\n  /helm_args=\\([\\s\\S]*upgrade --install \"agent-\\$\\{role\\}\"[\\s\\S]*--reset-values[\\s\\S]*--atomic --cleanup-on-fail --wait/,\n  'agent upgrades must discard stale release values and roll back failed waits atomically',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(busterValues, /name:\\s*plan-runtime[\\s\\S]*containerPort:\\s*28891/);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(busterValues, /legacy-runtime|28892/);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  busterValues,\n  /startupDoctor:[\\s\\S]*nodeOptions:\\s*\"--max-old-space-size=3072\"[\\s\\S]*limits:\\s*\\{\\s*cpu:\\s*\"2\",\\s*memory:\\s*4Gi\\s*\\}[\\s\\S]*initSetup:[\\s\\S]*requests:\\s*\\{\\s*cpu:\\s*500m,\\s*memory:\\s*1Gi\\s*\\}[\\s\\S]*limits:\\s*\\{\\s*cpu:\\s*\"2\",\\s*memory:\\s*8Gi\\s*\\}/,\n  'Buster migration and plugin setup must have explicit non-trivial memory budgets',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  novaValues,\n  /startupDoctor:[\\s\\S]*nodeOptions:\\s*\"--max-old-space-size=3072\"[\\s\\S]*limits:\\s*\\{\\s*cpu:\\s*\"2\",\\s*memory:\\s*4Gi\\s*\\}[\\s\\S]*initSetup:[\\s\\S]*limits:\\s*\\{\\s*cpu:\\s*\"2\",\\s*memory:\\s*8Gi\\s*\\}/,\n  'Nova migration and plugin setup must have enough memory for existing OpenClaw state',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  busterValues,\n  /service:\\s*\\n\\s+extraPorts:\\s*\\n\\s+- name:\\s*buster-plan\\s*\\n\\s+port:\\s*18891\\s*\\n\\s+targetPort:\\s*buster-plan/,\n  'the Buster Service must target the public Envoy ports, not the local suite runtime ports',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(novaValues, /BUSTER_SOURCE_ATTESTATION_PRIVATE_KEY[\\s\\S]*pipeline-test-gate-source-attestation/);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(busterValues, /BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY[\\s\\S]*pipeline-test-gate-source-attestation/);"
+          },
+          {
+            "kind": "ForOfStatement",
+            "syntax": "for (const values of [novaValues, busterValues, prismAgentValues]) {\n  assert.match(values, /repoUrl:\\s*[\"']git@github\\.com:datrab\\/kubeclaw\\.git[\"']/,\n    'production agents must clone the single authoritative datrab/kubeclaw repository');\n  assert.doesNotMatch(values, /Ravencrypt|ForgeStack/,\n    'production agent values must not retain a legacy repository identity');\n}"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(networkPolicies, /name:\\s*kubeclaw-nova-buster-test-gates[\\s\\S]*component:\\s*nova[\\s\\S]*component:\\s*buster[\\s\\S]*port:\\s*\"?18891/);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(networkPolicies, /name:\\s*kubeclaw-buster-test-gates-from-nova[\\s\\S]*component:\\s*buster[\\s\\S]*component:\\s*nova[\\s\\S]*port:\\s*\"?18891/);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(networkPolicies, /18892/);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(networkPolicies, /name:\\s*kubeclaw-buster-managed-test-egress/,\n  'Buster E2E egress must be a lease-scoped controller resource, not a namespace-wide static grant');"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.equal((busterValues.match(/scheme:\\s*HTTP/gu) ?? []).length, 3,\n  'all Buster plan runtime probes must use the loopback-only internal HTTP endpoint');"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(busterValues, /CONTAINER_BUILD_BUILDKIT_HOST[\\s\\S]*buildkitd\\.sock/);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(busterRuntimeDockerfile, /check-pipeline-container-build-production\\.mts/);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(busterRuntimeDockerfile, /check-pipeline-container-build-recovery\\.mts/);"
+          },
+          {
+            "kind": "ForOfStatement",
+            "syntax": "for (const [probe, endpoint] of [['startupProbe', '/bootstrapz'], ['readinessProbe', '/readyz'], ['livenessProbe', '/healthz']]) {\n  assert.match(\n    busterValues,\n    new RegExp(`${probe}:[\\\\s\\\\S]*path:\\\\s*${endpoint}[\\\\s\\\\S]*port:\\\\s*28891`),\n    `the Buster v2 runtime must define its own ${probe}`,\n  );\n}"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(\n  chart,\n  /busterHeartbeat|kubeclaw-buster-heartbeat|skills\\/pipeline\\/platform-config/,\n  'gateway probes must not retain the deleted v1 Buster heartbeat contract',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  busterValues,\n  /BUSTER_PLAN_STATE_DIR[\\s\\S]*\\/var\\/lib\\/buster-v2\\/plan-jobs[\\s\\S]*name:\\s*buster-v2-state[\\s\\S]*mountPath:\\s*\\/var\\/lib\\/buster-v2/,\n  'plan state must use the sidecar-only volume',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  busterValues,\n  /name:\\s*buster-v2-state\\s+persistentVolumeClaim:\\s+claimName:\\s*agent-buster-runtime-state/,\n  'authoritative worker receipts must survive Pod replacement in their dedicated PVC',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(novaValues, /\\.kubeclaw\\.svc\\.cluster\\.local/);"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const novaSettings = loadAll(novaValues)[0];"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.equal(novaSettings.archviewer.enabled, true);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.equal(novaSettings.archviewer.existingSecret, 'nova-archviewer-auth');"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.equal(novaSettings.archviewer.hostname, 'nova-architecture');"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.ok(!(novaSettings.service?.extraPorts ?? []).some(port => port.name === 'archviewer' || port.port === 3456),\n  'Archviewer must not retain its retired public NodePort');"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  novaValues,\n  /extraContainers:[\\s\\S]*name:\\s*archviewer[\\s\\S]*kubeclaw-archviewer:latest[\\s\\S]*name:\\s*archviewer[\\s\\S]*containerPort:\\s*3456[\\s\\S]*mountPath:\\s*\\/designs[\\s\\S]*readOnly:\\s*true/,\n  'Nova must retain the read-only Archviewer sidecar separately from Prism Studio',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(\n  novaValues,\n  /name:\\s*prism-preview/,\n  'the Nova architecture presentation port must not use the misleading Prism preview name',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  novaValues,\n  /extraVolumes:\\s*\\[\\][\\s\\S]*extraVolumeMounts:\\s*\\[\\]/,\n  'Nova must explicitly clear retired release-specific volumes and gateway mounts',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(\n  novaValues,\n  /buster-plan-trust|NODE_EXTRA_CA_CERTS/,\n  'Nova must not retain the retired direct-TLS Buster trust volume',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(networkPolicies, /port:\\s*[\"']?3456/,\n  'Archviewer ingress must be owned by its dedicated Tailscale policy');"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(chart, /fsGroup:\\s*1000/);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  chart,\n  /name:\\s*openclaw-state-migration[\\s\\S]*node \\/app\\/openclaw\\.mjs doctor --fix --non-interactive[\\s\\S]*mountPath:\\s*\\/home\\/node\\/\\.openclaw/,\n  'required OpenClaw state migrations must finish before the gateway container starts',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  chart,\n  /name:\\s*openclaw-state-migration[\\s\\S]*stdin:\\s*true[\\s\\S]*tty:\\s*true[\\s\\S]*doctor --fix --non-interactive/,\n  'OpenClaw 2026.8.1 doctor-owned migrations require a PTY even in non-interactive init automation',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  chart,\n  /Object\\.hasOwn\\(config\\.agents, 'ownership'\\)[\\s\\S]*delete config\\.agents\\.ownership[\\s\\S]*node \\/app\\/openclaw\\.mjs doctor --fix --non-interactive/,\n  'retired multi-agent ownership must be removed before doctor validates the single-agent config',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  deploy,\n  /require_helm_release_idle\\(\\)[\\s\\S]*pending-install\\|pending-upgrade\\|pending-rollback[\\s\\S]*refusing to start a competing operation[\\s\\S]*deploy_agent\\(\\)[\\s\\S]*require_helm_release_idle \"agent-\\$\\{role\\}\"/,\n  'agent deploys must stop before mutating a release that already has a pending Helm operation',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  deploy,\n  /Unknown deployment command: \\$1[\\s\\S]*KubeClaw \u2014 Deployment CLI/,\n  'unknown deployment targets must produce an explicit error instead of a full-stack heading',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  chart,\n  /process\\.env\\.AGENT_ROLE !== 'prism'[\\s\\S]*delete config\\.plugins\\.entries\\['kubeclaw-prism'\\][\\s\\S]*node \\/app\\/openclaw\\.mjs doctor --fix --non-interactive/,\n  'non-Prism agents must remove the Prism-only plugin entry before startup doctor validation',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  chart,\n  /name:\\s*NODE_OPTIONS\\s*\\n\\s*value:\\s*\\{\\{ \\.Values\\.gateway\\.startupDoctor\\.nodeOptions \\| quote \\}\\}/,\n  'the state migration must receive its explicitly budgeted V8 heap size',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(\n  gatewayConfig,\n  /\"ownership\":\\s*\"explicit\"/,\n  'single-agent configurations must not declare multi-agent ownership',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(\n  gatewayConfig,\n  /\"groupAllowFrom\"/,\n  'OpenClaw 2026.9 rejects the retired Discord groupAllowFrom field',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  gatewayConfig,\n  /\\$discordGuildUsers[\\s\\S]*trimPrefix \"discord:\" \\(trimPrefix \"user:\" \\$sender\\)[\\s\\S]*\"guilds\": \\{[\\s\\S]*\"\\*\": \\{[\\s\\S]*\"users\": \\{\\{ \\$discordGuildUsers \\| uniq \\| toJson \\}\\}/,\n  'Discord guild authorization must normalize the configured sender IDs into guild users',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  chart,\n  /Object\\.hasOwn\\(config\\.channels\\.discord, 'groupAllowFrom'\\)[\\s\\S]*delete config\\.channels\\.discord\\.groupAllowFrom[\\s\\S]*doctor --fix --non-interactive/,\n  'the startup migration must remove retired Discord groupAllowFrom before Doctor validation',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(\n  swarmConfig,\n  /discord_webhook_url/,\n  'the persistent swarm config source must not contain a runtime webhook placeholder',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  chart,\n  /temporaryPath=`\\$\\{p\\}\\.kubeclaw-normalize\\.tmp`[\\s\\S]*writeFileSync\\(temporaryPath[\\s\\S]*mode: 0o600[\\s\\S]*renameSync\\(temporaryPath,p\\)/,\n  'legacy swarm config normalization must atomically replace ConfigMap-derived read-only files',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  gatewayConfig,\n  /\"systemAgent\":\\s*\\{\\s*\"agentId\":\\s*\"main\"/,\n  'managed single-agent configurations must assign system jobs to the main agent',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(\n  gatewayConfig,\n  /\"default\":\\s*true/,\n  'single-agent configurations must not emit the legacy default marker',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  gatewayConfig,\n  /if \\.Values\\.discord\\.enabled[\\s\\S]*\"bindings\":\\s*\\[[\\s\\S]*\"agentId\":\\s*\"main\"[\\s\\S]*\"channel\":\\s*\"discord\"[\\s\\S]*\"accountId\":\\s*\"default\"/,\n  'Discord-enabled gateways must explicitly route the default account to main',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  gatewayConfig,\n  /\"allow\":\\s*\\[[\\s\\S]*\"discord\"[\\s\\S]*\"acpx\"[\\s\\S]*\"codex\"[\\s\\S]*\"openai\"/,\n  'fresh configs must allow only the installed role-appropriate OpenClaw plugins',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  gatewayConfig,\n  /\"defaultAgent\":\\s*\"codex\"[\\s\\S]*\"allowedAgents\":\\s*\\[[\\s\\S]*\"claude\"[\\s\\S]*\"codex\"[\\s\\S]*\"kimi\"[\\s\\S]*\"gemini\"[\\s\\S]*\"pi\"/,\n  'ACPx must retain all approved CLI agents while Codex remains the default',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(\n  gatewayConfig,\n  /maxConcurrentSessions|coalesceIdleMs|maxChunkChars|ttlMinutes/,\n  'fresh configs must not emit ACP tuning keys retired by OpenClaw 2026.8',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  gatewayConfig,\n  /\"exec\":\\s*\\{\\s*\"timeoutSeconds\":\\s*604800,\\s*\"mode\":\\s*\"full\"\\s*\\}/,\n  'fresh configs must use the canonical OpenClaw 2026.8 exec policy keys',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(\n  gatewayConfig,\n  /\"lastTouchedAt\":|\"timeoutSec\":|\"security\":\\s*\"full\"|\"ask\":\\s*\"off\"|\"ownerDisplay\":|\"eventQueue\":|\"retry\":|\"channelStaleEventThresholdMinutes\":|\"channelMaxRestartsPerHour\":|\"resetOnExit\":/,\n  'fresh configs must not reintroduce OpenClaw 2026.8 legacy runtime and Discord keys after doctor repair',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(\n  gatewayConfig,\n  /\"keepLastAssistants\":|\"softTrimRatio\":|\"hardClearRatio\":|\"reserveTokens\":|\"reserveTokensFloor\":|\"maxHistoryShare\":/,\n  'fresh configs must not emit retired context-pruning and compaction tuning keys',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  gatewayConfig,\n  /\"memory\":\\s*\\{\\s*\"search\":\\s*\\{[\\s\\S]*\"provider\":\\s*\"openai-compatible\"[\\s\\S]*\"baseUrl\":\\s*\"\\{\\{ \\.Values\\.litellm\\.endpoint \\}\\}\"[\\s\\S]*\"id\":\\s*\"LITELLM_API_KEY\"[\\s\\S]*\"model\":\\s*\"gemini-embedding-001\"/,\n  'memory search must use the current top-level schema and the isolated LiteLLM embedding route',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(\n  gatewayConfig,\n  /\"memorySearch\":|\"store\":\\s*\\{\\s*\"vector\"|\"hybrid\":/,\n  'fresh configs must not emit retired memory-search paths or tuning keys',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  chart,\n  /initialized\\?\\.memory\\?\\.search[\\s\\S]*config\\.memory\\.search = initialized\\.memory\\.search[\\s\\S]*delete config\\.agents\\.defaults\\.memorySearch/,\n  'persistent configs must converge from legacy agents.defaults.memorySearch to memory.search',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(\n  gatewayConfig,\n  /anthropic|claude-(?:sonnet|opus|haiku)/i,\n  'fresh OpenClaw ConfigMaps must not contain Anthropic providers or Claude models',\n);"
+          },
+          {
+            "kind": "ForOfStatement",
+            "syntax": "for (const [label, source] of [\n  ['chart values', values],\n  ['Nova values', novaValues],\n  ['Buster values', busterValues],\n]) {\n  assert.doesNotMatch(source, /\\banthropic\\b|ANTHROPIC_API_KEY|CLAUDE_CODE_OAUTH_TOKEN/i,\n    `${label} must not configure or inject Anthropic credentials`);\n}"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(\n  litellmConfig,\n  /anthropic|claude-(?:sonnet|opus|haiku)/i,\n  'LiteLLM ConfigMap source must not expose Anthropic models',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(\n  litellmConfig,\n  /model_name:\\s*[\"']?(?:\\*|gemini-(?:flash|pro))|model:\\s*(?:vertex_ai\\/)?gemini-(?:\\d[^\\s]*-)?(?:flash|pro)/i,\n  'LiteLLM must expose only the explicit memory-search embedding route',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(litellmConfig, /model_name:\\s*gemini-embedding-001[\\s\\S]*model:\\s*vertex_ai\\/gemini-embedding-001/,\n  'LiteLLM must retain the embedding route used by OpenClaw memory search');"
+          },
+          {
+            "kind": "ForOfStatement",
+            "syntax": "for (const [label, source] of [\n  ['chart values', values],\n  ['Nova values', novaValues],\n  ['Buster values', busterValues],\n  ['Prism values', prismAgentValues],\n]) {\n  assert.doesNotMatch(source, /gpt-5\\.4|gpt-5\\.5-pro|litellm\\/gemini-(?:flash|pro)/i,\n    `${label} must not retain retired reasoning model routes`);\n}"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(values, /primary:\\s*\"openai\\/gpt-5\\.6-sol\"[\\s\\S]*fallbacks:[\\s\\S]*\"openai\\/gpt-5\\.5\"/,\n  'chart defaults must use GPT-5.6 Sol with GPT-5.5 fallback');"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(prismAgentValues, /primary:\\s*openai\\/gpt-5\\.6-sol[\\s\\S]*fallbacks:\\s*\\[openai\\/gpt-5\\.5\\]/,\n  'Prism must use the same OpenAI model policy as every other agent');"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(\n  gatewayConfig,\n  /\"codex\":\\s*\\{\\}/,\n  'ACP runtimes must not be registered as a second OpenClaw agent',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(litellmDeployment, /nodePort:\\s*30050/u,\n  'the LiteLLM manifest must not hard-code a cluster-wide NodePort');"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(deploy,\n  /LITELLM_NODE_PORT[\\s\\S]*30000[\\s\\S]*32767[\\s\\S]*kubectl patch service litellm[\\s\\S]*nodePort[^\\n]*LITELLM_NODE_PORT/u,\n  'LiteLLM deployment must validate and apply its configured NodePort');"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(\n  gatewayConfig,\n  /\"list\":\\s*\\[/,\n  'new managed configs must not emit the retired agents.list roster',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  chart,\n  /legacyEntries\\.length > 0[\\s\\S]*canonicalEntries[\\s\\S]*delete config\\.agents\\.list[\\s\\S]*delete config\\.agents\\.ownership[\\s\\S]*delete managedMainEntry\\.default[\\s\\S]*entries = managedEntries[\\s\\S]*defaults\\.systemAgent = \\{ agentId: 'main' \\}[\\s\\S]*node \\/app\\/openclaw\\.mjs doctor/,\n  'legacy homes must converge to one unmarked main agent with explicit system ownership before doctor validation',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  chart,\n  /delete managedMainEntry\\.default[\\s\\S]*managedEntries[\\s\\S]*isBroadDefaultDiscordBinding[\\s\\S]*agentId: 'main', match: \\{ channel: 'discord', accountId: 'default' \\}[\\s\\S]*Bound discord:default to the main agent[\\s\\S]*doctor --fix --non-interactive/,\n  'persistent homes must gain a sole unmarked agent and explicit Discord owner before doctor validation',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  chart,\n  /managedPluginAllow = \\['discord', 'acpx', 'codex', 'openai'\\][\\s\\S]*config\\.plugins\\.allow = managedPluginAllow[\\s\\S]*doctor --fix --non-interactive/,\n  'startup migration must enforce the managed plugin allowlist before doctor validation',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(chart, /removedAnthropic|isAnthropicModel/,\n  'provider removal must not leave a one-off Anthropic migration in the deployment');"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  chart,\n  /config\\.plugins\\.entries = initialized\\.plugins\\.entries[\\s\\S]*config\\.auth = initialized\\.auth[\\s\\S]*config\\.commands = initialized\\.commands[\\s\\S]*config\\.channels\\.discord = initialized\\.channels\\.discord[\\s\\S]*delete config\\.models[\\s\\S]*config\\.acp = initialized\\.acp[\\s\\S]*synchronized managed agent model route[\\s\\S]*synchronized managed agent model policy[\\s\\S]*config\\.agents\\.entries = structuredClone\\(initialized\\.agents\\.entries\\)/,\n  'init setup must converge managed configuration generically instead of provider-specific cleanup',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(\n  chart,\n  /name:\\s*(?:ANTHROPIC_API_KEY|CLAUDE_CODE_OAUTH_TOKEN)|\\.Values\\.anthropic|kubeclaw\\.anthropicSecret/,\n  'agent workloads must not receive Anthropic credentials',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.ok(\n  chart.indexOf('name: openclaw-state-permissions') < chart.indexOf('name: openclaw-state-migration'),\n  'legacy state ownership must be repaired before the non-root OpenClaw migration',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  chart,\n  /if and \\.Values\\.gateway\\.startupDoctor\\.enabled \\(not \\.Values\\.runAsRoot\\)[\\s\\S]*name: openclaw-state-permissions[\\s\\S]*find \\/home\\/node\\/\\.openclaw -xdev -exec chown -h 1000:1000 \\{\\} \\+[\\s\\S]*runAsNonRoot: false[\\s\\S]*add:[\\s\\S]*- CHOWN[\\s\\S]*- DAC_READ_SEARCH[\\s\\S]*name: config[\\s\\S]*mountPath: \\/home\\/node\\/\\.openclaw/,\n  'non-root agents must repair only their persistent config ownership with bounded traversal and ownership capabilities',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.ok(\n  chart.indexOf('name: openclaw-state-migration') < chart.indexOf('name: init-setup'),\n  'state migration must run before init-setup invokes any OpenClaw CLI command',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  chart,\n  /name: init-setup[\\s\\S]*if \\.Values\\.runAsRoot[\\s\\S]*runAsUser: 0[\\s\\S]*else[\\s\\S]*runAsUser: 1000[\\s\\S]*runAsNonRoot: true/,\n  'init setup must honor the agent runtime identity instead of forcing root',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  chart,\n  /name: init-setup[\\s\\S]*capabilities:[\\s\\S]*drop:[\\s\\S]*- ALL[\\s\\S]*if \\.Values\\.runAsRoot[\\s\\S]*add:[\\s\\S]*- CHOWN[\\s\\S]*- FOWNER/,\n  'root-mode setup must retain only the capabilities required for its explicit ownership handoff',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  chart,\n  /if \\[ \"\\$INIT_RUN_AS_ROOT\" = \"true\" \\]; then[\\s\\S]*if \\[ \"\\$\\{AGENT_NAME\\}\" = \"buster\" \\]; then[\\s\\S]*chown -R 1000:1000 \\/workspace[\\s\\S]*chmod -R g\\+rwX \\/workspace[\\s\\S]*find \\/workspace -type d -exec chmod g\\+s \\{\\} \\+/,\n  'Buster setup must hand the shared workspace to UID/GID 1000 with group-write inheritance',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.equal(\n  (chart.match(/chown -R (?:0:1000|1000:1000) \\/workspace/gu) ?? []).length,\n  1,\n  'Buster workspace ownership must be reconciled once rather than traversed twice',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  chart,\n  /Non-root init selected; persistent volumes already use fsGroup 1000[\\s\\S]*name: INIT_SSH_HOME[\\s\\S]*ternary \"\\/root\\/\\.ssh\" \"\\/home\\/node\\/\\.ssh\" \\.Values\\.runAsRoot/,\n  'non-root agents must use their writable home and avoid root-only ownership changes',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  chart,\n  /\\[ssh\\.github\\.com\\]:443 ssh-ed25519[\\s\\S]*Host github\\.com[\\s\\S]*HostName ssh\\.github\\.com[\\s\\S]*Port 443[\\s\\S]*IdentitiesOnly yes/,\n  'GitHub SSH must use the HTTPS-compatible port because cluster egress blocks port 22',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  chart,\n  /CURRENT_REPO_URL=\"\\$\\(git remote get-url origin\\)\"[\\s\\S]*git remote set-url origin \"\\$GIT_REPO_URL\"[\\s\\S]*git remote add origin \"\\$GIT_REPO_URL\"/,\n  'persistent workspaces must reconcile origin to the configured repository',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  chart,\n  /name: ssh-secret-vol[\\s\\S]*defaultMode: \\{\\{ ternary \"0400\" \"0440\" \\.Values\\.runAsRoot \\}\\}/,\n  'non-root init must be able to read its fsGroup-restricted deploy key',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  chart,\n  /state_db=\"\\/home\\/node\\/\\.openclaw\\/state\\/openclaw\\.sqlite\"[\\s\\S]*if \\[ ! -f \"\\$state_db\" \\]; then[\\s\\S]*migration not required/,\n  'fresh installations without an OpenClaw state database must skip migration safely',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  chart,\n  /name:\\s*XDG_CACHE_HOME\\s*\\n\\s*value:\\s*\"\\/tmp\\/\\.cache\"/,\n  'OpenClaw SQLite staging must use the writable tmp volume with a read-only root filesystem',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.equal(\n  chart.match(/mountPath:\\s*\\/home\\/node\\/\\.cache/g)?.length,\n  3,\n  'migration, setup, and gateway containers must mount a writable OpenClaw fallback cache',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(\n  chart,\n  /startup doctor waiting for gateway health|kubeclaw-startup-doctor\\.sh/,\n  'state migration must not wait for the gateway whose startup it unblocks',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  busterValues,\n  /name:\\s*buster-api-token[\\s\\S]*defaultMode:\\s*288/,\n  'the worker credential projection must remain group-readable only',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  busterValues,\n  /name:\\s*buster-v2-runtime[\\s\\S]*runAsUser:\\s*0[\\s\\S]*runAsGroup:\\s*0[\\s\\S]*runAsNonRoot:\\s*false[\\s\\S]*add:\\s*\\[\"CHOWN\",\\s*\"SETGID\",\\s*\"SETPCAP\",\\s*\"SETUID\"\\]/,\n  'the supervisor must be able to enter the job UID and then drop the complete capability set',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(\n  busterValues,\n  /procMount:\\s*Unmasked|SYS_ADMIN|privileged:\\s*true|mountPath:\\s*\\/sys\\/fs\\/cgroup\\s*$|buster-command-cgroup/m,\n  'the nested suite sandbox fix must not broaden the Buster pod privilege boundary',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  busterRuntimeEntrypoint,\n  /allowSampledProcessLimit: true/,\n  'the deployed command runner must use the unprivileged sampled process-tree fallback',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  busterRuntimeDockerfile,\n  /USER\\s+0:0/,\n  'the runtime image must start the narrowly-capable job supervisor as root',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  busterRuntimeEntrypoint,\n  /setpriv[\\s\\S]*--reuid=1000[\\s\\S]*--regid=1000[\\s\\S]*--init-groups[\\s\\S]*rootlesskit/,\n  'the supervisor must launch rootless BuildKit under the non-root builder identity',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  busterRuntimeDockerfile,\n  /chown root:builder \\/home\\/builder\\/\\.config \\/home\\/builder\\/\\.config\\/buildkit[\\s\\S]*chmod 0750/,\n  'the restricted supervisor must own the BuildKit configuration directory without DAC_OVERRIDE',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  busterRuntimeDockerfile,\n  /BUILDKIT_HOST=unix:\\/\\/\\/run\\/user\\/1000\\/buildkit\\/buildkitd\\.sock/,\n  'the Buster worker must receive the explicit rootless BuildKit endpoint required by readiness checks',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  busterRuntimeEntrypoint,\n  /chown root:builder \"\\$config\"[\\s\\S]*chmod 0640 \"\\$config\"/,\n  'the generated BuildKit configuration must remain writable by the supervisor and readable by the builder',\n);"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const configRootOwnership = busterRuntimeEntrypoint.indexOf('chown -R root:root \"$runtime_config_root\"');"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const kubeconfigWrite = busterRuntimeEntrypoint.indexOf('cat >\"$kubeconfig\"');"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const runtimeConfigWrite = busterRuntimeEntrypoint.indexOf(\"fs.writeFileSync(path.join(root, 'runtime.json')\");"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const configRootHandoff = busterRuntimeEntrypoint.indexOf('chown -R builder:builder \"$runtime_config_root\"');"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.ok(\n  configRootOwnership >= 0\n    && configRootOwnership < kubeconfigWrite\n    && kubeconfigWrite < runtimeConfigWrite\n    && runtimeConfigWrite < configRootHandoff,\n  'the capability-restricted supervisor must generate runtime configuration before handing the directory to builder',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  busterRuntimeEntrypoint,\n  /setpriv[\\s\\S]*--reuid=1000[\\s\\S]*--regid=1000[\\s\\S]*--init-groups[\\s\\S]*chgrp 1002 \"\\$address\"[\\s\\S]*setpriv[\\s\\S]*--reuid=1000[\\s\\S]*--regid=1000[\\s\\S]*--init-groups[\\s\\S]*chmod 0660 \"\\$address\"/,\n  'the BuildKit socket owner must grant shared runner access without requiring CAP_FOWNER',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  busterRuntimeEntrypoint,\n  /chown -R builder:builder \"\\$plan_state_dir\" \"\\$plan_run_dir\"/,\n  'the Buster plan runtime must own the directories whose modes it initializes without CAP_FOWNER',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  busterRuntimeEntrypoint,\n  /BUSTER_V2_TOKEN=\"\\$worker_token\" KUBECONFIG=\"\\$kubeconfig\" setpriv[\\s\\S]*--groups 1000,1002[\\s\\S]*remote-plan-cli\\.ts/,\n  'the plan runtime must retain only its required token and BuildKit socket access',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(busterRuntimeEntrypoint, /BUSTER_LEGACY|18892|buster-suite-runtime\\/src\\/worker\\.ts/);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  deploy,\n  /app\\.kubernetes\\.io\\/instance=\\$\\{release\\},app\\.kubernetes\\.io\\/component=\\$\\{role\\}[\\s\\S]*pod=\"\\$\\(agent_pod_name \"\\$release\"\\)\"[\\s\\S]*kubectl exec -n \"\\$NAMESPACE\" \"\\$pod\" -c kubeclaw/,\n  'agent smoke must target the agent component pod rather than the colocated namespace controller',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  chart,\n  /initializedConfigPath[\\s\\S]*config\\.plugins\\.entries = initialized\\.plugins\\.entries/,\n  'existing persistent homes must converge to the complete chart-managed plugin configuration',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  gatewayConfig,\n  /if eq \\(\\.Values\\.agentRole \\| default \"\"\\) \"buster\"[\\s\\S]*\"kubeclaw-agent-observer\"[\\s\\S]*\\{\\{- end \\}\\}/,\n  'fresh gateway configs must include the observer plugin only for Buster',\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(\n  gatewayConfig,\n  /if eq \\(\\.Values\\.agentRole \\| default \"\"\\) \"prism\"[\\s\\S]*\"kubeclaw-prism\"[\\s\\S]*\\{\\{- end \\}\\}/,\n  'fresh gateway configs must include the Prism plugin only for agent-prism',\n);"
+          },
+          {
+            "kind": "ForOfStatement",
+            "syntax": "for (const toolProof of [\n  /hadolint --version/,\n  /kubeconform -v/,\n  /kubectl version --client=true/,\n  /ruff --version/,\n  /mypy --version/,\n  /semgrep --version/,\n  /shellcheck/,\n]) {\n  assert.match(\n    novaDockerfile,\n    toolProof,\n    `the authoritative Nova runtime lost static-analysis tooling: ${toolProof}`,\n  );\n}"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(\n  chart,\n  /skills\\/(?:nova|buster|common)\\/pipeline(?:\\/|[\"'])/,\n  'the chart must not materialize v1 runtime directories',\n);"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const helm = spawnSync(\n  'helm',\n  ['template', 'kubeclaw', path.join(sourceRoot, 'charts/kubeclaw')],\n  { cwd: sourceRoot, encoding: 'utf8' },\n);"
+          },
+          {
+            "kind": "IfStatement",
+            "syntax": "if (helm.error?.code !== 'ENOENT') {\n  assert.equal(helm.status, 0, `helm template failed:\\n${helm.stderr}`);\n  const assertManagedModels = rendered => {\n    const configMap = loadAll(rendered).find(object => object?.kind === 'ConfigMap' && object.data?.['openclaw.json']);\n    assert.ok(configMap, 'the rendered gateway configuration must be present');\n    const defaults = JSON.parse(configMap.data['openclaw.json']).agents.defaults;\n    const models = ['openai/gpt-6-astra', 'openai/gpt-6.1-sol'].includes(defaults.model.primary)\n      ? ['openai/gpt-6-astra', 'openai/gpt-6.1-sol', 'openai/gpt-5.6-sol', 'openai/gpt-5.5']\n      : ['openai/gpt-5.6-sol', 'openai/gpt-5.5'];\n    assert.deepEqual(defaults.modelPolicy.allow, models,\n      'fresh configs must retain approved models and allow Astra and 6.1 Sol for their managed primaries');\n    for (const model of [defaults.model.primary, ...defaults.model.fallbacks]) {\n      assert.ok(models.includes(model), 'every primary and fallback must be permitted');\n    }\n    assert.deepEqual(Object.keys(defaults.models).sort(), [...models].sort(),\n      'every managed model must retain its runtime configuration');\n  };\n  assertManagedModels(helm.stdout);\n  assert.match(helm.stdout, /kind: Deployment/, 'chart must render a Deployment');\n  assert.doesNotMatch(\n    helm.stdout,\n    /name:\\s*buster-pipeline|kubeclaw-buster-pipeline/,\n    'rendered manifests must not contain the deleted worker',\n  );\n  assert.doesNotMatch(\n    helm.stdout,\n    /name:\\s*execution-buildkit|name:\\s*buster-v2-runtime/,\n    'the generic default must not invent an execution provider',\n  );\n\n  const busterHelm = spawnSync(\n    'helm',\n    [\n      'template',\n      'agent-buster',\n      path.join(sourceRoot, 'charts/kubeclaw'),\n      '--namespace',\n      'kubeclaw',\n      '--values',\n      path.join(sourceRoot, 'my-values/buster-values.yaml'),\n      '--set-string',\n      'runtimeInfrastructure.registry.endpoint=https://registry.example.test',\n      '--set-string',\n      'runtimeInfrastructure.registry.transport=https',\n      '--set-string',\n      'runtimeInfrastructure.registry.authSecretName=registry-contract-test',\n    ],\n    { cwd: sourceRoot, encoding: 'utf8' },\n  );\n  assert.equal(\n    busterHelm.status,\n    0,\n    `Buster runtime helm template failed:\\n${busterHelm.stderr}`,\n  );\n  assert.match(\n    busterHelm.stdout,\n    /name:\\s*buster-v2-runtime/,\n    'Buster must render its isolated v2 suite worker',\n  );\n  assertManagedModels(busterHelm.stdout);\n  assert.match(\n    busterHelm.stdout,\n    /containerPort:\\s*18891/,\n    'Buster Envoy must expose the authenticated v2 worker port',\n  );\n  assert.match(busterHelm.stdout, /name:\\s*worker-trust-proxy/,\n    'Buster must obtain its rotating X.509-SVID through the SPIFFE CSI socket');\n  assert.match(busterHelm.stdout, /csi\\.spiffe\\.io/);\n  assert.match(busterHelm.stdout, /spire-agent\\.sock/);\n  assert.match(busterHelm.stdout,\n    /port_value:\\s*18891[\\s\\S]*require_client_certificate:\\s*true[\\s\\S]*agent-nova/,\n    'Buster must require Nova mTLS identity on the plan listener');\n  assert.match(\n    busterHelm.stdout,\n    /fsGroup:\\s*1000/,\n    'the non-root Buster worker must receive projected credentials through fsGroup 1000',\n  );\n  assert.match(\n    busterHelm.stdout,\n    /name:\\s*buster-api-token[\\s\\S]*defaultMode:\\s*288/,\n    'the rendered Buster token projection must remain mode 0440',\n  );\n  assert.doesNotMatch(busterHelm.stdout, /name:\\s*execution-buildkit/);\n\n  const novaHelm = spawnSync(\n    'helm',\n    [\n      'template',\n      'agent-nova',\n      path.join(sourceRoot, 'charts/kubeclaw'),\n      '--namespace',\n      'kubeclaw',\n      '--values',\n      path.join(sourceRoot, 'my-values/nova-values.yaml'),\n    ],\n    { cwd: sourceRoot, encoding: 'utf8' },\n  );\n  assert.equal(\n    novaHelm.status,\n    0,\n    `Nova provider-role helm template failed:\\n${novaHelm.stderr}`,\n  );\n  const novaObjects = loadAll(novaHelm.stdout);\n  assertManagedModels(novaHelm.stdout);\n  const viewer = kind => novaObjects.find(object => object?.kind === kind && object.metadata.name === 'agent-nova-archviewer');\n  assert.equal(viewer('Service')?.spec.type, 'ClusterIP');\n  assert.deepEqual(viewer('Service').spec.ports, [{ name: 'http', port: 3456, targetPort: 'archviewer', protocol: 'TCP' }]);\n  assert.equal(viewer('Ingress')?.spec.ingressClassName, 'tailscale');\n  assert.equal(viewer('Ingress').spec.defaultBackend.service.name, 'agent-nova-archviewer');\n  const viewerIngress = viewer('CiliumNetworkPolicy')?.spec.ingress;\n  assert.equal(viewerIngress?.length, 1);\n  assert.deepEqual(viewerIngress[0].fromEndpoints, [{ matchLabels: {\n    'k8s:io.kubernetes.pod.namespace': 'tailscale', 'tailscale.com/managed': 'true',\n    'tailscale.com/parent-resource-type': 'ingress', 'tailscale.com/parent-resource': 'agent-nova-archviewer',\n    'tailscale.com/parent-resource-ns': 'kubeclaw',\n  } }]);\n  assert.deepEqual(viewerIngress[0].toPorts, [{ ports: [{ port: '3456', protocol: 'TCP' }] }]);\n  assert.match(\n    novaHelm.stdout,\n    /name:\\s*KUBECLAW_CAPABILITY_PROVIDERS[\\s\\S]*agent-buster:18789[\\s\\S]*127\\.0\\.0\\.1:28891/,\n  );\n  assert.match(novaHelm.stdout,\n    /port_value:\\s*28891[\\s\\S]*agent-buster[\\s\\S]*port_value:\\s*18891[\\s\\S]*agent-buster/,\n    'Nova must reach Buster through its local SPIFFE mTLS proxy');\n  assert.match(novaHelm.stdout,\n    /port_value:\\s*28080[\\s\\S]*agent-prism[\\s\\S]*port_value:\\s*8080[\\s\\S]*agent-prism/,\n    'Nova must reach the Prism OpenClaw agent through its local SPIFFE mTLS proxy');\n  assert.doesNotMatch(novaHelm.stdout, /name:\\s*BUSTER_V2_ENDPOINT|name:\\s*BUSTER_GATEWAY_ORIGIN/);\n\n  const numericRole = spawnSync(\n    'helm',\n    [\n      'template',\n      'numeric-provider',\n      path.join(sourceRoot, 'charts/kubeclaw'),\n      '--set-string', 'capabilityProviders.numeric.agentRole=1buster',\n      '--set-string', 'capabilityProviders.numeric.capabilities.runtime\\\\.dispatch.adapter=custom-python',\n      '--set-string', 'capabilityProviders.numeric.capabilities.runtime\\\\.dispatch.port=18789',\n    ],\n    { cwd: sourceRoot, encoding: 'utf8' },\n  );\n  assert.equal(numericRole.status, 0, numericRole.stderr);\n  assert.match(numericRole.stdout, /http:\\/\\/agent-1buster:18789/);\n\n  for (const [label, overrides, expected] of [\n    [\n      'invalid provider role',\n      [\n        '--set-string', 'capabilityProviders.buster.agentRole=INVALID_ROLE',\n        '--set-string', 'capabilityProviders.buster.capabilities.runtime\\\\.dispatch.adapter=openclaw',\n        '--set-string', 'capabilityProviders.buster.capabilities.runtime\\\\.dispatch.port=18789',\n      ],\n      /agentRole must be a DNS label/,\n    ],\n    [\n      'invalid provider port',\n      [\n        '--set-string', 'capabilityProviders.buster.agentRole=buster',\n        '--set-string', 'capabilityProviders.buster.capabilities.runtime\\\\.dispatch.adapter=openclaw',\n        '--set-string', 'capabilityProviders.buster.capabilities.runtime\\\\.dispatch.port=70000',\n      ],\n      /port must be between 1 and 65535/,\n    ],\n  ]) {\n    const invalid = spawnSync(\n      'helm',\n      ['template', 'invalid-provider', path.join(sourceRoot, 'charts/kubeclaw'), ...overrides],\n      { cwd: sourceRoot, encoding: 'utf8' },\n    );\n    assert.notEqual(invalid.status, 0, `${label} must fail Helm rendering`);\n    assert.match(`${invalid.stdout}\\n${invalid.stderr}`, expected);\n  }\n}"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const kubeconform = spawnSync('sh', ['-c', 'command -v kubeconform'], {\n  cwd: sourceRoot,\n  encoding: 'utf8',\n});"
+          },
+          {
+            "kind": "IfStatement",
+            "syntax": "if (helm.status === 0 && kubeconform.status === 0) {\n  const renderedPath = path.join(\n    fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-manifests-')),\n    'rendered.yaml',\n  );\n  fs.writeFileSync(renderedPath, helm.stdout);\n  const validation = spawnSync(\n    'kubeconform',\n    ['-strict', '-summary', renderedPath],\n    { cwd: sourceRoot, encoding: 'utf8' },\n  );\n  assert.equal(\n    validation.status,\n    0,\n    `kubeconform failed:\\n${validation.stdout}\\n${validation.stderr}`,\n  );\n}"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const secretProbe = spawnSync(\n  'bash',\n  [\n    '-c',\n    `source \"$SOURCE_ROOT/my-values/setup-secrets.sh\"\nkubectl() {\n  if [[ \"$*\" == *\"with index\"* && \"$*\" == *\"present\"* ]]; then\n    printf 'c2VjcmV0'\n  elif [[ \"$*\" == *\"with index\"* && \"$*\" == *\"busterV2Token\"* ]]; then\n    printf ''\n  else\n    printf '<no value>'\n  fi\n}\nif secret_key_present test shared busterV2Token; then\n  echo 'missing busterV2Token was reported present' >&2\n  exit 1\nfi\nmapfile -t missing < <(secret_missing_keys test shared present busterV2Token)\n[[ \\${#missing[@]} == 1 && \\${missing[0]} == busterV2Token ]]\nload_secret_key test shared present decoded\n[[ $decoded == secret ]]\n\nprompt_hidden() {\n  local -n output_ref=\"$2\"\n  output_ref=\"\\${PROMPT_TEST_VALUE:-}\"\n}\ngenerate_secret_value() {\n  printf 'generated-worker-token'\n}\ngenerated=\"\"\nPROMPT_TEST_VALUE=\"\" prompt_secret_or_generate \"Buster v2 worker token\" generated\n[[ $generated == generated-worker-token ]]\nprovided=\"\"\nPROMPT_TEST_VALUE=\"operator-value\" prompt_secret_required \"Required value\" provided\n[[ $provided == operator-value ]]\npatched=\"\"\npatch_secret_literal() {\n  [[ $1 == test && $2 == shared && $3 == busterV2Token ]]\n  patched=\"$4\"\n}\nNAMESPACE=test\nSECRET_NAME=shared\nPROMPT_TEST_VALUE=\"\" patch_shared_secret_interactive busterV2Token\n[[ $patched == generated-worker-token ]]`,\n  ],\n  {\n    cwd: sourceRoot,\n    encoding: 'utf8',\n    env: { ...process.env, SOURCE_ROOT: sourceRoot },\n  },\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.equal(\n  secretProbe.status,\n  0,\n  `Secret key reconciliation probe failed:\\n${secretProbe.stdout}\\n${secretProbe.stderr}`,\n);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.doesNotMatch(busterValues, /name: (KUBECLAW_LOCAL_REGISTRY|CONTAINER_BUILD_REGISTRY_REFERENCE|CONTAINER_BUILD_REGISTRY_BASE_URL)/u);"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const registryTemplate = read('charts/kubeclaw/templates/_registry-clients.tpl');"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(registryTemplate, /KUBECLAW_REGISTRY_CONFIG/u);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(registryTemplate, /authSecretName is required/u);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "assert.match(registryTemplate, /transport must explicitly select https or http-lab/u);"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "console.log(\n  JSON.stringify({\n    ok: true,\n    phase: 12,\n    v2Deployment: true,\n    legacyWorkerAbsent: true,\n    deterministicSuiteRuntime: true,\n  }),\n);"
+          }
+        ]
+      }
+    },
+    "tests/verification/deployment/prism-native-runtime.test.mjs": {
+      "sha256": "8a103340311017870f682947f0003e59849048e344035bb55842851ee7d5531d",
+      "operation": "Source-owned native Prism verification: local charts/prism Helm template consumes generated native worker values/ci-values, checks deployment/NRI/mount/identity selection and five invalid native overrides must fail. Separate second test builds and executes original NRI policy-check binary and rejects writable policy/overwriting binary; those native capabilities are not newly authorized by this Helm adapter. No install/upgrade/apply route, runtime execution success or universal filesystem safety claim.",
+      "operationDigest": "8a103340311017870f682947f0003e59849048e344035bb55842851ee7d5531d",
+      "invocations": [
+        "import { renderNativeWorkerNode } from '../../../scripts/render-native-worker-node.mjs';",
+        "nodeName: 'native-render-test', runtime: { containerdVersion: 'v2.2.0-k3s1' } };",
+        "const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'prism-native-render-'));",
+        "const args = ['template', 'native-review', 'charts/prism', '-f', 'charts/prism/ci-values.yaml',",
+        "const docs = loadAll(execFileSync('helm', args, { encoding: 'utf8' }));",
+        "assert.throws(() => execFileSync('helm', [...args, '--set', 'worker.replicas=2'], { stdio: 'pipe' }));",
+        "assert.throws(() => execFileSync('helm', [...args, '--set', 'worker.native.enabled=false'], { stdio: 'pipe' }));",
+        "assert.throws(() => execFileSync('helm', [...args, '--set', 'worker.shutdownTimeoutMs=100000'], { stdio: 'pipe' }));",
+        "assert.throws(() => execFileSync('helm', [...args, '--set', 'worker.terminationGracePeriodSeconds=120'], { stdio: 'pipe' }));",
+        "assert.throws(() => execFileSync('helm', [...args, '--set', 'worker.native.namespace=other'], { stdio: 'pipe' }));"
+      ],
+      "operationRecipe": {
+        "language": "TypeScript",
+        "statements": [
+          {
+            "kind": "ImportDeclaration",
+            "syntax": "import assert from 'node:assert/strict';"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntax": "import fs from 'node:fs';"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntax": "import os from 'node:os';"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntax": "import path from 'node:path';"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntax": "import { execFileSync } from 'node:child_process';"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntax": "import test from 'node:test';"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntax": "import { load, loadAll } from 'js-yaml';"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntax": "import { renderNativeWorkerNode } from '../../../scripts/render-native-worker-node.mjs';"
+          },
+          {
+            "kind": "ImportDeclaration",
+            "syntax": "import { nativePrismDeploymentSelection } from '../../../scripts/native-worker-deployment-preflight.mjs';"
+          },
+          {
+            "kind": "FirstStatement",
+            "syntax": "const selected = { ...load(fs.readFileSync('my-values/infra/native-worker-pools.yaml', 'utf8')),\n  nodeName: 'native-render-test', runtime: { containerdVersion: 'v2.2.0-k3s1' } };"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "test('actual Prism Helm render binds V3 producer, supervisor, NRI selection and only its role mounts', () => {\n  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'prism-native-render-'));\n  try {\n    const bundle = renderNativeWorkerNode(selected);\n    const file = path.join(directory, 'native.yaml'); fs.writeFileSync(file, bundle['prism-native-values.yaml']);\n    const args = ['template', 'native-review', 'charts/prism', '-f', 'charts/prism/ci-values.yaml',\n      '-f', file, '--namespace', 'kubeclaw', '--set', 'workerTrust.spiffe.enabled=true'];\n    const docs = loadAll(execFileSync('helm', args, { encoding: 'utf8' }));\n    assert.equal(nativePrismDeploymentSelection(docs, 'kubeclaw', selected), true);\n    assert.throws(() => nativePrismDeploymentSelection(docs, 'other', selected), /POLICY_MISMATCH/);\n    assert.throws(() => nativePrismDeploymentSelection(docs, 'kubeclaw', { ...selected, nodeName: 'other-node' }), /POLICY_MISMATCH/);\n    const deployment = name => docs.find(doc => doc?.kind === 'Deployment' && doc.metadata.name === `prism-${name}`);\n    const worker = deployment('worker'); const control = deployment('control');\n    const spec = worker.spec.template.spec; const supervisor = spec.containers.find(container => container.name === 'worker');\n    const nri = JSON.parse(bundle['native-nri.json']);\n    assert.equal(nri.roles.prism.policyDigest, worker.spec.template.metadata.annotations['kubeclaw.dev/native-worker-policy']);\n    assert.equal(nri.roles.prism.container, supervisor.name); assert.equal(nri.roles.prism.namespace, 'kubeclaw');\n    assert.equal(worker.spec.template.metadata.annotations['kubeclaw.dev/native-worker-role'], 'prism');\n    assert.equal(spec.terminationGracePeriodSeconds, 150);\n    assert.equal(supervisor.env.find(item => item.name === 'PRISM_WORKER_SHUTDOWN_TIMEOUT_MS').value, '120000');\n    assert.equal(supervisor.env.find(item => item.name === 'PRISM_NATIVE_CLOSE_TIMEOUT_MS').value, '105000');\n    assert.equal(worker.spec.strategy.type, 'Recreate'); assert.equal(worker.spec.replicas, 1);\n    assert.deepEqual(spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms,\n      [{ matchFields: [{ key: 'metadata.name', operator: 'In', values: [selected.nodeName] }] }]);\n    assert.deepEqual(supervisor.command, ['node', 'skills/prism/server/worker.ts']);\n    assert.equal(spec.securityContext.runAsUser, 0); assert.equal(spec.securityContext.fsGroup, undefined);\n    assert.deepEqual(supervisor.securityContext.capabilities, { drop: ['ALL'], add: ['SETUID', 'SETGID', 'KILL'] });\n    assert.equal(supervisor.securityContext.allowPrivilegeEscalation, false);\n    assert.equal(supervisor.securityContext.privileged, undefined); assert.equal(spec.hostPID, undefined); assert.equal(spec.hostNetwork, undefined);\n    const pool = JSON.parse(bundle['prism-pool.json']);\n    const hosts = spec.volumes.filter(volume => volume.hostPath);\n    assert.deepEqual(hosts.map(volume => volume.hostPath.path).sort(),\n      [pool.cgroupRoot, pool.ownershipRoot, '/etc/kubeclaw/prism-pool.json', pool.nodeIdentityFile, pool.runtimeIdentityFile].sort());\n    for (const name of ['native-policy', 'native-node-identity', 'native-runtime-identity']) {\n      assert.equal(supervisor.volumeMounts.find(mount => mount.name === name).readOnly, true);\n    }\n    const proxy = spec.containers.find(container => container.name === 'worker-trust-proxy');\n    assert.equal(proxy.securityContext.runAsUser, 1000); assert.deepEqual(proxy.securityContext.capabilities, { drop: ['ALL'] });\n    for (const [name, pod] of [['control', control], ['worker', worker]]) {\n      const container = pod.spec.template.spec.containers.find(container => container.name === name);\n      assert.equal(container.env.some(item => item.name === 'PRISM_WORKER_EXECUTION_MODE'), false);\n      assert.equal(container.env.find(item => item.name === 'PRISM_ENGINE_CONTENT_DIGEST').value, supervisor.image.split('@')[1]);\n    }\n    assert.equal(control.spec.template.spec.volumes.some(volume => volume.hostPath), false);\n    assert.throws(() => execFileSync('helm', [...args, '--set', 'worker.replicas=2'], { stdio: 'pipe' }));\n    assert.throws(() => execFileSync('helm', [...args, '--set', 'worker.native.enabled=false'], { stdio: 'pipe' }));\n    assert.throws(() => execFileSync('helm', [...args, '--set', 'worker.shutdownTimeoutMs=100000'], { stdio: 'pipe' }));\n    assert.throws(() => execFileSync('helm', [...args, '--set', 'worker.terminationGracePeriodSeconds=120'], { stdio: 'pipe' }));\n    assert.throws(() => execFileSync('helm', [...args, '--set', 'worker.native.namespace=other'], { stdio: 'pipe' }));\n  } finally { fs.rmSync(directory, { recursive: true, force: true }); }\n});"
+          },
+          {
+            "kind": "ExpressionStatement",
+            "syntax": "test('original statically built NRI executable reads the actual generated root-owned policy', () => {\n  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'native-nri-binary-'));\n  try {\n    const binary = path.join(directory, '10-kubeclaw-native');\n    execFileSync(process.execPath, ['scripts/build-native-worker-nri.mjs', binary], { stdio: 'pipe' });\n    const policy = path.join(directory, 'native-nri.json');\n    fs.writeFileSync(policy, renderNativeWorkerNode(selected)['native-nri.json'], { mode: 0o600 });\n    assert.equal(execFileSync(binary, ['--check-policy', policy], { encoding: 'utf8' }).trim(), 'NATIVE_NRI_POLICY_VALID');\n    fs.chmodSync(policy, 0o666);\n    assert.throws(() => execFileSync(binary, ['--check-policy', policy], { stdio: 'pipe' }));\n    assert.throws(() => execFileSync(process.execPath, ['scripts/build-native-worker-nri.mjs', binary], { stdio: 'pipe' }));\n  } finally { fs.rmSync(directory, { recursive: true, force: true }); }\n});"
+          }
+        ]
+      }
     }
   },
   "nonApiOutputContracts": [
@@ -97506,7 +98806,7 @@
             "source": "scripts/docs-api-product-scope.mjs",
             "target": "scripts/docs-api-output-discovery.mjs",
             "kind": "import",
-            "operation": "import { discoverHelmApiOutputs, discoverScriptApiOutputs, discoverGoApiOutputs, discoverShellApiOutputs, discoverTransformedApiOutputs, discoverInfrastructureApiOutputs, discoverExternalChartApiOutputs } from './docs-api-output-discovery.mjs';"
+            "operation": "import { isQualifiedOriginalClientWireResponseContext, discoverHelmApiOutputs, discoverScriptApiOutputs, discoverGoApiOutputs, discoverShellApiOutputs, discoverTransformedApiOutputs, discoverInfrastructureApiOutputs, discoverExternalChartApiOutputs } from './docs-api-output-discovery.mjs';"
           },
           {
             "source": "scripts/docs-api-product-scope.mjs",
@@ -98497,7 +99797,7 @@
             "source": "scripts/docs-api-product-scope.mjs",
             "target": "scripts/docs-api-output-discovery.mjs",
             "kind": "import",
-            "operation": "import { discoverHelmApiOutputs, discoverScriptApiOutputs, discoverGoApiOutputs, discoverShellApiOutputs, discoverTransformedApiOutputs, discoverInfrastructureApiOutputs, discoverExternalChartApiOutputs } from './docs-api-output-discovery.mjs';"
+            "operation": "import { isQualifiedOriginalClientWireResponseContext, discoverHelmApiOutputs, discoverScriptApiOutputs, discoverGoApiOutputs, discoverShellApiOutputs, discoverTransformedApiOutputs, discoverInfrastructureApiOutputs, discoverExternalChartApiOutputs } from './docs-api-output-discovery.mjs';"
           },
           {
             "source": "scripts/docs-api-product-scope.mjs",
@@ -100235,7 +101535,7 @@
             "source": "scripts/docs-api-product-scope.mjs",
             "target": "scripts/docs-api-output-discovery.mjs",
             "kind": "import",
-            "operation": "import { discoverHelmApiOutputs, discoverScriptApiOutputs, discoverGoApiOutputs, discoverShellApiOutputs, discoverTransformedApiOutputs, discoverInfrastructureApiOutputs, discoverExternalChartApiOutputs } from './docs-api-output-discovery.mjs';"
+            "operation": "import { isQualifiedOriginalClientWireResponseContext, discoverHelmApiOutputs, discoverScriptApiOutputs, discoverGoApiOutputs, discoverShellApiOutputs, discoverTransformedApiOutputs, discoverInfrastructureApiOutputs, discoverExternalChartApiOutputs } from './docs-api-output-discovery.mjs';"
           },
           {
             "source": "scripts/docs-api-product-scope.mjs",
@@ -101174,7 +102474,7 @@
             "source": "scripts/docs-api-product-scope.mjs",
             "target": "scripts/docs-api-output-discovery.mjs",
             "kind": "import",
-            "operation": "import { discoverHelmApiOutputs, discoverScriptApiOutputs, discoverGoApiOutputs, discoverShellApiOutputs, discoverTransformedApiOutputs, discoverInfrastructureApiOutputs, discoverExternalChartApiOutputs } from './docs-api-output-discovery.mjs';"
+            "operation": "import { isQualifiedOriginalClientWireResponseContext, discoverHelmApiOutputs, discoverScriptApiOutputs, discoverGoApiOutputs, discoverShellApiOutputs, discoverTransformedApiOutputs, discoverInfrastructureApiOutputs, discoverExternalChartApiOutputs } from './docs-api-output-discovery.mjs';"
           },
           {
             "source": "scripts/docs-api-product-scope.mjs",

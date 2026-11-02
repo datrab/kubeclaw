@@ -220,11 +220,32 @@ const standaloneSerializedRoles = new WeakMap();
 const standaloneSerializedTrees = new WeakMap();
 const manifestValidationRoles = new WeakMap();
 // Existing sealed manifest-verification family; not filename/test-directory authority.
+const pluginAbiReceivingSources=["tests/verification/contracts/check-pipeline-test-plan-runner.mts", "tests/verification/contracts/check-pipeline-test-suite-resolver.mts"];
+const pluginAbiReceivingConsumerInputs=[
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/schema.ts",
+    "sha256": "eb665b9db83e0d0d1bd15fbe5c6f916f479bf8a9c049de6d90b2d6f9f59cc557"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+    "sha256": "1f2742573de8a2f37067238bc53edcb4b031e881f04da94519687c79eb758a87"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/build.ts",
+    "sha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867"
+  },
+  {
+    "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+    "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+  }
+];
 const manifestValidationPublicationContext = Object.freeze({
   "sources": [
     "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
     "tests/verification/contracts/support/manifest-lint-parity-fixture.mts",
-    "tests/verification/contracts/check-pipeline-manifest-lint-parity.mts"
+    "tests/verification/contracts/check-pipeline-manifest-lint-parity.mts",
+    "tests/verification/contracts/check-pipeline-test-plan-runner.mts",
+    "tests/verification/contracts/check-pipeline-test-suite-resolver.mts"
   ],
   "nonApiWrites": [
     [
@@ -250,6 +271,14 @@ const manifestValidationPublicationContext = Object.freeze({
     [
       "tests/verification/contracts/support/manifest-lint-parity-fixture.mts",
       34
+    ],
+    [
+      "tests/verification/contracts/check-pipeline-test-plan-runner.mts",
+      156
+    ],
+    [
+      "tests/verification/contracts/check-pipeline-test-suite-resolver.mts",
+      84
     ]
   ],
   "helperReturn": {
@@ -263,6 +292,208 @@ const manifestValidationPublicationContext = Object.freeze({
     "line": 42
   }
 });
+const originalClientHttpReceipts = new WeakMap();
+const originalClientWireResponseProofs = new WeakMap();
+const originalClientHttpProfiles = Object.freeze([
+  {
+    "source": "tests/verification/e2e/capabilities.mts",
+    "sourceSha256": "794727065190c57a8105facbe949f534427b3a96d087168b04b4c6a49a265752",
+    "callers": [
+      {
+        "source": "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+        "sha256": "456bdf9ad5926084bb89bbf9b4bc7ec5e58c1b4f426cffbfd79531b417c4db38"
+      }
+    ],
+    "targets": [
+      {
+        "phase": "client-config-write",
+        "kind": "CallExpression",
+        "start": 4870,
+        "end": 5319,
+        "line": 118,
+        "sha256": "c8da0afc81c3dba45a1b79f15666633243074d594dbea589a03b7ecc9bae46c6"
+      },
+      {
+        "phase": "client-config-constructor",
+        "kind": "ObjectLiteralExpression",
+        "start": 4914,
+        "end": 5300,
+        "line": 118,
+        "sha256": "a24698cca8f477e13ad22ab8a2c8b97b8d6ad49bbd38237bb88d1ba9b1aab34d"
+      }
+    ],
+    "context": {
+      "incomingEdges": [
+        {
+          "source": "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+          "target": "tests/verification/e2e/capabilities.mts",
+          "kind": "import",
+          "operation": "import { probeCapabilities } from '../e2e/capabilities.mts';"
+        }
+      ],
+      "outgoingEdges": [
+        {
+          "source": "tests/verification/e2e/capabilities.mts",
+          "target": "tests/verification/e2e/buster-readiness.mjs",
+          "kind": "import",
+          "operation": "import { probeBusterReadiness } from './buster-readiness.mjs';"
+        },
+        {
+          "source": "tests/verification/e2e/capabilities.mts",
+          "target": "tests/verification/e2e/provider-catalog.mjs",
+          "kind": "import",
+          "operation": "import { parseCapabilityProviders, resolveProviderCapability } from './provider-catalog.mjs';"
+        }
+      ],
+      "publicEntries": [],
+      "dynamicOperations": [],
+      "packageEntries": [
+        {
+          "name": "verify:test-gate:remote-runtime",
+          "command": "node tests/verification/contracts/check-pipeline-remote-plan-runtime.mts && tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json && npm run typecheck --prefix skills/nova",
+          "source": "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts"
+        }
+      ],
+      "aliases": []
+    }
+  },
+  {
+    "source": "tests/verification/reliability/tailscale-api-fixture.mjs",
+    "sourceSha256": "c2366885ea90e2fc1680608a512db3cad1bf0a45ec0d58c2d242e9edcda37d34",
+    "callers": [
+      {
+        "source": "tests/verification/reliability/demo-exposure-handoff.test.mjs",
+        "sha256": "cef20a36036ef42034221677638491cd7b9330a4b8a82588192a9c0af0cd02c3"
+      },
+      {
+        "source": "tests/verification/reliability/tailscale-generation.test.mjs",
+        "sha256": "b5cff588c588225c89e43dffba3900b66b74c0c1fb13a6beccf7b492ec8c9e5a"
+      }
+    ],
+    "targets": [
+      {
+        "phase": "http-completion",
+        "kind": "ReturnStatement",
+        "start": 1371,
+        "end": 1444,
+        "line": 21,
+        "sha256": "4cdaa66f97c6c7ea4eb34e4a5b48545ff28ff20e9a7f3fa6ed9ac10100eeac03"
+      },
+      {
+        "phase": "http-completion",
+        "kind": "ReturnStatement",
+        "start": 1472,
+        "end": 1859,
+        "line": 22,
+        "sha256": "8b4c0f409b36aa66d8795bb5bbb8c4a0037d8428e55cca3cf95863f42e2145f7"
+      },
+      {
+        "phase": "http-completion",
+        "kind": "ReturnStatement",
+        "start": 1889,
+        "end": 1983,
+        "line": 25,
+        "sha256": "67a452131074f7ac51ecbdf87e76fffcd735dd5040dd10f33b50627b471c2218"
+      },
+      {
+        "phase": "http-completion",
+        "kind": "ReturnStatement",
+        "start": 2029,
+        "end": 2289,
+        "line": 26,
+        "sha256": "10d7d71f39c14ce0e832a0e7ddafee5a6a83df917db73831bd6efb90ba4a47a4"
+      },
+      {
+        "phase": "http-completion",
+        "kind": "ReturnStatement",
+        "start": 2341,
+        "end": 2588,
+        "line": 28,
+        "sha256": "2e3d5dd69c00062e5576ed3c891ce6bc99ff965cb5fe3d48fff58618a24acf50"
+      },
+      {
+        "phase": "http-completion",
+        "kind": "ReturnStatement",
+        "start": 2665,
+        "end": 2780,
+        "line": 30,
+        "sha256": "7d9247e0e6d7bbac9cc93d0b7f05378a7e6a64ffed299f234c0b3d7053f2800c"
+      },
+      {
+        "phase": "http-completion",
+        "kind": "ReturnStatement",
+        "start": 3500,
+        "end": 3637,
+        "line": 41,
+        "sha256": "8b800023c34a205c4a6d6d45003a062685bd8bac891eaa4e1556e05d9f44b899"
+      },
+      {
+        "phase": "http-completion",
+        "kind": "ReturnStatement",
+        "start": 4795,
+        "end": 4920,
+        "line": 60,
+        "sha256": "1a36046fdbd621385e0998537596cb378febbb0af7733a467df77b4c6ac7f756"
+      },
+      {
+        "phase": "client-config-write",
+        "kind": "CallExpression",
+        "start": 5048,
+        "end": 5400,
+        "line": 64,
+        "sha256": "3d0899dc1c36b6f616949371b12fc7f091e1053a1c5ecec8d152257b89ff0fdb"
+      },
+      {
+        "phase": "client-config-constructor",
+        "kind": "ObjectLiteralExpression",
+        "start": 5088,
+        "end": 5398,
+        "line": 64,
+        "sha256": "6552041c045dee5f181ead1f2a3f6adc4084ebe53b20493136e95a5856e1ea89"
+      },
+      {
+        "phase": "harness-return",
+        "kind": "ReturnStatement",
+        "start": 5404,
+        "end": 5489,
+        "line": 66,
+        "sha256": "635bb59812561062d55ff3d6b8823af40bd581376306842c4e61006d7890b86d"
+      }
+    ],
+    "context": {
+      "incomingEdges": [
+        {
+          "source": "tests/verification/reliability/demo-exposure-handoff.test.mjs",
+          "target": "tests/verification/reliability/tailscale-api-fixture.mjs",
+          "kind": "import",
+          "operation": "import {exposureAPI} from './tailscale-api-fixture.mjs';"
+        },
+        {
+          "source": "tests/verification/reliability/tailscale-generation.test.mjs",
+          "target": "tests/verification/reliability/tailscale-api-fixture.mjs",
+          "kind": "import",
+          "operation": "import { exposureAPI } from './tailscale-api-fixture.mjs';"
+        }
+      ],
+      "outgoingEdges": [],
+      "publicEntries": [],
+      "dynamicOperations": [],
+      "packageEntries": [
+        {
+          "name": "verify:reliability",
+          "command": "node --test tests/verification/reliability/*.test.mts tests/verification/reliability/*.test.mjs && node tests/verification/contracts/check-plugin-system-v2-checkpoint-recovery.mjs && node tests/verification/contracts/check-plugin-system-v2-phase6.mjs && node tests/verification/contracts/check-plugin-system-v2-engine.mjs && node tests/verification/contracts/check-plugin-system-v2-resume.mjs && node tests/verification/contracts/check-pipeline-remote-result-import.mts && npm test --workspace @kubeclaw/plugin-git-workspace",
+          "source": "tests/verification/reliability/demo-exposure-handoff.test.mjs"
+        },
+        {
+          "name": "verify:reliability",
+          "command": "node --test tests/verification/reliability/*.test.mts tests/verification/reliability/*.test.mjs && node tests/verification/contracts/check-plugin-system-v2-checkpoint-recovery.mjs && node tests/verification/contracts/check-plugin-system-v2-phase6.mjs && node tests/verification/contracts/check-plugin-system-v2-engine.mjs && node tests/verification/contracts/check-plugin-system-v2-resume.mjs && node tests/verification/contracts/check-pipeline-remote-result-import.mts && npm test --workspace @kubeclaw/plugin-git-workspace",
+          "source": "tests/verification/reliability/tailscale-generation.test.mjs"
+        }
+      ],
+      "aliases": []
+    }
+  }
+]);
 const selectedSources = Object.freeze([
   'scripts/lint-baseline-update.mjs', 'scripts/observability-retirement-plan.mjs',
   'scripts/recover-openclaw-audit-input.mjs', 'scripts/render-kubernetes-api-probe.mjs',
@@ -681,6 +912,16 @@ export function checkedTopLevelScriptPurposes(root, graph, classify, sources, na
   if (!standaloneContextSources.every(source => standaloneCurrentInputs.some(input => input.path === source))) fail('standalone serialized current caller inputs');
   standaloneSerializedReceipts.set(receipt, Object.freeze({root,
     inputs:Object.freeze(standaloneCurrentInputs.map(input => Object.freeze({...input})))}));
+
+  // Optional exact receiver capability; original95/494 acquisition is unchanged.
+  const observedClientHttp=originalClientHttpProfiles.filter(profile=>sources.includes(profile.source));
+  const clientHttpFacts=[];
+  for(const profile of observedClientHttp){
+    const actual={incomingEdges:graph.edges.filter(e=>e.target===profile.source),outgoingEdges:graph.edges.filter(e=>e.source===profile.source),publicEntries:graph.publicEntries.filter(e=>e.source===profile.source||e.canonicalSource===profile.source),dynamicOperations:graph.dynamicOperations.filter(e=>e.source===profile.source),packageEntries:graph.packageEntries.filter(e=>[profile.source,...profile.callers.map(c=>c.source)].includes(e.source)),aliases:graph.aliases};
+    assert(JSON.stringify(actual)===JSON.stringify(profile.context),'API_PRODUCT_CLIENT_HTTP_RECEIVER_UNQUALIFIED: caller/native/public context');
+    for(const fact of [{source:profile.source,sha256:profile.sourceSha256},...profile.callers]){assert(hash(read(fact.source))===fact.sha256,'API_PRODUCT_CLIENT_HTTP_RECEIVER_UNQUALIFIED: Source/consumer');clientHttpFacts.push({path:fact.source,sha256:fact.sha256});}
+  }
+  if(observedClientHttp.length)originalClientHttpReceipts.set(receipt,Object.freeze({root,profiles:observedClientHttp,inputs:[...clientHttpFacts,{path:'package.json',sha256:hash(rootPackageBytes)}]}));
   receipts.add(receipt);
   return receipt;
 }
@@ -1111,6 +1352,21 @@ export function selectedManifestValidationPublicationPurpose(source, tree, publi
       ||owner.parent!==tree||!owner.modifiers?.some(modifier=>modifier.kind===ts.SyntaxKind.ExportKeyword))return null;
     helperOwner=owner;
   }
+  const pluginAbi=pluginAbiReceivingSources.includes(source);
+  if(pluginAbi){
+    if(phase!=='opaque'||!rawRole||rawRole.role!=='non-api'||!ts.isTemplateExpression(argument)
+      ||argument.head.text!==''||argument.templateSpans.length!==1||argument.templateSpans[0].literal.text!=='\n')return null;
+    const serializer=argument.templateSpans[0].expression;
+    if(!ts.isCallExpression(serializer)||serializer.expression.getText(tree)!=='JSON.stringify'
+      ||!ts.isObjectLiteralExpression(serializer.arguments[0]))return null;
+    const payload=serializer.arguments[0];
+    const apiVersion=payload.properties.find(property=>ts.isPropertyAssignment(property)&&property.name.getText(tree).replace(/^['"]|['"]$/gu,'')==='apiVersion');
+    if(!apiVersion||!ts.isStringLiteralLike(apiVersion.initializer)||apiVersion.initializer.text!=='pipeline-plugin-v2'
+      ||payload.properties.some(property=>ts.isSpreadAssignment(property)||property.name?.getText(tree).replace(/^['"]|['"]$/gu,'')==='kind'))return null;
+    for(const fact of pluginAbiReceivingConsumerInputs){const file=path.join(custody.root,fact.path);
+      assert(fs.existsSync(file)&&fs.realpathSync(file)===file&&fs.lstatSync(file).isFile()&&hash(fs.readFileSync(file))===fact.sha256,
+        'API_PRODUCT_TOP_LEVEL_SOURCE_PURPOSE_UNQUALIFIED: changed plugin ABI schema/registry consumer');}
+  }
   let root=node;while(root.parent)root=root.parent;
   let actualChild=false;if(node.parent)ts.forEachChild(node.parent,child=>{if(child===node)actualChild=true;});
   if(root!==tree||!actualChild)return null;
@@ -1119,9 +1375,46 @@ export function selectedManifestValidationPublicationPurpose(source, tree, publi
   if(!canonical){const parsed=ts.createSourceFile(source,tree.text,ts.ScriptTarget.Latest,true,/\.[cm]?ts$/u.test(source)?ts.ScriptKind.TS:ts.ScriptKind.JS);if(parsed.parseDiagnostics.length)return null;canonical=new Map();const visit=node=>{if(ts.isCallExpression(node)||ts.isReturnStatement(node)||ts.isFunctionDeclaration(node))canonical.set(`${node.getStart(parsed)}:${node.end}`,JSON.stringify(shape(node)));ts.forEachChild(node,visit);};visit(parsed);standaloneSerializedTrees.set(tree,canonical);}
   if(canonical.get(`${node.getStart(tree)}:${node.end}`)!==JSON.stringify(shape(node)))return null;
   if(helperOwner&&canonical.get(`${helperOwner.getStart(tree)}:${helperOwner.end}`)!==JSON.stringify(shape(helperOwner)))return null;
+  if(pluginAbi){const parsed=ts.createSourceFile(source,tree.text,ts.ScriptTarget.Latest,true,ts.ScriptKind.TS);if(parsed.parseDiagnostics.length||JSON.stringify(shape(parsed))!==JSON.stringify(shape(tree)))return null;}
   for(const fact of custody.inputs){const file=path.join(custody.root,fact.path);assert(fs.existsSync(file)&&fs.realpathSync(file)===file&&fs.lstatSync(file).isFile()&&hash(fs.readFileSync(file))===fact.sha256,
     'API_PRODUCT_TOP_LEVEL_SOURCE_PURPOSE_UNQUALIFIED: changed manifest publication Source/caller input');}
-  return Object.freeze({purpose:standaloneVerificationPurpose,kind:rawRole?(phase==='yaml-error'?'intentional-invalid-yaml-verification-input':'canonical-verification-file-input'):'closed-verification-api-text-helper-return',
+  return Object.freeze({purpose:standaloneVerificationPurpose,kind:pluginAbi?'source-qualified-plugin-abi-registry-input':rawRole?(phase==='yaml-error'?'intentional-invalid-yaml-verification-input':'canonical-verification-file-input'):'closed-verification-api-text-helper-return',
     boundRawRole:rawRole,canonicalRawRole:rawRole?.role??null,rawRoleSlotExists:Boolean(rawRole),witnessDigest:receipt.witnessDigest,inputDigest:receipt.inputDigest,
     payloadValidityProven:false,supportedProductEmissionProven:false,apiExclusion:false,runtimeExecutionAuthorized:false,apiApplyAuthorized:false});
+}
+
+// Exact local client configuration, HTTP completion and harness receiving contexts.
+// Never a raw-role relabel, API-payload truth or native invocation permission.
+export function selectedOriginalClientHttpReceiverPurpose(source,tree,publication,argument,receipt,phase){
+  const candidate=originalClientHttpProfiles.find(profile=>profile.source===source);if(!candidate)return null;
+  assert(receipt&&receipts.has(receipt),'API_PRODUCT_CLIENT_HTTP_RECEIVER_UNQUALIFIED: unacquired receipt');
+  const custody=originalClientHttpReceipts.get(receipt),profile=custody?.profiles.find(p=>p.source===source);assert(profile,'API_PRODUCT_CLIENT_HTTP_RECEIVER_UNQUALIFIED: missing observed Source custody');
+  if(tree.fileName!==source||hash(tree.text)!==profile.sourceSha256)return null;
+  let node;
+  if(phase==='wire-response-body'){
+    if(source!=='tests/verification/reliability/tailscale-api-fixture.mjs'||publication!==argument||!ts.isObjectLiteralExpression(publication))return null;
+    const send=publication.parent,returned=send?.parent;
+    if(!send||!ts.isCallExpression(send)||send.expression.getText(tree)!=='send'||send.arguments.length!==1||send.arguments[0]!==publication||!returned||!ts.isReturnStatement(returned)||returned.expression!==send)return null;node=returned;
+  }else if(phase==='client-config-constructor'){if(publication!==argument||!ts.isObjectLiteralExpression(publication))return null;node=publication;}
+  else if(phase==='serialized'){
+    if(ts.isCallExpression(publication)){if(publication.expression.getText(tree)!=='fs.writeFileSync'||publication.arguments[1]!==argument||argument.parent!==publication)return null;node=publication;}
+    else{if(publication.arguments?.length!==1||publication.arguments[0]!==argument||!ts.isReturnStatement(argument.parent)||argument.parent.expression!==argument||publication.parent!==argument.parent.parent||publication.getStart(tree)!==argument.parent.getStart(tree))return null;node=argument.parent;}
+  }else return null;
+  let actualNode=false;const membership=part=>{if(part===node)actualNode=true;ts.forEachChild(part,membership);};membership(tree);if(!actualNode)return null;
+  const target=profile.targets.find(t=>t.start===node.getStart(tree)&&t.end===node.end&&t.kind===ts.SyntaxKind[node.kind]&&(phase==='wire-response-body'?t.phase==='http-completion':phase==='client-config-constructor'?t.phase===phase:t.phase!=='client-config-constructor'));if(!target||hash(node.getText(tree))!==target.sha256)return null;
+  let owner=node;while(owner.parent)owner=owner.parent;if(owner!==tree)return null;
+  // Whole supplied tree must still be the native parse of current sealed Source,
+  // including mutable function headers and lexical consumer identities.
+  const shape=n=>{const children=[];ts.forEachChild(n,c=>{children.push(shape(c));});return[n.kind,typeof n.text==='string'?n.text:null,n.operator??null,children];};
+  const parsed=ts.createSourceFile(source,tree.text,ts.ScriptTarget.Latest,true,/\.[cm]?ts$/u.test(source)?ts.ScriptKind.TS:ts.ScriptKind.JS);if(parsed.parseDiagnostics.length||JSON.stringify(shape(tree))!==JSON.stringify(shape(parsed)))return null;
+  assert(path.isAbsolute(custody.root)&&fs.realpathSync(custody.root)===custody.root,'API_PRODUCT_CLIENT_HTTP_RECEIVER_UNQUALIFIED: canonical root');
+  for(const fact of custody.inputs){const file=path.join(custody.root,fact.path);assert(fs.existsSync(file)&&fs.realpathSync(file)===file&&fs.lstatSync(file).isFile()&&hash(fs.readFileSync(file))===fact.sha256,'API_PRODUCT_CLIENT_HTTP_RECEIVER_UNQUALIFIED: changed physical Source/consumer/package');}
+  const proof=Object.freeze({kind:phase==='wire-response-body'?phase:target.phase,purpose:phase==='wire-response-body'?'exact-loopback-http-response-body-context':target.phase.startsWith('client-config')?'local-kubernetes-client-configuration':target.phase==='http-completion'?'local-HTTP-response-completion-not-body':'closed-wire-test-harness-return',apiExclusion:false,containedApiBytesQualified:false,runtimeExecutionAuthorized:false,apiApplyAuthorized:false});
+  if(phase==='wire-response-body')originalClientWireResponseProofs.set(proof,custody);return proof;
+}
+
+export function isQualifiedOriginalClientWireResponseProof(root,proof){
+  const custody=proof&&originalClientWireResponseProofs.get(proof);if(!custody||root!==custody.root)return false;
+  if(!path.isAbsolute(root)||fs.realpathSync(root)!==root)return false;
+  return custody.inputs.every(fact=>{const file=path.join(root,fact.path);return fs.existsSync(file)&&fs.realpathSync(file)===file&&fs.lstatSync(file).isFile()&&hash(fs.readFileSync(file))===fact.sha256;});
 }
