@@ -10483,7 +10483,7 @@ export const documentationExecutableRoleRecipes = {
     {
       "path": "scripts/docs-api-output-discovery.mjs",
       "canonical": "scripts/docs-api-output-discovery.mjs",
-      "sha256": "39ad2b4a1ef2b8f184697dccb91c042c108d231ce4b39700fa6c222bdbfaec35"
+      "sha256": "ebc592f99b752fd32a0f011e2e921f7a7e83a51f26be8d1cfae23124a39c32e2"
     },
     {
       "path": "scripts/docs-helm-memory-chart.mjs",
@@ -10528,7 +10528,7 @@ export const documentationExecutableRoleRecipes = {
     {
       "path": "scripts/docs-api-output-discovery.mjs",
       "canonical": "scripts/docs-api-output-discovery.mjs",
-      "sha256": "39ad2b4a1ef2b8f184697dccb91c042c108d231ce4b39700fa6c222bdbfaec35"
+      "sha256": "ebc592f99b752fd32a0f011e2e921f7a7e83a51f26be8d1cfae23124a39c32e2"
     },
     {
       "path": "scripts/docs-memory-inputs.mjs",
@@ -10818,7 +10818,7 @@ const reviewedPublicationParserRecipe=frozenRecipes({
     },
     {
       "path": "scripts/docs-api-output-discovery.mjs",
-      "sha256": "39ad2b4a1ef2b8f184697dccb91c042c108d231ce4b39700fa6c222bdbfaec35"
+      "sha256": "ebc592f99b752fd32a0f011e2e921f7a7e83a51f26be8d1cfae23124a39c32e2"
     },
     {
       "path": "scripts/tests/api-output-publication-native-custody.test.mjs",

@@ -567,7 +567,7 @@ const publicationExampleChildPurpose=freeze({
       "path": "docs/config/publication-example-claims.json",
       "historicalWholeInputSha256": "dc132bc762d54068ce563e7df23fdad91af90c7b1798768a0e686ea4b3ab2a1f",
       "purposeProjection": "exact-generated-record-seals-only/v1",
-      "purposeProjectionSha256": "6c95f66fb4cf0df283eebb658a2366bacc8a8d041f359bdc2603f6c6f66c362a"
+      "purposeProjectionSha256": "e80168fad86ab0c554173ff412be8f9ba93e0a96c2265a6869900ed88d5b7118"
     },
     {
       "path": "package.json",
