@@ -1570,7 +1570,7 @@
     },
     {
       "source": "scripts/check-ap08-minimal-plugin.mjs",
-      "sha256": "5fb5e2db66603a145edb2ab0abd5cbe3739a7a90e808ecde138cd08eca134dfa",
+      "sha256": "b5b01f1734372e34237d1c41c710d014db3629f252ead3baa96448620e2025c4",
       "disposition": "validation-output",
       "boundary": "The exact checked-in validator, discovery/evidence or integration-harness source emits observations or controlled fixtures, not new operator configuration. This source-specific disposition grants no runtime, Helm, fixture, module or general output exemption; any actual configuration inputs remain with their existing owner/selector contracts.",
       "facts": []
@@ -1598,7 +1598,7 @@
     },
     {
       "source": "scripts/docs-publication-embedded-yaml.mjs",
-      "sha256": "4ec435e5e80ca0b2e4a99dd328df0d4d8d603f8e41587fe16a86069dce7c16eb",
+      "sha256": "bc00ecfd3d9cab31f0ba0baf5200477a2c2cc11de8fa1a2b391ccf463108090a",
       "disposition": "validation-output",
       "boundary": "The exact checked-in validator, discovery/evidence or integration-harness source emits observations or controlled fixtures, not new operator configuration. This source-specific disposition grants no runtime, Helm, fixture, module or general output exemption; any actual configuration inputs remain with their existing owner/selector contracts.",
       "facts": []
@@ -1819,7 +1819,7 @@
     },
     {
       "source": "scripts/updates/deployment-release.mjs",
-      "sha256": "87d7c5e64c9718aba77a259611a760666f05626379dd2cc3f218b75869ed9ac3",
+      "sha256": "71bd2e1f239f06c490fd697c614ee9fd93aaa09150dd8d8d376950b34526fcf7",
       "disposition": "configuration-producer",
       "boundary": "Existing deployment/release source consumes explicit selected values, version or ownership inputs. The configuration composition retains those inputs and receiver contracts, not a new global API-emission qualification.",
       "facts": [
@@ -1837,7 +1837,7 @@
     },
     {
       "source": "scripts/updates/materialize-release.mjs",
-      "sha256": "ad026a32e4e9cad21ab3f2f0e87fcafe6c5d563f5133191f70b4c5ef4c925475",
+      "sha256": "508018a6b1f46464612c702d55107aa13076627c661ab46a3e5e87375459e454",
       "disposition": "configuration-producer",
       "boundary": "Existing deployment/release source consumes explicit selected values, version or ownership inputs. The configuration composition retains those inputs and receiver contracts, not a new global API-emission qualification.",
       "facts": [

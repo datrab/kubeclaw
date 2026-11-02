@@ -5,7 +5,7 @@ Audience: plugin author, operator, maintainer
 Owner: plugin-foundation
 Evidence: skills/nova/plugins/delivery-lint/plugin.json; skills/nova/plugins/delivery-lint/README.md
 Applies to: pipeline-plugin-v2; package 1.0.0
-Last verified: source facts revision 7994a51e16bc752357c3a801190b12b7d6a191a4; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.
+Last verified: source facts revision 1a0c284899d5abdcf7504ef1c15defb3b6ce52db; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.
 
 ## Purpose
 
@@ -26,7 +26,7 @@ It checks the declared delivery surface, not all repository conventions.
 The package guide explains package-specific behavior. The shared guides explain
 the contract and lifecycle rules that apply to this package.
 
-- [Package guide](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/nova/plugins/delivery-lint/README.md)
+- [Package guide](https://github.com/datrab/kubeclaw/blob/1a0c284899d5abdcf7504ef1c15defb3b6ce52db/skills/nova/plugins/delivery-lint/README.md)
 - [Shared extension contracts](../contracts.md)
 - [Proof and failure exercises](../testing.md#use-a-proof-ladder)
 - [Install and activate](../testing.md#install-and-activate-by-surface)
@@ -40,7 +40,7 @@ the contract and lifecycle rules that apply to this package.
 - Host: `pipeline-runtime`.
 - Package identity: `kubeclaw.delivery-lint@1.0.0`.
 - Runtime-role manifest inclusion: `nova`
-- Manifest: [skills/nova/plugins/delivery-lint/plugin.json](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/nova/plugins/delivery-lint/plugin.json)
+- Manifest: [skills/nova/plugins/delivery-lint/plugin.json](https://github.com/datrab/kubeclaw/blob/1a0c284899d5abdcf7504ef1c15defb3b6ce52db/skills/nova/plugins/delivery-lint/plugin.json)
 
 ## Boundaries
 
@@ -65,15 +65,15 @@ Required capabilities: `git.repository.read`, `artifacts.write`
 
 Provided capabilities: None.
 
-Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/nova/plugins/delivery-lint/schemas/config.schema.json)
+Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/1a0c284899d5abdcf7504ef1c15defb3b6ce52db/skills/nova/plugins/delivery-lint/schemas/config.schema.json)
 
 Configuration fields: schema declarations. Defaults are annotations, not proof that the caller inserts a value.
 
 The schema declares no top-level fields.
 
-Input schema: [schemas/input.schema.json](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/nova/plugins/delivery-lint/schemas/input.schema.json)
+Input schema: [schemas/input.schema.json](https://github.com/datrab/kubeclaw/blob/1a0c284899d5abdcf7504ef1c15defb3b6ce52db/skills/nova/plugins/delivery-lint/schemas/input.schema.json)
 
-Result schema: [schemas/result.schema.json](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/nova/plugins/delivery-lint/schemas/result.schema.json)
+Result schema: [schemas/result.schema.json](https://github.com/datrab/kubeclaw/blob/1a0c284899d5abdcf7504ef1c15defb3b6ce52db/skills/nova/plugins/delivery-lint/schemas/result.schema.json)
 
 Declared manifest facts:
 
@@ -137,8 +137,8 @@ The result above states the exact local limit. Run the package command in the ta
 
 ## Source Evidence
 
-- Manifest: [skills/nova/plugins/delivery-lint/plugin.json](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/nova/plugins/delivery-lint/plugin.json)
-- Package implementation guide: [skills/nova/plugins/delivery-lint/README.md](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/nova/plugins/delivery-lint/README.md)
-- Module for `delivery-lint`: [src/stage.ts](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/nova/plugins/delivery-lint/src/stage.ts)
-- Test: [skills/nova/plugins/delivery-lint/tests/live-function.test.ts](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/nova/plugins/delivery-lint/tests/live-function.test.ts)
-- Test: [skills/nova/plugins/delivery-lint/tests/package-boundary.test.mjs](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/nova/plugins/delivery-lint/tests/package-boundary.test.mjs)
+- Manifest: [skills/nova/plugins/delivery-lint/plugin.json](https://github.com/datrab/kubeclaw/blob/1a0c284899d5abdcf7504ef1c15defb3b6ce52db/skills/nova/plugins/delivery-lint/plugin.json)
+- Package implementation guide: [skills/nova/plugins/delivery-lint/README.md](https://github.com/datrab/kubeclaw/blob/1a0c284899d5abdcf7504ef1c15defb3b6ce52db/skills/nova/plugins/delivery-lint/README.md)
+- Module for `delivery-lint`: [src/stage.ts](https://github.com/datrab/kubeclaw/blob/1a0c284899d5abdcf7504ef1c15defb3b6ce52db/skills/nova/plugins/delivery-lint/src/stage.ts)
+- Test: [skills/nova/plugins/delivery-lint/tests/live-function.test.ts](https://github.com/datrab/kubeclaw/blob/1a0c284899d5abdcf7504ef1c15defb3b6ce52db/skills/nova/plugins/delivery-lint/tests/live-function.test.ts)
+- Test: [skills/nova/plugins/delivery-lint/tests/package-boundary.test.mjs](https://github.com/datrab/kubeclaw/blob/1a0c284899d5abdcf7504ef1c15defb3b6ce52db/skills/nova/plugins/delivery-lint/tests/package-boundary.test.mjs)

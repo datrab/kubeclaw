@@ -10330,7 +10330,7 @@ function buildConfigurationFamilyReference() {
     'CONFIGURATION_REFERENCE_MODE_CONFLICT');
   const mapPath = 'docs/config/configuration-family-map.json';
   const mapBytes = fs.readFileSync(path.join(root, mapPath));
-  assert.equal(crypto.createHash('sha256').update(mapBytes).digest('hex'), 'c03d4c3c93cf51c9ccd8c061716c218f64b6757eb6aca84102bc207022d0315e', 'CONFIGURATION_FAMILY_MAP_IDENTITY');
+  assert.equal(crypto.createHash('sha256').update(mapBytes).digest('hex'), 'de2e64d80b4dc9bc5969d08481e0f30fb3a9a3ccbbb8704e93bae00f82df4d7c', 'CONFIGURATION_FAMILY_MAP_IDENTITY');
   const map = JSON.parse(mapBytes);
   assert.equal(map.schemaVersion, 'kubeclaw.configuration-family-map.v1');
   const unique = (rows, key) => { const values = rows.map(row => row[key]); assert.equal(new Set(values).size, values.length, 'CONFIGURATION_FAMILY_MAP_DUPLICATE'); return values; };

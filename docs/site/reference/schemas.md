@@ -36,7 +36,7 @@ standalone file. It is not a global
 catalog of all input, result, checkpoint, chart or host contracts.
 
 **Source — config selection and package-local acquisition:**
-[registeredSchemaAuthorities](../../../scripts/docs-configuration-inventory.mjs#L3178-L3210) (`scripts/docs-configuration-inventory.mjs:3178–3210`, current-checkout SHA-256 `d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f`). [validateRegistrationFiles / assertPackageFile](../../../skills/common/plugin-runtime/foundation/registry/build.ts#L30-L70) (`skills/common/plugin-runtime/foundation/registry/build.ts:30–70`, current-checkout SHA-256 `c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867`).
+[registeredSchemaAuthorities](../../../scripts/docs-configuration-inventory.mjs#L3182-L3214) (`scripts/docs-configuration-inventory.mjs:3182–3214`, current-checkout SHA-256 `c76211df8bb7741a8c87f421bc37347c2a59b9d8d68f2273768e38c5952f317d`). [validateRegistrationFiles / assertPackageFile](../../../skills/common/plugin-runtime/foundation/registry/build.ts#L30-L70) (`skills/common/plugin-runtime/foundation/registry/build.ts:30–70`, current-checkout SHA-256 `c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867`).
 
 <a id="stage-input-result-and-checkpoint-catalogue"></a>
 

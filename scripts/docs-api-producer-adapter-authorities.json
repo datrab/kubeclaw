@@ -103236,7 +103236,7 @@
       {
         "source": "scripts/docs-configuration-inventory.mjs",
         "semanticClass": "finite-documentation-runtime-semantics",
-        "sourceSha256": "d07b890d817f59b87b4b2b2cc7bb15f8f24c4889e0ccce8cc473b52c5e0c6f30",
+        "sourceSha256": "c76211df8bb7741a8c87f421bc37347c2a59b9d8d68f2273768e38c5952f317d",
         "operations": [
           {
             "expression": "import(pathToFileURL(path.join(root, file)).href)",

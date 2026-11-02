@@ -110,7 +110,7 @@ export const embeddedProgramBindings = [
     "mode": "commonjs"
   },
   {
-    "ref": "docs/site/extend/developer-handbook.md#block-17",
+    "ref": "docs/site/extend/developer-handbook.md#block-18",
     "start": 141,
     "length": 21,
     "sha256": "51c4e5cc1f52955455187687e85c0629de02755aea78830f89728cddbc54bdc7",
@@ -118,7 +118,7 @@ export const embeddedProgramBindings = [
     "mode": "commonjs"
   },
   {
-    "ref": "docs/site/extend/developer-handbook.md#block-17",
+    "ref": "docs/site/extend/developer-handbook.md#block-18",
     "start": 223,
     "length": 16,
     "sha256": "5f7e819b9ccfd6d50fe2ca3721a9af39726e501c92c0e19344d123ed9bcad32c",
@@ -126,7 +126,7 @@ export const embeddedProgramBindings = [
     "mode": "commonjs"
   },
   {
-    "ref": "docs/site/extend/developer-handbook.md#block-22",
+    "ref": "docs/site/extend/developer-handbook.md#block-23",
     "start": 42,
     "length": 629,
     "sha256": "8db67876651994a1bf9d891fa64fcddb25c58c18cb95f757fa9b5663d75f3a4d",
@@ -134,7 +134,7 @@ export const embeddedProgramBindings = [
     "mode": "module"
   },
   {
-    "ref": "docs/site/extend/developer-handbook.md#block-42",
+    "ref": "docs/site/extend/developer-handbook.md#block-43",
     "start": 133,
     "length": 112,
     "sha256": "2d586914e8b4cbe31b4ecbab616870400ab3bd0d046f97b11f297e7e2b6c04db",

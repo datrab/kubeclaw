@@ -226,7 +226,7 @@ const reviewedDocumentationModuleInputRecipes = [
   {
     "source": "scripts/docs-configuration-inventory.mjs",
     "semanticClass": "finite-documentation-runtime-semantics",
-    "recipeSha256": "da302f560afae833a8a389901eb5d24fc2c90b19c0918b062f6b0a0a1dbb6c4f"
+    "recipeSha256": "70f5d2d9b7c630177bb05cf7083bfdf6ecfc7e084d8c5173d621ca79978cadd4"
   },
   {
     "source": "scripts/docs-lint-policy-reference.mjs",
@@ -2842,7 +2842,7 @@ const reviewedPublicationYamlValidationInputs = Object.freeze({
       "path": "docs/config/publication-example-claims.json",
       "historicalWholeInputSha256": "dc132bc762d54068ce563e7df23fdad91af90c7b1798768a0e686ea4b3ab2a1f",
       "purposeProjection": "exact-generated-record-seals-only/v1",
-      "purposeProjectionSha256": "42d41be79e14631751cd0673f5059ddb75c11f60ce78fa181ba195e2fb291ade"
+      "purposeProjectionSha256": "6c95f66fb4cf0df283eebb658a2366bacc8a8d041f359bdc2603f6c6f66c362a"
     },
     {
       "path": "docs/site/use/diagnose.md",
@@ -3626,7 +3626,7 @@ const reviewedPublicationNativeValidation = Object.freeze({
       "path": "docs/config/publication-example-claims.json",
       "historicalWholeInputSha256": "dc132bc762d54068ce563e7df23fdad91af90c7b1798768a0e686ea4b3ab2a1f",
       "purposeProjection": "exact-generated-record-seals-only/v1",
-      "purposeProjectionSha256": "42d41be79e14631751cd0673f5059ddb75c11f60ce78fa181ba195e2fb291ade"
+      "purposeProjectionSha256": "6c95f66fb4cf0df283eebb658a2366bacc8a8d041f359bdc2603f6c6f66c362a"
     },
     {
       "path": "docs/site/extend/examples/minimal-stage/package.json",
@@ -3878,7 +3878,7 @@ const reviewedPublicationNativeValidation = Object.freeze({
     },
     {
       "path": "scripts/docs-publication-instruction-syntax.mjs",
-      "sha256": "a67002bba4e7a2759534dd206d558a79d96136162cb1abab4d77d9a6a74e5881"
+      "sha256": "0d3321ab623dbdb8c3a56e0d206827898e652e63f1463c04e6c115d42a78fe2a"
     },
     {
       "path": "scripts/docs-publication.mjs",
