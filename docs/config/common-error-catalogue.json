@@ -4769,19 +4769,19 @@
       "id": "go-python:controller-product",
       "section": "platform",
       "title": "Owned DEMO_PRODUCT_* message errors; handler retains exact DEMO_PRODUCT_ prefix or maps other errors to EVIDENCE_UNAVAILABLE",
-      "identity": "Owned DEMO_PRODUCT_* message errors. handler retains exact DEMO_PRODUCT_ prefix or maps other errors to EVIDENCE_UNAVAILABLE",
+      "identity": "Owned DEMO_PRODUCT_* message errors. HTTP 409 retains only a complete ASCII DEMO_PRODUCT_[A-Z_]+ token; other errors map to DEMO_PRODUCT_EVIDENCE_UNAVAILABLE",
       "kind": "upstream-translation",
       "trigger": "Signature/schema/time/actor/subject/replay/history/extension/admission checks and version-CAS/readback failures at actual product step.",
       "effect": "Decision verification binds signed bytes/actor/issuer/domain/lease and original ready identity. Existing exact decisionId+digest returns receipt. changed payload fails. Commit uses expectedRevision CAS then readback/receipt equality. 409 API conflict is VERSION_CONFLICT. other patch/readback uncertainty is COMMIT_UNCERTAIN. A status lookup not found is different from no attempted commit. Acceptance/extension updates durable product decisions and expiry. no generic rollback promised.",
       "retry": "Keep original decisionId/payloadDigest/envelope/leaseUID/readyDigest and read original status before any new attempt. Preserve history limit, expiry and subject-change stop. Do not forge acceptance or clear retained decision history to make retry succeed.",
       "safeAction": "Keep original decisionId/payloadDigest/envelope/leaseUID/readyDigest and read original status before any new attempt. Preserve history limit, expiry and subject-change stop. Do not forge acceptance or clear retained decision history to make retry succeed.",
       "retainedData": "Keep signed envelope/decisionId/payloadDigest/leaseUID/readyDigest and committed decisions/expiry. uncertain commit requires status against original identity.",
-      "consumer": "Exact owned error/return/status consumer selectors attached. no generic retry or global code meaning.",
+      "consumer": "The handler uses an anchored complete-token constructor before HTTP 409; a matching prefix, line breaks or an API-read payload are not an error-code proof. Authentication, successful response construction and individual owning recovery rules remain separate.",
       "sources": [
         {
           "path": "cmd/buster-namespace-controller/demo-product.go",
-          "line": 58,
-          "sha256": "127c82f150c8277a931ae9fba701b7a1c6cc368d9e8290f9fb2082efd74cc49c"
+          "line": 70,
+          "sha256": "73a7772b69a9b43688628f5ff84f5ca8d770e5a8e39fe65f4502dff17d826355"
         },
         {
           "path": "cmd/buster-namespace-controller/demo-readiness.go",
@@ -4799,19 +4799,19 @@
       "id": "go-python:native-nri",
       "section": "platform",
       "title": "Local fixed errors.New policy/identity/runtime/selection/sandbox messages; forwarded OS/JSON/stub.Run errors explicitly open",
-      "identity": "Local fixed errors.New policy/identity/runtime/selection/sandbox messages. forwarded OS/JSON/stub.Run errors explicitly open",
+      "identity": "Local fixed errors.New policy/identity/runtime/selection/sandbox messages. forwarded OS/JSON/stub.Run errors explicitly open; terminal stderr quotes the stringified message as one escaped scalar",
       "kind": "literal",
       "trigger": "Actual root/policy trust/schema/role/runtime/plugin identity and callback annotation/container/sandbox conditions in complete local main.",
       "effect": "ReadConfiguration does not mutate policy. Runtime callback returns adjustment removing cgroup namespace only after exact selected role/container/sandbox binding. Unselected roles/containers can return nil success, not a failure or proof all workloads were constrained. SDK Configure/CreateContainer errors are callback results. exact external lifecycle failure remains external.",
       "retry": "Keep selected binary/policy/version/role/sandbox identity. Correct owned rejection before admission. do not restart services, clear pools or reinterpret arbitrary SDK failure as one fixed NRI code. Host activation/upstream SDK consumers require their own closure before any stronger claim.",
       "safeAction": "Keep selected binary/policy/version/role/sandbox identity. Correct owned rejection before admission. do not restart services, clear pools or reinterpret arbitrary SDK failure as one fixed NRI code. Host activation/upstream SDK consumers require their own closure before any stronger claim.",
       "retainedData": "Keep selected binary/policy/version/role/sandbox and first error. no generic service restart/state removal. External SDK vocabulary/callback delivery remains open.",
-      "consumer": "Exact owned error/return/status consumer selectors attached. no generic retry or global code meaning.",
+      "consumer": "Main uses fmt.Sprint followed by a sole %q directive on stderr and exit 1. Decode the quoted representation before matching the owning message; this closes no upstream vocabulary, runtime callback, retry or API authority.",
       "sources": [
         {
           "path": "tools/native-worker-nri/main.go",
           "line": 37,
-          "sha256": "3d0c3149fc703f6c8e2fd3392b7f8e2e1bbd1df1b18215c2857cb2cddf417531"
+          "sha256": "63bc5b5a25666f9166214c9ff2fd91596c2ab818c3eec2db99857af192e4e8e5"
         },
         {
           "path": "scripts/install-native-worker-pools-stage.sh",
@@ -4829,14 +4829,14 @@
       "id": "go-python:upstream-cli-frontdoors",
       "section": "platform",
       "title": "kubectl upstream CheckErr dispatch; Hubble cmd.Execute err.Error→stderr+exit1",
-      "identity": "kubectl upstream CheckErr dispatch. Hubble cmd.Execute err.Error→stderr+exit1",
+      "identity": "kubectl upstream CheckErr dispatch unchanged. Hubble cmd.Execute Error() text to one escaped quoted scalar on stderr, then exit 1",
       "kind": "forwarded-error",
       "trigger": "Selected upstream CLI execution returns an error. exact upstream/remote error vocabulary is not locally closed.",
       "effect": "Upstream command flags and call sites determine effects, not the frontdoor. Error output does not prove a command was read-only or never accepted remotely.",
       "retry": "Retain selected CLI/version/subcommand/target and original error. defer recovery to exact upstream/operation authority. No invented per-prefix retry or whole upstream catalogue.",
       "safeAction": "Retain selected CLI/version/subcommand/target and original error. defer recovery to exact upstream/operation authority. No invented per-prefix retry or whole upstream catalogue.",
       "retainedData": "Keep selected CLI/version/subcommand/target and complete first cause. The frontdoor alone cannot establish prior side effects, retry or clean remote state.",
-      "consumer": "Exact owned error/return/status consumer selectors attached. no generic retry or global code meaning.",
+      "consumer": "Hubble quotes the original Error() string without changing exit status. Quotation is a representation boundary, not a fixed upstream/remote error vocabulary or an execution/effect/retry grant. kubectl dispatch remains upstream.",
       "sources": [
         {
           "path": "ops/pod/kubectl-build/main.go",
@@ -4846,7 +4846,7 @@
         {
           "path": "tools/ops-mcp/hubble/main.go",
           "line": 6,
-          "sha256": "df89cb21264c42c7bbc7a3b3b9501581e5877a2a50db2459c509329f7f2c52c4"
+          "sha256": "8bdc283ae1027d4ee5823eccc8309147bdedf6dbdf1a6463b9a3b907d498739c"
         },
         {
           "path": "ops/pod/Dockerfile",
@@ -5092,16 +5092,16 @@
       "identity": "readConfiguration OS/JSON errors. stub.New/run client.Run returned error",
       "kind": "forwarded-error",
       "trigger": "Actual OS, parser or external selected NRI SDK/runtime failure",
-      "effect": "Main prints returned error to stderr and exits1. callback result interpretation stays external.",
+      "effect": "Main stringifies the returned error with fmt.Sprint, quotes it as one escaped scalar on stderr and exits 1. Decode that representation to inspect the original terminal message. Callback result interpretation and the underlying external failure remain open.",
       "retry": "Correct exact owning failure. no inferred all-code retry, reset or live callback success.",
       "safeAction": "Keep selected binary/policy/version/role/sandbox identity. Correct owned rejection before admission. do not restart services, clear pools or reinterpret arbitrary SDK failure as one fixed NRI code. Host activation/upstream SDK consumers require their own closure before any stronger claim.",
       "retainedData": "Keep selected binary/policy/version/role/sandbox and first error. no generic service restart/state removal. External SDK vocabulary/callback delivery remains open.",
-      "consumer": "Owned main run/policy-check exits. external SDK Configure/CreateContainer interpretation explicitly OPEN.",
+      "consumer": "Owned main run/policy-check terminal formatting and exit only; no generic meaning or retry for arbitrary SDK messages. External Configure/CreateContainer interpretation explicitly OPEN.",
       "sources": [
         {
           "path": "tools/native-worker-nri/main.go",
           "line": 37,
-          "sha256": "3d0c3149fc703f6c8e2fd3392b7f8e2e1bbd1df1b18215c2857cb2cddf417531"
+          "sha256": "63bc5b5a25666f9166214c9ff2fd91596c2ab818c3eec2db99857af192e4e8e5"
         },
         {
           "path": "scripts/install-native-worker-pools-stage.sh",

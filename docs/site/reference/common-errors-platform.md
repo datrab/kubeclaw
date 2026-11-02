@@ -201,7 +201,7 @@ Search for the exact diagnostic or constructor. Each entry distinguishes its ide
 
 **Representation:** upstream-translation
 
-**Identity / construction:** Owned `DEMO_PRODUCT_`&#42; message errors. handler retains exact `DEMO_PRODUCT_` prefix or maps other errors to `EVIDENCE_UNAVAILABLE`
+**Identity / construction:** Owned `DEMO_PRODUCT_`&#42; message errors. HTTP 409 retains only a complete ASCII `DEMO_PRODUCT_`&#91;A-Z_&#93;+ token; other errors map to `DEMO_PRODUCT_EVIDENCE_UNAVAILABLE`
 
 **Trigger:** Signature/schema/time/actor/subject/replay/history/extension/admission checks and version-CAS/readback failures at actual product step.
 
@@ -213,11 +213,11 @@ Search for the exact diagnostic or constructor. Each entry distinguishes its ide
 
 **Retained evidence:** Keep signed envelope/decisionId/payloadDigest/leaseUID/readyDigest and committed decisions/expiry. uncertain commit requires status against original identity.
 
-**Consumer / translation:** Exact owned error/return/status consumer selectors attached. no generic retry or global code meaning.
+**Consumer / translation:** The handler uses an anchored complete-token constructor before HTTP 409; a matching prefix, line breaks or an API-read payload are not an error-code proof. Authentication, successful response construction and individual owning recovery rules remain separate.
 
 **Owning / consuming source:**
 
-- [cmd/buster-namespace-controller/demo-product.go:58](../../../cmd/buster-namespace-controller/demo-product.go#L58)
+- [cmd/buster-namespace-controller/demo-product.go:70](../../../cmd/buster-namespace-controller/demo-product.go#L70)
 - [cmd/buster-namespace-controller/demo-readiness.go:125](../../../cmd/buster-namespace-controller/demo-readiness.go#L125)
 - [cmd/buster-namespace-controller/demo-readiness-lifecycle.go:1](../../../cmd/buster-namespace-controller/demo-readiness-lifecycle.go#L1)
 
@@ -227,7 +227,7 @@ Search for the exact diagnostic or constructor. Each entry distinguishes its ide
 
 **Representation:** literal
 
-**Identity / construction:** Local fixed errors.New policy/identity/runtime/selection/sandbox messages. forwarded OS/JSON/stub.Run errors explicitly open
+**Identity / construction:** Local fixed errors.New policy/identity/runtime/selection/sandbox messages. forwarded OS/JSON/stub.Run errors explicitly open; terminal stderr quotes the stringified message as one escaped scalar
 
 **Trigger:** Actual root/policy trust/schema/role/runtime/plugin identity and callback annotation/container/sandbox conditions in complete local main.
 
@@ -239,7 +239,7 @@ Search for the exact diagnostic or constructor. Each entry distinguishes its ide
 
 **Retained evidence:** Keep selected binary/policy/version/role/sandbox and first error. no generic service restart/state removal. External SDK vocabulary/callback delivery remains open.
 
-**Consumer / translation:** Exact owned error/return/status consumer selectors attached. no generic retry or global code meaning.
+**Consumer / translation:** Main uses fmt.Sprint followed by a sole %q directive on stderr and exit 1. Decode the quoted representation before matching the owning message; this closes no upstream vocabulary, runtime callback, retry or API authority.
 
 **Owning / consuming source:**
 
@@ -253,7 +253,7 @@ Search for the exact diagnostic or constructor. Each entry distinguishes its ide
 
 **Representation:** forwarded-error
 
-**Identity / construction:** kubectl upstream CheckErr dispatch. Hubble cmd.Execute err.Error→stderr+exit1
+**Identity / construction:** kubectl upstream CheckErr dispatch unchanged. Hubble cmd.Execute Error() text to one escaped quoted scalar on stderr, then exit 1
 
 **Trigger:** Selected upstream CLI execution returns an error. exact upstream/remote error vocabulary is not locally closed.
 
@@ -265,7 +265,7 @@ Search for the exact diagnostic or constructor. Each entry distinguishes its ide
 
 **Retained evidence:** Keep selected CLI/version/subcommand/target and complete first cause. The frontdoor alone cannot establish prior side effects, retry or clean remote state.
 
-**Consumer / translation:** Exact owned error/return/status consumer selectors attached. no generic retry or global code meaning.
+**Consumer / translation:** Hubble quotes the original Error() string without changing exit status. Quotation is a representation boundary, not a fixed upstream/remote error vocabulary or an execution/effect/retry grant. kubectl dispatch remains upstream.
 
 **Owning / consuming source:**
 
@@ -489,7 +489,7 @@ Search for the exact diagnostic or constructor. Each entry distinguishes its ide
 
 **Trigger:** Actual OS, parser or external selected NRI SDK/runtime failure
 
-**Effect:** Main prints returned error to stderr and exits1. callback result interpretation stays external.
+**Effect:** Main stringifies the returned error with fmt.Sprint, quotes it as one escaped scalar on stderr and exits 1. Decode that representation to inspect the original terminal message. Callback result interpretation and the underlying external failure remain open.
 
 **Retry boundary:** Correct exact owning failure. no inferred all-code retry, reset or live callback success.
 
@@ -497,7 +497,7 @@ Search for the exact diagnostic or constructor. Each entry distinguishes its ide
 
 **Retained evidence:** Keep selected binary/policy/version/role/sandbox and first error. no generic service restart/state removal. External SDK vocabulary/callback delivery remains open.
 
-**Consumer / translation:** Owned main run/policy-check exits. external SDK Configure/CreateContainer interpretation explicitly OPEN.
+**Consumer / translation:** Owned main run/policy-check terminal formatting and exit only; no generic meaning or retry for arbitrary SDK messages. External Configure/CreateContainer interpretation explicitly OPEN.
 
 **Owning / consuming source:**
 

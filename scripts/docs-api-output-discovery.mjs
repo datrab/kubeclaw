@@ -2509,11 +2509,11 @@ const reviewedCommonErrorMarkdownOutput = Object.freeze({
     },
     {
       "path": "docs/config/common-error-catalogue.json",
-      "sha256": "d2ce4bac9405d0833c4fe59f604a4cdf2804a94fc8996e5b41d6f48e3e1d70f5"
+      "sha256": "437038c42da53b1c79a3dbef02cb8cceef5934f442e9874068adb331148e8f91"
     },
     {
       "path": "docs/config/common-error-input-surface.json",
-      "sha256": "0b181236aaf7ad8f664d35610e5cb13ed48ddefe29ce7f92cb6f08713551a588"
+      "sha256": "fd5e1ee8d29364b195dd3f46faf1473cdc4661fa2832ba99a9fcf8226133dea8"
     },
     {
       "path": "package.json",
