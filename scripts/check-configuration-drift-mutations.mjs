@@ -459,7 +459,7 @@ try {
     'detached source-root rejection did not explain the provenance boundary');
   const baselinePublish = runPublisher();
   assert.equal(baselinePublish.status, 0, `could not publish baseline environment and Secret contracts\n${baselinePublish.stdout}\n${baselinePublish.stderr}`);
-  const environmentPage = published('docs/site/reference/environment-variables.md');
+  const environmentPage = published('docs/reference/environment-variables.md');
   for (const phrase of ['Default:', 'Empty:', 'Invalid:', 'Winner:', 'BACKUP_EXPECTED_SERVER_VERSION', 'operator-authored-input']) assert.ok(environmentPage.includes(phrase), `published environment reference lacks ${phrase}`);
   const bundleTemporaryRootRow = environmentPage.split('\n').find((line) => line.startsWith('| `BUNDLE_TMP_ROOT`')) ?? '';
   for (const phrase of ['Internal implementation detail; no operator or external setting exists.', '/tmp/code-bundle', '#L944-L944', '#L1023-L1023', '#L1027-L1027']) {
@@ -472,7 +472,7 @@ try {
     assert.ok(databaseUrlRow.includes(phrase), `published DATABASE_URL contract lacks ${phrase}`);
   }
   assert.doesNotMatch(databaseUrlRow, /listener path does not use a database/iu, 'published DATABASE_URL contract invents a non-database Control path');
-  const secretsPage = published('docs/site/reference/secrets.md');
+  const secretsPage = published('docs/reference/secrets.md');
   for (const phrase of ['Rotation', 'Failure', 'pipeline-test-gate-source-attestation', 'source registry security']) assert.ok(secretsPage.includes(phrase), `published Secrets reference lacks ${phrase}`);
   const sopsSharedSecretRow = secretsPage.split('\n').find((line) => line.includes('<shell function create_shared_secret_from_sops>')) ?? '';
   assert.match(sopsSharedSecretRow, /setup-secrets\.sh#L444-L444/u,
@@ -876,8 +876,8 @@ spec:
   ];
   const semanticPublicationChecks = new Map([
     ['helm-field:add', () => {
-      assert.match(published('docs/site/reference/helm-values.md'), /\$\.ap98Mutation\.nestedField/u);
-      assert.match(published('docs/site/reference/helm-values.md'), /Add a source-backed template\/Application\/deploy binding or remove the unused value/u);
+      assert.match(published('docs/reference/helm-values.md'), /\$\.ap98Mutation\.nestedField/u);
+      assert.match(published('docs/reference/helm-values.md'), /Add a source-backed template\/Application\/deploy binding or remove the unused value/u);
     }],
     ['unregistered-values-profile:add', () => {
       const inventory = JSON.parse(fs.readFileSync(path.join(outputDirectory, 'configuration-values.json'), 'utf8'));
@@ -886,13 +886,13 @@ spec:
       const leaf = profile.documents.flatMap((document) => document.fields).find((field) => field.path === '$.ap98Mutation.nestedField');
       assert.equal(leaf?.required, 'not-applicable-unused', 'generic values filename fabricated a chart/runtime binding');
     }],
-    ['environment-setting:add', () => assert.match(published('docs/site/reference/environment-variables.md'), /AP98_MUTATION_ENV/u)],
-    ['secret-setting:add', () => assert.match(published('docs/site/reference/secrets.md'), /ap98MutationKey/u)],
-    ['script-flag:add', () => assert.match(published('docs/site/reference/cli.md'), /--ap98-mutation/u)],
-    ['swarm-config-field:add', () => assert.match(published('docs/site/reference/plugin-configuration.md'), /\$\.ap98Mutation\.nestedField/u)],
-    ['nested-plugin-config:add', () => assert.match(published('docs/site/reference/plugin-configuration.md'), /\$\.ap98Mutation\.nested/u)],
-    ['registered-nonstandard-config:add', () => assert.match(published('docs/site/reference/plugin-configuration.md'), /\$\.ap98RegisteredMutation/u)],
-    ['nova-cli-flag:add', () => assert.match(published('docs/site/reference/cli.md'), /--ap98-mutation/u)],
+    ['environment-setting:add', () => assert.match(published('docs/reference/environment-variables.md'), /AP98_MUTATION_ENV/u)],
+    ['secret-setting:add', () => assert.match(published('docs/reference/secrets.md'), /ap98MutationKey/u)],
+    ['script-flag:add', () => assert.match(published('docs/reference/cli.md'), /--ap98-mutation/u)],
+    ['swarm-config-field:add', () => assert.match(published('docs/reference/plugin-configuration.md'), /\$\.ap98Mutation\.nestedField/u)],
+    ['nested-plugin-config:add', () => assert.match(published('docs/reference/plugin-configuration.md'), /\$\.ap98Mutation\.nested/u)],
+    ['registered-nonstandard-config:add', () => assert.match(published('docs/reference/plugin-configuration.md'), /\$\.ap98RegisteredMutation/u)],
+    ['nova-cli-flag:add', () => assert.match(published('docs/reference/cli.md'), /--ap98-mutation/u)],
     ['default-precedence:change', () => {
       const inventory = JSON.parse(fs.readFileSync(path.join(outputDirectory, 'configuration-runtime-inputs.json'), 'utf8'));
       const fact = inventory.configurationConsumerSources.find((item) => item.path === 'skills/nova/plugins/lint/src/engine/policy-paths.ts');
@@ -900,7 +900,7 @@ spec:
       const baselineFact = baselineRuntime.configurationConsumerSources.find((item) => item.path === fact.path);
       assert(baselineFact, 'default-precedence baseline lost its consumer authority');
       assert.notEqual(fact.sourceDigest, baselineFact.sourceDigest, 'default-precedence source change did not update its internal drift digest');
-      const readerPage = published('docs/site/reference/plugin-configuration.md');
+      const readerPage = published('docs/reference/plugin-configuration.md');
       assert.equal(readerPage.includes(fact.sourceDigest), false, 'an internal source digest leaked into the reader reference');
       assert.doesNotMatch(readerPage, /candidate runtime consumer/iu, 'unresolved discovery language leaked into the reader reference');
     }],

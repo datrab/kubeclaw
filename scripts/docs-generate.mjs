@@ -115,7 +115,7 @@ function hasEquivalentDerivedPublicationSeals(sourcePath) {
 }
 
 if (root === gitRoot) {
-  const generatedPrefixes = ['docs/generated/', 'docs/site/'];
+  const generatedPrefixes = ['docs/generated/', 'docs/'];
   const changed = execFileSync('git', ['diff', '--name-only', sourceRevision, '--', '.'], {
     cwd: gitRoot,
     encoding: 'utf8',
@@ -222,7 +222,7 @@ function stableWriteMap() {
         if (bindings.length !== 1) throw new Error('RETAINED_SECRET_MEANING_EVIDENCE_AMBIGUOUS');
         return '<br>Current meaning evidence: ' + semanticEvidenceLinks(semanticContext, bindings[0].sources);
       };
-      outputs.set('docs/site/reference/secrets.md', renderSecrets(bundle.inventories.secretSetup,
+      outputs.set('docs/reference/secrets.md', renderSecrets(bundle.inventories.secretSetup,
         bundle.inventories.runtimeInputs, historicalLink, { artifactRevision: bundle.artifactRevision,
           sourceRevision: bundle.sourceRevision, semanticOwnerRevision: bundle.semanticOwnerRevision,
           notice: '> Retained historical view. This page does not acquire current Secret data.\n\n'
@@ -237,39 +237,39 @@ function stableWriteMap() {
       const committed = execFileSync('git', ['show', `${sourceRevision}:${source}`], { cwd: invocationRoot, maxBuffer: 64 * 1024 * 1024 });
       if (!committed.equals(fs.readFileSync(path.join(root, source)))) throw new Error(`CONFIGURATION_HUB_SOURCE_SNAPSHOT_DRIFT:${source}`);
     }
-    return new Map([['docs/site/reference/configuration.md', renderConfigurationFamilyHub(
+    return new Map([['docs/reference/configuration.md', renderConfigurationFamilyHub(
       readJson('docs/generated/inventory/configuration-families.json'), pinnedSourceUrl, {sourceRevision})]]);
   }
 
   // A schema-only correction has its own complete publication boundary. Keep
   // unrelated API, SDK and values inventories out of this explicitly selected route.
   if (only === 'plugin-configuration') return new Map([
-    ['docs/site/reference/plugin-configuration.md', renderPluginConfiguration(
+    ['docs/reference/plugin-configuration.md', renderPluginConfiguration(
       readJson('docs/generated/inventory/configuration-schemas.json'))],
   ]);
   // Keep bounded workflow publication independent of unrelated SDK inventories.
   if (only === 'workflows') return new Map([
-    ['docs/site/reference/workflows.md', renderWorkflows(readJson('docs/generated/inventory/workflows.json'))],
+    ['docs/reference/workflows.md', renderWorkflows(readJson('docs/generated/inventory/workflows.json'))],
   ]);
   // Current Helm/GitOps values have a bounded acquisition artifact. Do not
   // relabel the retained global environment/API inventories as current.
   if (only === 'helm-values') return new Map([
-    ['docs/site/reference/helm-values.md', renderHelmValues(
+    ['docs/reference/helm-values.md', renderHelmValues(
       readJson('docs/generated/inventory/configuration-helm-values.json'), {},
       { inventoryPath: 'docs/generated/inventory/configuration-helm-values.json', currentSelected: true })],
   ]);
   // Publish a selected bounded renderer without rewriting unrelated references.
   if (only === 'cli') return new Map([
-    ['docs/site/reference/cli.md', renderCli(readJson('docs/generated/inventory/deploy-script.json'), readJson('docs/generated/inventory/configuration-runtime-inputs.json'), (sourcePath, line) => `[\`${sourcePath}:${line}\`](${pinnedSourceUrl(sourcePath, line, line)})`, readJson('docs/generated/inventory/cli-surfaces.json'))],
+    ['docs/reference/cli.md', renderCli(readJson('docs/generated/inventory/deploy-script.json'), readJson('docs/generated/inventory/configuration-runtime-inputs.json'), (sourcePath, line) => `[\`${sourcePath}:${line}\`](${pinnedSourceUrl(sourcePath, line, line)})`, readJson('docs/generated/inventory/cli-surfaces.json'))],
   ]);
   if (only === 'endpoints') return new Map([
-    ['docs/site/reference/endpoints.md', renderEndpoints(readJson('docs/generated/inventory/platform-surfaces.json'))],
+    ['docs/reference/endpoints.md', renderEndpoints(readJson('docs/generated/inventory/platform-surfaces.json'))],
   ]);
   if (only === 'verification') return new Map([
-    ['docs/site/reference/verification-commands.md', renderVerification(readJson('docs/generated/inventory/deploy-script.json'))],
+    ['docs/reference/verification-commands.md', renderVerification(readJson('docs/generated/inventory/deploy-script.json'))],
   ]);
   if (only === 'native-supervisor-environment') {
-    const target = 'docs/site/reference/environment-variables.md';
+    const target = 'docs/reference/environment-variables.md';
     const rendered = renderEnvironment(readJson('docs/generated/inventory/deploy-script.json'),
       readJson('docs/generated/inventory/secret-setup.json'), readJson('docs/generated/inventory/configuration-runtime-inputs.json'));
     const selector = /^\| `KUBECLAW_NATIVE_SUPERVISOR_PID` \|.*$/gmu;
@@ -279,10 +279,10 @@ function stableWriteMap() {
     // Preserve all other retained snapshot rows, metadata and qualified meanings.
     return new Map([[target, current.replace(selector, () => rows[0][0])]]);
   }
-  if (only === 'environment') return new Map([['docs/site/reference/environment-variables.md', renderEnvironment(
+  if (only === 'environment') return new Map([['docs/reference/environment-variables.md', renderEnvironment(
     readJson('docs/generated/inventory/deploy-script.json'), readJson('docs/generated/inventory/secret-setup.json'),
     readJson('docs/generated/inventory/configuration-runtime-inputs.json'))]]);
-  if (only === 'secrets') return new Map([['docs/site/reference/secrets.md', renderSecrets(
+  if (only === 'secrets') return new Map([['docs/reference/secrets.md', renderSecrets(
     readJson('docs/generated/inventory/secret-setup.json'), readJson('docs/generated/inventory/configuration-runtime-inputs.json'),
     (sourcePath, line) => `[\`${sourcePath}${line ? `:${line}` : ''}\`](${pinnedSourceUrl(sourcePath, line ?? 1, line ?? 1)})`)]]);
   if (only === 'configuration') return configurationWriteMap(
@@ -302,22 +302,22 @@ function stableWriteMap() {
 
   return new Map([
     ['docs/generated/inventory/sdk-reference.json', `${JSON.stringify(sdkReference.inventory, null, 2)}\n`],
-    ['docs/site/reference/sdk-exports.md', sdkReference.generatedMarkdown],
+    ['docs/reference/sdk-exports.md', sdkReference.generatedMarkdown],
     ...configurationWriteMap(deploy, secrets, configurationValues, runtimeInputs, configurationSchemas),
-    ['docs/site/reference/endpoints.md', renderEndpoints(platformSurfaces)],
-    ['docs/site/reference/verification-commands.md', renderVerification(deploy)],
-    ['docs/site/reference/workflows.md', renderWorkflows(workflows)],
+    ['docs/reference/endpoints.md', renderEndpoints(platformSurfaces)],
+    ['docs/reference/verification-commands.md', renderVerification(deploy)],
+    ['docs/reference/workflows.md', renderWorkflows(workflows)],
   ]);
 }
 
 // Shared native five-page configuration boundary, including isolated mutations.
 function configurationWriteMap(deploy, secrets, configurationValues, runtimeInputs, configurationSchemas) {
   return new Map([
-    ['docs/site/reference/cli.md', renderCli(deploy, runtimeInputs, (sourcePath, line) => `[\`${sourcePath}:${line}\`](${pinnedSourceUrl(sourcePath, line, line)})`, readJson('docs/generated/inventory/cli-surfaces.json'))],
-    ['docs/site/reference/secrets.md', renderSecrets(secrets, runtimeInputs, (sourcePath, line) => `[\`${sourcePath}${line ? `:${line}` : ''}\`](${pinnedSourceUrl(sourcePath, line ?? 1, line ?? 1)})`)],
-    ['docs/site/reference/helm-values.md', renderHelmValues(configurationValues, configurationSchemas)],
-    ['docs/site/reference/environment-variables.md', renderEnvironment(deploy, secrets, runtimeInputs)],
-    ['docs/site/reference/plugin-configuration.md', renderPluginConfiguration(configurationSchemas, runtimeInputs)],
+    ['docs/reference/cli.md', renderCli(deploy, runtimeInputs, (sourcePath, line) => `[\`${sourcePath}:${line}\`](${pinnedSourceUrl(sourcePath, line, line)})`, readJson('docs/generated/inventory/cli-surfaces.json'))],
+    ['docs/reference/secrets.md', renderSecrets(secrets, runtimeInputs, (sourcePath, line) => `[\`${sourcePath}${line ? `:${line}` : ''}\`](${pinnedSourceUrl(sourcePath, line ?? 1, line ?? 1)})`)],
+    ['docs/reference/helm-values.md', renderHelmValues(configurationValues, configurationSchemas)],
+    ['docs/reference/environment-variables.md', renderEnvironment(deploy, secrets, runtimeInputs)],
+    ['docs/reference/plugin-configuration.md', renderPluginConfiguration(configurationSchemas, runtimeInputs)],
   ]);
 }
 

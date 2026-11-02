@@ -5,8 +5,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { loadPlatformConfig } from '../skills/common/plugin-runtime/foundation/config/platform.ts';
 const root = path.resolve(import.meta.dirname, '..');
-const authority = 'docs/site/use/workflows/wait-resume/platform.template.json';
-const page = 'docs/site/reference/capabilities.md';
+const authority = 'docs/use/workflows/wait-resume/platform.template.json';
+const page = 'docs/reference/capabilities.md';
 if (process.argv.includes('--describe-discovery')) {
   console.log(JSON.stringify({ owner: 'scripts/check-capability-policy-drift.mjs', mode: 'finite-authority-reader-comparison', authority, page, parser: 'schema-validated loadPlatformConfig: providers and grants only', exclusions: ['effective deployment', 'role translation', 'independent acceptance'] }));
   process.exit(0);

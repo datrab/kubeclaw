@@ -1853,12 +1853,12 @@ const qua010EmbeddedCases = [
 ];
 for (const fixture of qua010EmbeddedCases) for (const operation of ['change', 'remove']) {
   test(`QUA010 ${fixture.prefix}:${operation} changes exact production extraction and restores it`, () => {
-    const reader = 'docs/site/reference/environment-variables.md';
+    const reader = 'docs/reference/environment-variables.md';
     const pageBefore = fs.readFileSync(path.join(root, reader));
     const family = JSON.parse(fs.readFileSync(path.join(root, 'docs/config/configuration-family-map.json'), 'utf8'))
       .families.find(item => item.id === 'process-environment');
     assert.match(family.route, /\[Environment variables\]\(environment-variables\.md\)/u);
-    const governed = JSON.parse(fs.readFileSync(path.join(root, 'docs/site/reference/generated-documentation-map.json'), 'utf8'));
+    const governed = JSON.parse(fs.readFileSync(path.join(root, 'docs/reference/generated-documentation-map.json'), 'utf8'));
     assert(governed.pages.some(page => page.page === reader && page.owner && page.checks.length > 0), 'canonical environment reader is not governed');
     const extract = text => JSON.parse(JSON.stringify(Array.from(fixture.extract(fixture.file, text))));
     const baseline = extract(fixture.text);

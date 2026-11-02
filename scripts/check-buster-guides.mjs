@@ -12,7 +12,7 @@ const revision = '3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f';
 
 const specifications = [
   {
-    file: 'docs/site/understand/buster.md', minimumLinks: 10, revision,
+    file: 'docs/understand/buster.md', minimumLinks: 10, revision,
     required: ['## Product Boundary', '## Why Each Boundary Exists', '## Complete Request Path', '## 1. Plan Resolution',
       '## 2. Committed Source Snapshot', '## 3. Dispatch and HTTP API',
       '## 4. Durable Admission and State', '## 5. Execution, Providers, and Worker Core',
@@ -21,7 +21,7 @@ const specifications = [
       '**Rejected alternative:**', '**Cost:**'],
   },
   {
-    file: 'docs/site/understand/buster-namespace-controller.md', minimumLinks: 6,
+    file: 'docs/understand/buster-namespace-controller.md', minimumLinks: 6,
     revision: 'be78787633d774e9fd2a2ff401311499a555156d',
     additionalRevisions: ['f99aecbb00cb399b46dfbbeb3ddb375fba6218e7', '399d775e8efa7b54267af98d04463d6480e63684'],
     required: ['## Why a fixture requests a lease', '## From request to workload',
@@ -33,7 +33,7 @@ const specifications = [
       'It costs another reconciler', 'Reconsider this shape'],
   },
   {
-    file: 'docs/site/reference/buster-suites.md', minimumLinks: 25, revision,
+    file: 'docs/reference/buster-suites.md', minimumLinks: 25, revision,
     additionalRevisions: ['fe58209941f6aa597cc3e942959cf86906e451a4', '36adbf27e408e8c3f429a09d0dd1c5de94c33694'],
     required: ['## Why The Suite Model Uses These Rules', '## Common Node Rules', '## Complete Test-Scope Syntax', '### Suite selection',
       '### Test and fixture node', '### Concurrency and matrix rules', '### Coverage policy',
@@ -46,7 +46,7 @@ const specifications = [
       '## Configuration Precedence', '## Verification Matrix'],
   },
   {
-    file: 'docs/site/use/workflows/buster-suite.md', minimumLinks: 6, revision,
+    file: 'docs/use/workflows/buster-suite.md', minimumLinks: 6, revision,
     additionalRevisions: ['d271cf712e1f882c0c64e0c6d9e8a5cd36f18508', '5de04728653e7b4c350850e5fbeb6218b25ba5c3', '4dc3ff5829f3298a4d04148216e4e7da9b20c49b'],
     required: ['## Supported Execution Paths', '## Before You Start', '## 1. Start From The Maintained Example',
       'buster-fixture-matrix-report.pipeline.json', '## 2. Make The Decision Explicit',
@@ -57,7 +57,7 @@ const specifications = [
       'npm run verify:test-gate:phase8', 'vertical proof source'],
   },
   {
-    file: 'docs/site/reference/buster-runtime-configuration.md', minimumLinks: 6, revision,
+    file: 'docs/reference/buster-runtime-configuration.md', minimumLinks: 6, revision,
     required: ['## Load Order and Precedence', '## Required Environment',
       '## Root Service Fields', '## Minimal Root Configuration', '## Capability Blocks',
       '## Safe Configuration Procedure', '## Failure, Recovery, and Change Control',
@@ -65,7 +65,7 @@ const specifications = [
       'node skills/buster/engine/remote-plan-cli.ts --config'],
   },
   {
-    file: 'docs/site/extend/platform/buster.md', minimumLinks: 6, revision,
+    file: 'docs/extend/platform/buster.md', minimumLinks: 6, revision,
     required: ['## Component Map', '## Change A Plan Field', '## Change The Remote Protocol',
       '## Change Execution or Result Rules', '## Add A New Suite End To End',
       '## Add A New Provider or Report Adapter', '## Add A New Capability',
@@ -73,7 +73,7 @@ const specifications = [
       '**Rejected alternative:**', '**Cost:**'],
   },
   {
-    file: 'docs/site/extend/buster.md', minimumLinks: 12,
+    file: 'docs/extend/buster.md', minimumLinks: 12,
     revision: 'bcf032f241b432bf920baa9ee5f727947921447d',
     additionalRevisions: ['399d775e8efa7b54267af98d04463d6480e63684'],
     required: ['## Suite Templates', '## Implement A Test Provider',
@@ -81,13 +81,13 @@ const specifications = [
       '## Common Failures', '## Verification'],
   },
   {
-    file: 'docs/site/reference/buster-error-codes.md', minimumLinks: 20,
+    file: 'docs/reference/buster-error-codes.md', minimumLinks: 20,
     revision: 'cebe61ef2046263e4e373732227ae5f03107c1f6',
     required: ['## How To Use This Reference', '## Unit Command And JUnit Report',
       '## API', '## Security', '## Errors Outside This Inventory'],
   },
   {
-    file: 'docs/site/reference/buster-provider-configuration.md', minimumLinks: 20, revision,
+    file: 'docs/reference/buster-provider-configuration.md', minimumLinks: 20, revision,
     additionalRevisions: ['cf549b0238c89db00cc392dadbab40199777a6d7'],
     required: ['## How To Read The Tables', '## `kubeclaw.api-flow@1`',
       '## `kubeclaw.openapi@1`', '## `kubeclaw.api-flow-document@1`',
@@ -105,7 +105,7 @@ for (const specification of specifications) {
   for (const marker of specification.required) {
     assert(source.includes(marker), `${specification.file} lacks required content: ${marker}`);
   }
-  if (specification.file.startsWith('docs/site/understand/')) {
+  if (specification.file.startsWith('docs/understand/')) {
     const blockLanguages = [...source.matchAll(/^```([^\n]*)$/gmu)]
       .map(match => match[1].trim().toLowerCase()).filter(Boolean);
     assert(blockLanguages.every(language => language === 'mermaid'),
@@ -140,8 +140,8 @@ for (const specification of specifications) {
   }
 }
 
-const reference = fs.readFileSync(path.join(root, 'docs/site/reference/buster-suites.md'), 'utf8');
-const extension = fs.readFileSync(path.join(root, 'docs/site/extend/buster.md'), 'utf8');
+const reference = fs.readFileSync(path.join(root, 'docs/reference/buster-suites.md'), 'utf8');
+const extension = fs.readFileSync(path.join(root, 'docs/extend/buster.md'), 'utf8');
 const suiteDirectory = path.join(root, 'contracts/pipeline-test-gate/v1/suites');
 const suites = fs.readdirSync(suiteDirectory).filter(name => name.endsWith('.v1.json')).sort();
 assert.equal(suites.length, 12, 'shipped Buster suite count changed; update the twelve-suite guide');
@@ -194,7 +194,7 @@ execFileSync(process.execPath, [path.join(root, 'scripts/generate-buster-provide
   { cwd: root, stdio: 'pipe' });
 
 const examplePath = path.join(root,
-  'docs/site/use/workflows/examples/buster-fixture-matrix-report.pipeline.json');
+  'docs/use/workflows/examples/buster-fixture-matrix-report.pipeline.json');
 const example = JSON.parse(fs.readFileSync(examplePath, 'utf8'));
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'buster-doc-example-'));
 const swarm = path.join(temporary, '.swarm');
@@ -249,8 +249,8 @@ assert(resolvedExample.nodes.some(node => node.id === 'unit/unit'
   'worked workflow did not bind the JUnit report adapter');
 
 const namespaceGuide = fs.readFileSync(
-  path.join(root, 'docs/site/understand/buster-namespace-controller.md'), 'utf8');
-const helmReference = fs.readFileSync(path.join(root, 'docs/site/reference/helm-values.md'), 'utf8');
+  path.join(root, 'docs/understand/buster-namespace-controller.md'), 'utf8');
+const helmReference = fs.readFileSync(path.join(root, 'docs/reference/helm-values.md'), 'utf8');
 assert(namespaceGuide.includes('[generated configuration reference](../reference/helm-values.md)'),
   'namespace guide must link its canonical Helm configuration reference');
 for (const value of ['leaseClient.enabled', 'readyClient.enabled', 'leaseApiGroup', 'leaseApiVersion',
@@ -265,15 +265,15 @@ for (const value of ['leaseClient.enabled', 'readyClient.enabled', 'leaseApiGrou
 }
 
 const navigation = [
-  ['docs/site/README.md', 'understand/buster.md'],
-  ['docs/site/understand/README.md', 'buster.md'],
-  ['docs/site/understand/README.md', 'buster-namespace-controller.md'],
-  ['docs/site/reference/README.md', 'buster-suites.md'],
-  ['docs/site/reference/README.md', 'buster-error-codes.md'],
-  ['docs/site/reference/README.md', 'buster-provider-configuration.md'],
-  ['docs/site/reference/README.md', 'buster-runtime-configuration.md'],
-  ['docs/site/use/README.md', 'workflows/buster-suite.md'],
-  ['docs/site/extend/README.md', 'platform/buster.md'],
+  ['docs/README.md', 'understand/buster.md'],
+  ['docs/understand/README.md', 'buster.md'],
+  ['docs/understand/README.md', 'buster-namespace-controller.md'],
+  ['docs/reference/README.md', 'buster-suites.md'],
+  ['docs/reference/README.md', 'buster-error-codes.md'],
+  ['docs/reference/README.md', 'buster-provider-configuration.md'],
+  ['docs/reference/README.md', 'buster-runtime-configuration.md'],
+  ['docs/use/README.md', 'workflows/buster-suite.md'],
+  ['docs/extend/README.md', 'platform/buster.md'],
 ];
 for (const [file, target] of navigation) {
   assert(fs.readFileSync(path.join(root, file), 'utf8').includes(`](${target})`),
@@ -288,19 +288,19 @@ for (const specification of specifications) {
   }
 }
 
-const surfaces = fs.readFileSync(path.join(root, 'docs/site/product-surfaces.md'), 'utf8');
+const surfaces = fs.readFileSync(path.join(root, 'docs/product-surfaces.md'), 'utf8');
 for (const id of ['SUR-SPC-04', 'SUR-SPC-05', 'SUR-DAT-03']) {
   const row = surfaces.split('\n').find(line => line.startsWith(`| ${id} |`));
   assert(row?.endsWith('| Detailed |'), `${id} does not declare detailed Buster coverage`);
 }
 
 const requirementMarkers = {
-  'SPC-001': ['docs/site/understand/buster.md', '## Product Boundary'],
-  'SPC-008': ['docs/site/understand/buster-namespace-controller.md', '## From request to workload'],
-  'CFG-006': ['docs/site/reference/buster-suites.md', '## Suite Inventory'],
-  'FLW-011': ['docs/site/use/workflows/buster-suite.md', 'buster-fixture-matrix-report.pipeline.json'],
-  'EXT-005': ['docs/site/extend/buster.md', '## Suite Templates'],
-  'CDV-008': ['docs/site/extend/platform/buster.md', '## Component Map'],
+  'SPC-001': ['docs/understand/buster.md', '## Product Boundary'],
+  'SPC-008': ['docs/understand/buster-namespace-controller.md', '## From request to workload'],
+  'CFG-006': ['docs/reference/buster-suites.md', '## Suite Inventory'],
+  'FLW-011': ['docs/use/workflows/buster-suite.md', 'buster-fixture-matrix-report.pipeline.json'],
+  'EXT-005': ['docs/extend/buster.md', '## Suite Templates'],
+  'CDV-008': ['docs/extend/platform/buster.md', '## Component Map'],
 };
 for (const [id, [file, marker]] of Object.entries(requirementMarkers)) {
   assert(fs.readFileSync(path.join(root, file), 'utf8').includes(marker),

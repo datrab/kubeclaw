@@ -8,7 +8,7 @@ import path from 'node:path';
 
 const root = path.resolve(import.meta.dirname, '..');
 const pluginRoot = path.join(root, 'skills/buster/plugins');
-const target = path.join(root, 'docs/site/reference/buster-provider-configuration.md');
+const target = path.join(root, 'docs/reference/buster-provider-configuration.md');
 const revisionArgument = process.argv.find((argument) => argument.startsWith('--revision='));
 const storedRevision = fs.existsSync(target)
   ? fs.readFileSync(target, 'utf8').match(/^Evidence revision: `([a-f0-9]{40})`$/mu)?.[1]
@@ -296,7 +296,7 @@ lines.push('## Maintenance Rule', '',
   'Run from a clean repository checkout with Git and a Node.js runtime supporting native ESM and `import.meta.dirname`. Generation does not require a cluster or remote service.', '',
   'Commit changes to the generator, catalog prose template, schemas and manifests before generation. Select that source commit. All installed provider manifests must match it byte-for-byte. All selected configuration schemas and API-flow schemas must also match it byte-for-byte. The remote catalog parser, catalog prose template and generator must match it byte-for-byte.', '',
   'Replace `<full-source-commit>` with that existing lowercase 40-hex commit, then run `node scripts/generate-buster-provider-reference.mjs --write --revision=<full-source-commit>`.', '',
-  'Expected write result: `wrote docs/site/reference/buster-provider-configuration.md`. Then run `node scripts/generate-buster-provider-reference.mjs` without `--write`.', '',
+  'Expected write result: `wrote docs/reference/buster-provider-configuration.md`. Then run `node scripts/generate-buster-provider-reference.mjs` without `--write`.', '',
   'Expected check result: `Buster provider configuration verified: 19 providers and one flow document`. This result is evidence of generated freshness, not provider execution or remote health.', '',
   'If `BUSTER_PROVIDER_SOURCE_REVISION` fails, examine the selected commit, missing objects and exact committed input bytes. Commit the intended source and select its revision. Do not weaken the pin.', '',
   'A stale-output assertion requires regeneration from the selected matching inputs. For an inventory-count or provider-contract assertion, examine the changed provider contracts and review the generator before regeneration. Do not change the count only to remove the error.', '',

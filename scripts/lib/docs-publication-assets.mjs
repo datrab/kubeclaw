@@ -59,8 +59,8 @@ export function publicationPages(siteRoot, classification) {
       throw new Error('Invalid or duplicate documentation classification path');
     }
     seen.add(record.path);
-    if (!record.path.startsWith('docs/site/') || !record.path.endsWith('.md')) continue;
-    const relative = record.path.slice('docs/site/'.length);
+    if (!record.path.startsWith('docs/') || !record.path.endsWith('.md')) continue;
+    const relative = record.path.slice('docs/'.length);
     if (relative !== path.posix.normalize(relative) || relative.startsWith('../')
       || relative.includes('\\') || path.isAbsolute(relative)
       || record.class !== 'canonical-reader-documentation' || record.expectedPath !== record.path) {
@@ -119,8 +119,8 @@ export function copyPublicationAssets(siteRoot, outputRoot, assets) {
 // or unclassified pages instead of discovering a broader publication authority.
 export function publicationManifest(siteRoot, classification) {
   const pages = publicationPages(siteRoot, classification).map(file => {
-    const sourcePath = `docs/site/${path.relative(siteRoot, file).split(path.sep).join('/')}`;
-    const route = `/${sourcePath.slice('docs/site/'.length, -3)}.html`;
+    const sourcePath = `docs/${path.relative(siteRoot, file).split(path.sep).join('/')}`;
+    const route = `/${sourcePath.slice('docs/'.length, -3)}.html`;
     return { sourcePath, route, canonicalUrl: route };
   });
   if (!pages.length) throw new Error('Publication manifest must contain reader pages');

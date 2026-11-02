@@ -6,7 +6,7 @@ import { markdownAnchors, markdownAnchorEntries } from './docs-markdown-anchors.
 
 const digest = value => createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const id = (...parts) => parts.map(part => encodeURIComponent(String(part))).join(':');
-const reference = name => `docs/site/reference/${name}.md`;
+const reference = name => `docs/reference/${name}.md`;
 
 // These adapters consume the existing inventories; their owning source-discovery
 // checks remain necessary. This is deliberately not another source interpreter.
@@ -139,7 +139,7 @@ export function buildSourceSurfaceMap(root, pages, read = file => JSON.parse(fs.
       'This scope includes all workflow and job records that the workflow inventory finds. It includes no other workflow or job records. It does not include workflow action internals outside these records.');
     for (const workflow of data.workflows) {
       const target = workflow.path === '.github/workflows/docs-checks.yaml'
-        ? 'docs/site/extend/documentation-maintenance.md#generate-only-owned-facts-then-check'
+        ? 'docs/extend/documentation-maintenance.md#generate-only-owned-facts-then-check'
         : `${reference('workflows')}#workflows`;
       add(['workflow'], workflow.path, target, workflow);
       for (const job of workflow.jobs) add(['job', job], workflow.path, target, { job });
@@ -151,7 +151,7 @@ export function buildSourceSurfaceMap(root, pages, read = file => JSON.parse(fs.
       'Before you select a package guide or change the package contract, find the package manifest and registration identity.',
       'This scope includes all manifest packages and registrations from the plugin-system inventory. It includes no other packages or registrations. It does not include all implementation files.');
     const packages = new Map(data.packages.map(item => [item.id, item]));
-    const catalogue = pkg => `docs/site/extend/plugin-catalogue/${pkg.id}.md`;
+    const catalogue = pkg => `docs/extend/plugin-catalogue/${pkg.id}.md`;
     for (const item of data.packages) add(['package', item.id], item.manifest, `${catalogue(item)}#package-reference`, item);
     for (const item of data.registrations) {
       const pkg = packages.get(item.packageId);
@@ -541,7 +541,7 @@ export const manualAuthorityInventoryScopes = {
 
 // Keep declared docs-generate ownership separate from the bounded inventory.
 export function generatedPageFreshnessChecks(page, configurationPages, generatedReferencePages, configurationRevision) {
-  if (page === 'docs/site/reference/configuration.md') {
+  if (page === 'docs/reference/configuration.md') {
     assert(/^[0-9a-f]{40}$/u.test(configurationRevision ?? ''), 'configuration hub lacks its reviewed source/inventory revision');
     return [
     'node scripts/docs-configuration-inventory.mjs --configuration-reference-only --check',
@@ -706,7 +706,7 @@ export function buildAuthorityMatrix(root, pages, domains, additionalRecords = [
       `authority-matrix invalid canonical anchor: ${target}`);
     return page;
   };
-  const text = fs.readFileSync(path.join(root, 'docs/site/product-surfaces.md'), 'utf8');
+  const text = fs.readFileSync(path.join(root, 'docs/product-surfaces.md'), 'utf8');
   const families = [];
   const records = [];
   for (const line of text.split('\n')) {
@@ -717,7 +717,7 @@ export function buildAuthorityMatrix(root, pages, domains, additionalRecords = [
     const firstLink = /\]\(([^)]+)\)/u.exec(reading)?.[1];
     assert(firstLink && !firstLink.includes('://'), `authority-matrix missing reader route: ${familyId}`);
     const [relativePage, anchor] = firstLink.split('#');
-    const canonicalTarget = path.posix.normalize(`docs/site/${relativePage}`) + (anchor ? `#${anchor}` : '');
+    const canonicalTarget = path.posix.normalize(`docs/${relativePage}`) + (anchor ? `#${anchor}` : '');
     const page = targetPage(canonicalTarget);
     assert(page.sourceDependencies.length && page.checks.length,
       `authority-matrix manual boundary has no owning source/review route: ${familyId}`);
@@ -887,7 +887,7 @@ export function additionalAuthorityRecords(root, pages, read = file =>
     const route = fact.reference ?? (fact.kind === 'direct-source-boundary' ? familyRoutes.get(fact.family) : null);
     const relativeTarget = /\]\(([^)]+)\)/u.exec(route)?.[1];
     assert(relativeTarget && !relativeTarget.includes('://'), 'authority-matrix configuration view lacks its reader route');
-    const target = path.posix.normalize(`docs/site/reference/${relativeTarget}`);
+    const target = path.posix.normalize(`docs/reference/${relativeTarget}`);
     const primaryIdentity = schemaPaths.has(fact.source)
       ? id('schema-document', fact.source) : id('configuration-source-boundary', fact.source);
     if (!schemaPaths.has(fact.source) && !configurationSources.has(fact.source)) {
@@ -1008,13 +1008,13 @@ export function additionalAuthorityRecords(root, pages, read = file =>
     scopeLimit: 'Authored mechanical membership declaration. No operational owner, activation, image or deployment outcome is inferred.',
   };
   for (const pkg of read(ownershipFile).packages) add(id('runtime-package', pkg.id), 'SUR-CTL-06',
-    ownershipFile, 'docs/site/understand/deployment-and-trust.md', pkg, authoredPolicy);
+    ownershipFile, 'docs/understand/deployment-and-trust.md', pkg, authoredPolicy);
   // This is the exact already-declared role directory, not a repository walk.
   for (const name of fs.readdirSync(path.join(root, 'packaging/runtime/roles')).sort()) {
     assert(name.endsWith('.json'), `authority-matrix unexpected runtime role member: ${name}`);
     const source = `packaging/runtime/roles/${name}`;
     add(id('runtime-role', name), 'SUR-EXT-09', source,
-      'docs/site/reference/worker-profiles-and-roles.md', read(source), { ...authoredPolicy, inventory: source });
+      'docs/reference/worker-profiles-and-roles.md', read(source), { ...authoredPolicy, inventory: source });
   }
   const platformFile = 'docs/generated/inventory/platform-surfaces.json';
   const platform = read(platformFile);
@@ -1027,7 +1027,7 @@ export function additionalAuthorityRecords(root, pages, read = file =>
   };
   for (const item of platform.networkExposures) add(id('network-exposure', item.source,
     item.value, item.routeKind ?? ''), 'SUR-API-09', item.source,
-  'docs/site/understand/communication.md#endpoint-catalogue', item, {
+  'docs/understand/communication.md#endpoint-catalogue', item, {
     ...platformPolicy, consumerBoundary: JSON.stringify({ kind: item.kind,
       backendService: item.backendService ?? null, activationState: item.activationState }),
   });

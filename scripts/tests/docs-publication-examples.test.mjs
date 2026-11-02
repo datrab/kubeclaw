@@ -21,9 +21,9 @@ test('prompt library workspace commands retain real receiver and old verificatio
   const result = validateInstructionSyntax(pages, sources);
   assert.equal(result.documentCommandsExecuted, false);
   assert.equal(result.checkedCommandReferences.length, 454);
-  for (const ordinal of [1, 2, 3]) assert.ok(result.checkedCommandReferences.includes(`docs/site/extend/documentation-maintenance.md#block-${ordinal}`));
-  for (const ordinal of [1, 2]) assert.ok(result.checkedCommandReferences.includes(`docs/site/extend/contracts.md#block-${ordinal}`));
-  const page = 'docs/site/extend/contracts.md', text = sources.get(page);
+  for (const ordinal of [1, 2, 3]) assert.ok(result.checkedCommandReferences.includes(`docs/extend/documentation-maintenance.md#block-${ordinal}`));
+  for (const ordinal of [1, 2]) assert.ok(result.checkedCommandReferences.includes(`docs/extend/contracts.md#block-${ordinal}`));
+  const page = 'docs/extend/contracts.md', text = sources.get(page);
   // Syntactically valid mutations keep both fences and the total count. The
   // actual native receiver, not a test-local field assertion, must reject them.
   for (const changed of [text.replace('npm test --workspace @kubeclaw/prompt-contract', 'npm test --workspace @kubeclaw/unrelated-contract'),
@@ -40,7 +40,7 @@ const hash = value => crypto.createHash('sha256').update(value).digest('hex');
 function fixture(t) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'publication-example-claims-'));
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
-  const name = 'docs/site/use/example.md', file = path.join(root, name);
+  const name = 'docs/use/example.md', file = path.join(root, name);
   fs.mkdirSync(path.dirname(file), { recursive: true });
   const text = '# Example\n\nRun only in the owned fixture.\n\n```json\n{"ready":true}\n```\n';
   fs.writeFileSync(file, text);
@@ -81,7 +81,7 @@ test('a recorded prose region cannot be exempted or attached to an unrelated act
   f.declaration.pages[0].prose[0].checks = [];
   assert.throws(f.bind, /missing check assignment/u);
   f.declaration.pages[0].prose[0].checks = ['fixture-input'];
-  f.declaration.checks[0].inputs = f.declaration.checks[0].inputs.filter(input => input !== 'docs/site/use/example.md#prose-1');
+  f.declaration.checks[0].inputs = f.declaration.checks[0].inputs.filter(input => input !== 'docs/use/example.md#prose-1');
   assert.throws(f.bind, /no assigned check consumes/u);
 });
 
@@ -112,7 +112,7 @@ test('source authority symlinks cannot reuse repository-local hash declarations'
   assert.throws(f.bind, /authority symlink/u);
 });
 
-const sdkMarkdown = fs.readFileSync(path.resolve(import.meta.dirname, '../../docs/site/reference/sdk-exports.md'), 'utf8');
+const sdkMarkdown = fs.readFileSync(path.resolve(import.meta.dirname, '../../docs/reference/sdk-exports.md'), 'utf8');
 test('actual SDK governed values reach native schemas, including field domains', () => {
   const rows = validateSdkLiteralExamples(sdkMarkdown);
   assert.equal(rows.length, 58);
@@ -136,7 +136,7 @@ test('an altered canonical SDK program is refused before any scratch or executio
 
 test('wait example discovery respects declared trust separately from installation', () => {
   const root = path.resolve(import.meta.dirname, '../..');
-  const directory = path.join(root, 'docs/site/use/workflows/wait-resume');
+  const directory = path.join(root, 'docs/use/workflows/wait-resume');
   const platform = JSON.parse(fs.readFileSync(path.join(directory, 'platform.template.json'), 'utf8'));
   const definition = JSON.parse(fs.readFileSync(path.join(directory, 'approval.pipeline.json'), 'utf8'));
   const projection = { providers: platform.providers, grants: platform.grants };
@@ -150,7 +150,7 @@ test('wait example discovery respects declared trust separately from installatio
 
 test('authored procedure duties and truthful native-result linkage fail closed', async () => {
   const { validatePublicationClaimContracts } = await import('../lib/docs-publication-claim-contracts.mjs');
-  const sourceRef = 'docs/site/use/contract.md';
+  const sourceRef = 'docs/use/contract.md';
   const sources = new Map([[sourceRef, 'Use the private fixture. Stop on error. Remove only owned files.\n']]);
   const contract = { sourceRef, kind: 'bounded-procedure', scope: 'Private fixture lifecycle',
     owners: ['fixture owner'], prerequisites: 'Owned fixture only', expectedResults: 'Actual bounded result',

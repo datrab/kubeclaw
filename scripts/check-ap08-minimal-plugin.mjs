@@ -8,8 +8,8 @@ import { execFileSync, spawnSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
 
 const root = path.resolve(import.meta.dirname, '..');
-const fixtureRoot = path.join(root, 'docs/site/extend/examples/minimal-stage');
-const guidePath = path.join(root, 'docs/site/extend/first-plugin.md');
+const fixtureRoot = path.join(root, 'docs/extend/examples/minimal-stage');
+const guidePath = path.join(root, 'docs/extend/first-plugin.md');
 const guide = fs.readFileSync(guidePath, 'utf8');
 const core = await import(pathToFileURL(path.join(root, 'skills/nova/core/src/index.ts')).href);
 const { prepareRuntime } = await import(pathToFileURL(path.join(root, 'skills/nova/core/execution/engine-runtime.ts')).href);

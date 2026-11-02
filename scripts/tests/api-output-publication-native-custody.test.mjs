@@ -92,7 +92,7 @@ test('actual Buster construction and Prism blocked path never start recover or i
 // Exact receiving payloads remain sealed; generated surrounding data is not an
 // execution/freshness assertion and complete current bytes remain dependencies.
 test('three generated inputs preserve consumed templates and wait block without Source/output self-seals',()=>{
- const helm='docs/site/reference/helm-values.md',cap='docs/site/reference/capabilities.md',map='docs/site/reference/generated-documentation-map.json';
+ const helm='docs/reference/helm-values.md',cap='docs/reference/capabilities.md',map='docs/reference/generated-documentation-map.json';
  const original=p=>fs.readFileSync(path.join(root,p),'utf8');
  const override=(p,text)=>verifier({overrides:new Map([[path.join(root,p),Buffer.from(text)]])}).snapshots();
  const baseline=verifier().snapshots();assert.equal(baseline.length,3);

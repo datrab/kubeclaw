@@ -207,7 +207,7 @@ function checkMarkdownLinks(filePath, text) {
       errors.push(`${rel(filePath)} links through a symbolic link: ${link.raw}`);
       continue;
     }
-    if (rawFragment && resolved.endsWith('.md') && rel(filePath).startsWith('docs/site/')) {
+    if (rawFragment && resolved.endsWith('.md') && rel(filePath).startsWith('docs/')) {
       let fragment;
       try { fragment = decodeURIComponent(rawFragment); } catch { fragment = rawFragment; }
       scanCounts.markdownAnchors += 1;
@@ -358,7 +358,7 @@ for (const filePath of docsToScan()) {
   const text = stripFencedCodeAndComments(raw);
   checkMarkdownLinks(filePath, text);
   checkRepoRefs(filePath, text);
-  if (rel(filePath).startsWith('docs/site/')) {
+  if (rel(filePath).startsWith('docs/')) {
     checkSourceCalloutRevisions(filePath, raw);
     for (const finding of pinnedLinkErrors(raw)) errors.push(`${rel(filePath)} ${finding}`);
   }

@@ -64,7 +64,7 @@ export function validateCompletionRecords(matrix, catalogue, rows, repo = {
     for (const id of record.requirementIds) assert(requirements.has(id), `unknown requirement: ${id}`);
     assert(record.pages.length > 0 && record.sources.length > 0, 'pages and sources must be explicit');
     for (const page of record.pages) {
-      assert(page.startsWith('docs/site/') && page.endsWith('.md'), `not a reader page: ${page}`);
+      assert(page.startsWith('docs/') && page.endsWith('.md'), `not a reader page: ${page}`);
     }
     for (const file of [...record.pages, ...record.sources]) repo.trackedFile(record.revision, file);
     if (record.verdict !== 'PASS') continue;

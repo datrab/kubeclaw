@@ -9,7 +9,7 @@ import { checkSdkReference } from './docs-sdk-reference.mjs';
 import { checkProductPipeline } from './docs-product-pipeline-reference.mjs';
 
 const root = process.cwd();
-const handbook = 'docs/site/extend/developer-handbook.md';
+const handbook = 'docs/extend/developer-handbook.md';
 try {
   const failures = [];
   // The contributor procedure deliberately delegates the export/member list.
@@ -37,11 +37,11 @@ try {
     if (changed.length) throw new Error(`SDK_SEMANTIC_SOURCE_DRIFT:${changed.join(',')}:reviewed source binding changed; compiler not run, no compilation result claimed`);
     checkSdkReference({ root, revision,
       inventoryPath: path.join(root, 'docs/generated/inventory/sdk-reference.json'),
-      markdownPath: path.join(root, 'docs/site/reference/sdk-exports.md') });
+      markdownPath: path.join(root, 'docs/reference/sdk-exports.md') });
   } catch (error) {
     // Parser, compiler, filesystem and unsupported-shape errors are NOT drift proofs.
     if (!/^SDK_(?:SEMANTIC_COVERAGE_DRIFT|SEMANTIC_SOURCE_DRIFT|REFERENCE_OUTPUT_DRIFT):/u.test(error.message)) throw error;
-    failures.push(`DOC_DRIFT_CONTRACT ${handbook}: delegated docs/site/reference/sdk.md and docs/site/reference/sdk-exports.md require review; ${error.message}`);
+    failures.push(`DOC_DRIFT_CONTRACT ${handbook}: delegated docs/reference/sdk.md and docs/reference/sdk-exports.md require review; ${error.message}`);
   }
   const progress = checkProductPipeline(root, 'contract');
   if (progress) failures.push(progress);

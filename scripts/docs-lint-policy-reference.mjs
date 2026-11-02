@@ -9,7 +9,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(import.meta.dirname, '..');
 const policyPath = path.join(root, 'charts/kubeclaw/files/config/lint-policy.json');
-const target = path.join(root, 'docs/site/reference/lint-policy-generated.md');
+const target = path.join(root, 'docs/reference/lint-policy-generated.md');
 const revision = '32b02816cc19cc8865a45b221b8b6ca28e99e8fb';
 const versionsPath = path.join(root, 'versions.json');
 const novaToolsPackagePath = path.join(root, 'docker/nova-tools/package.json');

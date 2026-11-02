@@ -1869,7 +1869,7 @@ function rejectedProfileContracts(root) {
     assert(!identities.has(identity),`API_PRODUCT_REJECTED_PROFILE_DUPLICATE: ${identity}`);identities.add(identity);
     for(const field of ['expectedError','canonicalProcedure','owner','safeStop','preparationCriterion','discoveryInputDigest'])assert(typeof contract[field]==='string'&&contract[field].trim(),`API_PRODUCT_REJECTED_PROFILE_CONTRACT_INCOMPLETE: ${identity}:${field}`);
     const [procedure,anchor]=contract.canonicalProcedure.split('#');
-    assert(procedure.startsWith('docs/site/')&&!procedure.split('/').includes('..')&&fs.existsSync(path.join(root,procedure)),`API_PRODUCT_REJECTED_PROFILE_PROCEDURE_MISSING: ${identity}`);
+    assert(procedure.startsWith('docs/')&&!procedure.split('/').includes('..')&&fs.existsSync(path.join(root,procedure)),`API_PRODUCT_REJECTED_PROFILE_PROCEDURE_MISSING: ${identity}`);
     const headings=[...fs.readFileSync(path.join(root,procedure),'utf8').matchAll(/^#{1,6}\s+(.+)$/gmu)].map(match=>match[1].toLowerCase().replace(/[^\p{L}\p{N} -]/gu,'').trim().replace(/ +/gu,'-'));
     assert(anchor&&headings.includes(anchor),`API_PRODUCT_REJECTED_PROFILE_PROCEDURE_ANCHOR_MISSING: ${identity}`);
     const actualChart=Object.fromEntries(walkProductSources(root,[contract.chart],()=>true).map(source=>[source,hash(fs.readFileSync(path.join(root,source)))]));
@@ -2530,13 +2530,13 @@ const reviewedCommonErrorMarkdownOutput = Object.freeze({
     "configuration"
   ],
   "outputs": [
-    "docs/site/reference/common-errors.md",
-    "docs/site/reference/common-errors-foundation.md",
-    "docs/site/reference/common-errors-nova.md",
-    "docs/site/reference/common-errors-worker.md",
-    "docs/site/reference/common-errors-prism.md",
-    "docs/site/reference/common-errors-platform.md",
-    "docs/site/reference/common-errors-configuration.md"
+    "docs/reference/common-errors.md",
+    "docs/reference/common-errors-foundation.md",
+    "docs/reference/common-errors-nova.md",
+    "docs/reference/common-errors-worker.md",
+    "docs/reference/common-errors-prism.md",
+    "docs/reference/common-errors-platform.md",
+    "docs/reference/common-errors-configuration.md"
   ],
   "callers": {
     "docs:errors:generate": "node scripts/docs-common-error-catalogue.mjs",
@@ -2609,7 +2609,7 @@ function checkedCommonErrorMarkdownOutput(root,graph,classify,sources) {
   if(graph.edges.some(edge=>edge.target===profile.source))fail('new imported/callback writer entry');
   const data=JSON.parse(physical(profile.dataPath)),surface=JSON.parse(physical(profile.surfacePath));
   if(JSON.stringify(data.sections.map(section=>section.id))!==JSON.stringify(profile.sections))fail('ordered section vector');
-  const outputs=['docs/site/reference/common-errors.md',...data.sections.map(section=>'docs/site/reference/common-errors-'+section.id+'.md')];
+  const outputs=['docs/reference/common-errors.md',...data.sections.map(section=>'docs/reference/common-errors-'+section.id+'.md')];
   if(JSON.stringify(outputs)!==JSON.stringify(profile.outputs)||new Set(outputs).size!==7)fail('seven-output vector');
   for(const output of outputs)physical(output);
   // Existing accepted source-surface admission; no new source discovery algorithm.
@@ -2664,7 +2664,7 @@ const reviewedEventContractDocumentationOutput = Object.freeze({
       "sha256": "0a8f76c0a868d5b85467081f4c635421995b1792791b0acec05f80be9e93c4ef"
     },
     {
-      "path": "docs/site/reference/events.md",
+      "path": "docs/reference/events.md",
       "historicalWholeInputSha256": "2f3add53b588aff3eacf45d5d366ea2461998ff922757d33c7a968bc76d39551",
       "purposeProjection": "existing-generated-region-interior-only/v1",
       "purposeProjectionSha256": "c7f8e40fc689673cd0e9e42ef1902ac6286e4252e69d050de3215f5ae3c1d69f"
@@ -2672,7 +2672,7 @@ const reviewedEventContractDocumentationOutput = Object.freeze({
   ],
   "targets": [
     "docs/generated/inventory/event-contracts.json",
-    "docs/site/reference/events.md"
+    "docs/reference/events.md"
   ],
   "callers": {
     "docs:events:generate": "node scripts/docs-event-contracts.mjs",
@@ -2756,7 +2756,7 @@ function eventContractPurposeInputBytes(input,bytes) {
     if(!/^"[a-f0-9]{64}"$/u.test(text.slice(begin,end)))fail('source-vector stamp representation');
     return text.slice(0,begin)+'"'+'0'.repeat(64)+'"'+text.slice(end);
   }
-  if(input.path==='docs/site/reference/events.md'&&input.purposeProjection==='existing-generated-region-interior-only/v1'){
+  if(input.path==='docs/reference/events.md'&&input.purposeProjection==='existing-generated-region-interior-only/v1'){
     const begin='<!-- BEGIN GENERATED EVENT CONTRACT REFERENCE -->',end='<!-- END GENERATED EVENT CONTRACT REFERENCE -->';
     const start=text.indexOf(begin),finish=text.indexOf(end);
     if(start<0||finish<start+begin.length||text.indexOf(begin,start+begin.length)>=0||text.indexOf(end,finish+end.length)>=0)fail('unique ordered generated region');
@@ -2845,11 +2845,11 @@ const reviewedPublicationYamlValidationInputs = Object.freeze({
       "purposeProjectionSha256": "e80168fad86ab0c554173ff412be8f9ba93e0a96c2265a6869900ed88d5b7118"
     },
     {
-      "path": "docs/site/use/diagnose.md",
+      "path": "docs/use/diagnose.md",
       "sha256": "400d1969237d4939a38a45a343ff7282d303c9393d96ee5c16411c3a74cd6a6e"
     },
     {
-      "path": "docs/site/use/install.md",
+      "path": "docs/use/install.md",
       "sha256": "498df5af42f9e8757687a0ba28d659d21bedf63dbbde3c090950aa93512701f7"
     },
     {
@@ -3629,231 +3629,231 @@ const reviewedPublicationNativeValidation = Object.freeze({
       "purposeProjectionSha256": "e80168fad86ab0c554173ff412be8f9ba93e0a96c2265a6869900ed88d5b7118"
     },
     {
-      "path": "docs/site/extend/examples/minimal-stage/package.json",
+      "path": "docs/extend/examples/minimal-stage/package.json",
       "sha256": "858afd76f0e8f9d21fac54b22cb409b5c11effd93b5530c91eb40bc4b9907a39"
     },
     {
-      "path": "docs/site/extend/examples/minimal-stage/plugin.json",
+      "path": "docs/extend/examples/minimal-stage/plugin.json",
       "sha256": "ffcd1ea2b759081d86a9812ea05b37a347ce13bd1a68a2640bf1e0a29146bd73"
     },
     {
-      "path": "docs/site/extend/examples/minimal-stage/schemas/config.schema.json",
+      "path": "docs/extend/examples/minimal-stage/schemas/config.schema.json",
       "sha256": "ecb4659a0d13372817eb167c4af7a0eaba08e1b8f3ccf496dbb6fa287cc992ad"
     },
     {
-      "path": "docs/site/extend/examples/minimal-stage/schemas/input.schema.json",
+      "path": "docs/extend/examples/minimal-stage/schemas/input.schema.json",
       "sha256": "39dcacb7784aaf29e76304fb161c03c4d050a4abff4f080b4bd39f604ee486c4"
     },
     {
-      "path": "docs/site/extend/examples/minimal-stage/schemas/result.schema.json",
+      "path": "docs/extend/examples/minimal-stage/schemas/result.schema.json",
       "sha256": "1b312c6f2a9601239a47a3ad6ebc7d3ff67c5e377b1b2a905e743298e9d35859"
     },
     {
-      "path": "docs/site/extend/examples/minimal-stage/src/stage.js",
+      "path": "docs/extend/examples/minimal-stage/src/stage.js",
       "sha256": "c57349a102e2a549c270e3a9062460fce887ab642f330a9b78980611272322e0"
     },
     {
-      "path": "docs/site/extend/examples/minimal-stage/tests/stage.test.mjs",
+      "path": "docs/extend/examples/minimal-stage/tests/stage.test.mjs",
       "sha256": "075a2ade71a516359dc13ed2bda42afb4360e12e532f06f2bec6d872beb4e80f"
     },
     {
-      "path": "docs/site/extend/examples/observer-lifecycle/journey.mjs",
+      "path": "docs/extend/examples/observer-lifecycle/journey.mjs",
       "sha256": "be2ca59fb8bd6f2571ba2a27ee176241ef76436dac5d1ae07cd73354134e2d06"
     },
     {
-      "path": "docs/site/extend/examples/observer-lifecycle/plugin/package.json",
+      "path": "docs/extend/examples/observer-lifecycle/plugin/package.json",
       "sha256": "19024f350c83619ca208e044bea042455517084566e099270ac9a0e0a2b50dd9"
     },
     {
-      "path": "docs/site/extend/examples/observer-lifecycle/plugin/plugin.json",
+      "path": "docs/extend/examples/observer-lifecycle/plugin/plugin.json",
       "sha256": "42c68ce5ae6ec703393d16617e5ec3884f2e7a0453891e9e8924eb065ee0425a"
     },
     {
-      "path": "docs/site/extend/examples/observer-lifecycle/plugin/schemas/checkpoint.schema.json",
+      "path": "docs/extend/examples/observer-lifecycle/plugin/schemas/checkpoint.schema.json",
       "sha256": "8076bdee81e673be6e14805339f1f28a3d2cf294c0d56254463a74fabb031008"
     },
     {
-      "path": "docs/site/extend/examples/observer-lifecycle/plugin/schemas/config.schema.json",
+      "path": "docs/extend/examples/observer-lifecycle/plugin/schemas/config.schema.json",
       "sha256": "2630fff1d6be622bfc3ab96f4f9a3960d0e5afdaae53528416ca13b6b19b1b3a"
     },
     {
-      "path": "docs/site/extend/examples/observer-lifecycle/plugin/src/observer.js",
+      "path": "docs/extend/examples/observer-lifecycle/plugin/src/observer.js",
       "sha256": "886992a473fc3a1d0401d16fd6a5b1ed214976e5a46297e5e644508b06069041"
     },
     {
-      "path": "docs/site/extend/examples/platform-change-nova-lifecycle.json",
+      "path": "docs/extend/examples/platform-change-nova-lifecycle.json",
       "sha256": "86f9a38e7f7fd6b1ad71fb5d4df6d226f483607054f27cb2caee9dd13f582253"
     },
     {
-      "path": "docs/site/extend/first-plugin.md",
+      "path": "docs/extend/first-plugin.md",
       "sha256": "31ce4e5bb6f05d51eff25bae63c2052e72540f8adafec46efc03c1bae697652b"
     },
     {
-      "path": "docs/site/reference/buster-runtime-configuration.md",
+      "path": "docs/reference/buster-runtime-configuration.md",
       "sha256": "630e5513c5b3f13c736368b311b3c8b23f3dc0bcb4f215e81cff072c82116a5d"
     },
     {
-      "path": "docs/site/reference/configuration-precedence.md",
+      "path": "docs/reference/configuration-precedence.md",
       "sha256": "507a6da536dc050dbc64eb2d39528af33bd64255a5586be20cf0346c1d6dfa04"
     },
     {
-      "path": "docs/site/reference/documentation-route-registry.json",
+      "path": "docs/reference/documentation-route-registry.json",
       "sha256": "7e5e283c02677c552eda930da2e65baa2fb4076182f8b48b607876fff10fc8f7"
     },
     {
-      "path": "docs/site/reference/host-and-prism-configuration.md",
+      "path": "docs/reference/host-and-prism-configuration.md",
       "sha256": "f4cb0d8a77902249345dc75804a7d54d4b7b56106d4287c0ea62637f8b5198b6"
     },
     {
-      "path": "docs/site/reference/nova-project.md",
+      "path": "docs/reference/nova-project.md",
       "sha256": "217d91583f26d89ec054c810dd101181a6d5e43fce48cf255e7b7dc776c7154e"
     },
     {
-      "path": "docs/site/reference/pipeline-definition.md",
+      "path": "docs/reference/pipeline-definition.md",
       "sha256": "2883069bd568fb73f47d6524680eae63a03494a5b52f0afced88a4d7674383da"
     },
     {
-      "path": "docs/site/reference/pipeline-json.md",
+      "path": "docs/reference/pipeline-json.md",
       "sha256": "e4bbbcde519911fb512acd60b1b4d3945b480b0cc9b8312d757faa96361ea128"
     },
     {
-      "path": "docs/site/reference/pipeline-platform.md",
+      "path": "docs/reference/pipeline-platform.md",
       "sha256": "53a81b42c1dfbde0f0d0a0a8c61eaabfa36975325e8b1c5cd10653541d0909de"
     },
     {
-      "path": "docs/site/reference/project-pipeline-publication.md",
+      "path": "docs/reference/project-pipeline-publication.md",
       "sha256": "28c71320dc54ca369b91d8135d61a109bdf8c4c8f7fd06e20b8cb95ffd7898f9"
     },
     {
-      "path": "docs/site/use/operate.md",
+      "path": "docs/use/operate.md",
       "sha256": "eceeb467c5a78e3d587955cff2a795d059700339483efe38040a70628e374483"
     },
     {
-      "path": "docs/site/use/prism-studio.md",
+      "path": "docs/use/prism-studio.md",
       "sha256": "0fe8346293c9e20e88e102b03cf2ac9792973416d10c940d7e957ac22e970066"
     },
     {
-      "path": "docs/site/use/workflows/README.md",
+      "path": "docs/use/workflows/README.md",
       "sha256": "91a14e8418f2bfc0f7d3242deb77a2387448ff8598ea1db8cc1dcb32dd3ed946"
     },
     {
-      "path": "docs/site/use/workflows/examples/buster-fixture-matrix-report.pipeline.json",
+      "path": "docs/use/workflows/examples/buster-fixture-matrix-report.pipeline.json",
       "sha256": "d86e5c8143d03af2c41db295f9f763e4038ffd7a1c89a2a66790337c1874e2e5"
     },
     {
-      "path": "docs/site/use/workflows/examples/compiled-project-input.mjs",
+      "path": "docs/use/workflows/examples/compiled-project-input.mjs",
       "sha256": "5e6248abc70806f463293b14193a402a24f6168ab12344762d993d0a99f202da"
     },
     {
-      "path": "docs/site/use/workflows/examples/compiled-project-verification.mjs",
+      "path": "docs/use/workflows/examples/compiled-project-verification.mjs",
       "sha256": "3341ba042e0e8bb42a4554c41bee38ab5986ae39afded23c74bd01ac9bbf3ed2"
     },
     {
-      "path": "docs/site/use/workflows/examples/compiled-project.mjs",
+      "path": "docs/use/workflows/examples/compiled-project.mjs",
       "sha256": "a25552b997a071342fb6e2003ab2ee8b3e9cd963cbc63ce11edb38a5aa075240"
     },
     {
-      "path": "docs/site/use/workflows/examples/first-project.mjs",
+      "path": "docs/use/workflows/examples/first-project.mjs",
       "sha256": "a6c7965165ad093a109c1c5210802914c1382585dd315afea8ddec79c4e08442"
     },
     {
-      "path": "docs/site/use/workflows/examples/local-core.mjs",
+      "path": "docs/use/workflows/examples/local-core.mjs",
       "sha256": "3e54567536d0b13090f2ea37f1b04b4fad725415767c70e24533419eba985744"
     },
     {
-      "path": "docs/site/use/workflows/examples/minimal-compiled-redis.mjs",
+      "path": "docs/use/workflows/examples/minimal-compiled-redis.mjs",
       "sha256": "5bc2998072d885410553a0094dc8a9260948f65573d8cf67e9ce44aa9117fdc0"
     },
     {
-      "path": "docs/site/use/workflows/examples/minimal-project.mjs",
+      "path": "docs/use/workflows/examples/minimal-project.mjs",
       "sha256": "0851cc47a9376444c6ed0634cb079257a7edff0d5d8b08b2419ba22e66b95107"
     },
     {
-      "path": "docs/site/use/workflows/examples/minimal-redis-inspection.mjs",
+      "path": "docs/use/workflows/examples/minimal-redis-inspection.mjs",
       "sha256": "1a53d19b148eb69b5ac72c1cd21668faa228cbd0837aa89ea88f8992693d354a"
     },
     {
-      "path": "docs/site/use/workflows/examples/minimal-redis-verification.mjs",
+      "path": "docs/use/workflows/examples/minimal-redis-verification.mjs",
       "sha256": "4dc9eb32db87ae0097e7a0031d4657086841df6ef32bf4c4a36ec7cccf366917"
     },
     {
-      "path": "docs/site/use/workflows/examples/minimal.pipeline.json",
+      "path": "docs/use/workflows/examples/minimal.pipeline.json",
       "sha256": "d2429199edfbbe3acba58876ac5fc64e930822cfa79edc26dabd7262155c127b"
     },
     {
-      "path": "docs/site/use/workflows/examples/prism-studio-flow.json",
+      "path": "docs/use/workflows/examples/prism-studio-flow.json",
       "sha256": "ea096d2c1fe260eb2d568f6f018c36de64f435cad0d93fad0525cc09250735c1"
     },
     {
-      "path": "docs/site/use/workflows/examples/quality-validation.mjs",
+      "path": "docs/use/workflows/examples/quality-validation.mjs",
       "sha256": "ab862a8a86d40810994bafea3a8669cbc5969e0f40f51887e28754b7507b8503"
     },
     {
-      "path": "docs/site/use/workflows/examples/repair-retry.mjs",
+      "path": "docs/use/workflows/examples/repair-retry.mjs",
       "sha256": "bd7def69bea092fe006ada1efc331b5c049c97c0768bf0ece7d4aedca9c0d18f"
     },
     {
-      "path": "docs/site/use/workflows/examples/request-trace-redis-unavailable.json",
+      "path": "docs/use/workflows/examples/request-trace-redis-unavailable.json",
       "sha256": "9ea32431ccb8979cb625a6c487fd39e348a49e2fe3bd332a647cdc3a9c89e239"
     },
     {
-      "path": "docs/site/use/workflows/examples/request-trace-success.json",
+      "path": "docs/use/workflows/examples/request-trace-success.json",
       "sha256": "e2f92f057f5e2c7d1f8bd9d8c9faebdf826d1f818bf0c44405a9d0efe5b07ed7"
     },
     {
-      "path": "docs/site/use/workflows/examples/uncertain-effect.pipeline.json",
+      "path": "docs/use/workflows/examples/uncertain-effect.pipeline.json",
       "sha256": "d2ae14634ed7061e257a50cf52ff4d5830a18993955a71da599864448bb0ab14"
     },
     {
-      "path": "docs/site/use/workflows/examples/uncertain-effect/journey.mjs",
+      "path": "docs/use/workflows/examples/uncertain-effect/journey.mjs",
       "sha256": "7f88cdabc73ecae8bccb21e3523b7be09819158b926eda43c1fa848725e2cc9c"
     },
     {
-      "path": "docs/site/use/workflows/examples/uncertain-effect/plugin/package.json",
+      "path": "docs/use/workflows/examples/uncertain-effect/plugin/package.json",
       "sha256": "291d1d1d5b1e40cb92b21c09b2c0dfc3f0ae0efedd3db9ec20562a03b5164c73"
     },
     {
-      "path": "docs/site/use/workflows/examples/uncertain-effect/plugin/plugin.json",
+      "path": "docs/use/workflows/examples/uncertain-effect/plugin/plugin.json",
       "sha256": "00bf39ebd3b1851dce0e6af8363ea68635fde22340135dd42a49356cd418b409"
     },
     {
-      "path": "docs/site/use/workflows/examples/uncertain-effect/plugin/schemas/config.json",
+      "path": "docs/use/workflows/examples/uncertain-effect/plugin/schemas/config.json",
       "sha256": "2656294ca60aa23acaa3e6e1b688fa8b754196e6636657eb146a559936511803"
     },
     {
-      "path": "docs/site/use/workflows/examples/uncertain-effect/plugin/schemas/input.json",
+      "path": "docs/use/workflows/examples/uncertain-effect/plugin/schemas/input.json",
       "sha256": "2656294ca60aa23acaa3e6e1b688fa8b754196e6636657eb146a559936511803"
     },
     {
-      "path": "docs/site/use/workflows/examples/uncertain-effect/plugin/schemas/result.json",
+      "path": "docs/use/workflows/examples/uncertain-effect/plugin/schemas/result.json",
       "sha256": "b065f652df71a853fdc26e2edd957ce5bf9b5de3634b91a19a9fc7608bac102c"
     },
     {
-      "path": "docs/site/use/workflows/examples/uncertain-effect/plugin/src/stage.js",
+      "path": "docs/use/workflows/examples/uncertain-effect/plugin/src/stage.js",
       "sha256": "9f03161a68b3f82d7e51ab84315dc1385db2a78e877e8084f08a506d50dfeed3"
     },
     {
-      "path": "docs/site/use/workflows/quality-validation.md",
+      "path": "docs/use/workflows/quality-validation.md",
       "sha256": "d88b9747a74d76342c24b25022f1fe0c856df72e3dfc24187a2805c8ff8c97f9"
     },
     {
-      "path": "docs/site/use/workflows/uncertain-effect.md",
+      "path": "docs/use/workflows/uncertain-effect.md",
       "sha256": "eb4ea2c0d09968315b58cf313ca0cc55344ca79b6cfd5e2406c48a45bd223ec6"
     },
     {
-      "path": "docs/site/use/workflows/wait-resume.md",
+      "path": "docs/use/workflows/wait-resume.md",
       "sha256": "1b89a8bb14787210a9dfdb390c1be232c917e5b5724b843898436d9c9269677c"
     },
     {
-      "path": "docs/site/use/workflows/wait-resume/approval.pipeline.json",
+      "path": "docs/use/workflows/wait-resume/approval.pipeline.json",
       "sha256": "c1532f9bec42468e078856298a4ff697b7691c81d6fd728f9a53fde897f64adb"
     },
     {
-      "path": "docs/site/use/workflows/wait-resume/platform.template.json",
+      "path": "docs/use/workflows/wait-resume/platform.template.json",
       "sha256": "8d9f160964ea4c3ff5c924c3c4c36291f5a6bfa969807721f5a8383578a5b1ef"
     },
     {
-      "path": "docs/site/use/workflows/wait-resume/signal.template.json",
+      "path": "docs/use/workflows/wait-resume/signal.template.json",
       "sha256": "bb56a824887fc969186e48babe5744a5050fb143099a19e065b00cfbe7c19567"
     },
     {
@@ -5675,9 +5675,9 @@ const reviewedPublicationNativeValidation = Object.freeze({
 // sealed. Current complete physical bytes remain cache/receipt dependencies.
 const reviewedPublicationGeneratedDataInputs = Object.freeze({
   "paths": [
-    "docs/site/reference/helm-values.md",
-    "docs/site/reference/capabilities.md",
-    "docs/site/reference/generated-documentation-map.json"
+    "docs/reference/helm-values.md",
+    "docs/reference/capabilities.md",
+    "docs/reference/generated-documentation-map.json"
   ],
   "helmOptions": [
     "--set 'nodeSelector.kubeclaw\\.io/log-collector=<value>'",
@@ -5716,10 +5716,10 @@ function publicationGeneratedDataSnapshots(root,fail) {
   }
   const bytes=fs.readFileSync(file),text=bytes.toString('utf8');
   if(!Buffer.from(text,'utf8').equals(bytes))fail('generated data UTF-8 '+relative);
-  if(relative==='docs/site/reference/helm-values.md'){
+  if(relative==='docs/reference/helm-values.md'){
    const options=[...new Set([...text.matchAll(/--set '[^'\n]+=<value>'/gu)].map(match=>match[0]))];
    if(JSON.stringify(options)!==JSON.stringify(reviewedPublicationGeneratedDataInputs.helmOptions))fail('consumed Helm option templates');
-  }else if(relative==='docs/site/reference/capabilities.md'){
+  }else if(relative==='docs/reference/capabilities.md'){
    const blocks=publicationExampleBlocks(text).map(({content,...descriptor})=>descriptor);
    if(JSON.stringify(blocks)!==JSON.stringify(reviewedPublicationGeneratedDataInputs.capabilityBlocks))fail('consumed capability example blocks');
   }else{

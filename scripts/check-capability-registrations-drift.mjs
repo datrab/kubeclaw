@@ -3,7 +3,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 const root = path.resolve(import.meta.dirname, '..');
-const page = 'docs/site/reference/capabilities.md';
+const page = 'docs/reference/capabilities.md';
 const sourceRoot = 'skills';
 const kinds = { stages: 'Nova grant', observers: 'Nova grant', adapters: 'Nova grant', testProviders: 'Buster runtime', reportAdapters: 'Report adapter (no grant namespace)' };
 if (process.argv.includes('--describe-discovery')) {

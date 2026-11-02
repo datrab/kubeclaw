@@ -56,7 +56,7 @@ test('block ordinals substitutions input identities authorities selectors and ra
   const changed=helperCode.replace(a,b);assert.notEqual(changed,helperCode);assert.throws(()=>verifier({overrides:new Map([[path.join(root,source),Buffer.from(changed)]])}).acquire(),/fixed source\/input/);
  }
  const lock=JSON.parse(fs.readFileSync(path.join(root,'scripts/docs-api-authority-lock.json')));
- for(const p of ['versions.json','scripts/docs-api-authority-lock.json',lock.kubernetes.path,lock.customResources.cilium.crds.CiliumNetworkPolicy.path,'scripts/lib/docs-publication-example-coverage.mjs','docs/site/use/diagnose.md','docs/site/use/install.md','docs/config/publication-example-claims.json']){
+ for(const p of ['versions.json','scripts/docs-api-authority-lock.json',lock.kubernetes.path,lock.customResources.cilium.crds.CiliumNetworkPolicy.path,'scripts/lib/docs-publication-example-coverage.mjs','docs/use/diagnose.md','docs/use/install.md','docs/config/publication-example-claims.json']){
   const before=fs.readFileSync(path.join(root,p));
   // Malformed claims now fail in the real shared JSON-byte projection before
   // the old full fixed-input hash guard; every other input keeps its guard.

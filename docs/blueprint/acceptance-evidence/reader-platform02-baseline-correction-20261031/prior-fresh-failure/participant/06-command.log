@@ -1,4 +1,0 @@
-npm notice run versions:check
-npm notice run node scripts/versions.mjs --check
-{"checked":42,"changed":[]}
-{"inputs":4,"locks":5}

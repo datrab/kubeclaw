@@ -100,8 +100,8 @@ test('bundle check and failed validation do not write output or canonical invent
 
 test('retained page preflight rejects symlink and hardlink aliases before writing either page', t => {
   const { root } = fixture(t);
-  const paths = ['docs/site/reference/helm-values.md', 'docs/site/reference/environment-variables.md'];
-  const parent = path.join(root, 'docs/site/reference');
+  const paths = ['docs/reference/helm-values.md', 'docs/reference/environment-variables.md'];
+  const parent = path.join(root, 'docs/reference');
   fs.mkdirSync(parent, { recursive: true });
   const target = path.join(root, 'docs/generated/inventory/configuration-values.json');
   const original = fs.readFileSync(target);
@@ -133,9 +133,9 @@ test('the executing editorial owner cannot attest another checkout source tree',
 
 test('semantic mode preflights exactly all three destinations; v1 cannot select Secrets', t => {
   const f = fixture(t);
-  const paths = ['docs/site/reference/helm-values.md', 'docs/site/reference/environment-variables.md',
-    'docs/site/reference/secrets.md'];
-  const parent = path.join(f.root, 'docs/site/reference');
+  const paths = ['docs/reference/helm-values.md', 'docs/reference/environment-variables.md',
+    'docs/reference/secrets.md'];
+  const parent = path.join(f.root, 'docs/reference');
   fs.mkdirSync(parent, { recursive: true });
   assert.throws(() => assertRetainedPageDestinations(f.root, paths), /OUTPUT_SET_INVALID/);
   assert.throws(() => assertRetainedPageDestinations(f.root, paths.slice(0, 2), { semantic: true }), /OUTPUT_SET_INVALID/);

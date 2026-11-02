@@ -7,7 +7,7 @@ import { publicationAssets, copyPublicationAssets, publicationPages, publication
 
 function classification(...paths) {
   return { schemaVersion: 'kubeclaw-documentation-tree-classification.v1', files: paths.map(name => ({
-    path: `docs/site/${name}`, expectedPath: `docs/site/${name}`, class: 'canonical-reader-documentation',
+    path: `docs/${name}`, expectedPath: `docs/${name}`, class: 'canonical-reader-documentation',
   })) };
 }
 
@@ -92,7 +92,7 @@ test('invalid classification cannot broaden the publication boundary', t => {
   assert.throws(() => publicationPages(site, classification('README.md', 'README.md')), /duplicate/u);
   assert.throws(() => publicationPages(site, classification('../private.md')), /no canonical/u);
   const registry = classification('README.md');
-  registry.files[0].expectedPath = 'docs/site/other.md';
+  registry.files[0].expectedPath = 'docs/other.md';
   assert.throws(() => publicationPages(site, registry), /no canonical/u);
 });
 
@@ -103,8 +103,8 @@ test('positive manifest preserves registered exact HTML paths and refuses unappr
   const registry = classification('README.md', 'use/task.md');
   const manifest = publicationManifest(site, registry);
   assert.deepEqual(manifest, { schemaVersion: 'kubeclaw-publication-manifest.v1', pages: [
-    {sourcePath: 'docs/site/README.md', route: '/README.html', canonicalUrl: '/README.html'},
-    {sourcePath: 'docs/site/use/task.md', route: '/use/task.html', canonicalUrl: '/use/task.html'},
+    {sourcePath: 'docs/README.md', route: '/README.html', canonicalUrl: '/README.html'},
+    {sourcePath: 'docs/use/task.md', route: '/use/task.html', canonicalUrl: '/use/task.html'},
   ] });
   write('unapproved.md', '# Internal\n');
   assert.throws(() => publicationManifest(site, registry), /no publication allowance/u);
@@ -120,7 +120,7 @@ test('positive manifest cannot launder a registered Markdown symlink', t => {
 
 test('the complete maintained observer example publishes byte-exactly without adjacent private artifacts', t => {
   const { root, site, write } = fixture(t);
-  const example = path.resolve(import.meta.dirname, '../../docs/site/extend/examples/observer-lifecycle');
+  const example = path.resolve(import.meta.dirname, '../../docs/extend/examples/observer-lifecycle');
   const relativeFiles = fs.readdirSync(example, { recursive: true }).filter(name => fs.statSync(path.join(example, name)).isFile());
   for (const relative of relativeFiles) {
     write(`extend/examples/observer-lifecycle/${relative}`, fs.readFileSync(path.join(example, relative)));

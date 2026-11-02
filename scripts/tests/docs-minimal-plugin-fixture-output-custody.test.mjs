@@ -8,9 +8,9 @@ import {classifySerializedOutputRoles} from '../docs-api-output-role-classificat
 
 const repository = path.resolve(import.meta.dirname, '../..');
 const source = 'scripts/check-ap08-minimal-plugin.mjs';
-const plugin = 'docs/site/extend/examples/minimal-stage/plugin.json';
-const packageFile = 'docs/site/extend/examples/minimal-stage/package.json';
-const moduleFile = 'docs/site/extend/examples/minimal-stage/src/stage.js';
+const plugin = 'docs/extend/examples/minimal-stage/plugin.json';
+const packageFile = 'docs/extend/examples/minimal-stage/package.json';
+const moduleFile = 'docs/extend/examples/minimal-stage/src/stage.js';
 const consumer = 'scripts/check-runtime-role-manifests.mjs';
 function fixture(run) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'minimal-plugin-fixture-custody-'));

@@ -108,7 +108,7 @@ test('docs-check-refs validates reference destinations and their fragments', () 
   write(root, 'package.json', '{}\n');
   fs.symlinkSync(path.join(sourceRoot, 'node_modules'), path.join(root, 'node_modules'), 'dir');
   fs.symlinkSync('/etc/passwd', path.join(root, 'outside-link'));
-  write(root, 'docs/site/index.md', [
+  write(root, 'docs/index.md', [
     '[Full][full] [Collapsed][] [Shortcut] ![Diagram][diagram]',
     '`scripts/docs-check-refs.mjs:1–2` and `scripts/docs-check-refs.mjs:1—2`',
     '`skills/missing-real-source.ts:1–2`',
@@ -159,17 +159,17 @@ test('docs-check-refs validates reference destinations and their fragments', () 
       && !output.includes('missing-code.md') && !output.includes('missing-html.md');
   });
 
-  write(root, 'docs/site/missing-full.md', '# Full\n');
-  write(root, 'docs/site/missing-collapsed.md', '# Collapsed\n');
-  write(root, 'docs/site/missing-shortcut.md', 'Expected section\n================\n');
-  write(root, 'docs/site/missing-image.svg', '<svg xmlns="http://www.w3.org/2000/svg"/>\n');
-  write(root, 'docs/site/missing-multiline.md', '# Multiline\n');
-  write(root, 'docs/site/exists(missing).md', '# Balanced\n');
-  write(root, 'docs/site/guide_(v2).md', '# Escaped\n');
-  write(root, 'docs/site/fragment.md', '# Real\n');
-  write(root, 'docs/site/missing-angle-inline.md', '# Inline angle\n');
-  write(root, 'docs/site/missing-angle-reference.md', '# Reference angle\n');
-  const indexPath = path.join(root, 'docs/site/index.md');
+  write(root, 'docs/missing-full.md', '# Full\n');
+  write(root, 'docs/missing-collapsed.md', '# Collapsed\n');
+  write(root, 'docs/missing-shortcut.md', 'Expected section\n================\n');
+  write(root, 'docs/missing-image.svg', '<svg xmlns="http://www.w3.org/2000/svg"/>\n');
+  write(root, 'docs/missing-multiline.md', '# Multiline\n');
+  write(root, 'docs/exists(missing).md', '# Balanced\n');
+  write(root, 'docs/guide_(v2).md', '# Escaped\n');
+  write(root, 'docs/fragment.md', '# Real\n');
+  write(root, 'docs/missing-angle-inline.md', '# Inline angle\n');
+  write(root, 'docs/missing-angle-reference.md', '# Reference angle\n');
+  const indexPath = path.join(root, 'docs/index.md');
   fs.writeFileSync(indexPath, fs.readFileSync(indexPath, 'utf8')
     .replace('`skills/missing-real-source.ts:1–2`\n', '')
     .replace('[Absolute](/etc/passwd)\n', '').replace('[Escape](../../../outside.md)\n', '')
@@ -189,7 +189,7 @@ test('docs-check-refs starts and validates in a SHA-256 Git repository', (contex
   write(root, 'scripts/lib/docs-markdown-anchors.mjs', fs.readFileSync(
     path.join(sourceRoot, 'scripts/lib/docs-markdown-anchors.mjs'), 'utf8'));
   write(root, 'package.json', '{}\n');
-  write(root, 'docs/site/index.md', '# SHA-256 fixture\n');
+  write(root, 'docs/index.md', '# SHA-256 fixture\n');
   fs.symlinkSync(path.join(sourceRoot, 'node_modules'), path.join(root, 'node_modules'), 'dir');
   execFileSync('git', ['config', 'user.name', 'Docs Test'], { cwd: root });
   execFileSync('git', ['config', 'user.email', 'docs-test@example.invalid'], { cwd: root });
@@ -225,20 +225,20 @@ test('mixed source callouts admit only explicitly declared immutable revisions',
       `> **Revision:** ${declaration}. Source bindings, not execution receipts.`,
       `> ${extra}`, '',
     ].join('\n');
-    write(root, 'docs/site/index.md', page('`' + first + '`; `' + second + '`'));
+    write(root, 'docs/index.md', page('`' + first + '`; `' + second + '`'));
     assert.match(run(root), /docs reference check passed/u);
-    write(root, 'docs/site/index.md', page('`' + first + '`', 'Other prose mentions `' + second + '`.'));
+    write(root, 'docs/index.md', page('`' + first + '`', 'Other prose mentions `' + second + '`.'));
     assert.throws(() => run(root), error => String(error.stderr).includes(`but links ${second}`));
-    write(root, 'docs/site/index.md', page('`' + first + '`; ' + second));
+    write(root, 'docs/index.md', page('`' + first + '`; ' + second));
     assert.throws(() => run(root), error => String(error.stderr).includes(`but links ${second}`));
     const callout = (linked, declared) => [
       '> **Source evidence — independent adjacent scope**', '>',
       `> [Source](https://github.com/datrab/kubeclaw/blob/${linked}/skills/one.ts#L1-L1).`,
       '> **Revision:** `' + declared + '`.', '',
     ].join('\n');
-    write(root, 'docs/site/index.md', callout(first, first) + '\n' + callout(second, second));
+    write(root, 'docs/index.md', callout(first, first) + '\n' + callout(second, second));
     assert.match(run(root), /docs reference check passed/u);
-    write(root, 'docs/site/index.md', callout(second, first) + '\n' + callout(second, second));
+    write(root, 'docs/index.md', callout(second, first) + '\n' + callout(second, second));
     assert.throws(() => run(root), error => String(error.stderr).includes(`but links ${second}`));
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 });

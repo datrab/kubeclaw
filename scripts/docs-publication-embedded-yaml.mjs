@@ -28,8 +28,8 @@ function embeddedYamlMaterials(root) {
   function heredocs(text) {
     return [...text.matchAll(/<<EOF\n([\s\S]*?)^EOF\s*$/gmu)].map(match => match[1]);
   }
-  const diagnose = heredocs(block('docs/site/use/diagnose.md', 22));
-  const install = heredocs(block('docs/site/use/install.md', 10));
+  const diagnose = heredocs(block('docs/use/diagnose.md', 22));
+  const install = heredocs(block('docs/use/install.md', 10));
   assert.equal(diagnose.length, 1); assert.equal(install.length, 2);
   const image = JSON.parse(read('versions.json')).buildArgs.OPS_NODE_BASE;
   const materials = [

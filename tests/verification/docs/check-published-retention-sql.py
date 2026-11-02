@@ -32,7 +32,7 @@ def main():
     bindir = Path(options.postgres_bin_dir).resolve(strict=True)
     binaries = {name: bindir / name for name in ['postgres', 'initdb', 'pg_ctl', 'psql']}
     assert all(file.is_file() for file in binaries.values())
-    source = root / 'docs/site/understand/data-and-state.md'
+    source = root / 'docs/understand/data-and-state.md'
     bodies = re.findall(r"<<'SQL'\n(.*?)^SQL\s*$", source.read_text(), re.M | re.S)
     assert len(bodies) == 1, 'exact published quoted SQL payload required'
     sql = bodies[0]

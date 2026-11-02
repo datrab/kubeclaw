@@ -151,7 +151,7 @@ for (const assignment of namespaceAssignments) {
     `NAMESPACE:${assignment.line}: conditional flow fan-out is implausibly broad (${assignment.consumers.length})`);
 }
 
-const publishedCli = fs.readFileSync(path.join(root, 'docs/site/reference/cli.md'), 'utf8');
+const publishedCli = fs.readFileSync(path.join(root, 'docs/reference/cli.md'), 'utf8');
 const publishedFlagRows = publishedCli.split('\n').filter((line) => line.startsWith('| `--')).join('\n');
 assert.doesNotMatch(publishedFlagRows, /scripts\/(?:ap0[89][^/\s`]*|docs-[^/\s`]*|check-configuration-drift-mutations\.mjs)/u,
   'internal AP08/AP09, docs-tooling, or mutation-runner flags leaked into the published CLI page');

@@ -44,8 +44,8 @@ test('full historical renderer reproduces original pages and preserves all rows 
     assert(next.get(relative).includes(publishedIntroduction), `published operator guidance lost: ${relative}`);
 
   }
-  const helm = baseline.get('docs/site/reference/helm-values.md');
-  const changed = next.get('docs/site/reference/helm-values.md');
+  const helm = baseline.get('docs/reference/helm-values.md');
+  const changed = next.get('docs/reference/helm-values.md');
   const anchors = [...helm.matchAll(/<a id="api-collection-[a-f0-9]+"><\/a>/gu)];
   assert.equal(anchors.length, 170);
   for (const { index } of anchors) {

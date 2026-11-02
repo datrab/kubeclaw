@@ -3,11 +3,11 @@
   "purpose": "Explicit upstream-main Ops evidence; no runtime source adoption into PR #13.",
   "revision": "34cf38ef53ee41381543785d0ffae90a37fac9ca",
   "pages": [
-    "docs/site/understand/ops-mcp.md",
-    "docs/site/understand/codex-integration.md",
-    "docs/site/understand/platform-and-operations.md",
-    "docs/site/understand/security-and-trust.md",
-    "docs/site/understand/communication.md"
+    "docs/understand/ops-mcp.md",
+    "docs/understand/codex-integration.md",
+    "docs/understand/platform-and-operations.md",
+    "docs/understand/security-and-trust.md",
+    "docs/understand/communication.md"
   ],
   "sources": {
     "charts/kubeclaw/templates/configmap-gateway.yaml": "37f2a0ad3038097d484da8a968f44a2a583049aa64772df435bde7094e89c46f",

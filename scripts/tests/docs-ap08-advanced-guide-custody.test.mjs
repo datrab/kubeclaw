@@ -24,7 +24,7 @@ test('real advanced-guide owner accepts only the exact reviewed coverage locator
     const clone = run('git', ['clone', '--shared', '--no-checkout', '--quiet', root, fixture]);
     assert.equal(clone.status, 0, clone.stderr);
     copy('scripts/check-ap08-advanced-guides.mjs');
-    for (const page of ['contracts', 'effectful-plugin', 'buster', 'nova']) copy(`docs/site/extend/${page}.md`);
+    for (const page of ['contracts', 'effectful-plugin', 'buster', 'nova']) copy(`docs/extend/${page}.md`);
     for (const owner of ['nova', 'buster']) {
       const directory = `skills/${owner}/plugins`;
       for (const entry of fs.readdirSync(path.join(root, directory), { withFileTypes: true })) {
@@ -37,8 +37,8 @@ test('real advanced-guide owner accepts only the exact reviewed coverage locator
     const baseline = checker();
     assert.equal(baseline.status, 0, baseline.stdout + baseline.stderr);
     assert.equal(JSON.parse(baseline.stdout).pages, 4);
-    const busterPath = path.join(fixture, 'docs/site/extend/buster.md');
-    const novaPath = path.join(fixture, 'docs/site/extend/nova.md');
+    const busterPath = path.join(fixture, 'docs/extend/buster.md');
+    const novaPath = path.join(fixture, 'docs/extend/nova.md');
     const original = fs.readFileSync(busterPath, 'utf8');
     const nova = fs.readFileSync(novaPath, 'utf8');
     const locator = 'https://github.com/datrab/kubeclaw/blob/399d775e8efa7b54267af98d04463d6480e63684/skills/buster/plugins/coverage-budget/tests/live-function.test.ts#L9-L51';

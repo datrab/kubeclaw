@@ -18,21 +18,21 @@ const configurationPages = new Set(JSON.parse(fs.readFileSync(path.join(root, 'd
 const operatorPages = new Set(JSON.parse(fs.readFileSync(path.join(root, 'docs/operator-tasks.json'), 'utf8'))
   .tasks.map((task) => task.canonical.split('#')[0]));
 const generatedReferencePages = new Set(['cli', 'secrets', 'helm-values', 'environment-variables', 'plugin-configuration', 'endpoints', 'verification-commands', 'workflows', 'sdk-exports']
-  .map((name) => `docs/site/reference/${name}.md`));
-generatedReferencePages.add('docs/site/reference/configuration.md');
+  .map((name) => `docs/reference/${name}.md`));
+generatedReferencePages.add('docs/reference/configuration.md');
 const markedRegionOwners = new Map([
-  ['docs/site/product-surfaces.md', 'scripts/docs-governance.mjs'],
-  ['docs/site/reference/schemas.md', 'scripts/docs-schema-fields.mjs'],
-  ['docs/site/reference/events.md', 'scripts/docs-event-contracts.mjs'],
+  ['docs/product-surfaces.md', 'scripts/docs-governance.mjs'],
+  ['docs/reference/schemas.md', 'scripts/docs-schema-fields.mjs'],
+  ['docs/reference/events.md', 'scripts/docs-event-contracts.mjs'],
 ]);
-const platformInventoryPage = 'docs/site/reference/platform-surfaces-generated.md';
+const platformInventoryPage = 'docs/reference/platform-surfaces-generated.md';
 const platformInventoryGenerator = 'scripts/docs-platform-surface-inventory.mjs';
-const promptContractPage = 'docs/site/extend/contracts.md';
+const promptContractPage = 'docs/extend/contracts.md';
 const promptContractDirectory = 'skills/common/plugins/prompt-contract';
 const promptContractSource = `${promptContractDirectory}/src/index.ts`;
 const promptContractChecks = ['npm run build --workspace @kubeclaw/prompt-contract', 'npm test --workspace @kubeclaw/prompt-contract'];
-const prismGuidePages = new Set(['docs/site/understand/prism.md', 'docs/site/understand/prism-runtime.md', 'docs/site/understand/prism-data.md',
-  'docs/site/use/prism-studio.md', 'docs/site/extend/platform/prism.md']);
+const prismGuidePages = new Set(['docs/understand/prism.md', 'docs/understand/prism-runtime.md', 'docs/understand/prism-data.md',
+  'docs/use/prism-studio.md', 'docs/extend/platform/prism.md']);
 
 function walk(directory) {
   return fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
@@ -58,28 +58,28 @@ function publicRoute(item) {
 
 function checksFor(page, text) {
   const checks = ['npm run docs:governance:check', 'npm run docs:publication:check', 'npm run docs:check:refs'];
-  if (page.startsWith('docs/site/extend/deep-guides/')) checks.unshift('npm run docs:plugin-complexity:check');
-  if (page === 'docs/site/status/open-issues.md') checks.unshift('npm run docs:status:check');
+  if (page.startsWith('docs/extend/deep-guides/')) checks.unshift('npm run docs:plugin-complexity:check');
+  if (page === 'docs/status/open-issues.md') checks.unshift('npm run docs:status:check');
   if (page === promptContractPage) checks.unshift(...promptContractChecks);
   checks.unshift(...generatedPageFreshnessChecks(page, configurationPages, generatedReferencePages,
     text.match(/^Source snapshot: `([0-9a-f]{40})`$/mu)?.[1]));
   if (/^docs\/site\/reference\/common-errors(?:-[a-z]+)?\.md$/u.test(page)) checks.unshift('npm run docs:errors:check');
-  if (page === 'docs/site/reference/schemas.md') checks.unshift('node scripts/docs-schema-fields.mjs --check --reference');
-  if (page === 'docs/site/reference/events.md') checks.unshift('npm run docs:events:check');
+  if (page === 'docs/reference/schemas.md') checks.unshift('node scripts/docs-schema-fields.mjs --check --reference');
+  if (page === 'docs/reference/events.md') checks.unshift('npm run docs:events:check');
   if (page === platformInventoryPage) {
     checks.unshift('npm run docs:ap09:platform-inventory:check', 'npm run docs:ap09:platform-drift:mutations');
   }
   if (operatorPages.has(page)) checks.unshift('npm run docs:operator-tasks:check');
   if (prismGuidePages.has(page)) checks.unshift('npm run docs:prism-guides:check');
-  if (page === 'docs/site/reference/helm-values.md') checks.unshift('npm run docs:inventory:local-helm:check');
-  if (page === 'docs/site/reference/lint-policy-generated.md') checks.unshift('npm run docs:lint-policy:check');
-  if (['docs/site/reference/sdk.md', 'docs/site/reference/sdk-exports.md'].includes(page)) {
+  if (page === 'docs/reference/helm-values.md') checks.unshift('npm run docs:inventory:local-helm:check');
+  if (page === 'docs/reference/lint-policy-generated.md') checks.unshift('npm run docs:lint-policy:check');
+  if (['docs/reference/sdk.md', 'docs/reference/sdk-exports.md'].includes(page)) {
     checks.unshift('npm run docs:sdk:check');
   }
-  if (page.includes('/buster') || page === 'docs/site/extend/platform/buster.md') {
+  if (page.includes('/buster') || page === 'docs/extend/platform/buster.md') {
     checks.unshift('npm run docs:buster-guides:check');
   }
-  if (page === 'docs/site/reference/capabilities.md' || page.startsWith('docs/site/extend/plugin-catalogue/')) {
+  if (page === 'docs/reference/capabilities.md' || page.startsWith('docs/extend/plugin-catalogue/')) {
     checks.unshift('npm run docs:publication:check');
   }
   return [...new Set(checks)];
@@ -87,22 +87,22 @@ function checksFor(page, text) {
 
 function contentKind(page, text) {
   if (markedRegionOwners.has(page)) return 'authored-with-generated-region';
-  if (page === 'docs/site/extend/deep-guides/README.md') return 'generated';
+  if (page === 'docs/extend/deep-guides/README.md') return 'generated';
   if (page === platformInventoryPage || metadata(text, 'Generator') || generatedReferencePages.has(page)) return 'generated';
-  if (page === 'docs/site/status/open-issues.md'
-    || page === 'docs/site/reference/capabilities.md'
+  if (page === 'docs/status/open-issues.md'
+    || page === 'docs/reference/capabilities.md'
     || [
-      'docs/site/reference/cli.md',
-      'docs/site/reference/environment-variables.md',
-      'docs/site/reference/helm-values.md',
-      'docs/site/reference/secrets.md',
-      'docs/site/reference/verification-commands.md',
-      'docs/site/reference/workflows.md',
-      'docs/site/reference/buster-error-codes.md',
-      'docs/site/reference/buster-provider-configuration.md',
-      'docs/site/reference/lint-policy-generated.md',
+      'docs/reference/cli.md',
+      'docs/reference/environment-variables.md',
+      'docs/reference/helm-values.md',
+      'docs/reference/secrets.md',
+      'docs/reference/verification-commands.md',
+      'docs/reference/workflows.md',
+      'docs/reference/buster-error-codes.md',
+      'docs/reference/buster-provider-configuration.md',
+      'docs/reference/lint-policy-generated.md',
     ].includes(page)
-    || page.startsWith('docs/site/extend/plugin-catalogue/')) return 'generated';
+    || page.startsWith('docs/extend/plugin-catalogue/')) return 'generated';
   return 'authored';
 }
 
@@ -119,7 +119,7 @@ const pages = walk(siteRoot)
     const generator = metadata(text, 'Generator')
       ?? markedRegionOwners.get(page)
       ?? (page === platformInventoryPage ? platformInventoryGenerator
-        : page === 'docs/site/extend/deep-guides/README.md' ? 'scripts/docs-plugin-complexity.mjs'
+        : page === 'docs/extend/deep-guides/README.md' ? 'scripts/docs-plugin-complexity.mjs'
         : generatedReferencePages.has(page) ? 'scripts/docs-generate.mjs' : null);
     return {
       page,

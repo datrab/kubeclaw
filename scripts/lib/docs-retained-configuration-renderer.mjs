@@ -516,8 +516,8 @@ node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PW
 
 
  const outputs=new Map([
- ['docs/site/reference/helm-values.md',renderHelmValues(configurationValues,configurationSchemas)],
- ['docs/site/reference/environment-variables.md',renderEnvironment(deploy,secrets,runtimeInputs)],
+ ['docs/reference/helm-values.md',renderHelmValues(configurationValues,configurationSchemas)],
+ ['docs/reference/environment-variables.md',renderEnvironment(deploy,secrets,runtimeInputs)],
  ]);
  if(banner){
   assert.match(editorialRevision??'',/^[0-9a-f]{40}$/u);
@@ -991,8 +991,8 @@ node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PW
 
 
  const outputs=new Map([
- ['docs/site/reference/helm-values.md',renderHelmValues(configurationValues,configurationSchemas)],
- ['docs/site/reference/environment-variables.md',renderEnvironment(deploy,secrets,runtimeInputs)],
+ ['docs/reference/helm-values.md',renderHelmValues(configurationValues,configurationSchemas)],
+ ['docs/reference/environment-variables.md',renderEnvironment(deploy,secrets,runtimeInputs)],
  ]);
  if(banner){
   assert.match(editorialRevision??'',/^[0-9a-f]{40}$/u);

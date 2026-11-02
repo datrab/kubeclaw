@@ -66,13 +66,13 @@ if (JSON.stringify(markdownLinkTargets('[valid](target.md) and \\[a-z\\](?:not-a
 
 function checkGeneratedMarkers() {
   const generatedPages = [
-    'docs/site/reference/cli.md',
-    'docs/site/reference/environment-variables.md',
-    'docs/site/reference/helm-values.md',
-    'docs/site/reference/secrets.md',
-    'docs/site/reference/verification-commands.md',
-    'docs/site/reference/workflows.md',
-    'docs/site/reference/sdk-exports.md',
+    'docs/reference/cli.md',
+    'docs/reference/environment-variables.md',
+    'docs/reference/helm-values.md',
+    'docs/reference/secrets.md',
+    'docs/reference/verification-commands.md',
+    'docs/reference/workflows.md',
+    'docs/reference/sdk-exports.md',
   ];
   for (const page of generatedPages) {
     const filePath = path.join(root, page);
@@ -90,7 +90,7 @@ function checkCurrentPagesDoNotContainTargetStateSections(files) {
   for (const file of files) {
     const relative = rel(file);
     if (
-      relative === 'docs/site/status/roadmap.md' ||
+      relative === 'docs/status/roadmap.md' ||
       relative === 'docs/future-implementation-ideas.md' ||
       relative === 'docs/concepts/intent-driven-pipeline.md'
     ) continue;
@@ -111,12 +111,12 @@ function sourceLineCount(revision, sourcePath) {
 
 function checkArchitecturePresentation() {
   const pages = [
-    'docs/site/understand/README.md',
-    'docs/site/understand/components-and-authority.md',
-    'docs/site/understand/request-state-recovery.md',
-    'docs/site/understand/deployment-and-trust.md',
-    'docs/site/understand/pipeline-dependencies.md',
-    'docs/site/understand/platform-and-operations.md',
+    'docs/understand/README.md',
+    'docs/understand/components-and-authority.md',
+    'docs/understand/request-state-recovery.md',
+    'docs/understand/deployment-and-trust.md',
+    'docs/understand/pipeline-dependencies.md',
+    'docs/understand/platform-and-operations.md',
   ];
   const sourceLink = /https:\/\/github\.com\/datrab\/kubeclaw\/blob\/([0-9a-f]{40})\/([^\s)#]+)#L(\d+)(?:-L(\d+))?/gu;
   let diagrams = 0;
@@ -167,11 +167,11 @@ function checkArchitecturePresentation() {
 
 function checkOperationsEvidence() {
   const pages = new Map([
-    ['docs/site/use/install.md', ['Supported Versions', 'Supported Topology and Limits', 'Prerequisites', 'Install in Dependency Order', 'Failed First Installation', 'Recovery and Rollback', 'Evidence to Retain']],
-    ['docs/site/use/operate.md', ['Supported Versions', 'Configure the Platform', 'Start a Project Run', 'Inspect a Run', 'Approve or Resume a Wait', 'Recover After Interruption', 'Cancellation Boundary', 'Safe Retry Decision']],
-    ['docs/site/use/diagnose.md', ['Supported Versions', 'Diagnosis Order', 'Durable Run Inspection', 'Capacity and Growth', 'Symptom Index', 'Lost Responses and Uncertain Effects', 'Escalation Conditions', 'Recovery and Cleanup']],
-    ['docs/site/use/recovery.md', ['Supported Versions', 'State Inventory', 'Procedure', 'Recovery', 'Node or Cluster Loss', 'Recover Administrative Access', 'Verification', 'Rollback Boundary']],
-    ['docs/site/use/maintenance.md', ['Supported Versions', 'Version Authorities', 'GitOps Operation', 'Upgrade Order', 'Stateful Service Upgrade', 'Rollback Decision', 'Credential Rotation', 'Controlled Retirement']],
+    ['docs/use/install.md', ['Supported Versions', 'Supported Topology and Limits', 'Prerequisites', 'Install in Dependency Order', 'Failed First Installation', 'Recovery and Rollback', 'Evidence to Retain']],
+    ['docs/use/operate.md', ['Supported Versions', 'Configure the Platform', 'Start a Project Run', 'Inspect a Run', 'Approve or Resume a Wait', 'Recover After Interruption', 'Cancellation Boundary', 'Safe Retry Decision']],
+    ['docs/use/diagnose.md', ['Supported Versions', 'Diagnosis Order', 'Durable Run Inspection', 'Capacity and Growth', 'Symptom Index', 'Lost Responses and Uncertain Effects', 'Escalation Conditions', 'Recovery and Cleanup']],
+    ['docs/use/recovery.md', ['Supported Versions', 'State Inventory', 'Procedure', 'Recovery', 'Node or Cluster Loss', 'Recover Administrative Access', 'Verification', 'Rollback Boundary']],
+    ['docs/use/maintenance.md', ['Supported Versions', 'Version Authorities', 'GitOps Operation', 'Upgrade Order', 'Stateful Service Upgrade', 'Rollback Decision', 'Credential Rotation', 'Controlled Retirement']],
   ]);
   const sourceLink = /https:\/\/github\.com\/datrab\/kubeclaw\/blob\/([0-9a-f]{40})\/([^\s)#]+)#L(\d+)(?:-L(\d+))?/gu;
   let evidenceBoxes = 0;
@@ -219,20 +219,20 @@ function checkOperationsEvidence() {
   if (evidenceBoxes === 0) errors.push('operations pages contain no source-evidence boxes');
   if (codeLinks === 0) errors.push('operations pages contain no revision-bound code links');
 
-  const quickstart = fs.readFileSync(path.join(root, 'docs/site/use/quickstart.md'), 'utf8');
+  const quickstart = fs.readFileSync(path.join(root, 'docs/use/quickstart.md'), 'utf8');
   if (quickstart.includes('npm run pipeline -- --help')) errors.push('operator quickstart must not present the unsupported pipeline --help form');
   if (!quickstart.includes('KUBECLAW_TEST_CGROUP_ROOT="<delegated-cgroup-v2-root>"')) errors.push('operator quickstart lacks the full-verifier cgroup prerequisite');
   if (!quickstart.includes('npm run plugin-system:inventory:check')) errors.push('operator quickstart lacks the portable plugin inventory check');
 
-  const install = fs.readFileSync(path.join(root, 'docs/site/use/install.md'), 'utf8');
+  const install = fs.readFileSync(path.join(root, 'docs/use/install.md'), 'utf8');
   if (!/KUBECLAW_RUN_SECRET_SETUP=true[\s\S]*KUBECLAW_SECRET_SETUP_MODE=noninteractive[\s\S]*(?:\.\/scripts\/deploy\.sh|bound_deploy) setup/u.test(install)) {
     errors.push('noninteractive installation does not run setup with secret setup enabled');
   }
 
-  const operate = fs.readFileSync(path.join(root, 'docs/site/use/operate.md'), 'utf8');
+  const operate = fs.readFileSync(path.join(root, 'docs/use/operate.md'), 'utf8');
   if (operate.includes('npm run pipeline -- --help')) errors.push('operate guide must not present the unsupported pipeline --help form');
 
-  const maintenance = fs.readFileSync(path.join(root, 'docs/site/use/maintenance.md'), 'utf8');
+  const maintenance = fs.readFileSync(path.join(root, 'docs/use/maintenance.md'), 'utf8');
   for (const statement of ['Do not run these commands as a sequence.', 'every PVC left in the application namespace', 'enumerates and deletes all remaining PVCs']) {
     if (!maintenance.includes(statement)) errors.push(`maintenance teardown warning lacks required statement: ${statement}`);
   }

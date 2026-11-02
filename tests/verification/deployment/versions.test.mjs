@@ -113,7 +113,7 @@ test('the generated Codex package and integrity lock agree with the central vers
 test('version projection stays internal and Renovate retains the actual generated companion', () => {
   const outputs = versionOutputs(root);
   assert.ok(outputs.has('docs/generated/inventory/ops-tool-versions.json'));
-  assert.ok([...outputs.keys()].every(file => !file.startsWith('docs/site/') && !file.startsWith('docs/_legacy-source/') && !file.startsWith('docs/ops/')));
+  assert.ok([...outputs.keys()].every(file => !file.startsWith('docs/') && !file.startsWith('docs/_legacy-source/') && !file.startsWith('docs/ops/')));
   const config = JSON.parse(fs.readFileSync(path.join(root, 'renovate.json'), 'utf8'));
   const rule = config.packageRules.find(rule => rule.matchFileNames?.includes('versions.json') && rule.postUpgradeTasks);
   assert.ok(rule.postUpgradeTasks.fileFilters.includes('docs/generated/inventory/ops-tool-versions.json'));

@@ -7,7 +7,7 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 const root = path.resolve(import.meta.dirname, '..');
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-capability-declarations-'));
-const page = 'docs/site/reference/capabilities.md';
+const page = 'docs/reference/capabilities.md';
 const authority = 'skills/common/plugins/operator-messaging/plugin.json';
 function copyManifests(directory) {
   for (const entry of fs.readdirSync(path.join(root, directory), { withFileTypes: true })) {

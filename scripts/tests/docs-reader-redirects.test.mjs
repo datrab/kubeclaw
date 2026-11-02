@@ -11,7 +11,7 @@ import {spawnSync,spawn} from 'node:child_process';
 import {once} from 'node:events';
 import {buildReader} from '../docs-reader/renderer.mjs';
 const pages=[{relative:'README.md',owner:'documentation',text:'# Home\n'},{relative:'new.md',owner:'new owner',text:'# New\n\n## Kept\n'}];
-const baseline={schemaVersion:'kubeclaw-published-route-baseline.v1',pages:[{page:'docs/site/old.md',route:'/old/',owner:'old owner'}]};
+const baseline={schemaVersion:'kubeclaw-published-route-baseline.v1',pages:[{page:'docs/old.md',route:'/old/',owner:'old owner'}]};
 const entry={from:'/old/',to:'/new/',reason:'Synthetic rename fixture only.',preservedFragments:['kept']};
 const registry=redirects=>({schemaVersion:'kubeclaw-documentation-routes.v1',redirects});
 function fixture(t){const outputRoot=fs.mkdtempSync(path.join(os.tmpdir(),'reader-redirect-owned-'));t.after(()=>fs.rmSync(outputRoot,{recursive:true,force:true}));const manifest=buildReader({outputRoot,pages,assets:[],revision:'a'.repeat(40)});return{outputRoot,manifest,pages,baseline,registry:registry([entry])};}
@@ -26,7 +26,7 @@ test('actual renderer integration emits redirect manifest from explicit inputs',
 
 test('actual positive selector to renderer path refuses injected docs/site Markdown with no rogue route or output',t=>{
  const f=fixture(t),site=path.join(f.outputRoot,'fixture/docs/site'),output=path.join(f.outputRoot,'published');fs.mkdirSync(site,{recursive:true});fs.writeFileSync(path.join(site,'README.md'),'# Home\n');
- const classification={schemaVersion:'kubeclaw-documentation-tree-classification.v1',files:[{path:'docs/site/README.md',expectedPath:'docs/site/README.md',class:'canonical-reader-documentation'}]};
+ const classification={schemaVersion:'kubeclaw-documentation-tree-classification.v1',files:[{path:'docs/README.md',expectedPath:'docs/README.md',class:'canonical-reader-documentation'}]};
  function publish(){const positive=publicationManifest(site,classification);const selected=publicationPages(site,classification).map(file=>({relative:path.relative(site,file),text:fs.readFileSync(file,'utf8')}));return {positive,reader:buildReader({outputRoot:output,pages:selected,assets:[],revision:'d'.repeat(40)})};}
  const first=publish();assert.equal(first.positive.pages.length,1);assert(fs.existsSync(path.join(output,'README.html')));
  fs.writeFileSync(path.join(site,'private-review.md'),'# Private review\n');assert.throws(publish,/no publication allowance/);assert(!first.positive.pages.some(page=>page.route.includes('private-review')));assert(!fs.existsSync(path.join(output,'private-review.html')));assert(!JSON.parse(fs.readFileSync(path.join(output,'reader-manifest.json'))).outputs.some(entry=>entry.path.includes('private-review')));

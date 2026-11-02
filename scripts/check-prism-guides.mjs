@@ -10,7 +10,7 @@ import { parse as parseYaml } from 'yaml';
 const root = path.resolve(import.meta.dirname, '..');
 const specifications = [
   {
-    file: 'docs/site/understand/prism.md', minimumLinks: 11,
+    file: 'docs/understand/prism.md', minimumLinks: 11,
     required: [
       '## The Product Boundary', '## One Request Through the System',
       '## Authority Map', '## The Durable Spine', '## Five Engine Operations',
@@ -20,7 +20,7 @@ const specifications = [
     ],
   },
   {
-    file: 'docs/site/understand/prism-runtime.md', minimumLinks: 49,
+    file: 'docs/understand/prism-runtime.md', minimumLinks: 49,
     required: [
       '## Runtime Map', '## 1. Control: The Durable Authority',
       '## 2. API Surface and Request Flows', '## 3. The Main Design Journey',
@@ -34,7 +34,7 @@ const specifications = [
     ],
   },
   {
-    file: 'docs/site/understand/prism-data.md', minimumLinks: 86,
+    file: 'docs/understand/prism-data.md', minimumLinks: 86,
     required: [
       '## The Data Map', '## Projects and Design Requests',
       '## Design Rounds and Directions', '## Design Documents',
@@ -49,7 +49,7 @@ const specifications = [
     ],
   },
   {
-    file: 'docs/site/use/prism-studio.md', minimumLinks: 53,
+    file: 'docs/use/prism-studio.md', minimumLinks: 53,
     required: [
       '## Configuration Sources and Precedence', '### Main Helm values',
       '### Runtime settings and defaults', '### Deploy-command settings',
@@ -64,7 +64,7 @@ const specifications = [
     ],
   },
   {
-    file: 'docs/site/extend/platform/prism.md', minimumLinks: 29,
+    file: 'docs/extend/platform/prism.md', minimumLinks: 29,
     required: [
       '## Start With the Smallest Owner', '## Change a Public Contract',
       '## Add or Change a Document Operation',
@@ -90,7 +90,7 @@ for (const specification of specifications) {
     assert(source.includes(marker), `${specification.file} lacks required content: ${marker}`);
   }
 
-  if (specification.file.startsWith('docs/site/understand/')) {
+  if (specification.file.startsWith('docs/understand/')) {
     const blockLanguages = [...source.matchAll(/^```([^\n]*)$/gmu)]
       .map((match) => match[1].trim().toLowerCase()).filter(Boolean);
     assert(blockLanguages.every((language) => language === 'mermaid'),
@@ -126,7 +126,7 @@ for (const specification of specifications) {
   }
 }
 
-const operator = fs.readFileSync(path.join(root, 'docs/site/use/prism-studio.md'), 'utf8');
+const operator = fs.readFileSync(path.join(root, 'docs/use/prism-studio.md'), 'utf8');
 const runtimeConfigFiles = [
   'skills/prism/config/database-bootstrap.ts', 'skills/prism/config/native-worker.ts',
   'skills/prism/server/studio-config.ts', 'skills/prism/server/agent-bridge.mjs',
@@ -148,7 +148,7 @@ const settings = [...new Set([...directSettings, ...helperSettings])].sort();
 const runtimeInventory = JSON.parse(fs.readFileSync(
   path.join(root, 'docs/generated/inventory/configuration-runtime-inputs.json'), 'utf8'));
 const environmentReference = fs.readFileSync(
-  path.join(root, 'docs/site/reference/environment-variables.md'), 'utf8');
+  path.join(root, 'docs/reference/environment-variables.md'), 'utf8');
 assert(operator.includes('../reference/environment-variables.md#variables'),
   'Prism operator guide must link the canonical environment inventory');
 for (const setting of settings) {
@@ -170,7 +170,7 @@ function leafValues(value, prefix = '$') {
 }
 const valueInventory = JSON.parse(fs.readFileSync(
   path.join(root, 'docs/generated/inventory/configuration-values.json'), 'utf8'));
-const helmReference = fs.readFileSync(path.join(root, 'docs/site/reference/helm-values.md'), 'utf8');
+const helmReference = fs.readFileSync(path.join(root, 'docs/reference/helm-values.md'), 'utf8');
 assert(operator.includes('../reference/helm-values.md#recursive-value-reference'),
   'Prism operator guide must link the canonical Helm value inventory');
 let helmFields = [];
@@ -218,7 +218,7 @@ for (const setting of deploySettings) {
     `Prism operator guide does not classify deploy identifier ${setting}`);
 }
 
-const dataGuide = fs.readFileSync(path.join(root, 'docs/site/understand/prism-data.md'), 'utf8');
+const dataGuide = fs.readFileSync(path.join(root, 'docs/understand/prism-data.md'), 'utf8');
 const migrationDirectory = path.join(root, 'skills/prism/storage/migrations');
 const migrations = fs.readdirSync(migrationDirectory)
   .filter((name) => /^\d{3}_.+\.sql$/u.test(name)).sort();
@@ -236,27 +236,27 @@ for (const operation of ['generate', 'render', 'evaluate', 'ingest', 'publish'])
 }
 
 const navigation = [
-  ['docs/site/README.md', 'understand/prism.md'],
-  ['docs/site/understand/README.md', 'prism.md'],
-  ['docs/site/use/README.md', 'prism-studio.md'],
-  ['docs/site/extend/README.md', 'platform/prism.md'],
+  ['docs/README.md', 'understand/prism.md'],
+  ['docs/understand/README.md', 'prism.md'],
+  ['docs/use/README.md', 'prism-studio.md'],
+  ['docs/extend/README.md', 'platform/prism.md'],
 ];
 for (const [file, target] of navigation) {
   assert(fs.readFileSync(path.join(root, file), 'utf8').includes(`](${target}`),
     `${file} does not link to ${target}`);
 }
 
-const surfaces = fs.readFileSync(path.join(root, 'docs/site/product-surfaces.md'), 'utf8');
+const surfaces = fs.readFileSync(path.join(root, 'docs/product-surfaces.md'), 'utf8');
 for (const id of ['SUR-SPC-03', 'SUR-DAT-04', 'SUR-DEP-06']) {
   const row = surfaces.split('\n').find((line) => line.startsWith(`| ${id} |`));
   assert(row?.endsWith('| Detailed |'), `${id} does not declare detailed coverage`);
 }
 
 const requirementMarkers = {
-  'SPC-002': ['docs/site/understand/prism.md', '## The Product Boundary'],
-  'SPC-003': ['docs/site/understand/prism-data.md', '## Projects and Design Requests'],
-  'OPR-010': ['docs/site/use/prism-studio.md', '## The Complete Studio Journey'],
-  'CDV-009': ['docs/site/extend/platform/prism.md', '## Start With the Smallest Owner'],
+  'SPC-002': ['docs/understand/prism.md', '## The Product Boundary'],
+  'SPC-003': ['docs/understand/prism-data.md', '## Projects and Design Requests'],
+  'OPR-010': ['docs/use/prism-studio.md', '## The Complete Studio Journey'],
+  'CDV-009': ['docs/extend/platform/prism.md', '## Start With the Smallest Owner'],
 };
 for (const [id, [file, marker]] of Object.entries(requirementMarkers)) {
   assert(fs.readFileSync(path.join(root, file), 'utf8').includes(marker),

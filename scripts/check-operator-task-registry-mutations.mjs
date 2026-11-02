@@ -48,7 +48,7 @@ try {
   }, /operator recovery outcome inventory differs from project recovery implementation/u);
 
   const fixtureUseRoot = path.join(temporaryRoot, 'use');
-  fs.cpSync(path.join(root, 'docs/site/use'), fixtureUseRoot, { recursive: true });
+  fs.cpSync(path.join(root, 'docs/use'), fixtureUseRoot, { recursive: true });
   const nested = path.join(fixtureUseRoot, 'workflows', 'mutation-task.md');
   fs.writeFileSync(nested, '# Mutation Task\n\n<!-- operator-task: nested-mutation-task -->\n');
   expectFailure('scripts/check-operator-task-registry.mjs', {

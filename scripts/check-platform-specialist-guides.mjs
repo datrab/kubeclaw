@@ -10,19 +10,19 @@ import { verifySourceEvidencePin } from './docs-source-evidence-pin.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
 const specifications = [
-  ['docs/site/reference/platform-surfaces-generated.md', 100, [
+  ['docs/reference/platform-surfaces-generated.md', 100, [
     '## Runtime Dependencies', '## Runtime Signals',
     '## Runtime Resources', '## Secret References',
     '## HTTP Endpoints', '## Outbound HTTP Connections',
     '## State And Cache Names', '## Runtime Events',
     '## Ops MCP Tools',
   ]],
-  ['docs/site/extend/lint.md', 15, [
+  ['docs/extend/lint.md', 15, [
     '## Architecture', '## Pre-Check And Full', '## Add A Rule To An Existing Tool',
     '## Add A Local ESLint Rule', '## Add A Tool', '## Add A Target Or Language',
     '## Add A Policy Pack', '## Change A Baseline Or Waiver', '## Proof Ladder',
   ]],
-  ['docs/site/reference/lint-policy.md', 25, [
+  ['docs/reference/lint-policy.md', 25, [
     '## Contracts And Versions', '## Loading, Precedence, And Authority',
     '## Stage And Adapter Configuration', '## Complete Tool Inventory',
     '## Blocking ESLint Rules', '## Experimental Type-Evidence Rules',
@@ -30,56 +30,56 @@ const specifications = [
     '## Baselines, Waivers, And Debt', '## Rule Admission',
     '## Invalid Policy And Runtime Failures', '## Report Evidence',
   ]],
-  ['docs/site/reference/lint-rules.md', 12, [
+  ['docs/reference/lint-rules.md', 12, [
     '## How To Interpret A Finding', '## Blocking ESLint Rules',
     '## Experimental Type-Evidence Rules', '## Curated Semgrep Rules',
     '## Engine-Owned Finding Codes', '## Kubernetes Policy Rules',
     '## External Rule Families', '## Operational Error Codes',
     '## Verification Boundary',
   ]],
-  ['docs/site/understand/forge.md', 5, [
+  ['docs/understand/forge.md', 5, [
     '## Purpose And Authority', '## Input And Dispatch Contract',
     '## Workspace And Git Flow', '## Completion, Commit Selection, And Merge',
     '## Failure And Recovery', '## Configuration And Extension',
   ]],
-  ['docs/site/understand/echo.md', 5, [
+  ['docs/understand/echo.md', 5, [
     '## Purpose And Decision Boundary', '## Fixed Review Subject', '## Echo Output',
     '## Policy And Certification', '## Findings, Reports, And Repair',
     '## Failure And Recovery', '## Extension And Verification',
   ]],
-  ['docs/site/understand/openclaw.md', 4, [
+  ['docs/understand/openclaw.md', 4, [
     '## Two Integration Surfaces', '## Shipped Host Plugins',
     '## Discovery, Installation, And Activation', '## Runtime Dispatch Target',
     '## Session Lifecycle', '## State, Ordering, Retry, And Pressure', '## Diagnosis',
   ]],
-  ['docs/site/understand/codex-integration.md', 4, [
+  ['docs/understand/codex-integration.md', 4, [
     '## What The Plugin Does', '## Installation And Activation',
     '## Deployed Ops Pod', '## Workspace And Network Boundaries',
     '## Connection Failure And Recovery',
   ]],
-  ['docs/site/understand/ops-mcp.md', 4, [
+  ['docs/understand/ops-mcp.md', 4, [
     '## Purpose And Safety Boundary', '## HTTP Contract And Authentication',
     '## Tool Reference', '## Kubernetes Transport', '## Hubble Transport And Evidence Limits',
     '## Authorization And Data Exposure', '## Failure And Recovery',
   ]],
-  ['docs/site/understand/archviewer.md', 5, [
+  ['docs/understand/archviewer.md', 5, [
     '## Purpose And Product Boundary', '## Request Path',
     '## Publication And Lifecycle', '## Failure And Recovery',
   ]],
-  ['docs/site/understand/communication.md', 12, [
+  ['docs/understand/communication.md', 12, [
     '## Complete Connection Matrix', '## Endpoint Catalog', '<a id="endpoint-catalogue"></a>',
     '### Nova And Buster', '### Core, Plugins, And Worker Control', '### Redis',
     '### SPIFFE And mTLS', '### Git, OCI, BuildKit, And Tailscale',
     '## Global Retry Rules', '## Evidence Limits',
   ]],
-  ['docs/site/understand/data-and-state.md', 15, [
+  ['docs/understand/data-and-state.md', 15, [
     '## Complete Store Matrix', '## Nova Run State', '## Worker State',
     '## Buster State', '## PostgreSQL Owners', '### LiteLLM PostgreSQL',
     '## Redis: Durable Delivery, Not Product Authority', '## Artifact Lifecycle',
     '## Backup Groups', '## Restore Decision Rules', '## Deletion and Retention Rules',
     '## Failure and Recovery Matrix', '## Verification Map and Evidence Limits',
   ]],
-  ['docs/site/understand/telemetry.md', 15, [
+  ['docs/understand/telemetry.md', 15, [
     '## Two Contract Families', '## Active Data Path', '## Active Event Catalog',
     '## Producer and Consumer Matrix', '## Identity and Correlation',
     '## Ordering and Deduplication', '<a id="ordering-and-deduplification"></a>', '## Redaction and Sensitive Data',
@@ -87,7 +87,7 @@ const specifications = [
     '## Retention, Capacity, and Backpressure', '## Audit Is a Projection',
     '## Failure and Recovery Matrix', '## Change Guide',
   ]],
-  ['docs/site/understand/platform-and-operations.md', 20, [
+  ['docs/understand/platform-and-operations.md', 20, [
     '## Required, Conditional, and Optional Systems', '## Host and K3s Boundary',
     '## DNS, Storage, and Scheduling', '## One Network Owner: Flannel or Cilium',
     '## Argo CD and Exclusive Resource Ownership', '## Rootless BuildKit',
@@ -97,7 +97,7 @@ const specifications = [
     '## Ops Pod: Tool Policy Is Not Kubernetes Authority',
     '## Dependency and Recovery Order', '## Failure and Recovery Matrix',
   ]],
-  ['docs/site/understand/security-and-trust.md', 15, [
+  ['docs/understand/security-and-trust.md', 15, [
     '## Security Goals and Assumptions', '## Trust Boundary Map',
     '## One Request Passes Several Independent Checks',
     '## Identity Types Must Not Be Confused', '## SPIFFE, SPIRE, Envoy, and Worker Core',
@@ -112,68 +112,68 @@ const specifications = [
 // Finite per-page revision roster: existing unchanged scoped evidence plus
 // independently source-inspected current excerpts. A new revision needs review.
 const reviewedPageSourceRevisions = {
-  "docs/site/reference/platform-surfaces-generated.md": [
+  "docs/reference/platform-surfaces-generated.md": [
     "7994a51e16bc752357c3a801190b12b7d6a191a4"
   ],
-  "docs/site/extend/lint.md": [
+  "docs/extend/lint.md": [
     "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
     "569f7b4933d4859cc67c80ddf40d5154ffd95ce5"
   ],
-  "docs/site/reference/lint-policy.md": [
+  "docs/reference/lint-policy.md": [
     "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
     "569f7b4933d4859cc67c80ddf40d5154ffd95ce5"
   ],
-  "docs/site/reference/lint-rules.md": [
+  "docs/reference/lint-rules.md": [
     "569f7b4933d4859cc67c80ddf40d5154ffd95ce5"
   ],
-  "docs/site/understand/forge.md": [
+  "docs/understand/forge.md": [
     "569f7b4933d4859cc67c80ddf40d5154ffd95ce5"
   ],
-  "docs/site/understand/echo.md": [
+  "docs/understand/echo.md": [
     "569f7b4933d4859cc67c80ddf40d5154ffd95ce5"
   ],
-  "docs/site/understand/openclaw.md": [
+  "docs/understand/openclaw.md": [
     "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
     "569f7b4933d4859cc67c80ddf40d5154ffd95ce5"
   ],
-  "docs/site/understand/codex-integration.md": [
+  "docs/understand/codex-integration.md": [
     "569f7b4933d4859cc67c80ddf40d5154ffd95ce5"
   ],
-  "docs/site/understand/ops-mcp.md": [
+  "docs/understand/ops-mcp.md": [
     "54a535b6046bc54e9aeeebee9c4cd24388477115",
     "569f7b4933d4859cc67c80ddf40d5154ffd95ce5"
   ],
-  "docs/site/understand/archviewer.md": [
+  "docs/understand/archviewer.md": [
     "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
     "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
     "f99aecbb00cb399b46dfbbeb3ddb375fba6218e7"
   ],
-  "docs/site/understand/communication.md": [
+  "docs/understand/communication.md": [
     "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
     "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
     "a721a6e69aef5900002cef1dca3d1272f7903009",
     "d7f822c3cddd97e637aeca47f1cd49e87164ff87",
     "f88a8c5c56adc2098d73804c85c6f41d7d7a239f"
   ],
-  "docs/site/understand/data-and-state.md": [
+  "docs/understand/data-and-state.md": [
     "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
     "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
     "1e60f5d34c9a599a334a414987a754c95dc3543f",
     "ebcc04066d42c94b4a4e0fc85e3393dae3d61f78",
     "f99aecbb00cb399b46dfbbeb3ddb375fba6218e7"
   ],
-  "docs/site/understand/telemetry.md": [
+  "docs/understand/telemetry.md": [
     "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
     "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
     "f99aecbb00cb399b46dfbbeb3ddb375fba6218e7"
   ],
-  "docs/site/understand/platform-and-operations.md": [
+  "docs/understand/platform-and-operations.md": [
     "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
     "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
     "7994a51e16bc752357c3a801190b12b7d6a191a4",
     "d7f822c3cddd97e637aeca47f1cd49e87164ff87"
   ],
-  "docs/site/understand/security-and-trust.md": [
+  "docs/understand/security-and-trust.md": [
     "0e35889a3c4e65d5c47ba88e924611aace67eb1d",
     "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10"
   ]
@@ -182,9 +182,9 @@ const reviewedPageSourceRevisions = {
 // Existing independently reviewed operator invocations, not maintained source
 // copies. Keep the language/body roster exact; new examples require review.
 const reviewedOperatorInvocationBlocks = new Map([
-  ["docs/site/understand/data-and-state.md:bash", new Set(["1eb6d0e7a4f36d116677d9928611f6ba56496251c38c4bd1a0e84ac6c3ae4c79", "2136684a1dc8309e94ee786a8f76cfb2d524c00792e7cbeb3bd1b45a06d3067c", "1bdae1bd4ca174516fc703ebd059c6e82731e881f63123a5c2113151e2e4c488"])],
-  ["docs/site/understand/echo.md:sh", new Set(["f552bfe8686918b49c4138af2d327105b4393a09c6eb1e08a07f76666c6d5a4c", "e143f404d4eea298cf9ba8522ca07998b2820052808ccdd81042a9f0187da823", "66096c1b38c9366a42ef34f98b0d673a2d61f0c4ef3aec5cba11e0ffb492fec3"])],
-  ["docs/site/understand/telemetry.md:sh", new Set(["f135f9fa4f38fd0c92563221116e2f79df0838f5ff86440ae44d4b428576fc62"])],
+  ["docs/understand/data-and-state.md:bash", new Set(["1eb6d0e7a4f36d116677d9928611f6ba56496251c38c4bd1a0e84ac6c3ae4c79", "2136684a1dc8309e94ee786a8f76cfb2d524c00792e7cbeb3bd1b45a06d3067c", "1bdae1bd4ca174516fc703ebd059c6e82731e881f63123a5c2113151e2e4c488"])],
+  ["docs/understand/echo.md:sh", new Set(["f552bfe8686918b49c4138af2d327105b4393a09c6eb1e08a07f76666c6d5a4c", "e143f404d4eea298cf9ba8522ca07998b2820052808ccdd81042a9f0187da823", "66096c1b38c9366a42ef34f98b0d673a2d61f0c4ef3aec5cba11e0ffb492fec3"])],
+  ["docs/understand/telemetry.md:sh", new Set(["f135f9fa4f38fd0c92563221116e2f79df0838f5ff86440ae44d4b428576fc62"])],
 ]);
 
 let sourceLinkCount = 0;
@@ -207,7 +207,7 @@ for (const [file, minimumLinks, markers] of specifications) {
     `${file} declares an unreviewed baseline evidence revision`);
   for (const marker of markers) assert(source.includes(marker), `${file} lacks ${marker}`);
 
-  if (file.startsWith('docs/site/understand/')) {
+  if (file.startsWith('docs/understand/')) {
     for (const [, language, body] of source.matchAll(/^```([^\n]*)\n([\s\S]*?)^```/gmu)) {
       if (language.trim().toLowerCase() === 'mermaid') continue;
       assert(reviewedOperatorInvocationBlocks.get(`${file}:${language.trim()}`)
@@ -229,8 +229,8 @@ for (const [file, minimumLinks, markers] of specifications) {
       page: file, revision: linkRevision, source: repositoryPath,
       first: firstValue, last: lastValue ?? firstValue,
       allowedRevisions: reviewedPageSourceRevisions[file],
-      requireRange: file.startsWith('docs/site/understand/') || file.endsWith('platform-surfaces-generated.md'),
-      maximumSpan: file.startsWith('docs/site/understand/') || file.endsWith('platform-surfaces-generated.md') ? 60 : Infinity,
+      requireRange: file.startsWith('docs/understand/') || file.endsWith('platform-surfaces-generated.md'),
+      maximumSpan: file.startsWith('docs/understand/') || file.endsWith('platform-surfaces-generated.md') ? 60 : Infinity,
       ...(linkRevision === upstreamOps.revision ? {
         upstreamSnapshot: (() => {
           assert(source.includes('Upstream source scope:'), `${file} must distinguish upstream evidence from branch adoption`);
@@ -241,14 +241,14 @@ for (const [file, minimumLinks, markers] of specifications) {
     checkedSources.add(`${linkRevision}:${repositoryPath}`);
   }
 
-  if (file.startsWith('docs/site/understand/') || file.endsWith('platform-surfaces-generated.md')) {
+  if (file.startsWith('docs/understand/') || file.endsWith('platform-surfaces-generated.md')) {
     assert(links.every((match) => match[3]), `${file} has a source link without an explicit line range`);
   }
 }
 
-const lintReference = fs.readFileSync(path.join(root, 'docs/site/reference/lint-policy.md'), 'utf8');
-const lintRules = fs.readFileSync(path.join(root, 'docs/site/reference/lint-rules.md'), 'utf8');
-const lintExtension = fs.readFileSync(path.join(root, 'docs/site/extend/lint.md'), 'utf8');
+const lintReference = fs.readFileSync(path.join(root, 'docs/reference/lint-policy.md'), 'utf8');
+const lintRules = fs.readFileSync(path.join(root, 'docs/reference/lint-rules.md'), 'utf8');
+const lintExtension = fs.readFileSync(path.join(root, 'docs/extend/lint.md'), 'utf8');
 const lintPackage = JSON.parse(fs.readFileSync(path.join(root, 'skills/nova/plugins/lint/package.json'), 'utf8'));
 assert.equal(typeof lintPackage.scripts?.['test:focused'], 'string', 'lint package lacks the fail-fast focused suite');
 assert.equal(typeof lintPackage.scripts?.['test:live'], 'string', 'lint package lacks the separate live suite');
@@ -277,7 +277,7 @@ for (const tool of lintPolicy.tools) {
 execFileSync(process.execPath, [path.join(root, 'scripts/docs-lint-policy-reference.mjs'), '--check'],
   { encoding: 'utf8' });
 const lintGeneratedReference = fs.readFileSync(
-  path.join(root, 'docs/site/reference/lint-policy-generated.md'), 'utf8');
+  path.join(root, 'docs/reference/lint-policy-generated.md'), 'utf8');
 
 const eslintConfigs = await Promise.all([
   'eslint.config.mjs', 'eslint-type-evidence-config.mjs',
@@ -328,7 +328,7 @@ for (const reference of lintPolicy.kubernetes_policy_packs) {
   }
 }
 
-const opsGuide = fs.readFileSync(path.join(root, 'docs/site/understand/ops-mcp.md'), 'utf8');
+const opsGuide = fs.readFileSync(path.join(root, 'docs/understand/ops-mcp.md'), 'utf8');
 const opsServer = fs.readFileSync(path.join(root, 'tools/ops-mcp/src/server.mjs'), 'utf8');
 const opsTools = [...opsServer.matchAll(/server\.registerTool\(\s*['"]([^'"]+)['"]/gu)]
   .map(match => match[1]);
@@ -345,7 +345,7 @@ for (const required of [
 
 const surfaceMap = JSON.parse(fs.readFileSync(
   path.join(root, 'docs/config/platform-surface-map.json'), 'utf8'));
-const dataGuide = fs.readFileSync(path.join(root, 'docs/site/understand/data-and-state.md'), 'utf8');
+const dataGuide = fs.readFileSync(path.join(root, 'docs/understand/data-and-state.md'), 'utf8');
 const mappedAliases = new Set();
 for (const identity of surfaceMap.stores.identities) {
   const escaped = identity.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&');
@@ -361,7 +361,7 @@ for (const alias of mappedAliases) {
   `${alias} lacks a complete authority, consistency, retention, recovery, and loss contract`);
 }
 
-const telemetryGuide = fs.readFileSync(path.join(root, 'docs/site/understand/telemetry.md'), 'utf8');
+const telemetryGuide = fs.readFileSync(path.join(root, 'docs/understand/telemetry.md'), 'utf8');
 for (const required of [
   '## OpenClaw agent-observability v1 path',
   'pipeline:agent-observability:payload:v1',
@@ -373,7 +373,7 @@ for (const required of [
   `telemetry guide omits active OpenClaw observer fact: ${required}`);
 
 const busterWorkflowGuide = fs.readFileSync(
-  path.join(root, 'docs/site/use/workflows/buster-suite.md'), 'utf8');
+  path.join(root, 'docs/use/workflows/buster-suite.md'), 'utf8');
 for (const required of [
   'operator-supplied `nova-project.v2` descriptor',
   'conceptual\n[20-step showcase trace]',
@@ -387,7 +387,7 @@ for (const required of [
 assert(!busterWorkflowGuide.includes('uses an operator-reviewed explicit pipeline graph'),
   'Buster workflow still depends on an unmaintained explicit pipeline graph');
 
-const dependencyFailureGuide = fs.readFileSync(path.join(root, 'docs/site/use/diagnose.md'), 'utf8');
+const dependencyFailureGuide = fs.readFileSync(path.join(root, 'docs/use/diagnose.md'), 'utf8');
 for (const required of [
   '### Registry Endpoint Unavailable During BuildKit Push',
   "trap 'restore_redis' EXIT",
@@ -420,7 +420,7 @@ assert(!/EXEC-[A-Z0-9-]+/u.test(dependencyFailureGuide),
   'dependency failure guide exposes internal fixture identifiers to readers');
 
 const referenceTrace = JSON.parse(fs.readFileSync(
-  path.join(root, 'docs/site/use/workflows/examples/request-trace-success.json'), 'utf8'));
+  path.join(root, 'docs/use/workflows/examples/request-trace-success.json'), 'utf8'));
 assert.equal(referenceTrace.status, 'conceptual-reference-only-not-live-proof');
 assert.match(referenceTrace.scopeBoundary, /No maintained harness currently binds/u);
 assert.equal(referenceTrace.steps.length, 20);
@@ -428,7 +428,7 @@ for (const step of referenceTrace.steps) {
   assert.equal(step.evidenceStatus, 'reference-only; no live evidence is attached',
     `reference trace step ${step.order} lacks its evidence boundary`);
 }
-const roadmap = fs.readFileSync(path.join(root, 'docs/site/status/roadmap.md'), 'utf8');
+const roadmap = fs.readFileSync(path.join(root, 'docs/status/roadmap.md'), 'utf8');
 assert(roadmap.includes('## Joined Showcase Acceptance Harness'),
   'roadmap omits the joined showcase harness limit');
 execFileSync(process.execPath, ['--test', path.join(root, 'scripts/tests/docs-source-evidence-pin.test.mjs')],
@@ -443,22 +443,22 @@ execFileSync(process.execPath, [path.join(root, 'scripts/check-cni-portability.m
   { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
 
 const navigation = [
-  ['docs/site/extend/README.md', 'lint.md'],
-  ['docs/site/reference/README.md', 'lint-policy.md'],
-  ['docs/site/reference/README.md', 'lint-policy-generated.md'],
-  ['docs/site/reference/README.md', 'lint-rules.md'],
-  ['docs/site/reference/README.md', 'platform-surfaces-generated.md'],
-  ['docs/site/understand/README.md', 'forge.md'],
-  ['docs/site/understand/README.md', 'echo.md'],
-  ['docs/site/understand/README.md', 'openclaw.md'],
-  ['docs/site/understand/README.md', 'codex-integration.md'],
-  ['docs/site/understand/README.md', 'ops-mcp.md'],
-  ['docs/site/understand/README.md', 'archviewer.md'],
-  ['docs/site/understand/README.md', 'communication.md'],
-  ['docs/site/understand/README.md', 'data-and-state.md'],
-  ['docs/site/understand/README.md', 'telemetry.md'],
-  ['docs/site/understand/README.md', 'platform-and-operations.md'],
-  ['docs/site/understand/README.md', 'security-and-trust.md'],
+  ['docs/extend/README.md', 'lint.md'],
+  ['docs/reference/README.md', 'lint-policy.md'],
+  ['docs/reference/README.md', 'lint-policy-generated.md'],
+  ['docs/reference/README.md', 'lint-rules.md'],
+  ['docs/reference/README.md', 'platform-surfaces-generated.md'],
+  ['docs/understand/README.md', 'forge.md'],
+  ['docs/understand/README.md', 'echo.md'],
+  ['docs/understand/README.md', 'openclaw.md'],
+  ['docs/understand/README.md', 'codex-integration.md'],
+  ['docs/understand/README.md', 'ops-mcp.md'],
+  ['docs/understand/README.md', 'archviewer.md'],
+  ['docs/understand/README.md', 'communication.md'],
+  ['docs/understand/README.md', 'data-and-state.md'],
+  ['docs/understand/README.md', 'telemetry.md'],
+  ['docs/understand/README.md', 'platform-and-operations.md'],
+  ['docs/understand/README.md', 'security-and-trust.md'],
 ];
 for (const [file, target] of navigation) {
   const source = fs.readFileSync(path.join(root, file), 'utf8');

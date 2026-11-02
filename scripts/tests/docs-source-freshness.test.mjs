@@ -31,7 +31,7 @@ test('original generator separates review records from source freshness without 
     { cwd: root, encoding: 'utf8', timeout: 60_000 });
   let result = run(false);
   assert.equal(result.status, 0, result.stderr);
-  const page = path.join(root, 'docs/site/reference/plugin-configuration.md');
+  const page = path.join(root, 'docs/reference/plugin-configuration.md');
   const baseline = fs.readFileSync(page);
   const matrix = path.join(root, 'docs/blueprint/documentation-completion-matrix.json');
   fs.appendFileSync(matrix, '\n');

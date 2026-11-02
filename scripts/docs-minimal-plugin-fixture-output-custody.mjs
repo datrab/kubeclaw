@@ -9,9 +9,9 @@ const source = 'scripts/check-ap08-minimal-plugin.mjs';
 const inputs = Object.freeze([
   {path: source, sha256: 'b5b01f1734372e34237d1c41c710d014db3629f252ead3baa96448620e2025c4'},
   {path: 'scripts/check-runtime-role-manifests.mjs', sha256: '521f14214afa42f7651ef81eca689f206cf3bc63c1c9edeb2376037dfba7d80c'},
-  {path: 'docs/site/extend/examples/minimal-stage/plugin.json', sha256: 'ffcd1ea2b759081d86a9812ea05b37a347ce13bd1a68a2640bf1e0a29146bd73'},
-  {path: 'docs/site/extend/examples/minimal-stage/package.json', sha256: '858afd76f0e8f9d21fac54b22cb409b5c11effd93b5530c91eb40bc4b9907a39'},
-  {path: 'docs/site/extend/examples/minimal-stage/src/stage.js', sha256: 'c57349a102e2a549c270e3a9062460fce887ab642f330a9b78980611272322e0'},
+  {path: 'docs/extend/examples/minimal-stage/plugin.json', sha256: 'ffcd1ea2b759081d86a9812ea05b37a347ce13bd1a68a2640bf1e0a29146bd73'},
+  {path: 'docs/extend/examples/minimal-stage/package.json', sha256: '858afd76f0e8f9d21fac54b22cb409b5c11effd93b5530c91eb40bc4b9907a39'},
+  {path: 'docs/extend/examples/minimal-stage/src/stage.js', sha256: 'c57349a102e2a549c270e3a9062460fce887ab642f330a9b78980611272322e0'},
 ].map(Object.freeze));
 const slots = Object.freeze([
   Object.freeze({line: 176, expression: 'JSON.stringify(probeManifest)'}),

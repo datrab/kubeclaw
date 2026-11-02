@@ -8335,12 +8335,12 @@ function cliSurface(sourcePath) {
 }
 
 const CLI_AUTHORED_PAGE_BINDINGS = [
-  [/^skills\/nova\/core\/cli\.ts$/u, [{ page: 'docs/site/use/operate.md' }]],
-  [/^skills\/nova\/project\/(?:cli|legacy-import-cli)\.ts$/u, [{ page: 'docs/site/reference/nova-project.md' }]],
-  [/^skills\/nova\/project_setup\/tools\/progress-scaffold\.ts$/u, [{ page: 'docs/site/reference/project-pipeline-publication.md' }]],
-  [/^skills\/buster\/engine\/remote-plan-cli\.ts$/u, [{ page: 'docs/site/reference/buster-runtime-configuration.md', section: '## Minimal Root Configuration', endBefore: '### Start one Nova remote-gate request' }]],
-  [/^skills\/nova\/core\/test-gates\/remote-gate-cli\.ts$/u, [{ page: 'docs/site/reference/buster-runtime-configuration.md', section: '### Start one Nova remote-gate request' }]],
-  [/^scripts\/deploy\.sh$/u, [{ page: 'docs/site/use/operate.md' }]],
+  [/^skills\/nova\/core\/cli\.ts$/u, [{ page: 'docs/use/operate.md' }]],
+  [/^skills\/nova\/project\/(?:cli|legacy-import-cli)\.ts$/u, [{ page: 'docs/reference/nova-project.md' }]],
+  [/^skills\/nova\/project_setup\/tools\/progress-scaffold\.ts$/u, [{ page: 'docs/reference/project-pipeline-publication.md' }]],
+  [/^skills\/buster\/engine\/remote-plan-cli\.ts$/u, [{ page: 'docs/reference/buster-runtime-configuration.md', section: '## Minimal Root Configuration', endBefore: '### Start one Nova remote-gate request' }]],
+  [/^skills\/nova\/core\/test-gates\/remote-gate-cli\.ts$/u, [{ page: 'docs/reference/buster-runtime-configuration.md', section: '### Start one Nova remote-gate request' }]],
+  [/^scripts\/deploy\.sh$/u, [{ page: 'docs/use/operate.md' }]],
 ];
 
 function markdownSectionLines(lines, heading, endBefore = null) {

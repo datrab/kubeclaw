@@ -20,24 +20,24 @@ import { verifyGeneratedPublicationExampleProjections } from './docs-publication
 
 const hash = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
 const mandatoryInputs = {
-  'workflow-projection': ['docs/site/reference/workflows.md'],
-  'retention-sql-assertion': ['docs/site/understand/data-and-state.md#block-2'],
-  'embedded-yaml': ['docs/site/use/diagnose.md#block-22', 'docs/site/use/install.md#block-10'],
-  'sdk-pure-example': ['docs/site/reference/sdk.md#block-3'],
-  manifest: ['docs/site/extend/first-plugin.md#block-2'],
-  'buster-runtime': ['docs/site/reference/buster-runtime-configuration.md#block-1'],
-  platform: ['docs/site/reference/pipeline-platform.md#block-1'],
-  'wait-template': ['docs/site/reference/capabilities.md#block-1'],
-  graph: ['docs/site/reference/pipeline-definition.md#block-1'],
-  compact: ['docs/site/reference/configuration-precedence.md#block-1', 'docs/site/reference/host-and-prism-configuration.md#block-1'],
-  'helm-overlays': ['docs/site/reference/configuration-precedence.md#block-2', 'docs/site/reference/configuration-precedence.md#block-3', 'docs/site/reference/configuration-precedence.md#block-4'],
-  'test-scope': ['docs/site/reference/pipeline-json.md#block-1'],
-  'pair-template': ['docs/site/reference/project-pipeline-publication.md#block-6'],
-  'receiver-template': ['docs/site/use/workflows/wait-resume.md#block-19'],
-  'approval-signal': ['docs/site/use/operate.md#block-10'],
-  deliverables: ['docs/site/reference/nova-project.md#block-3'],
-  'prism-payload': ['docs/site/use/prism-studio.md#block-10'],
-  'prism-development-document': ['docs/site/use/prism-studio.md'],
+  'workflow-projection': ['docs/reference/workflows.md'],
+  'retention-sql-assertion': ['docs/understand/data-and-state.md#block-2'],
+  'embedded-yaml': ['docs/use/diagnose.md#block-22', 'docs/use/install.md#block-10'],
+  'sdk-pure-example': ['docs/reference/sdk.md#block-3'],
+  manifest: ['docs/extend/first-plugin.md#block-2'],
+  'buster-runtime': ['docs/reference/buster-runtime-configuration.md#block-1'],
+  platform: ['docs/reference/pipeline-platform.md#block-1'],
+  'wait-template': ['docs/reference/capabilities.md#block-1'],
+  graph: ['docs/reference/pipeline-definition.md#block-1'],
+  compact: ['docs/reference/configuration-precedence.md#block-1', 'docs/reference/host-and-prism-configuration.md#block-1'],
+  'helm-overlays': ['docs/reference/configuration-precedence.md#block-2', 'docs/reference/configuration-precedence.md#block-3', 'docs/reference/configuration-precedence.md#block-4'],
+  'test-scope': ['docs/reference/pipeline-json.md#block-1'],
+  'pair-template': ['docs/reference/project-pipeline-publication.md#block-6'],
+  'receiver-template': ['docs/use/workflows/wait-resume.md#block-19'],
+  'approval-signal': ['docs/use/operate.md#block-10'],
+  deliverables: ['docs/reference/nova-project.md#block-3'],
+  'prism-payload': ['docs/use/prism-studio.md#block-10'],
+  'prism-development-document': ['docs/use/prism-studio.md'],
 };
 
 export async function validatePublicationExamples(root) {
@@ -50,8 +50,8 @@ export async function validatePublicationExamples(root) {
   const { sources, checks } = bindPublicationExampleCoverage(root, pages, assets, declaration);
   const input = ref => { assert(sources.has(ref), `missing classified example input: ${ref}`); return sources.get(ref); };
   const json = ref => JSON.parse(input(ref));
-  const assetJson = name => json(`docs/site/${name}`);
-  const fullSdk = () => input('docs/site/reference/sdk-exports.md');
+  const assetJson = name => json(`docs/${name}`);
+  const fullSdk = () => input('docs/reference/sdk-exports.md');
   const actions = {
     'workflow-projection': async () => validateWorkflowProjection(root, input(mandatoryInputs['workflow-projection'][0])),
     'retention-sql-assertion': async () => validateRetentionNativeAssertion(root, input(mandatoryInputs['retention-sql-assertion'][0])),
@@ -62,7 +62,7 @@ export async function validatePublicationExamples(root) {
     'sdk-selected-native': async () => ({ values: validateSdkLiteralExamples(fullSdk()),
       parsers: await validateSdkParserExamples(fullSdk()), literalSourceFragmentsNotRuntimePrograms: true }),
     'sdk-pure-example': async () => validateCanonicalSdkProgram(root, input(mandatoryInputs['sdk-pure-example'][0])),
-    'cel-projection': async () => validateLeaseRuleProjection(root, input('docs/site/reference/buster-namespace-lease.md')),
+    'cel-projection': async () => validateLeaseRuleProjection(root, input('docs/reference/buster-namespace-lease.md')),
     diagram: async () => validateDiagramProjection(root, pages),
     manifest: async () => { native.validateManifestExample(input(mandatoryInputs.manifest[0]), mandatoryInputs.manifest[0]); return { nativeManifestSchema: true }; },
     'buster-runtime': async () => native.validateBusterExample(root, json(mandatoryInputs['buster-runtime'][0])),
@@ -83,7 +83,7 @@ export async function validatePublicationExamples(root) {
     'prism-payload': async () => native.validatePrismPayloadTemplate(json(mandatoryInputs['prism-payload'][0])),
     'prism-development-document': async () => native.validatePrismDevelopmentDocument(),
     'assets-native': async () => validateExampleAssets(root, assets),
-    'helm-option-templates': async () => validateHelmKeyTemplates(input('docs/site/reference/helm-values.md')),
+    'helm-option-templates': async () => validateHelmKeyTemplates(input('docs/reference/helm-values.md')),
     'syntax-instructions': async () => validateInstructionSyntax(declaration.pages.map(page => page.path), sources),
   };
   // Syntax and full asset/companion duties are intentionally mandatory. Missing

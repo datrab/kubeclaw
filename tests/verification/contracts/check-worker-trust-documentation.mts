@@ -3,11 +3,11 @@ import { readdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 
 const read = (path: string) => readFileSync(new URL(`../../../${path}`, import.meta.url), 'utf8');
-const understand = read('docs/site/understand/worker-trust.md');
-const use = read('docs/site/use/worker-trust.md');
-const workerCore = read('docs/site/understand/worker-core.md');
-const busterErrors = read('docs/site/reference/buster-error-codes.md');
-const environment = read('docs/site/reference/environment-variables.md');
+const understand = read('docs/understand/worker-trust.md');
+const use = read('docs/use/worker-trust.md');
+const workerCore = read('docs/understand/worker-core.md');
+const busterErrors = read('docs/reference/buster-error-codes.md');
+const environment = read('docs/reference/environment-variables.md');
 const all = [understand, use, workerCore, busterErrors, environment].join('\n');
 const authored = [understand, use, workerCore].join('\n');
 

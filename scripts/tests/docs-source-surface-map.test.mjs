@@ -9,7 +9,7 @@ import { buildSourceSurfaceMap, assertSourceSurfaceMap, assertAuthorityMatrix,
   requiredSurfaceFamilies, generatedPageFreshnessChecks, manualAuthorityInventoryScopes } from '../lib/docs-source-surface-map.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-const mapFile = path.join(root, 'docs/site/reference/generated-documentation-map.json');
+const mapFile = path.join(root, 'docs/reference/generated-documentation-map.json');
 const committed = JSON.parse(fs.readFileSync(mapFile, 'utf8'));
 const read = file => JSON.parse(fs.readFileSync(path.join(root, file), 'utf8'));
 const build = (file, mutate, pages = committed.pages) => buildSourceSurfaceMap(root, pages, candidate => {
@@ -23,7 +23,7 @@ const stale = changed => assert.throws(() => assertSourceSurfaceMap(typeof chang
 
 function authorityFixture() {
   const families = requiredSurfaceFamilies.map(id => ({ id, title: id,
-    canonicalTarget: 'docs/site/product-surfaces.md', owner: 'fixture documentation owner' }));
+    canonicalTarget: 'docs/product-surfaces.md', owner: 'fixture documentation owner' }));
   const records = families.map(family => ({ normalizedIdentity: `manual:${family.id}`,
     surFamily: family.id, sourceAuthority: 'fixture/current-source-boundary',
     consumerBoundary: 'Authored family explanation; actual consumer review required.',
@@ -36,7 +36,7 @@ function authorityFixture() {
   records.push({ normalizedIdentity: 'schema-property:fixture/schema.json:/properties/timeout',
     surFamily: 'SUR-API-03', sourceAuthority: 'fixture/schema.json',
     consumerBoundary: 'Declared schema annotation, not consumer insertion.',
-    canonicalTarget: 'docs/site/reference/schemas.md', owner: 'fixture schema owner',
+    canonicalTarget: 'docs/reference/schemas.md', owner: 'fixture schema owner',
     scopeLimit: 'Declaration only; no runtime or validation execution.',
     checks: ['fixture schema owner check'], generator: 'fixture schema owner',
     inventory: 'fixture/schema-index.json', factsSha256: '1'.repeat(64),
@@ -61,17 +61,17 @@ function authorityFixture() {
 }
 
 test('generated page freshness preserves declared generator and bounded configuration classes', () => {
-  const configuration = new Set(['docs/site/reference/environment-variables.md']);
+  const configuration = new Set(['docs/reference/environment-variables.md']);
   const generated = new Set(['cli', 'workflows', 'verification-commands', 'sdk-exports', 'configuration']
-    .map(name => `docs/site/reference/${name}.md`));
+    .map(name => `docs/reference/${name}.md`));
   for (const page of [...configuration, ...generated].filter(page => !page.endsWith('/configuration.md'))) {
     assert.deepEqual(generatedPageFreshnessChecks(page, configuration, generated), ['npm run docs:generate:check']);
   }
-  const bounded = generatedPageFreshnessChecks('docs/site/reference/configuration.md', configuration, generated, 'a'.repeat(40));
+  const bounded = generatedPageFreshnessChecks('docs/reference/configuration.md', configuration, generated, 'a'.repeat(40));
   assert.equal(bounded.length, 2);
   assert(bounded[0].includes('--configuration-reference-only --check'));
   assert(bounded[1].includes('--only configuration-hub'));
-  assert.deepEqual(generatedPageFreshnessChecks('docs/site/product-surfaces.md', configuration, generated), []);
+  assert.deepEqual(generatedPageFreshnessChecks('docs/product-surfaces.md', configuration, generated), []);
 });
 
 test('manual route cannot replace an available selected typed authority', () => {
@@ -152,7 +152,7 @@ test('prompt library routes through the actual governance owner and rejects miss
     if (name !== 'docs-governance.mjs') fs.symlinkSync(path.join(root, 'scripts', name), path.join(temporary, 'scripts', name));
   }
   const ownerPath = path.join(temporary, 'scripts/docs-governance.mjs');
-  const guidePath = path.join(temporary, 'docs/site/extend/contracts.md');
+  const guidePath = path.join(temporary, 'docs/extend/contracts.md');
   const owner = fs.readFileSync(path.join(root, 'scripts/docs-governance.mjs'), 'utf8');
   const guide = fs.readFileSync(guidePath, 'utf8');
   fs.writeFileSync(ownerPath, owner);
@@ -161,8 +161,8 @@ test('prompt library routes through the actual governance owner and rejects miss
   assert.equal(result.status, 0, result.stderr);
   result = run('--check');
   assert.equal(result.status, 0, result.stderr);
-  const actual = JSON.parse(fs.readFileSync(path.join(temporary, 'docs/site/reference/generated-documentation-map.json'), 'utf8'));
-  const page = actual.pages.find(item => item.page === 'docs/site/extend/contracts.md');
+  const actual = JSON.parse(fs.readFileSync(path.join(temporary, 'docs/reference/generated-documentation-map.json'), 'utf8'));
+  const page = actual.pages.find(item => item.page === 'docs/extend/contracts.md');
   assert.equal(page.owner, 'plugin-foundation');
   assert.ok(page.sourceDependencies.includes('skills/common/plugins/prompt-contract'));
   for (const command of ['npm run build --workspace @kubeclaw/prompt-contract', 'npm test --workspace @kubeclaw/prompt-contract']) assert.ok(page.checks.includes(command));
@@ -251,10 +251,10 @@ for (const [name, collection, rename, change] of cases) {
 test('internal workflow and each package route to their actual owning reader page', () => {
   const workflows = currentBaseline().domains.find(item => item.domain === 'workflow');
   assert(workflows.surfaces.filter(item => item.source === '.github/workflows/docs-checks.yaml')
-    .every(item => item.target === 'docs/site/extend/documentation-maintenance.md#generate-only-owned-facts-then-check'));
+    .every(item => item.target === 'docs/extend/documentation-maintenance.md#generate-only-owned-facts-then-check'));
   const plugins = currentBaseline().domains.find(item => item.domain === 'plugin');
   for (const item of read('docs/generated/inventory/plugin-system.json').packages) {
-    assert(plugins.surfaces.some(surface => surface.source === item.manifest && surface.target === `docs/site/extend/plugin-catalogue/${item.id}.md#package-reference`));
+    assert(plugins.surfaces.some(surface => surface.source === item.manifest && surface.target === `docs/extend/plugin-catalogue/${item.id}.md#package-reference`));
   }
 });
 
@@ -316,14 +316,14 @@ test('wrong existing SDK support destination and inverse omission remain detecta
   support.surfaces[0].target = wrongTarget;
   stale(bad);
   const inverse = structuredClone(currentBaseline());
-  const page = inverse.pageSources.find(item => item.page === 'docs/site/reference/sdk-exports.md');
+  const page = inverse.pageSources.find(item => item.page === 'docs/reference/sdk-exports.md');
   page.sourceIds = page.sourceIds.filter(sourceId => !sourceId.startsWith('sdk-support:'));
   stale(inverse);
 });
 
 test('wrong existing page, valid existing source ID, member omission and inverse omission fail', () => {
   let bad = structuredClone(currentBaseline());
-  bad.domains[0].surfaces[0].target = 'docs/site/reference/cli.md#defined-flags';
+  bad.domains[0].surfaces[0].target = 'docs/reference/cli.md#defined-flags';
   stale(bad);
   bad = structuredClone(currentBaseline());
   bad.domains[0].surfaces[0].sourceId = bad.domains[0].surfaces[1].sourceId;
@@ -348,9 +348,9 @@ test('orphan source binding, removed canonical page, missing anchor and duplicat
   assert.throws(() => build('docs/config/platform-surface-map.json', data => {
     delete data.endpoints.identityTargets[Object.keys(data.endpoints.identityTargets)[0]];
   }), /source-map orphan source/u);
-  assert.throws(() => build('', () => {}, committed.pages.filter(page => page.page !== 'docs/site/reference/sdk-exports.md')), /source-map orphan page/u);
+  assert.throws(() => build('', () => {}, committed.pages.filter(page => page.page !== 'docs/reference/sdk-exports.md')), /source-map orphan page/u);
   assert.throws(() => build('docs/config/platform-surface-map.json', data => {
-    data.endpoints.identityTargets[Object.keys(data.endpoints.identityTargets)[0]] = 'docs/site/reference/cli.md#not-an-existing-anchor';
+    data.endpoints.identityTargets[Object.keys(data.endpoints.identityTargets)[0]] = 'docs/reference/cli.md#not-an-existing-anchor';
   }), /source-map orphan anchor/u);
   assert.throws(() => build('docs/generated/inventory/workflows.json', data => data.workflows.push(structuredClone(data.workflows[0]))), /source-map duplicate source identity/u);
 });

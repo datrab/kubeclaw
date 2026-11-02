@@ -8,7 +8,7 @@ import {buildReader} from '../docs-reader/renderer.mjs';
 import {createReaderServer} from '../docs-reader/serve.mjs';
 const root=fs.mkdtempSync(path.join(os.tmpdir(),'reader-redirect-browser-owned-'));
 const pages=[{relative:'README.md',owner:'documentation',text:'# Home\n'},{relative:'new.md',owner:'owner',text:'# New\n\n## Kept\n'}];
-const baseline={schemaVersion:'kubeclaw-published-route-baseline.v1',pages:[{page:'docs/site/old.md',route:'/old/',owner:'old owner'}]};
+const baseline={schemaVersion:'kubeclaw-published-route-baseline.v1',pages:[{page:'docs/old.md',route:'/old/',owner:'old owner'}]};
 const registry={schemaVersion:'kubeclaw-documentation-routes.v1',redirects:[{from:'/old/',to:'/new/',reason:'Synthetic controlled test only; not product history.',preservedFragments:['kept']}]};
 let browser,server;const observed=[];
 try{

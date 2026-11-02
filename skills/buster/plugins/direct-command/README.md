@@ -15,5 +15,5 @@ Reports and optional LCOV files use exact paths relative to the configured
 working directory. The provider copies them into the attempt evidence area.
 It does not use wildcard paths, fetch test code, or interpret shell syntax.
 
-See `docs/site/reference/buster-suites.md` for complete fields,
+See `docs/reference/buster-suites.md` for complete fields,
 examples, result rules, trade-offs, and operator requirements.

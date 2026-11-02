@@ -7,7 +7,7 @@ import Ajv2020 from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
 const root = path.resolve(import.meta.dirname, '..');
 const authority = 'skills/buster/plugins/junit-report-adapter/plugin.json';
-const page = 'docs/site/reference/buster-suites.md';
+const page = 'docs/reference/buster-suites.md';
 try {
   const manifest = JSON.parse(fs.readFileSync(path.join(root, authority), 'utf8'));
   const schema = JSON.parse(fs.readFileSync(path.join(root, 'skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json'), 'utf8'));

@@ -14,7 +14,7 @@ function parseOnly(command, argv, source) {
 export function validateInstructionSyntax(pages, sources) {
   // This newly documented library check is not a runtime registration. Keep
   // its real workspace commands distinct from the existing verification block.
-  const promptPage = 'docs/site/extend/contracts.md';
+  const promptPage = 'docs/extend/contracts.md';
   const promptBlocks = publicationExampleBlocks(sources.get(promptPage) ?? '');
   assert.equal(promptBlocks.length, 2, 'prompt contract instruction responsibilities changed');
   assert.equal(promptBlocks[0].info, 'bash', 'prompt library commands must retain their shell syntax owner');

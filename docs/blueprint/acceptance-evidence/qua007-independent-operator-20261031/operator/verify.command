@@ -1,1 +1,0 @@
-set -euo pipefail; node docs/site/use/workflows/examples/compiled-project.mjs verify /home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey; cat /home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/native-verification.json

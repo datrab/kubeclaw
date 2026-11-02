@@ -16,7 +16,7 @@ export function validateSdkProjection(root) {
     'docs/generated/inventory/documentation-source-revision.json'), 'utf8')).revision;
   const { inventory } = checkSdkReference({ root, revision,
     inventoryPath: path.join(root, 'docs/generated/inventory/sdk-reference.json'),
-    markdownPath: path.join(root, 'docs/site/reference/sdk-exports.md') });
+    markdownPath: path.join(root, 'docs/reference/sdk-exports.md') });
   return { nativeCompilerSchemaAndAuthoredProjection: true, exports: inventory.exports.length,
     consumerStringsExecutedOrTypechecked: false };
 }
@@ -51,7 +51,7 @@ export function validateDiagramProjection(root, pages) {
 export function validateStatusProjection(root) {
   const data = JSON.parse(fs.readFileSync(path.join(root, 'docs/status/open-issues.json'), 'utf8'));
   const text = renderStatus(data);
-  assert.equal(fs.readFileSync(path.join(root, 'docs/site/status/open-issues.md'), 'utf8'), text,
+  assert.equal(fs.readFileSync(path.join(root, 'docs/status/open-issues.md'), 'utf8'), text,
     'published issue procedures differ from their actual owner');
   return { nativeIssueSchemaAndRenderProjection: true, issues: data.issues.length,
     reproductionOrLiveValidationExecution: false };

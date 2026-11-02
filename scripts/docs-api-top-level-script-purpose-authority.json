@@ -2697,7 +2697,7 @@
       "sink": "fs.writeFileSync",
       "expression": null,
       "sinkContract": {
-        "destination": "path.join(root, 'docs/site/reference/schemas.md')",
+        "destination": "path.join(root, 'docs/reference/schemas.md')",
         "expression": "page"
       },
       "role": "non-api"
@@ -4352,7 +4352,7 @@
       "sha256": "75c5258cf16c8d0ce3c4d36c80d246dbbcdc6a339e456cd219bc065839b1c2dd"
     },
     {
-      "path": "docs/site/extend/lint.md",
+      "path": "docs/extend/lint.md",
       "sha256": "8e84ad80f6b9fff4557073d77796f64e6374c170ad23d261c1a3ae6b0dac461e"
     },
     {

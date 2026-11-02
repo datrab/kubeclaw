@@ -7,7 +7,7 @@ import {assertRouteContinuity} from '../lib/docs-route-continuity.mjs';
 
 const digest=bytes=>crypto.createHash('sha256').update(bytes).digest('hex');
 const escape=value=>String(value).replace(/[&<>"']/gu,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-export function pinnedReaderRouteBaseline(root){const bytes=fs.readFileSync(path.join(root,'scripts/docs-published-route-baseline.json'));assert.equal(digest(bytes),'c9fd21962ade0616a71cc5f0a30363b0020ed26028fd88444a9934197d76f6b7','Known route baseline changed; do not renew it to conceal removal');return JSON.parse(bytes);}
+export function pinnedReaderRouteBaseline(root){const bytes=fs.readFileSync(path.join(root,'scripts/docs-published-route-baseline.json'));assert.equal(digest(bytes),'d5ef3b765b90d792e6a6b05ad826865947ce0e74620ea1c17086225c510f673b','Known route baseline changed; do not renew it to conceal removal');return JSON.parse(bytes);}
 export const legacyReaderRoute=relative=>relative==='README.md'?'/':relative.endsWith('/README.md')?'/'+relative.slice(0,-9):'/'+relative.slice(0,-3)+'/';
 function localRoute(route){
  assert(typeof route==='string'&&/^\/(?:[A-Za-z0-9_.-]+\/)*(?:[A-Za-z0-9_.-]+\.html)?$/u.test(route),'Redirect route must be an exact local directory or HTML route');
@@ -29,7 +29,7 @@ function readerRedirectPlan({outputRoot,pages,registry,baseline,reservedOutputs}
   const html='/'+page.relative.slice(0,-3)+'.html',friendly=legacyReaderRoute(page.relative);
   assert(!canonical.has(html)&&!canonical.has(friendly),'Duplicate canonical reader route');
   const target={html,ids:ids(fs.readFileSync(path.join(outputRoot,html.slice(1)),'utf8'))};canonical.set(html,target);canonical.set(friendly,target);
-  assert(typeof page.owner==='string'&&page.owner.trim(),'Positive page needs its actual owner');current.push({page:'docs/site/'+page.relative,route:friendly,owner:page.owner});
+  assert(typeof page.owner==='string'&&page.owner.trim(),'Positive page needs its actual owner');current.push({page:'docs/'+page.relative,route:friendly,owner:page.owner});
  }
  // Existing continuity rejects erased known routes, dead targets, chains and
  // loops in the governance route vocabulary before files are emitted.

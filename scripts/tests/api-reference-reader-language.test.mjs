@@ -18,7 +18,7 @@ test('reader boundary accepts exact registered command data but rejects work not
   fs.copyFileSync(new URL('../check-site-reader-boundary.mjs',import.meta.url),path.join(root,'scripts/check-site-reader-boundary.mjs'));
   fs.writeFileSync(path.join(root,'package.json'),JSON.stringify({scripts:{'docs:ap09:platform-inventory:check':'node scripts/inventory.mjs'}}));
   fs.writeFileSync(path.join(root,'docs/status/open-issues.json'),'{}');
-  const map=path.join(root,'docs/site/map.json');
+  const map=path.join(root,'docs/map.json');
   const run=()=>spawnSync(process.execPath,[path.join(root,'scripts/check-site-reader-boundary.mjs')],{encoding:'utf8'});
   fs.writeFileSync(map,JSON.stringify({checks:['npm run docs:ap09:platform-inventory:check']}));
   let result=run();assert.equal(result.status,0,result.stderr);
@@ -64,7 +64,7 @@ test('product review stages and honest execution limits remain publishable',()=>
 
 // Resolve emitted Markdown from its real publication location. The test reads
 // authored destinations, not stale generated output or an invented route map.
-const emittedPage = fileURLToPath(new URL('../../docs/site/reference/helm-values.md', import.meta.url));
+const emittedPage = fileURLToPath(new URL('../../docs/reference/helm-values.md', import.meta.url));
 function resolveReaderLink(target) {
  const [relative, fragment] = target.split('#');
  const destination = path.resolve(path.dirname(emittedPage), relative);
@@ -80,7 +80,7 @@ test('all seven actual PV reader links resolve from the Helm values reference to
  const output=render('Synthetic remaining upstream fields.', [], 'PersistentVolume', pvReceiverContracts);
  const links=[...output.matchAll(/\[Retire the former Qdrant installation and check storage ownership and deletion\]\(([^)]+)\)/gu)];
  assert.equal(links.length,7);
- const intended=fileURLToPath(new URL('../../docs/site/use/maintenance.md',import.meta.url));
+ const intended=fileURLToPath(new URL('../../docs/use/maintenance.md',import.meta.url));
  for(const [,target] of links) assert.equal(resolveReaderLink(target),intended);
  assert.throws(()=>resolveReaderLink('maintenance.md#retire-the-former-qdrant-installation'),/destination does not exist/);
  assert.throws(()=>resolveReaderLink('../use/maintenance.md#missing-retirement-task'),/anchor does not exist/);
@@ -97,7 +97,7 @@ test('reader links permit the finite canonical task and retain safe same-directo
   '../use/unknown.md#retire-the-former-qdrant-installation',
   '../use/maintenance.md#missing-retirement-task',
   '../understand/maintenance.md#retire-the-former-qdrant-installation',
-  '/docs/site/use/maintenance.md#retire-the-former-qdrant-installation',
+  '/docs/use/maintenance.md#retire-the-former-qdrant-installation',
   'https://example.invalid/maintenance.md#retire-the-former-qdrant-installation',
   'javascript:alert(1)', '//example.invalid/task.md#purpose',
   '%2e%2e/use/maintenance.md#retire-the-former-qdrant-installation',

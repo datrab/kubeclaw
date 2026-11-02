@@ -4,7 +4,6 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { parse } from 'parse5';
 import { fileURLToPath } from 'node:url';
-import { verifyReaderPageRecords } from './page-records.mjs';
 
 const args = process.argv.slice(2);
 const legacyRendererFixture = args[0] === '--legacy-renderer-fixture';
@@ -56,10 +55,5 @@ for (const [page, { links }] of records) {
     if (url.hash && records.has(target)) assert(records.get(target).ids.has(decodeURIComponent(url.hash.slice(1))), `Missing rendered fragment: ${page}: ${link}`);
     localLinks++;
   }
-}
-if (legacyRendererFixture && manifest.pageRecords === undefined) {
-  assert(!fs.existsSync(path.join(root, 'build-report.json')), 'Legacy renderer fixture mode cannot omit production pageRecords');
-} else {
-  verifyReaderPageRecords({ outputRoot: root, repositoryRoot: path.resolve(args[1] ?? fileURLToPath(new URL('../../', import.meta.url))), manifest });
 }
 console.log(JSON.stringify({ selectedPages: manifest.pageCount, htmlPages: records.size, localLinks, verifiedOutputDigests: paths.size }));

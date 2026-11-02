@@ -1,8 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { assertRouteContinuity } from '../lib/docs-route-continuity.mjs';
-const old = { page: 'docs/site/old.md', route: '/old/', owner: 'old owner' };
-const next = { page: 'docs/site/new.md', route: '/new/', owner: 'new owner' };
+const old = { page: 'docs/old.md', route: '/old/', owner: 'old owner' };
+const next = { page: 'docs/new.md', route: '/new/', owner: 'new owner' };
 const baseline = { schemaVersion: 'kubeclaw-published-route-baseline.v1', pages: [old] };
 const registry = (redirects = []) => ({ schemaVersion: 'kubeclaw-documentation-routes.v1', redirects });
 const redirect = { from: '/old/', to: '/new/', reason: 'Renamed; successor owns the maintained content.' };

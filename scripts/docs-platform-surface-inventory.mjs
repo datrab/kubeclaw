@@ -57,7 +57,7 @@ if (explicitRevision !== undefined) {
   assert.equal(git('rev-parse', 'HEAD'), sourceRevision,
     '--revision must identify the current committed source');
   const isSource = (file) => file && !file.startsWith('docs/generated/')
-    && !file.startsWith('docs/site/')
+    && !file.startsWith('docs/')
     && file !== 'docs/blueprint/documentation-completion-matrix.json'
     && !file.startsWith('docs/blueprint/acceptance-evidence/');
   const changed = git('diff', '--name-only', sourceRevision, '--', '.').split('\n').filter(isSource);
@@ -67,7 +67,7 @@ if (explicitRevision !== undefined) {
 }
 const busterReadyActivation = 'requires busterNamespaceBroker.controller.readiness.enabled=true; selected my-values/buster-values.yaml inherits the chart default false';
 const busterProductActivation = 'requires busterNamespaceBroker.controller.readiness.enabled=true and busterNamespaceBroker.controller.productDecisions.enabled=true (BUSTER_PRODUCT_ENABLED=true); selected my-values/buster-values.yaml inherits the chart default false for both';
-const pageTarget = path.join(root, 'docs/site/reference/platform-surfaces-generated.md');
+const pageTarget = path.join(root, 'docs/reference/platform-surfaces-generated.md');
 const mappingTarget = path.join(root, 'docs/config/platform-surface-map.json');
 const storePolicyProducerSources = [
   'scripts/docs-platform-surface-inventory.mjs',
@@ -174,9 +174,9 @@ const dependencyDefinitions = [
   ['monitoring-stack', 'optional-platform', 'gitops/platform/bootstrap/prometheus.yaml', 'project: monitoring'],
   ['ops-pod', 'optional-platform', 'gitops/platform/bootstrap/codex-ops.yaml', 'name: codex-ops'],
   ['archviewer', 'optional-platform', 'charts/kubeclaw/templates/archviewer.yaml', 'archviewer.enabled'],
-  ['git-mirror', 'planned', 'docs/site/status/roadmap.md', '## Resilient Git Source Acquisition'],
-  ['authenticated-https-registry', 'planned', 'docs/site/status/roadmap.md', '## Production-Grade Local OCI Registry'],
-  ['automated-host-bootstrap', 'planned', 'docs/site/status/roadmap.md', '## Automated Host Bootstrap and Recovery'],
+  ['git-mirror', 'planned', 'docs/status/roadmap.md', '## Resilient Git Source Acquisition'],
+  ['authenticated-https-registry', 'planned', 'docs/status/roadmap.md', '## Production-Grade Local OCI Registry'],
+  ['automated-host-bootstrap', 'planned', 'docs/status/roadmap.md', '## Automated Host Bootstrap and Recovery'],
 ];
 const externalStoreDefinitions = [
   ['helm:redis/data', 'gitops/platform/values/redis.yaml', 'persistence:'],
@@ -1260,8 +1260,8 @@ function mappingReviewDigest(group, entry) {
 
 function sourceLink(item) {
   if (!item.line || item.source.startsWith('helm:')) return `\`${item.source}${item.line ? `:${item.line}` : ''}\``;
-  if (item.source.startsWith('docs/site/')) {
-    const relativeTarget = path.posix.relative('docs/site/reference', item.source);
+  if (item.source.startsWith('docs/')) {
+    const relativeTarget = path.posix.relative('docs/reference', item.source);
     const anchor = item.needle?.replace(/^#+\s*/u, '').toLowerCase()
       .replace(/[^a-z0-9\s-]/gu, '').trim().replace(/\s+/gu, '-');
     return `[${item.source}](${relativeTarget}${anchor ? `#${anchor}` : ''})`;
@@ -1272,7 +1272,7 @@ function pageLink(target) {
   const [file, anchor] = target.split('#');
   assert(path.join(root, file) !== pageTarget,
     'DOC_DRIFT_MAP_REVIEW: generated platform output cannot be its own source explanation');
-  const relativeTarget = path.posix.relative('docs/site/reference', file);
+  const relativeTarget = path.posix.relative('docs/reference', file);
   return `[explanation](${relativeTarget}#${anchor})`;
 }
 function assertDependencySignalTable(page, inventory) {

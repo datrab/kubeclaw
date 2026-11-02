@@ -105,7 +105,7 @@ export function schemaFieldInputs(root) {
       if (item.isDirectory()) visit(name);
       else if (item.isFile()) {
         if (name.endsWith('.schema.json')) schemas.push(name);
-        if (['plugin.json', 'openclaw.plugin.json'].includes(item.name) && (name.startsWith('skills/') || name.startsWith('docs/site/extend/examples/'))) registrations.push(name);
+        if (['plugin.json', 'openclaw.plugin.json'].includes(item.name) && (name.startsWith('skills/') || name.startsWith('docs/extend/examples/'))) registrations.push(name);
       }
     }
   }
@@ -134,7 +134,7 @@ export function schemaFieldInventory(root) {
     const record = expected[name];
     if (!record || !inputs.schemas.includes(name)) throw new Error(`SCHEMA_FIELD_INPUT_DRIFT:${record ? 'removed' : 'added'}:${name}:review schema family and reference route`);
     if (!['current-declaration', 'fixture', 'retained', 'documentation-only'].includes(record.status)) throw new Error(`SCHEMA_FIELD_STATUS_INVALID:${name}`);
-    if (typeof record.referenceRoute !== 'string' || !record.referenceRoute.startsWith('docs/site/') || record.referenceRoute.split('/').includes('..') || !fs.statSync(path.join(root, record.referenceRoute.split('#')[0])).isFile()) throw new Error(`SCHEMA_FIELD_ROUTE_INVALID:${name}`);
+    if (typeof record.referenceRoute !== 'string' || !record.referenceRoute.startsWith('docs/') || record.referenceRoute.split('/').includes('..') || !fs.statSync(path.join(root, record.referenceRoute.split('#')[0])).isFile()) throw new Error(`SCHEMA_FIELD_ROUTE_INVALID:${name}`);
     if (digest(fs.readFileSync(path.join(root, name))) !== record.sha256) throw new Error(`SCHEMA_FIELD_INPUT_DRIFT:changed:${name}:${record.referenceRoute}`);
   }
   for (const name of [...new Set([...Object.keys(binding.registrations), ...inputs.registrations])].sort()) {
@@ -146,7 +146,7 @@ export function checkSchemaFieldInventory(root) {
   const inventory = schemaFieldInventory(root);
   const content = JSON.stringify(inventory, null, 2) + '\n';
   if (fs.readFileSync(path.join(root, outputPath), 'utf8') !== content) throw new Error(`SCHEMA_FIELD_OUTPUT_DRIFT:${outputPath}`);
-  const page = fs.readFileSync(path.join(root, 'docs/site/reference/schemas.md'), 'utf8');
+  const page = fs.readFileSync(path.join(root, 'docs/reference/schemas.md'), 'utf8');
   if (renderSchemaAuthorityReference(root, inventory, page) !== page) throw new Error('SCHEMA_AUTHORITY_REFERENCE_DRIFT');
   return {schemas: inventory.schemas.length, propertyPointers: inventory.schemas.reduce((sum, item) => sum + item.properties.length, 0), runtimeValidationClaimed: false};
 }
@@ -159,9 +159,9 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   else {
     const inventory = schemaFieldInventory(root);
     const page = process.argv.includes('--reference')
-      ? renderSchemaAuthorityReference(root, inventory, fs.readFileSync(path.join(root, 'docs/site/reference/schemas.md'), 'utf8')) : null;
+      ? renderSchemaAuthorityReference(root, inventory, fs.readFileSync(path.join(root, 'docs/reference/schemas.md'), 'utf8')) : null;
     fs.writeFileSync(path.join(root, outputPath), JSON.stringify(inventory, null, 2) + '\n');
-    if (page !== null) fs.writeFileSync(path.join(root, 'docs/site/reference/schemas.md'), page);
+    if (page !== null) fs.writeFileSync(path.join(root, 'docs/reference/schemas.md'), page);
     console.log(JSON.stringify({generated: outputPath, runtimeValidationClaimed: false}));
   }
 }

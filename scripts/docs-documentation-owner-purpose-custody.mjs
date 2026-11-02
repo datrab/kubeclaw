@@ -15,8 +15,8 @@ export const reviewedDocumentationOwnerPurposes=freeze({
     "consumer": "Owned temporary manifest Add/Change/Remove and malformed-input controls for the canonical capability reader, not runtime configuration.",
     "purposeInputs": [
       {
-        "path": "docs/site/reference/capabilities.md",
-        "canonical": "docs/site/reference/capabilities.md",
+        "path": "docs/reference/capabilities.md",
+        "canonical": "docs/reference/capabilities.md",
         "projection": "capability-registration-reader-columns/v1",
         "sha256": "625ebc282501239f4d23e48555f4773bf8328f680b0aebf911273819fdc8594d"
       },
@@ -82,8 +82,8 @@ export const reviewedDocumentationOwnerPurposes=freeze({
         "sha256": "af1973d167a0c43ffe14eb828fc8d139a63ab8b696fdc4095c8e862f2d414dd8"
       },
       {
-        "path": "docs/site/use/workflows/wait-resume/platform.template.json",
-        "canonical": "docs/site/use/workflows/wait-resume/platform.template.json",
+        "path": "docs/use/workflows/wait-resume/platform.template.json",
+        "canonical": "docs/use/workflows/wait-resume/platform.template.json",
         "sha256": "8d9f160964ea4c3ff5c924c3c4c36291f5a6bfa969807721f5a8383578a5b1ef"
       },
       {
@@ -319,8 +319,8 @@ export const reviewedDocumentationOwnerPurposes=freeze({
         "sha256": "86576d0f96d9787028c87e6d2b489f956b34d00284ef6ad34cdcbdc01fcf9467"
       },
       {
-        "path": "docs/site/extend/documentation-maintenance.md",
-        "canonical": "docs/site/extend/documentation-maintenance.md",
+        "path": "docs/extend/documentation-maintenance.md",
+        "canonical": "docs/extend/documentation-maintenance.md",
         "sha256": "f2e56245caa40edaac97b242b90de8d1efeb6477bfc03dc2a997d14ca6b38602"
       },
       {
@@ -367,7 +367,7 @@ const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
 // purpose, not current declaration correctness or native execution proof.
 export function documentationPurposeInputBytes(source,input,bytes) {
  if(input.projection===undefined)return bytes;
- assert(source==='scripts/check-capability-registrations-drift-controls.mjs'&&input.path==='docs/site/reference/capabilities.md'&&input.projection==='capability-registration-reader-columns/v1','DOCUMENTATION_PURPOSE_INPUT_PROJECTION_UNQUALIFIED');
+ assert(source==='scripts/check-capability-registrations-drift-controls.mjs'&&input.path==='docs/reference/capabilities.md'&&input.projection==='capability-registration-reader-columns/v1','DOCUMENTATION_PURPOSE_INPUT_PROJECTION_UNQUALIFIED');
  const text=Buffer.isBuffer(bytes)?bytes.toString('utf8'):bytes;
  assert(typeof text==='string'&&Buffer.from(text,'utf8').equals(Buffer.isBuffer(bytes)?bytes:Buffer.from(bytes)),'DOCUMENTATION_PURPOSE_INPUT_PROJECTION_UTF8');
  const start='## Registration Capability Declarations\n',end='## Platform Grants Are Not Swarm Roles\n';
@@ -468,8 +468,8 @@ const readerArtifactCiPurpose=freeze({
       "sha256": "4d08e2533bda82a536a9c61ab27a3fca94939a484a5a2154e012ff9507f26155"
     },
     {
-      "path": "docs/site/reference/documentation-site.md",
-      "canonical": "docs/site/reference/documentation-site.md",
+      "path": "docs/reference/documentation-site.md",
+      "canonical": "docs/reference/documentation-site.md",
       "sha256": "a1851910ffb2832775a4a4888ee0f3d9e474d5940dcdbbfb46c6d20a861e29cb"
     },
     {
@@ -527,7 +527,7 @@ export function assertReaderArtifactExternalCiPurpose(root){
  }
  const runLines=fs.readFileSync(ci,'utf8').split('\n').filter(line=>/^\s*run:/u.test(line)&&line.includes(profile.source)).map(line=>line.trim());
  assert.deepEqual(runLines,[profile.ciRunLine],'DOCUMENTATION_READER_CI_PURPOSE_DRIFT: exact normal CI argv');
- assert(fs.readFileSync(path.join(root,'docs/site/reference/documentation-site.md'),'utf8').includes(profile.manualCommand),
+ assert(fs.readFileSync(path.join(root,'docs/reference/documentation-site.md'),'utf8').includes(profile.manualCommand),
   'DOCUMENTATION_READER_CI_PURPOSE_DRIFT: documented normal checker argv');
  const definition=JSON.parse(fs.readFileSync(path.join(root,'package.json'),'utf8'));
  assert(!Object.values(definition.scripts??{}).some(command=>typeof command==='string'&&command.includes(profile.source)),
@@ -600,21 +600,21 @@ const publicationExampleChildPurpose=freeze({
 // exact. Mixed pages additionally seal every byte outside their owned region.
 const reviewedPublicationMixedAuthoredPages=Object.freeze([
   {
-    "path": "docs/site/use/plugins.md",
+    "path": "docs/use/plugins.md",
     "begin": "<!-- BEGIN GENERATED OPERATOR PLUGIN MATRIX -->",
     "end": "<!-- END GENERATED OPERATOR PLUGIN MATRIX -->",
     "authoredProjectionSha256": "f63737896cf85641d3f889717482fa9806948cbc79a85488d220bbaa24ffdff2",
     "schemaSelectorCitation": false
   },
   {
-    "path": "docs/site/reference/schemas.md",
+    "path": "docs/reference/schemas.md",
     "begin": "<!-- BEGIN GENERATED: schema authority dispositions -->",
     "end": "<!-- END GENERATED: schema authority dispositions -->",
     "authoredProjectionSha256": "a2699fab148a0ed6e03a02044f2512975f40eb118531cd38ed2ae19cbc6ba024",
     "schemaSelectorCitation": true
   },
   {
-    "path": "docs/site/reference/events.md",
+    "path": "docs/reference/events.md",
     "begin": "<!-- BEGIN GENERATED EVENT CONTRACT REFERENCE -->",
     "end": "<!-- END GENERATED EVENT CONTRACT REFERENCE -->",
     "authoredProjectionSha256": "45f680ea38a5dcf62a264365e5b9ef664fdda77998d9476c3794537cdd8b9402",
@@ -680,7 +680,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
  const selected=[
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/README.md",
+    "docs/extend/plugin-catalogue/README.md",
     [
       1
     ],
@@ -688,7 +688,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw-agent-observer.md",
+    "docs/extend/plugin-catalogue/kubeclaw-agent-observer.md",
     [
       1,
       2,
@@ -698,7 +698,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw-ops.md",
+    "docs/extend/plugin-catalogue/kubeclaw-ops.md",
     [
       1
     ],
@@ -706,7 +706,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw-prism.md",
+    "docs/extend/plugin-catalogue/kubeclaw-prism.md",
     [
       1,
       2
@@ -715,7 +715,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.agent-observability.md",
+    "docs/extend/plugin-catalogue/kubeclaw.agent-observability.md",
     [
       1,
       2,
@@ -725,7 +725,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.api-flow.md",
+    "docs/extend/plugin-catalogue/kubeclaw.api-flow.md",
     [
       1,
       2,
@@ -735,7 +735,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.architecture-validator.md",
+    "docs/extend/plugin-catalogue/kubeclaw.architecture-validator.md",
     [
       1,
       2,
@@ -745,7 +745,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.artifact-store.md",
+    "docs/extend/plugin-catalogue/kubeclaw.artifact-store.md",
     [
       1,
       2,
@@ -755,7 +755,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.axe.md",
+    "docs/extend/plugin-catalogue/kubeclaw.axe.md",
     [
       1,
       2,
@@ -765,7 +765,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.blueprint-sync.md",
+    "docs/extend/plugin-catalogue/kubeclaw.blueprint-sync.md",
     [
       1,
       2,
@@ -775,7 +775,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.buster-quality-gate.md",
+    "docs/extend/plugin-catalogue/kubeclaw.buster-quality-gate.md",
     [
       1,
       2,
@@ -785,7 +785,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.case-study.md",
+    "docs/extend/plugin-catalogue/kubeclaw.case-study.md",
     [
       1,
       2,
@@ -795,7 +795,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.command-runner.md",
+    "docs/extend/plugin-catalogue/kubeclaw.command-runner.md",
     [
       1,
       2,
@@ -805,7 +805,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.container-build.md",
+    "docs/extend/plugin-catalogue/kubeclaw.container-build.md",
     [
       1,
       2,
@@ -815,7 +815,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.coverage-budget.md",
+    "docs/extend/plugin-catalogue/kubeclaw.coverage-budget.md",
     [
       1,
       2,
@@ -825,7 +825,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.delivery-lint.md",
+    "docs/extend/plugin-catalogue/kubeclaw.delivery-lint.md",
     [
       1,
       2,
@@ -835,7 +835,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.demo-auth-smoke.md",
+    "docs/extend/plugin-catalogue/kubeclaw.demo-auth-smoke.md",
     [
       1,
       2,
@@ -845,7 +845,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.demo-handoff.md",
+    "docs/extend/plugin-catalogue/kubeclaw.demo-handoff.md",
     [
       1,
       2,
@@ -855,7 +855,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.direct-command.md",
+    "docs/extend/plugin-catalogue/kubeclaw.direct-command.md",
     [
       1,
       2,
@@ -865,7 +865,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.git-workspace.md",
+    "docs/extend/plugin-catalogue/kubeclaw.git-workspace.md",
     [
       1,
       2,
@@ -875,7 +875,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.http.md",
+    "docs/extend/plugin-catalogue/kubeclaw.http.md",
     [
       1,
       2,
@@ -885,7 +885,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.human-approval.md",
+    "docs/extend/plugin-catalogue/kubeclaw.human-approval.md",
     [
       1,
       2,
@@ -895,7 +895,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.implementation-agent.md",
+    "docs/extend/plugin-catalogue/kubeclaw.implementation-agent.md",
     [
       1,
       2,
@@ -905,7 +905,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.junit-report.md",
+    "docs/extend/plugin-catalogue/kubeclaw.junit-report.md",
     [
       1,
       2,
@@ -915,7 +915,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.kubernetes-fixture.md",
+    "docs/extend/plugin-catalogue/kubeclaw.kubernetes-fixture.md",
     [
       1,
       2,
@@ -925,7 +925,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.lighthouse.md",
+    "docs/extend/plugin-catalogue/kubeclaw.lighthouse.md",
     [
       1,
       2,
@@ -935,7 +935,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.lint.md",
+    "docs/extend/plugin-catalogue/kubeclaw.lint.md",
     [
       1,
       2,
@@ -945,7 +945,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.network-http.md",
+    "docs/extend/plugin-catalogue/kubeclaw.network-http.md",
     [
       1,
       2,
@@ -955,7 +955,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.notification-observer.md",
+    "docs/extend/plugin-catalogue/kubeclaw.notification-observer.md",
     [
       1,
       2,
@@ -965,7 +965,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.openapi.md",
+    "docs/extend/plugin-catalogue/kubeclaw.openapi.md",
     [
       1,
       2,
@@ -975,7 +975,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.md",
+    "docs/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.md",
     [
       1,
       2,
@@ -985,7 +985,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.operator-messaging.md",
+    "docs/extend/plugin-catalogue/kubeclaw.operator-messaging.md",
     [
       1,
       2,
@@ -995,7 +995,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.pipeline-review.md",
+    "docs/extend/plugin-catalogue/kubeclaw.pipeline-review.md",
     [
       1,
       2,
@@ -1005,7 +1005,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.playwright.md",
+    "docs/extend/plugin-catalogue/kubeclaw.playwright.md",
     [
       1,
       2,
@@ -1015,7 +1015,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.preflight-contract.md",
+    "docs/extend/plugin-catalogue/kubeclaw.preflight-contract.md",
     [
       1,
       2,
@@ -1025,7 +1025,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.prism-design.md",
+    "docs/extend/plugin-catalogue/kubeclaw.prism-design.md",
     [
       1,
       2,
@@ -1035,7 +1035,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.project-summary.md",
+    "docs/extend/plugin-catalogue/kubeclaw.project-summary.md",
     [
       1,
       2,
@@ -1045,7 +1045,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.redis-transport.md",
+    "docs/extend/plugin-catalogue/kubeclaw.redis-transport.md",
     [
       1,
       2,
@@ -1055,7 +1055,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.remote-test-gate.md",
+    "docs/extend/plugin-catalogue/kubeclaw.remote-test-gate.md",
     [
       1,
       2,
@@ -1065,7 +1065,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.repository-adapter.md",
+    "docs/extend/plugin-catalogue/kubeclaw.repository-adapter.md",
     [
       1,
       2,
@@ -1075,7 +1075,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.review.md",
+    "docs/extend/plugin-catalogue/kubeclaw.review.md",
     [
       1,
       2,
@@ -1085,7 +1085,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.runtime-dispatch.md",
+    "docs/extend/plugin-catalogue/kubeclaw.runtime-dispatch.md",
     [
       1,
       2,
@@ -1095,7 +1095,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.secret-resolver.md",
+    "docs/extend/plugin-catalogue/kubeclaw.secret-resolver.md",
     [
       1,
       2,
@@ -1105,7 +1105,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.security-providers.md",
+    "docs/extend/plugin-catalogue/kubeclaw.security-providers.md",
     [
       1,
       2,
@@ -1115,7 +1115,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.size-budget.md",
+    "docs/extend/plugin-catalogue/kubeclaw.size-budget.md",
     [
       1,
       2,
@@ -1125,7 +1125,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.state-store.md",
+    "docs/extend/plugin-catalogue/kubeclaw.state-store.md",
     [
       1,
       2,
@@ -1135,7 +1135,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.tailscale-exposure.md",
+    "docs/extend/plugin-catalogue/kubeclaw.tailscale-exposure.md",
     [
       1,
       2,
@@ -1145,7 +1145,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-observer.md",
+    "docs/extend/plugin-catalogue/kubeclaw.telemetry-observer.md",
     [
       1,
       2,
@@ -1155,7 +1155,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-store.md",
+    "docs/extend/plugin-catalogue/kubeclaw.telemetry-store.md",
     [
       1,
       2,
@@ -1165,7 +1165,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.transport-publisher.md",
+    "docs/extend/plugin-catalogue/kubeclaw.transport-publisher.md",
     [
       1,
       2,
@@ -1175,7 +1175,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.visual.md",
+    "docs/extend/plugin-catalogue/kubeclaw.visual.md",
     [
       1,
       2,
@@ -1185,7 +1185,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/extend/plugin-catalogue/kubeclaw.wait-store.md",
+    "docs/extend/plugin-catalogue/kubeclaw.wait-store.md",
     [
       1,
       2,
@@ -1195,7 +1195,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/reference/capabilities.md",
+    "docs/reference/capabilities.md",
     [
       1,
       2
@@ -1204,7 +1204,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/reference/cli.md",
+    "docs/reference/cli.md",
     [
       1,
       2
@@ -1213,7 +1213,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/reference/endpoints.md",
+    "docs/reference/endpoints.md",
     [
       1
     ],
@@ -1221,7 +1221,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/reference/environment-variables.md",
+    "docs/reference/environment-variables.md",
     [
       1,
       2
@@ -1230,7 +1230,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/reference/events.md",
+    "docs/reference/events.md",
     [
       1,
       2,
@@ -1243,7 +1243,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/reference/helm-values.md",
+    "docs/reference/helm-values.md",
     [
       1
     ],
@@ -1251,7 +1251,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/reference/lint-policy-generated.md",
+    "docs/reference/lint-policy-generated.md",
     [
       1
     ],
@@ -1259,7 +1259,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/reference/platform-surfaces-generated.md",
+    "docs/reference/platform-surfaces-generated.md",
     [
       1
     ],
@@ -1267,7 +1267,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/reference/plugin-configuration.md",
+    "docs/reference/plugin-configuration.md",
     [
       1
     ],
@@ -1275,7 +1275,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/reference/schemas.md",
+    "docs/reference/schemas.md",
     [
       1
     ],
@@ -1283,7 +1283,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/reference/sdk-exports.md",
+    "docs/reference/sdk-exports.md",
     [
       1,
       2,
@@ -1579,7 +1579,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/reference/secrets.md",
+    "docs/reference/secrets.md",
     [
       1,
       2,
@@ -1589,7 +1589,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/reference/verification-commands.md",
+    "docs/reference/verification-commands.md",
     [
       1,
       2,
@@ -1962,7 +1962,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/reference/workflows.md",
+    "docs/reference/workflows.md",
     [
       1
     ],
@@ -1970,7 +1970,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/status/open-issues.md",
+    "docs/status/open-issues.md",
     [
       1
     ],
@@ -1978,7 +1978,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/use/plugins.md",
+    "docs/use/plugins.md",
     [
       1
     ],
@@ -1986,7 +1986,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/reference/common-errors-configuration.md",
+    "docs/reference/common-errors-configuration.md",
     [
       1,
       2,
@@ -2284,7 +2284,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/reference/common-errors-foundation.md",
+    "docs/reference/common-errors-foundation.md",
     [
       1,
       2,
@@ -2305,7 +2305,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/reference/common-errors-nova.md",
+    "docs/reference/common-errors-nova.md",
     [
       1,
       2,
@@ -2348,7 +2348,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/reference/common-errors-platform.md",
+    "docs/reference/common-errors-platform.md",
     [
       1
     ],
@@ -2356,7 +2356,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/reference/common-errors-prism.md",
+    "docs/reference/common-errors-prism.md",
     [
       1,
       2,
@@ -2369,7 +2369,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/reference/common-errors-worker.md",
+    "docs/reference/common-errors-worker.md",
     [
       1,
       2,
@@ -2384,7 +2384,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "pages",
-    "docs/site/reference/common-errors.md",
+    "docs/reference/common-errors.md",
     [
       1
     ],
@@ -2392,7 +2392,7 @@ export function publicationClaimsPurposeInputBytes(bytes,mixedInputs) {
   ],
   [
     "assets",
-    "docs/site/reference/generated-documentation-map.json",
+    "docs/reference/generated-documentation-map.json",
     null,
     null
   ]

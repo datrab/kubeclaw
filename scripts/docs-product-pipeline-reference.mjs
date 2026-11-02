@@ -3,7 +3,7 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import ts from 'typescript';
 
-export const pipelinePage = 'docs/site/reference/workflows.md';
+export const pipelinePage = 'docs/reference/workflows.md';
 const contracts = 'skills/common/plugin-runtime/sdk/src/generated/contracts.ts';
 const compiler = 'skills/nova/project/compiler.ts';
 const progress = 'skills/nova/project_setup/tools/progress-scaffold-validation.ts';

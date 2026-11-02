@@ -23,7 +23,7 @@ function anchors(text) {
 }
 const errors = [];
 let localLinks = 0; let pinnedLinks = 0; const objects = new Map();
-for (const file of walk(path.join(root, 'docs/site/extend'))) {
+for (const file of walk(path.join(root, 'docs/extend'))) {
   const text = fs.readFileSync(file, 'utf8');
   const prose = text.replace(/```[^]*?```/gu, '');
   // Include reference-style definitions as well as inline links.

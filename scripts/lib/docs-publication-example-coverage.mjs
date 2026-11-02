@@ -129,7 +129,7 @@ export function bindPublicationExampleCoverage(root, pages, assets, declaration)
   }
   assert.equal(declaredPages.size, 0, `missing classified example pages: ${[...declaredPages.keys()]}`);
   for (const asset of assets) {
-    const relative = `docs/site/${asset}`;
+    const relative = `docs/${asset}`;
     const record = declaredAssets.get(relative);
     assert(record, `unclassified publication example asset: ${relative}`);
     exactKeys(record, ['path', 'sha256', 'owner', 'claim', 'executionBoundary', 'basis', 'checks'], relative);

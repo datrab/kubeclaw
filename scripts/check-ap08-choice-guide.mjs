@@ -5,7 +5,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 
 const root = path.resolve(import.meta.dirname, '..');
-const pagePath = path.join(root, 'docs/site/extend/README.md');
+const pagePath = path.join(root, 'docs/extend/README.md');
 const inventoryPath = path.join(root, 'docs/blueprint/generated/ap08-extension-inventory.json');
 const page = fs.readFileSync(pagePath, 'utf8');
 const inventory = JSON.parse(fs.readFileSync(inventoryPath, 'utf8'));

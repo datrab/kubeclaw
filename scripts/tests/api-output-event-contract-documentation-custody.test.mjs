@@ -28,7 +28,7 @@ function verifier({overrides=new Map(),cwd=root,selectedGraph=graph,rows=raw,nat
  return {acquire:(selectedRoot=root)=>context.api.acquire(selectedRoot,selectedGraph,classify,[source]),slot:(role,receipt,selectedSource=source)=>context.api.slot(selectedSource,role,receipt)};
 }
 test('exact two documentation targets and distinct writer/failure receipts preserve all raw classifications',()=>{
- const v=verifier(),r=v.acquire();assert.deepEqual(Array.from(r.targets),['docs/generated/inventory/event-contracts.json','docs/site/reference/events.md']);assert.equal(raw.length,4);assert.equal(raw.filter(row=>row.role==='unknown').length,2);
+ const v=verifier(),r=v.acquire();assert.deepEqual(Array.from(r.targets),['docs/generated/inventory/event-contracts.json','docs/reference/events.md']);assert.equal(raw.length,4);assert.equal(raw.filter(row=>row.role==='unknown').length,2);
  assert.equal(v.slot(raw[1],r).kind,'two-member-documentation-map-writer');assert.equal(v.slot(raw[3],r).kind,'source-owned-failure-diagnostic');assert.equal(v.slot(raw[0],r),false);assert.equal(v.slot(raw[2],r),false);
  assert(r.slots.every(s=>s.role==='non-api'&&s.runtimeExecutionAuthorized===false&&s.apiApplyAuthorized===false));
  assert.equal(r.qualifiedSourceVectorSatisfaction,'not-observed');assert.equal(r.currentEventSemanticClosureGranted,false);assert.equal(r.defaultMayPartiallyWrite,true);assert.equal(r.checkModeNeverWrites,true);
@@ -46,13 +46,13 @@ test('added missing reordered renamed traversal callback and outside maps plus s
   s=>s.replace('if (!check) for (const [file, content] of outputs)','if (check) for (const [file, content] of outputs)'),
   s=>s.replace('bindings.qualifiedSourceVectorSha256 !== census.sourceSetSha256','false'),
   s=>s.replace('[inventoryPath, JSON.stringify(inventory, null, 2) + \'\\n\'],',''),
-  s=>s.replace('const outputs = new Map([',"const outputs = new Map([['docs/site/reference/extra.md','extra'],"),
+  s=>s.replace('const outputs = new Map([',"const outputs = new Map([['docs/reference/extra.md','extra'],"),
   s=>s.replace('for (const [file, content] of outputs)','for (const [file, content] of [...outputs].reverse())')
  ];
  for(const mutate of mutations){const after=mutate(before);assert.notEqual(after,before);assert.throws(()=>verifier({overrides:new Map([[path.join(root,source),Buffer.from(after)]])}).acquire(),/fixed source\/input/);}
 });
 test('helper binding page and raw descriptor changes refuse without a census or source-vector update',()=>{
- for(const p of ['scripts/lib/docs-event-contracts.mjs','scripts/lib/docs-event-reference-collector.mjs','scripts/lib/docs-event-reference.mjs','docs/config/event-reference-bindings.json','docs/site/reference/events.md']){
+ for(const p of ['scripts/lib/docs-event-contracts.mjs','scripts/lib/docs-event-reference-collector.mjs','scripts/lib/docs-event-reference.mjs','docs/config/event-reference-bindings.json','docs/reference/events.md']){
   const b=fs.readFileSync(path.join(root,p));assert.throws(()=>verifier({overrides:new Map([[path.join(root,p),Buffer.concat([b,Buffer.from('\nUNREVIEWED')])]])}).acquire(),/fixed source\/input/);
  }
  const facts=structuredClone(deriveNativeOperationFacts(root,source,raw.filter(r=>r.role==='unknown').map(r=>({expression:r.expression}))));assert(facts.length);facts[0].sha256='0'.repeat(64);assert.throws(()=>verifier({nativeFacts:facts}).acquire(),/complete native facts/);
@@ -76,7 +76,7 @@ test('only root admission stamp bytes may change; complete authored bindings rem
  for(const bad of [changed.replace('a'.repeat(64),'invalid'),changed.replace('"families": [','"extra": true,\n  "families": ['),changed.replace('"families": [','"qualifiedSourceVectorSha256": "'+'b'.repeat(64)+'",\n  "families": ['),changed.replace('"qualificationStatus":','"renamedQualificationStatus":')])assert.throws(()=>verifier({overrides:new Map([[file,Buffer.from(bad)]])}).acquire(),/fixed source\/input/);
 });
 test('only existing generated region interior may change without claiming output freshness',()=>{
- const file=path.join(root,'docs/site/reference/events.md'),before=fs.readFileSync(file,'utf8'),begin='<!-- BEGIN GENERATED EVENT CONTRACT REFERENCE -->',end='<!-- END GENERATED EVENT CONTRACT REFERENCE -->';
+ const file=path.join(root,'docs/reference/events.md'),before=fs.readFileSync(file,'utf8'),begin='<!-- BEGIN GENERATED EVENT CONTRACT REFERENCE -->',end='<!-- END GENERATED EVENT CONTRACT REFERENCE -->';
  const at=before.indexOf(begin)+begin.length,to=before.indexOf(end);assert(at>=begin.length&&to>at);
  const changed=before.slice(0,at)+'\nSTALE generated apiVersion: v1; kind: Secret\n'+before.slice(to),r=verifier({overrides:new Map([[file,Buffer.from(changed)]])}).acquire();
  assert.equal(r.currentEventSemanticClosureGranted,false);assert.equal(r.qualifiedSourceVectorSatisfaction,'not-observed');
@@ -104,8 +104,8 @@ test('actual sealed mode program uses fake inputs only: invalid argv/check/defau
  const drift=mode({args:['--check'],stale:true});assert.equal(drift.exitCode,1);assert(drift.stderr[0].includes('DOC_DRIFT_EVENT_CONTRACT'));assert.equal(drift.writes.size,0);assert.equal(drift.mkdir.length,0);
  const staleRegion=mode({args:['--check'],generatedRegionDrift:true});assert.equal(staleRegion.exitCode,1);assert(staleRegion.stderr[0].includes('DOC_DRIFT_EVENT_CONTRACT'));assert.equal(staleRegion.writes.size,0);assert.equal(staleRegion.mkdir.length,0);
  const mismatch=mode({sourceMismatch:true});assert.equal(mismatch.exitCode,1);assert(mismatch.stderr[0].includes('EVENT_SOURCE_SEMANTIC_DISPOSITION_REQUIRED'));assert.equal(mismatch.bindingCalls,0);assert.equal(mismatch.writes.size,0);assert.equal(mismatch.mkdir.length,0);
- const generated=mode();assert.equal(generated.exitCode,0);assert.deepEqual(generated.attempts,[path.join(root,'docs/generated/inventory/event-contracts.json'),path.join(root,'docs/site/reference/events.md')]);assert.equal(generated.writes.size,2);
+ const generated=mode();assert.equal(generated.exitCode,0);assert.deepEqual(generated.attempts,[path.join(root,'docs/generated/inventory/event-contracts.json'),path.join(root,'docs/reference/events.md')]);assert.equal(generated.writes.size,2);
  const partial=mode({secondWriteFailure:true});assert.equal(partial.exitCode,1);assert.equal(partial.attempts.length,2);assert.equal(partial.writes.size,1);assert(partial.writes.has(path.join(root,'docs/generated/inventory/event-contracts.json')));assert(partial.stderr[0].includes('controlled second-write failure'));
  // API-looking samples stay in the two documentation files / diagnostic stream.
- assert(generated.writes.get(path.join(root,'docs/site/reference/events.md')).includes('kind: Secret'));assert.equal(generated.stdout.length,1);assert.equal(partial.stdout.length,0);
+ assert(generated.writes.get(path.join(root,'docs/reference/events.md')).includes('kind: Secret'));assert.equal(generated.stdout.length,1);assert.equal(partial.stdout.length,0);
 });

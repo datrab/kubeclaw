@@ -12,7 +12,7 @@ import { resolveCapabilityGrants } from '../skills/common/plugin-runtime/foundat
 const root = path.resolve(import.meta.dirname, '..');
 const citationPaths = [
   'charts/kubeclaw/files/config/swarm.config.json',
-  'docs/site/use/workflows/wait-resume/platform.template.json',
+  'docs/use/workflows/wait-resume/platform.template.json',
   'tests/verification/e2e/support/platform-config.ts',
   'tests/verification/e2e/support/config-profiles/standard.json',
   'skills/common/plugin-runtime/foundation/config/platform.schema.json',
@@ -41,7 +41,7 @@ assert.equal(JSON.stringify(compact), original, 'qualification modified authored
 
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-capability-swarm-boundary-'));
 try {
-  const platform = JSON.parse(read('docs/site/use/workflows/wait-resume/platform.template.json'));
+  const platform = JSON.parse(read('docs/use/workflows/wait-resume/platform.template.json'));
   const file = path.join(temporary, 'platform.json');
   fs.writeFileSync(file, JSON.stringify(platform));
   const loaded = loadPlatformConfig(file);
@@ -84,7 +84,7 @@ for (const relative of citationPaths) {
 
 const generated = spawnSync(process.execPath, ['scripts/docs-publication.mjs', 'capability-page'], { cwd: root, encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
 assert.equal(generated.status, 0, generated.stderr);
-assert.equal(generated.stdout, read('docs/site/reference/capabilities.md'), 'capability reader page differs from canonical generator');
+assert.equal(generated.stdout, read('docs/reference/capabilities.md'), 'capability reader page differs from canonical generator');
 assert(generated.stdout.includes('## Platform Grants Are Not Swarm Roles\n'));
 console.log('Native swarm boundary PASS: no role/grant/provider translation; 6 invalid-authority controls rejected; known override accepted.');
 console.log('Separate platform loader and finite registry grant/denial controls PASS; canonical capability page exact.');

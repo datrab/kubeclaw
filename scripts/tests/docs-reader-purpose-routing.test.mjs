@@ -26,7 +26,7 @@ test('actual finite preview role and discovery work cold and warm without invent
  assert.deepEqual(JSON.parse(read('package.json')),{});
  const record=JSON.parse(read(authority)).documentationToolBoundary.purposeRoutes[0];assert.deepEqual(record.documentationEntries,[]);assert.deepEqual(record.graphEdges,[]);
 }));
-for(const input of ['.github/workflows/docs-checks.yaml','scripts/tests/docs-reader-redirects.test.mjs','scripts/tests/docs-reader-redirects.browser.mjs','docs/site/reference/documentation-site.md']){
+for(const input of ['.github/workflows/docs-checks.yaml','scripts/tests/docs-reader-redirects.test.mjs','scripts/tests/docs-reader-redirects.browser.mjs','docs/reference/documentation-site.md']){
  for(const warm of [false,true])test(`${warm?'warm':'cold'} actual external caller/CLI proof substitution rejects: ${input}`,()=>fixture(({root,write,read,discover})=>{
   if(warm)assert.deepEqual(discover(),[]);
   const original=read(input);

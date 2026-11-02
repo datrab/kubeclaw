@@ -6,7 +6,7 @@ import path from 'node:path';
 import ts from 'typescript';
 
 const root = path.resolve(import.meta.dirname, '..');
-const target = path.join(root, 'docs/site/reference/buster-error-codes.md');
+const target = path.join(root, 'docs/reference/buster-error-codes.md');
 const revisionArg = process.argv.find(argument => argument.startsWith('--revision='));
 const revision = revisionArg?.slice('--revision='.length)
   ?? (fs.existsSync(target) ? fs.readFileSync(target, 'utf8').match(/^Evidence revision: `([a-f0-9]{40})`$/mu)?.[1] : undefined);

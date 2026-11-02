@@ -8,7 +8,7 @@ function fixture() {
   const record = {
     id: 'pipeline-topic', revision, author: 'writer', reviewer: 'independent-reader',
     gateIds: ['A911-11'], requirementIds: ['REF-001'],
-    pages: ['docs/site/reference/workflows.md'], sources: ['scripts/docs-pipeline.mjs'],
+    pages: ['docs/reference/workflows.md'], sources: ['scripts/docs-pipeline.mjs'],
     checks: [{ command: 'node relevant-check.mjs', exitCode: 0, observation: 'baseline and selected changes checked' }],
     review: { sourceAccuracy: 'PASS', readerUsability: 'PASS', quality: 'PASS' },
     summary: 'Pipeline reference and drift coverage checked.', limits: ['No deployment claim.'],
@@ -40,7 +40,7 @@ test('unknown IDs, missing canonical page and duplicate acceptance are rejected'
   for (const change of [
     x => { x.record.gateIds.push('A911-99'); },
     x => { x.record.requirementIds.push('UNKNOWN'); },
-    x => { x.record.pages = ['docs/site/reference/other.md']; },
+    x => { x.record.pages = ['docs/reference/other.md']; },
     x => { x.matrix.completionRecords.push({ ...x.record, id: 'duplicate' }); },
   ]) {
     const x = fixture(); change(x); assert.throws(() => x.run());

@@ -18,7 +18,7 @@ test('historical review prose is scoped while broken links and current source cl
     fs.symlinkSync(path.resolve(import.meta.dirname, '../../../node_modules'), path.join(root, 'node_modules'), 'dir');
     fs.writeFileSync(path.join(root, 'package.json'), '{}\n');
     const review = path.join(root, 'docs/review/snapshot.md');
-    const current = path.join(root, 'docs/site/current.md');
+    const current = path.join(root, 'docs/current.md');
     const run = () => spawnSync(process.execPath, [checker], { encoding: 'utf8' });
     fs.writeFileSync(review, 'Historical location: `skills/retired/source.ts`.');
     execFileSync('git', ['init', '-q'], { cwd: root });

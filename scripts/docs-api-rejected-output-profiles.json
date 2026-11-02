@@ -63,7 +63,7 @@
         "--values",
         "examples/buster-values.yaml"
       ],
-      "canonicalProcedure": "docs/site/use/install.md#select-configuration",
+      "canonicalProcedure": "docs/use/install.md#select-configuration",
       "owner": "platform operator preparing agent values",
       "safeStop": "Do not deploy this illustrative file alone. The chart rejects it before any Kubernetes resource is emitted.",
       "preparationCriterion": "Prepare complete Buster values with exactly one buster-v2-runtime container and configured node-reachable registry transport and credentials, then require successful bound offline rendering before deployment. The runtime deploy path additionally requires a verified selected runtime release materialization; no release receipt is fabricated."

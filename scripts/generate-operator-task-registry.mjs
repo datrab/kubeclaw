@@ -46,7 +46,7 @@ assert.deepEqual(authoredRecoveryOutcomes.map(({ code, implementationAuthority }
 const variantIds = new Set((runControl.variants ?? []).map((variant) => variant.variantId));
 for (const outcome of authoredRecoveryOutcomes) {
   assert.ok(variantIds.has(outcome.variantId), `${outcome.code}: recovery variant is not registered`);
-  assert.equal(outcome.documentation, 'docs/site/use/operate.md#recover-after-interruption',
+  assert.equal(outcome.documentation, 'docs/use/operate.md#recover-after-interruption',
     `${outcome.code}: recovery documentation authority is invalid`);
 }
 const generated = `${JSON.stringify({

@@ -9,7 +9,7 @@ import { fileURLToPath } from 'node:url';
 import test from 'node:test';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
-const guide = fs.readFileSync(path.join(root, 'docs/site/use/install.md'), 'utf8');
+const guide = fs.readFileSync(path.join(root, 'docs/use/install.md'), 'utf8');
 const marker = guide.indexOf('schema_expected_version=');
 assert(marker > 0, 'the documented strict schema step must exist');
 const start = guide.lastIndexOf('```bash\n', marker) + '```bash\n'.length;

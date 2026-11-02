@@ -11,13 +11,13 @@ const revision = 'bcf032f241b432bf920baa9ee5f727947921447d';
 // assessment. Bind guide, source, range AND revision; this is not a general
 // mixed-revision allowance. The cited object still equals current test Source.
 const reviewedLinkCorrections = new Map([
-  [JSON.stringify(['docs/site/extend/buster.md',
+  [JSON.stringify(['docs/extend/buster.md',
     'skills/buster/plugins/coverage-budget/tests/live-function.test.ts', '9', '51']),
   '399d775e8efa7b54267af98d04463d6480e63684'],
 ]);
 const specifications = [
   {
-    file: 'docs/site/extend/contracts.md',
+    file: 'docs/extend/contracts.md',
     minimumLinks: 15,
     required: [
       '## Why KubeClaw Uses Five Contracts',
@@ -30,7 +30,7 @@ const specifications = [
     ],
   },
   {
-    file: 'docs/site/extend/effectful-plugin.md',
+    file: 'docs/extend/effectful-plugin.md',
     minimumLinks: 10,
     required: [
       '## Follow One Effectful Stage From Package To Test',
@@ -43,7 +43,7 @@ const specifications = [
     ],
   },
   {
-    file: 'docs/site/extend/buster.md',
+    file: 'docs/extend/buster.md',
     minimumLinks: 10,
     required: [
       '## Why Buster Separates Plans, Providers, And Reports',
@@ -56,7 +56,7 @@ const specifications = [
     ],
   },
   {
-    file: 'docs/site/extend/nova.md',
+    file: 'docs/extend/nova.md',
     minimumLinks: 12,
     required: [
       '## Why Nova Separates Orchestration From Authority',

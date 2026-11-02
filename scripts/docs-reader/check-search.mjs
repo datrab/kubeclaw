@@ -4,12 +4,14 @@ import path from 'node:path';
 import { searchReaderPages } from './renderer.mjs';
 
 const root = path.resolve(process.argv[2] ?? '.tmp/docs-publication');
-const manifest = JSON.parse(fs.readFileSync('docs/config/documentation-publication-manifest.json', 'utf8'));
+const manifest = JSON.parse(fs.readFileSync(path.join(root, 'reader-manifest.json'), 'utf8'));
+const walk = directory => fs.readdirSync(directory, {withFileTypes: true}).flatMap(entry => entry.isDirectory() ? walk(path.join(directory, entry.name)) : entry.name.endsWith('.md') ? [path.relative('docs', path.join(directory, entry.name)).split(path.sep).join('/').replace(/\.md$/u, '.html')] : []);
 const source = fs.readFileSync(path.join(root, 'search-index.js'), 'utf8');
 const prefix = 'window.kubeclawSearchIndex=';
 assert(source.startsWith(prefix) && source.endsWith(';\n'), 'Invalid reader index envelope');
 const index = JSON.parse(source.slice(prefix.length, -2));
-const expected = manifest.pages.map(item => item.route.slice(1)).sort();
+const expected = walk('docs').sort();
+assert.equal(expected.length, manifest.pageCount);
 assert.deepEqual(index.map(item => item.route).sort(), expected, 'Search must contain exactly the canonical manifest, not internal artifacts or auxiliary pages');
 assert.equal(new Set(index.map(item => item.route)).size, index.length);
 assert(index.every(item => typeof item.title === 'string' && item.title && Array.isArray(item.headings)

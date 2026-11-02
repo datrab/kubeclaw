@@ -143,13 +143,14 @@ export async function verifyDiagramArtifact(outputRoot, repositoryRoot) {
     const bytes = fs.readFileSync(file); assert.equal(hash(bytes), entry.sha256); assert.equal(bytes.length, entry.bytes); return bytes;
   }
   const manifest = JSON.parse(read('diagram-manifest.json')); assert.equal(manifest.schemaVersion, 'kubeclaw-rendered-diagrams.v1');
-  const canonical = JSON.parse(fs.readFileSync(path.join(repositoryRoot, 'docs/config/documentation-publication-manifest.json'), 'utf8')).pages.map(entry => { assert(entry.sourcePath.startsWith('docs/site/')); return entry.sourcePath.slice('docs/site/'.length); });
+  const walk = directory => fs.readdirSync(directory, {withFileTypes: true}).flatMap(entry => entry.isDirectory() ? walk(path.join(directory, entry.name)) : entry.name.endsWith('.md') ? [path.relative(path.join(repositoryRoot, 'docs'), path.join(directory, entry.name)).split(path.sep).join('/')] : []);
+  const canonical = walk(path.join(repositoryRoot, 'docs'));
   assert.equal(new Set(manifest.pages.map(page => page.path)).size, manifest.pages.length);
   assert.deepEqual(new Set(manifest.pages.map(page => page.path)), new Set(canonical));
   const pages = [], observed = [];
   for (const page of manifest.pages) {
     assert(page.path === path.posix.normalize(page.path) && !page.path.startsWith('../') && !path.isAbsolute(page.path) && !page.path.includes('\\') && page.path.endsWith('.md'));
-    const file = path.join(root, page.path); assert.equal(fs.realpathSync(file), file); const bytes = fs.readFileSync(file); assert.equal(hash(bytes), page.sourceMarkdownSha256);
+    const file = path.join(repositoryRoot, 'docs', page.path); assert.equal(fs.realpathSync(file), file); const bytes = fs.readFileSync(file); assert.equal(hash(bytes), page.sourceMarkdownSha256);
     pages.push({ relative: page.path, text: bytes.toString('utf8') });
     const ids = new Set(), figures = [];
     function walk(node) {
@@ -176,7 +177,7 @@ export async function verifyDiagramArtifact(outputRoot, repositoryRoot) {
     }
   }
   assert.deepEqual(observed.sort(), manifest.diagrams.map(diagram => diagram.id).sort(), 'Rendered diagram set differs from its source registry');
-  const registry = JSON.parse(fs.readFileSync(path.join(repositoryRoot, 'docs/config/documentation-diagrams.json'), 'utf8'));
+  const registry = JSON.parse(fs.readFileSync(path.join(repositoryRoot, 'scripts/docs-reader/diagram-registry.json'), 'utf8'));
   const fresh = await prepareDiagramPages(pages, registry);
   assert.deepEqual(fresh.manifest, manifest, 'Diagram differs from a fresh deterministic render of its source');
   return { pages: pages.length, diagrams: observed.length, freshRenderHashesMatched: observed.length, localOnly: true, limit: 'Source/owner/question/visible alternative routing, static SVG and deterministic render checks only; not per-edge semantic or human screenreader acceptance.' };

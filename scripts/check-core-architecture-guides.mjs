@@ -19,7 +19,7 @@ function sourceFiles(directory) {
 
 const specifications = [
   {
-    file: 'docs/site/understand/nova-core.md',
+    file: 'docs/understand/nova-core.md',
     minimumLinks: 60,
     required: [
       '## The Core Model', '## Authority and Invariants',
@@ -50,7 +50,7 @@ const specifications = [
     ],
   },
   {
-    file: 'docs/site/understand/plugin-runtime.md',
+    file: 'docs/understand/plugin-runtime.md',
     minimumLinks: 35,
     required: [
       '## Four Identities That Must Not Be Confused',
@@ -75,7 +75,7 @@ const specifications = [
     ],
   },
   {
-    file: 'docs/site/understand/worker-core.md',
+    file: 'docs/understand/worker-core.md',
     minimumLinks: 45,
     required: [
       '## The Two Execution Layers', '## Attempt Flow',
@@ -140,12 +140,12 @@ for (const specification of specifications) {
   }
 }
 
-const entry = fs.readFileSync(path.join(root, 'docs/site/understand/README.md'), 'utf8');
+const entry = fs.readFileSync(path.join(root, 'docs/understand/README.md'), 'utf8');
 for (const target of ['nova-core.md', 'plugin-runtime.md', 'worker-core.md']) {
   assert(entry.includes(`](${target})`), `architecture entry does not link to ${target}`);
 }
 
-const surfaces = fs.readFileSync(path.join(root, 'docs/site/product-surfaces.md'), 'utf8');
+const surfaces = fs.readFileSync(path.join(root, 'docs/product-surfaces.md'), 'utf8');
 for (const id of ['SUR-CTL-02', 'SUR-CTL-03', 'SUR-CTL-04', 'SUR-CTL-05',
   'SUR-COM-02', 'SUR-COM-03', 'SUR-DAT-01', 'SUR-DAT-02']) {
   const row = surfaces.split('\n').find((line) => line.startsWith(`| ${id} |`));
@@ -153,58 +153,58 @@ for (const id of ['SUR-CTL-02', 'SUR-CTL-03', 'SUR-CTL-04', 'SUR-CTL-05',
 }
 
 const requirementMarkers = {
-  'ARC-001': ['docs/site/understand/components-and-authority.md', '## Authority Map'],
-  'ARC-002': ['docs/site/understand/components-and-authority.md', 'Core owns graph execution, lifecycle state, effects, recovery, waits, and final run closure.'],
-  'ARC-003': ['docs/site/understand/components-and-authority.md', '## Runtime Role, Engine, and Specialist'],
-  'ARC-004': ['docs/site/understand/request-state-recovery.md', '## Failure Paths'],
-  'ARC-005': ['docs/site/understand/components-and-authority.md', '**Rejected alternative:**'],
-  'ARC-006': ['docs/site/understand/components-and-authority.md', '## Communication, Persistence, And Retention Map'],
-  'NVC-001': ['docs/site/understand/components-and-authority.md', '## Nova and Nova Core'],
-  'NVC-002': ['docs/site/understand/nova-core.md', '## 1. Project Admission and Compilation'],
-  'NVC-003': ['docs/site/understand/nova-core.md', 'Source admission creates a second, narrower boundary'],
-  'NVC-004': ['docs/site/understand/nova-core.md', '## 2. Graph Construction, Validation, and Freeze'],
-  'NVC-005': ['docs/site/understand/nova-core.md', '## 5. Scheduling, Readiness, and Concurrency'],
-  'NVC-006': ['docs/site/understand/nova-core.md', '## 6. Stage Dispatch and Attempt Authority'],
-  'NVC-007': ['docs/site/understand/nova-core.md', 'Each attempt receives a revocable invocation lease.'],
-  'NVC-008': ['docs/site/understand/nova-core.md', '## 8. Technical Retry and Product Repair'],
-  'NVC-009': ['docs/site/understand/nova-core.md', '## 9. Wait, Signal, and Resume'],
-  'NVC-010': ['docs/site/understand/nova-core.md', '## 12. Cancellation and Shutdown'],
-  'NVC-011': ['docs/site/understand/nova-core.md', '## 10. Effects, Locks, Fencing, and Receipts'],
-  'NVC-012': ['docs/site/understand/nova-core.md', '## 11. Artifact Checkpoints and Visibility'],
-  'NVC-013': ['docs/site/understand/nova-core.md', '## 4. Durable State and the Run Root'],
-  'NVC-014': ['docs/site/understand/nova-core.md', '## 7. Lifecycle State and Result Mapping'],
-  'NVC-015': ['docs/site/understand/nova-core.md', '## 14. Administrative Reopen'],
-  'NVC-016': ['docs/site/understand/nova-core.md', '## 15. Nova-to-Buster Test Dispatch'],
-  'NVC-017': ['docs/site/understand/nova-core.md', 'The output contract is `pipeline-audit.v1`.'],
-  'NVC-018': ['docs/site/understand/nova-core.md', '## 17. Failure Families and Operator Response'],
-  'PLG-001': ['docs/site/understand/plugin-runtime.md', '## Four Identities That Must Not Be Confused'],
-  'PLG-002': ['docs/site/understand/plugin-runtime.md', '## Discovery Reads Data, Not Executable Code'],
-  'PLG-003': ['docs/site/understand/plugin-runtime.md', '## Manifest, Schema, And Path Admission'],
-  'PLG-004': ['docs/site/understand/plugin-runtime.md', '## Replacement, Disablement, And Removal'],
-  'PLG-005': ['docs/site/understand/plugin-runtime.md', '## Integrity And Provenance'],
-  'PLG-006': ['docs/site/understand/plugin-runtime.md', '## Import Audit Is An Admission Check, Not The Runtime Sandbox'],
-  'PLG-007': ['docs/site/understand/plugin-runtime.md', '## Registry Construction And Global Ownership'],
-  'PLG-008': ['docs/site/understand/plugin-runtime.md', '## Capabilities And Grants'],
-  'PLG-009': ['docs/site/understand/plugin-runtime.md', 'There is no wildcard syntax.'],
-  'PLG-010': ['docs/site/understand/plugin-runtime.md', '## Configuration Ownership And Precedence'],
-  'PLG-011': ['docs/site/understand/plugin-runtime.md', '## Activation Is Fail-Closed'],
-  'PLG-012': ['docs/site/understand/plugin-runtime.md', 'A safe replacement sequence is:'],
-  'PLG-013': ['docs/site/understand/plugin-runtime.md', '## Isolation For External Stages And Observers'],
-  'PLG-014': ['docs/site/understand/plugin-runtime.md', 'External capability adapters are rejected.'],
-  'WKC-001': ['docs/site/understand/worker-core.md', 'Worker Core runs one bounded attempt.'],
-  'WKC-002': ['docs/site/understand/worker-core.md', '## Contract And Version Model'],
-  'WKC-003': ['docs/site/understand/worker-core.md', '### Registration And Readiness'],
-  'WKC-004': ['docs/site/understand/worker-core.md', '### Claims, Generation, And Duplicate Protection'],
-  'WKC-005': ['docs/site/understand/worker-core.md', '## Durable Ownership'],
-  'WKC-006': ['docs/site/understand/worker-core.md', '## Native Launch And Trust Boundary'],
-  'WKC-007': ['docs/site/understand/worker-core.md', '## Native Control Channel'],
-  'WKC-008': ['docs/site/understand/worker-core.md', '### Native Output Spool'],
-  'WKC-009': ['docs/site/understand/worker-core.md', '## Resource Policy And Accounting'],
-  'WKC-010': ['docs/site/understand/worker-core.md', '## Deadlines, Cancellation, And Termination'],
-  'WKC-011': ['docs/site/understand/worker-core.md', '## Attempt Journal And Commit Boundaries'],
-  'WKC-012': ['docs/site/understand/worker-core.md', 'does not implement an ownership heartbeat'],
-  'WKC-013': ['docs/site/understand/worker-core.md', '## Result, Digest, And Receipt'],
-  'WKC-014': ['docs/site/understand/worker-core.md', '## Error Reference And Retry Decisions'],
+  'ARC-001': ['docs/understand/components-and-authority.md', '## Authority Map'],
+  'ARC-002': ['docs/understand/components-and-authority.md', 'Core owns graph execution, lifecycle state, effects, recovery, waits, and final run closure.'],
+  'ARC-003': ['docs/understand/components-and-authority.md', '## Runtime Role, Engine, and Specialist'],
+  'ARC-004': ['docs/understand/request-state-recovery.md', '## Failure Paths'],
+  'ARC-005': ['docs/understand/components-and-authority.md', '**Rejected alternative:**'],
+  'ARC-006': ['docs/understand/components-and-authority.md', '## Communication, Persistence, And Retention Map'],
+  'NVC-001': ['docs/understand/components-and-authority.md', '## Nova and Nova Core'],
+  'NVC-002': ['docs/understand/nova-core.md', '## 1. Project Admission and Compilation'],
+  'NVC-003': ['docs/understand/nova-core.md', 'Source admission creates a second, narrower boundary'],
+  'NVC-004': ['docs/understand/nova-core.md', '## 2. Graph Construction, Validation, and Freeze'],
+  'NVC-005': ['docs/understand/nova-core.md', '## 5. Scheduling, Readiness, and Concurrency'],
+  'NVC-006': ['docs/understand/nova-core.md', '## 6. Stage Dispatch and Attempt Authority'],
+  'NVC-007': ['docs/understand/nova-core.md', 'Each attempt receives a revocable invocation lease.'],
+  'NVC-008': ['docs/understand/nova-core.md', '## 8. Technical Retry and Product Repair'],
+  'NVC-009': ['docs/understand/nova-core.md', '## 9. Wait, Signal, and Resume'],
+  'NVC-010': ['docs/understand/nova-core.md', '## 12. Cancellation and Shutdown'],
+  'NVC-011': ['docs/understand/nova-core.md', '## 10. Effects, Locks, Fencing, and Receipts'],
+  'NVC-012': ['docs/understand/nova-core.md', '## 11. Artifact Checkpoints and Visibility'],
+  'NVC-013': ['docs/understand/nova-core.md', '## 4. Durable State and the Run Root'],
+  'NVC-014': ['docs/understand/nova-core.md', '## 7. Lifecycle State and Result Mapping'],
+  'NVC-015': ['docs/understand/nova-core.md', '## 14. Administrative Reopen'],
+  'NVC-016': ['docs/understand/nova-core.md', '## 15. Nova-to-Buster Test Dispatch'],
+  'NVC-017': ['docs/understand/nova-core.md', 'The output contract is `pipeline-audit.v1`.'],
+  'NVC-018': ['docs/understand/nova-core.md', '## 17. Failure Families and Operator Response'],
+  'PLG-001': ['docs/understand/plugin-runtime.md', '## Four Identities That Must Not Be Confused'],
+  'PLG-002': ['docs/understand/plugin-runtime.md', '## Discovery Reads Data, Not Executable Code'],
+  'PLG-003': ['docs/understand/plugin-runtime.md', '## Manifest, Schema, And Path Admission'],
+  'PLG-004': ['docs/understand/plugin-runtime.md', '## Replacement, Disablement, And Removal'],
+  'PLG-005': ['docs/understand/plugin-runtime.md', '## Integrity And Provenance'],
+  'PLG-006': ['docs/understand/plugin-runtime.md', '## Import Audit Is An Admission Check, Not The Runtime Sandbox'],
+  'PLG-007': ['docs/understand/plugin-runtime.md', '## Registry Construction And Global Ownership'],
+  'PLG-008': ['docs/understand/plugin-runtime.md', '## Capabilities And Grants'],
+  'PLG-009': ['docs/understand/plugin-runtime.md', 'There is no wildcard syntax.'],
+  'PLG-010': ['docs/understand/plugin-runtime.md', '## Configuration Ownership And Precedence'],
+  'PLG-011': ['docs/understand/plugin-runtime.md', '## Activation Is Fail-Closed'],
+  'PLG-012': ['docs/understand/plugin-runtime.md', 'A safe replacement sequence is:'],
+  'PLG-013': ['docs/understand/plugin-runtime.md', '## Isolation For External Stages And Observers'],
+  'PLG-014': ['docs/understand/plugin-runtime.md', 'External capability adapters are rejected.'],
+  'WKC-001': ['docs/understand/worker-core.md', 'Worker Core runs one bounded attempt.'],
+  'WKC-002': ['docs/understand/worker-core.md', '## Contract And Version Model'],
+  'WKC-003': ['docs/understand/worker-core.md', '### Registration And Readiness'],
+  'WKC-004': ['docs/understand/worker-core.md', '### Claims, Generation, And Duplicate Protection'],
+  'WKC-005': ['docs/understand/worker-core.md', '## Durable Ownership'],
+  'WKC-006': ['docs/understand/worker-core.md', '## Native Launch And Trust Boundary'],
+  'WKC-007': ['docs/understand/worker-core.md', '## Native Control Channel'],
+  'WKC-008': ['docs/understand/worker-core.md', '### Native Output Spool'],
+  'WKC-009': ['docs/understand/worker-core.md', '## Resource Policy And Accounting'],
+  'WKC-010': ['docs/understand/worker-core.md', '## Deadlines, Cancellation, And Termination'],
+  'WKC-011': ['docs/understand/worker-core.md', '## Attempt Journal And Commit Boundaries'],
+  'WKC-012': ['docs/understand/worker-core.md', 'does not implement an ownership heartbeat'],
+  'WKC-013': ['docs/understand/worker-core.md', '## Result, Digest, And Receipt'],
+  'WKC-014': ['docs/understand/worker-core.md', '## Error Reference And Retry Decisions'],
 };
 assert.equal(Object.keys(requirementMarkers).length, 52,
   'core architecture requirement marker count changed');
@@ -218,11 +218,11 @@ const capabilityVocabulary = await import(pathToFileURL(path.join(root,
 assert.equal(capabilityVocabulary.CAPABILITY_IDS.length, 28,
   'plugin-facing capability count changed; update the runtime guide');
 for (const capability of capabilityVocabulary.CAPABILITY_IDS) {
-  assert(fs.readFileSync(path.join(root, 'docs/site/understand/plugin-runtime.md'), 'utf8').includes(`\`${capability}\``),
+  assert(fs.readFileSync(path.join(root, 'docs/understand/plugin-runtime.md'), 'utf8').includes(`\`${capability}\``),
     `plugin runtime guide does not name capability ${capability}`);
 }
 
-const novaGuide = fs.readFileSync(path.join(root, 'docs/site/understand/nova-core.md'), 'utf8');
+const novaGuide = fs.readFileSync(path.join(root, 'docs/understand/nova-core.md'), 'utf8');
 const novaSource = [path.join(root, 'skills/nova/core'), path.join(root, 'skills/nova/project')]
   .flatMap(sourceFiles)
   .map((file) => fs.readFileSync(file, 'utf8'))
@@ -249,7 +249,7 @@ const uncoveredNovaCodes = [...novaCodes].filter((code) =>
 assert.deepEqual(uncoveredNovaCodes.sort(), [],
   `Nova source contains undocumented error families: ${uncoveredNovaCodes.join(', ')}`);
 
-const workerGuide = fs.readFileSync(path.join(root, 'docs/site/understand/worker-core.md'), 'utf8');
+const workerGuide = fs.readFileSync(path.join(root, 'docs/understand/worker-core.md'), 'utf8');
 const workerSource = [path.join(root, 'skills/worker/core'),
   path.join(root, 'contracts/pipeline-worker-core/v1')]
   .flatMap(sourceFiles)
@@ -280,7 +280,7 @@ const undocumentedWorkerCodes = [...concreteWorkerCodes].filter((code) =>
 assert.deepEqual(undocumentedWorkerCodes.sort(), [],
   `Worker guide does not name source error codes: ${undocumentedWorkerCodes.join(', ')}`);
 
-const pluginGuide = fs.readFileSync(path.join(root, 'docs/site/understand/plugin-runtime.md'), 'utf8');
+const pluginGuide = fs.readFileSync(path.join(root, 'docs/understand/plugin-runtime.md'), 'utf8');
 const pluginSource = sourceFiles(path.join(root, 'skills/common/plugin-runtime/foundation'))
   .map((file) => fs.readFileSync(file, 'utf8'))
   .join('\n');

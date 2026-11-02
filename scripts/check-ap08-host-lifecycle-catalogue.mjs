@@ -9,8 +9,8 @@ const root = path.resolve(import.meta.dirname, '..');
 const revision = '32b02816cc19cc8865a45b221b8b6ca28e99e8fb';
 // Reader journeys have independently maintained evidence; catalogue authority stays fixed.
 const readerRevisions = new Map([
-  ['docs/site/extend/host-and-engine.md', '569f7b4933d4859cc67c80ddf40d5154ffd95ce5'],
-  ['docs/site/extend/testing.md', 'f68a7294abf0928c1aabf290c6a7e486c651a808'],
+  ['docs/extend/host-and-engine.md', '569f7b4933d4859cc67c80ddf40d5154ffd95ce5'],
+  ['docs/extend/testing.md', 'f68a7294abf0928c1aabf290c6a7e486c651a808'],
 ]);
 
 // Release image selection was independently refreshed without rewriting the
@@ -32,7 +32,7 @@ function pinnedLinks(relative, minimum) {
   const links = [...source.matchAll(/https:\/\/github\.com\/datrab\/kubeclaw\/blob\/([0-9a-f]{40})\/([^#)]+)#L([0-9]+)-L([0-9]+)/gu)];
   assert(links.length >= minimum, `${relative} has only ${links.length} pinned line links`);
   for (const [, linkRevision, repositoryPath, firstValue, lastValue] of links) {
-    const expectedRevision = relative === 'docs/site/extend/testing.md' && releaseEvidenceSources.has(`${repositoryPath}#L${firstValue}-L${lastValue}`)
+    const expectedRevision = relative === 'docs/extend/testing.md' && releaseEvidenceSources.has(`${repositoryPath}#L${firstValue}-L${lastValue}`)
       ? releaseEvidenceRevision : readerRevision;
     assert.equal(linkRevision, expectedRevision, `${relative} uses another revision for ${repositoryPath}`);
     const value = execFileSync('git', ['-C', root, 'show', `${expectedRevision}:${repositoryPath}`], { encoding: 'utf8' });
@@ -44,7 +44,7 @@ function pinnedLinks(relative, minimum) {
   return links.length;
 }
 
-const host = read('docs/site/extend/host-and-engine.md');
+const host = read('docs/extend/host-and-engine.md');
 for (const required of [
   '## Build An OpenClaw Hook Extension',
   '## Build An OpenClaw Tool Extension',
@@ -63,7 +63,7 @@ for (const required of [
   'Validate the result against the original attempt.',
 ]) assert(host.includes(required), `host-and-engine.md lacks Worker journey step: ${required}`);
 
-const lifecycle = read('docs/site/extend/testing.md');
+const lifecycle = read('docs/extend/testing.md');
 for (const required of [
   '## Use A Proof Ladder', '## Record A Reproducible Result',
   '## Test A Pipeline Stage', '## Test An Observer', '## Test A Capability Adapter',
@@ -75,8 +75,8 @@ for (const required of [
 ]) assert(lifecycle.includes(required), `testing.md lacks ${required}`);
 
 for (const [relative, source] of [
-  ['docs/site/extend/host-and-engine.md', host],
-  ['docs/site/extend/testing.md', lifecycle],
+  ['docs/extend/host-and-engine.md', host],
+  ['docs/extend/testing.md', lifecycle],
 ]) {
   assert(source.includes(`Evidence revision: \`${readerRevisions.get(relative)}\``), `${relative} lacks the evidence revision`);
   const codeBlocks = [...source.matchAll(/^```([^\n]*)$/gmu)]
@@ -142,7 +142,7 @@ assert(
 const sourceRevision = JSON.parse(read('docs/generated/inventory/documentation-source-revision.json')).revision;
 assert.match(sourceRevision, /^[0-9a-f]{40}$/u, 'catalogue source lock must be an exact commit');
 execFileSync('git', ['-C', root, 'cat-file', '-e', `${sourceRevision}^{commit}`]);
-const catalogueRoot = path.join(root, 'docs/site/extend/plugin-catalogue');
+const catalogueRoot = path.join(root, 'docs/extend/plugin-catalogue');
 const packagePages = fs.readdirSync(catalogueRoot)
   .filter((name) => name.endsWith('.md') && name !== 'README.md')
   .sort();
@@ -202,7 +202,7 @@ assert(prismCatalogue.includes('The Prism agent image copies this extension dire
   'Prism catalogue page does not explain direct image packaging');
 assert(![...auditStatuses.values()].includes('pending'), 'catalogue contains a pending package audit');
 
-const generatedIndex = read('docs/site/extend/plugin-catalogue/README.md');
+const generatedIndex = read('docs/extend/plugin-catalogue/README.md');
 assert(generatedIndex.includes(`The catalogue contains ${packageCount} packages.`));
 assert(generatedIndex.includes('Maintainers write the practical'));
 
@@ -220,8 +220,8 @@ for (const target of sourceTargets) {
   execFileSync('git', ['-C', root, 'cat-file', '-e', `${sourceRevision}:${target}`]);
 }
 
-const hostLinks = pinnedLinks('docs/site/extend/host-and-engine.md', 25);
-const lifecycleLinks = pinnedLinks('docs/site/extend/testing.md', 10);
+const hostLinks = pinnedLinks('docs/extend/host-and-engine.md', 25);
+const lifecycleLinks = pinnedLinks('docs/extend/testing.md', 10);
 console.log(JSON.stringify({
   ok: true,
   pages: packagePages.length + 3,

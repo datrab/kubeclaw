@@ -6,7 +6,7 @@ import path from 'node:path';
 import ts from 'typescript';
 const root = path.resolve(import.meta.dirname, '..');
 const authority = 'skills/common/plugin-runtime/foundation/registry/types.ts';
-const page = 'docs/site/extend/README.md';
+const page = 'docs/extend/README.md';
 try {
   const source = ts.createSourceFile(authority, fs.readFileSync(path.join(root, authority), 'utf8'), ts.ScriptTarget.Latest, true);
   if (source.parseDiagnostics.length) throw new Error('invalid registry TypeScript');

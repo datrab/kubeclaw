@@ -51,7 +51,7 @@ test('native endpoint publication is isolated and preserves the original source-
   const lockBefore = fs.readFileSync(path.join(root, lock));
   let result = run();
   assert.equal(result.status, 0, result.stderr);
-  const page = 'docs/site/reference/endpoints.md';
+  const page = 'docs/reference/endpoints.md';
   assert.deepEqual(git(['diff', '--name-only']).split('\n'), [page]);
   const delivered = fs.readFileSync(path.join(root, page));
   assert(delivered.includes(Buffer.from(`generated from revision \`${revision}\``)));

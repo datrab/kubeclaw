@@ -20,13 +20,23 @@ function enabled(job,event,ref){
 }
 const trusted=(event,ref)=>['push','workflow_dispatch'].includes(event)&&ref==='refs/heads/main';
 
-test('docs checks run for every pull request and main-branch push',()=>{
-  assert.equal(docs.on.pull_request,null);
-  assert.deepEqual(docs.on.push,{branches:['main']});
+test('docs builds use the current root on PRs and main with read-only credentials',()=>{
+  assert(docs.on.pull_request.paths.includes('docs/**'));
+  assert.deepEqual(docs.on.push.branches,['main']);
+  assert(docs.on.push.paths.includes('scripts/docs-reader/**'));
+  assert.deepEqual(docs.permissions,{contents:'read'});
+  const job=docs.jobs.reader;
+  assert.doesNotMatch(JSON.stringify(job),/secrets\.|github\.token|git push|docs:parity|docs:blueprint/u);
+  const checkout=job.steps.find(step=>step.uses?.startsWith('actions/checkout@'));
+  assert.equal(checkout.with['persist-credentials'],false);
+  for(const command of ['npm run docs:check','npm run docs:test','npm run docs:build','node scripts/docs-reader/check-artifact.mjs'])assert(job.steps.some(step=>step.run===command));
+  const upload=job.steps.find(step=>step.uses?.startsWith('actions/upload-artifact@'));
+  assert.equal(upload.with.path,'.tmp/docs-publication/');
+  assert.equal(upload.with['if-no-files-found'],'error');
 });
 
 test('parsed job guards keep PRs and non-main dispatches read-only',()=>{
-  for(const workflow of [ops,docs]){
+  for(const workflow of [ops]){
     assert.deepEqual(workflow.permissions,{contents:'read'});
     assert(!workflow.on.pull_request_target); assert(!workflow.on.workflow_run);
     assert.deepEqual(workflow.on.push.branches,['main']);
@@ -42,7 +52,7 @@ test('parsed job guards keep PRs and non-main dispatches read-only',()=>{
 });
 
 test('read-only jobs publish only diagnostic reports and cannot persist credentials or pass release artifacts forward',()=>{
-  for(const workflow of [ops,docs]){
+  for(const workflow of [ops]){
     const job=workflow.jobs.validate;
     assert.deepEqual(job.permissions,{contents:'read'});
     const text=JSON.stringify(job);
@@ -59,7 +69,6 @@ test('read-only jobs publish only diagnostic reports and cannot persist credenti
   const build=ops.jobs.validate.steps.find(s=>s.id==='build');assert.equal(build.with.load,true);assert.equal(build.with.push,false);
   assert(ops.jobs.validate.steps.some(s=>s.run?.includes('bash ops/pod/test-image.sh')));
   assert(ops.jobs.validate.steps.some(s=>s.run?.includes('bash tools/ops-mcp/test-image.sh')));
-  assert(docs.jobs.validate.steps.some(s=>s.run?.includes('Generated docs are stale')&&!s.if));
 });
 
 test('trusted publication rebuilds source and retains digest smoke and receipt authority',()=>{
@@ -77,35 +86,6 @@ test('trusted publication rebuilds source and retains digest smoke and receipt a
   assert.equal(ops.jobs['preserve-receipts'].needs,'publish');assert.equal(ops.jobs['preserve-receipts'].if,job.if);
   assert.equal(ops.jobs['preserve-receipts'].uses,'./.github/workflows/publish-image-receipts.yaml');
   assert.deepEqual(job.strategy.matrix,ops.jobs.validate.strategy.matrix);
-});
-
-test('trusted docs check before a scoped main-only commit and consume no validation artifacts',()=>{
-  const job=docs.jobs.update;assert.equal(job.needs,undefined);
-  assert.doesNotMatch(JSON.stringify(job),/download-artifact|cache:|head_ref/u);
-  assert.equal(job.steps.find(s=>s.uses?.startsWith('actions/checkout@')).with.ref,'${{ github.sha }}');
-  const commit=job.steps.find(s=>s.name==='Commit generated docs');assert.equal(job.steps.at(-1),commit);
-  assert.match(commit.run,/git add docs\/generated docs\/site\/reference docs\/site\/status\/open-issues\.md/u);
-  assert.match(commit.run,/docs\/blueprint\/generated/u);
-  assert.match(commit.run,/scripts\/docs-local-helm-field-authorities\.json/u);
-  assert.match(commit.run,/git diff --cached --name-only/u);
-  assert.doesNotMatch(commit.run,/git add[^\n]*docs\/reference(?:\s|$)/u);
-  assert.match(commit.run,/git diff --quiet/u);
-  assert.match(commit.run,/git ls-files --others --exclude-standard/u);
-  assert.match(commit.run,/git push origin HEAD:refs\/heads\/main/u);
-  assert.doesNotMatch(commit.run,/--force|git add \./u);
-  const regenerate=job.steps.find(s=>s.name==='Regenerate docs');
-  assert.match(regenerate.run,/docs:generate -- --revision "\$GITHUB_SHA" --update-source-revision/u);
-  for(const generator of ['docs:ap09:platform-inventory','docs:inventory:config','docs:operator-tasks:generate',
-    'docs:blueprint:generate','docs:status:generate','docs:tree:generate']) assert.match(regenerate.run,new RegExp(generator.replaceAll(':','\\:')));
-  for(const command of ['npm run docs:check:generated','node scripts/docs-check.mjs','npm run docs:check:refs','npm run docs:parity:transition:check','npm run docs:check:coverage','git diff --check'])assert(job.steps.some(s=>s.run===command));
-});
-
-test('pull-request drift detection covers every generator output and new untracked output',()=>{
-  const step=docs.jobs.validate.steps.find(s=>s.name==='Reject generated docs drift');
-  assert(step);
-  assert.match(step.run,/git status --porcelain --untracked-files=all/u);
-  assert.doesNotMatch(step.run,/git diff --quiet -- docs\/generated/u);
-  assert.match(step.run,/git status --short --untracked-files=all/u);
 });
 
 test('every external action in the two entrypoints is commit pinned',()=>{

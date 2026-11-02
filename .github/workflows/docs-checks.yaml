@@ -1,268 +1,34 @@
-name: Docs Checks
+name: Documentation
 on:
-  pull_request: null
+  pull_request:
+    paths: ['docs/**', 'scripts/docs-reader/**', 'scripts/lib/docs-markdown-anchors.mjs', 'scripts/lib/docs-route-continuity.mjs', 'scripts/docs-published-route-baseline.json', 'scripts/tests/docs-reader*.mjs', 'scripts/tests/docs-root-layout.test.mjs', 'package.json', 'package-lock.json', '.github/workflows/docs-checks.yaml']
   push:
-    branches:
-      - main
-  workflow_dispatch: null
+    branches: [main]
+    paths: ['docs/**', 'scripts/docs-reader/**', 'scripts/lib/docs-markdown-anchors.mjs', 'scripts/lib/docs-route-continuity.mjs', 'scripts/docs-published-route-baseline.json', 'scripts/tests/docs-reader*.mjs', 'scripts/tests/docs-root-layout.test.mjs', 'package.json', 'package-lock.json', '.github/workflows/docs-checks.yaml']
+  workflow_dispatch:
 permissions:
   contents: read
 jobs:
-  validate:
-    name: Read-only documentation drift guardrails
+  reader:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
-          fetch-depth: 0
           persist-credentials: false
-      - name: Set up Node
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
-          node-version: "24"
-      - name: Set up qualified CLI Python parser
-        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+          node-version: '24'
+          cache: npm
+      - run: npm ci --ignore-scripts --include=dev
+      - run: npm ci --ignore-scripts --prefix scripts/docs-reader
+      - run: npx --no-install playwright install --with-deps chromium
+      - run: npm run docs:check
+      - run: npm run docs:test
+      - run: npm run docs:build
+      - run: node scripts/docs-reader/check-artifact.mjs
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          python-version: "3.11.18"
-      - name: Set up documentation Go parser
-        uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
-        with:
-          go-version: "1.26.5"
-          cache: false
-      - name: Prepare checksum-pinned CLI shell parser
-        run: |
-          node --input-type=module - <<'JS'
-          import assert from 'node:assert/strict';
-          import crypto from 'node:crypto';
-          import fs from 'node:fs';
-          import path from 'node:path';
-          import { execFileSync } from 'node:child_process';
-          assert.equal(process.platform, 'linux'); assert.equal(process.arch, 'x64');
-          const pins = JSON.parse(fs.readFileSync('versions.json', 'utf8')).buildArgs;
-          const directory = fs.mkdtempSync(path.join(process.env.RUNNER_TEMP, 'docs-shfmt-'));
-          const binary = path.join(directory, 'shfmt');
-          try {
-            execFileSync('curl', ['--fail', '--silent', '--show-error', '--location',
-              `https://github.com/mvdan/sh/releases/download/v${pins.SHFMT_VERSION}/shfmt_v${pins.SHFMT_VERSION}_linux_amd64`, '-o', binary]);
-            assert.equal(crypto.createHash('sha256').update(fs.readFileSync(binary)).digest('hex'), pins.SHFMT_SHA256_AMD64);
-            execFileSync('sudo', ['install', '-m', '0755', binary, '/usr/local/bin/shfmt']);
-          } finally { fs.rmSync(directory, { recursive: true, force: true }); }
-          JS
-      - name: Set up documentation Helm renderer
-        uses: azure/setup-helm@bf6a7d304bc2fdb57e0331155b7ebf2c504acf0a # v4
-        with:
-          version: "v3.22.0"
-      - name: Prepare checksum-pinned documentation schema validator
-        run: |
-          node --input-type=module - <<'JS'
-          import assert from 'node:assert/strict';
-          import crypto from 'node:crypto';
-          import fs from 'node:fs';
-          import path from 'node:path';
-          import { execFileSync } from 'node:child_process';
-          assert.equal(process.platform, 'linux'); assert.equal(process.arch, 'x64');
-          const pins = JSON.parse(fs.readFileSync('versions.json', 'utf8')).buildArgs;
-          const directory = fs.mkdtempSync(path.join(process.env.RUNNER_TEMP, 'docs-kubeconform-'));
-          const archive = path.join(directory, 'kubeconform.tar.gz');
-          try {
-            execFileSync('curl', ['--fail', '--silent', '--show-error', '--location',
-              `https://github.com/yannh/kubeconform/releases/download/v${pins.KUBECONFORM_VERSION}/kubeconform-linux-amd64.tar.gz`, '-o', archive]);
-            assert.equal(crypto.createHash('sha256').update(fs.readFileSync(archive)).digest('hex'), pins.KUBECONFORM_SHA256_AMD64);
-            execFileSync('tar', ['-xzf', archive, '-C', directory, 'kubeconform']);
-            fs.chmodSync(path.join(directory, 'kubeconform'), 0o755);
-            fs.appendFileSync(process.env.GITHUB_PATH, directory + '\n');
-          } finally { fs.rmSync(archive, { force: true }); }
-          JS
-      - name: Install repository dependencies
-        run: npm ci --ignore-scripts && npm ci --prefix scripts/docs-reader --ignore-scripts
-      - name: Prepare read-only documentation native inputs
-        run: |
-          node scripts/docs-prepare-go-parsers.mjs
-          node scripts/docs-prepare-publication-schemas.mjs
-          node scripts/infrastructure-chart.mjs tailscale
-          node scripts/infrastructure-chart.mjs redis
-          node scripts/infrastructure-chart.mjs postgresql
-      - name: Check CLI extractor and literal rendering regressions
-        run: |
-          node --test scripts/tests/docs-cli-*.test.mjs scripts/tests/docs-prepared-go-parsers.test.mjs
-          python3 scripts/tests/docs_cli_python_test.py
-          python3 scripts/tests/docs_cli_go_test.py
-      - name: Install documentation diagram browser
-        run: npx --no-install playwright install --with-deps chromium
-      - name: Check reader publication and render HTML
-        run: npm run docs:publication:check && node --test scripts/tests/docs-reader.test.mjs scripts/tests/docs-reader-page-records.test.mjs scripts/tests/docs-reader-redirects.test.mjs scripts/tests/docs-reader-source-links.test.mjs scripts/tests/docs-reader-source-previews.test.mjs scripts/tests/docs-reader-diagrams.test.mjs && node scripts/tests/docs-reader-redirects.browser.mjs && npm run docs:publication:build && node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs && node scripts/docs-reader/check-search.mjs && node --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs && node --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs && node --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs
-      - name: Check blueprint and suite documentation contracts
-        run: npm run docs:blueprint:check && npm run verify:docs:schema-fields && npm run verify:docs:error-codes && npm run verify:docs:examples && npm run verify:docs:controlled-language
-      - name: Check docs workflow trigger coverage
-        run: node scripts/check-workflow-yaml.mjs .github/workflows/docs-checks.yaml && node --test tests/verification/contracts/workflow-trust-split.test.mjs
-      - name: Check canonical open-issue register and generated view
-        run: npm run docs:status:check && node --test scripts/tests/docs-status.test.mjs
-      - name: Regenerate docs
-        run: npm run plugin-system:inventory && npm run docs:inventory && npm run docs:generate
-      - name: Reject generated docs drift
-        run: |
-          if [ -z "$(git status --porcelain --untracked-files=all)" ]; then
-            echo "Generated docs are already current."
-            exit 0
-          fi
-
-          echo "::error::Generated docs are stale. Run npm run plugin-system:inventory && npm run docs:inventory && npm run docs:generate and commit the result."
-          git status --short --untracked-files=all
-          exit 1
-      - name: Check plugin dependency aggregate drift
-        run: node scripts/generate-plugin-dependency-aggregate.mjs --check
-      - name: Check generated docs freshness
-        run: npm run docs:check:generated
-      - name: Check Markdown hygiene
-        run: node scripts/docs-check.mjs
-      - name: Verify reference-checking boundaries
-        run: node --test tests/verification/deployment/docs-reference-scope.test.mjs
-      - name: Check cited repository references
-        run: npm run docs:check:refs
-      - name: Check reader-site boundary
-        run: npm run docs:site-boundary:check
-      - name: Check documentation tree classification and immutable baseline
-        run: npm run docs:tree:check && npm run docs:tree:mutations
-      - name: Check documentation parity transition
-        run: npm run docs:parity:transition:check
-      - name: Check documentation topic map
-        run: npm run docs:check:coverage
-      - name: Check whitespace
-        run: git diff --check
-    if: github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/main')
-    permissions:
-      contents: read
-  update:
-    name: Trusted main documentation update
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-        with:
-          fetch-depth: 0
-          ref: ${{ github.sha }}
-      - name: Set up Node
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
-        with:
-          node-version: "24"
-      - name: Set up qualified CLI Python parser
-        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
-        with:
-          python-version: "3.11.18"
-      - name: Set up documentation Go parser
-        uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
-        with:
-          go-version: "1.26.5"
-          cache: false
-      - name: Prepare checksum-pinned CLI shell parser
-        run: |
-          node --input-type=module - <<'JS'
-          import assert from 'node:assert/strict';
-          import crypto from 'node:crypto';
-          import fs from 'node:fs';
-          import path from 'node:path';
-          import { execFileSync } from 'node:child_process';
-          assert.equal(process.platform, 'linux'); assert.equal(process.arch, 'x64');
-          const pins = JSON.parse(fs.readFileSync('versions.json', 'utf8')).buildArgs;
-          const directory = fs.mkdtempSync(path.join(process.env.RUNNER_TEMP, 'docs-shfmt-'));
-          const binary = path.join(directory, 'shfmt');
-          try {
-            execFileSync('curl', ['--fail', '--silent', '--show-error', '--location',
-              `https://github.com/mvdan/sh/releases/download/v${pins.SHFMT_VERSION}/shfmt_v${pins.SHFMT_VERSION}_linux_amd64`, '-o', binary]);
-            assert.equal(crypto.createHash('sha256').update(fs.readFileSync(binary)).digest('hex'), pins.SHFMT_SHA256_AMD64);
-            execFileSync('sudo', ['install', '-m', '0755', binary, '/usr/local/bin/shfmt']);
-          } finally { fs.rmSync(directory, { recursive: true, force: true }); }
-          JS
-      - name: Set up documentation Helm renderer
-        uses: azure/setup-helm@bf6a7d304bc2fdb57e0331155b7ebf2c504acf0a # v4
-        with:
-          version: "v3.22.0"
-      - name: Install repository dependencies
-        run: npm ci --ignore-scripts && npm ci --prefix scripts/docs-reader --ignore-scripts
-      - name: Prepare read-only documentation native inputs
-        run: |
-          node scripts/docs-prepare-go-parsers.mjs
-          node scripts/docs-prepare-publication-schemas.mjs
-          node scripts/infrastructure-chart.mjs tailscale
-          node scripts/infrastructure-chart.mjs redis
-          node scripts/infrastructure-chart.mjs postgresql
-      - name: Check CLI extractor and literal rendering regressions
-        run: |
-          node --test scripts/tests/docs-cli-*.test.mjs scripts/tests/docs-prepared-go-parsers.test.mjs
-          python3 scripts/tests/docs_cli_python_test.py
-          python3 scripts/tests/docs_cli_go_test.py
-      - name: Check docs workflow trigger coverage
-        run: node scripts/check-workflow-yaml.mjs .github/workflows/docs-checks.yaml && node --test tests/verification/contracts/workflow-trust-split.test.mjs
-      - name: Check canonical open-issue register and generated view
-        run: npm run docs:status:check && node --test scripts/tests/docs-status.test.mjs
-      - name: Regenerate docs
-        run: |
-          npm run docs:generate -- --revision "$GITHUB_SHA" --update-source-revision
-          npm run plugin-system:inventory
-          npm run docs:ap08:inventory
-          node scripts/generate-plugin-dependency-aggregate.mjs
-          npm run docs:ap08:review-scope
-          npm run docs:ap09:catalogue
-          npm run docs:ap09:platform-inventory
-          npm run docs:lint-policy:generate
-          npm run docs:inventory
-          npm run docs:inventory:local-helm
-          npm run docs:inventory:config
-          npm run docs:operator-tasks:generate
-          npm run docs:generate -- --revision "$GITHUB_SHA"
-          npm run docs:governance:generate
-          npm run docs:parity:batches
-          npm run docs:parity:assignments
-          npm run docs:parity:extract
-          npm run docs:parity:status
-          npm run docs:blueprint:generate
-          npm run docs:status:generate
-          npm run docs:tree:generate
-      - name: Check plugin dependency aggregate drift
-        run: node scripts/generate-plugin-dependency-aggregate.mjs --check
-      - name: Check generated docs freshness
-        run: npm run docs:check:generated
-      - name: Check Markdown hygiene
-        run: node scripts/docs-check.mjs
-      - name: Verify reference-checking boundaries
-        run: node --test tests/verification/deployment/docs-reference-scope.test.mjs
-      - name: Check cited repository references
-        run: npm run docs:check:refs
-      - name: Check reader-site boundary
-        run: npm run docs:site-boundary:check
-      - name: Check documentation tree classification and immutable baseline
-        run: npm run docs:tree:check && npm run docs:tree:mutations
-      - name: Check documentation parity transition
-        run: npm run docs:parity:transition:check
-      - name: Check documentation topic map
-        run: npm run docs:check:coverage
-      - name: Check whitespace
-        run: git diff --check
-      - name: Commit generated docs
-        run: |
-          if [ -z "$(git status --porcelain --untracked-files=all)" ]; then
-            echo "Generated docs are already current."
-            exit 0
-          fi
-
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if [ -n "$(git diff --cached --name-only)" ]; then
-            echo "::error::A documentation generator staged changes before the trusted output check."
-            git status --short --untracked-files=all
-            exit 1
-          fi
-          git add docs/generated docs/site/reference docs/site/status/open-issues.md \
-            docs/architecture/plugin-system-current-inventory.md docs/blueprint/generated \
-            docs/blueprint/AP08-audit-ledger.json scripts/docs-local-helm-field-authorities.json
-          if ! git diff --quiet || [ -n "$(git ls-files --others --exclude-standard)" ]; then
-            echo "::error::A documentation generator changed a path outside the declared generated outputs."
-            git status --short --untracked-files=all
-            exit 1
-          fi
-          git commit -m "docs: refresh generated references"
-          git push origin HEAD:refs/heads/main
-    if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main'
-    permissions:
-      contents: write
+          name: documentation-reader
+          path: .tmp/docs-publication/
+          include-hidden-files: true
+          if-no-files-found: error

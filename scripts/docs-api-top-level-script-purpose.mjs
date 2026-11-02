@@ -9,7 +9,7 @@ const authorityPath = 'scripts/docs-api-top-level-script-purpose-authority.json'
 const authoritySha256 = 'f5ab471dfd592b972ab19db80ad60a37cb01d6ff1f87229d5614dc23d24d054f';
 const currentPurposeInputBindings20261031 = Object.freeze([
   {
-    "path": "docs/site/extend/lint.md",
+    "path": "docs/extend/lint.md",
     "sha256": "a1c0a7ba491dcb60690e38e50d813d477ce33894492a43629b10e12c60cbd53e",
     "historicalSha256": "8e84ad80f6b9fff4557073d77796f64e6374c170ad23d261c1a3ae6b0dac461e"
   },
@@ -698,8 +698,8 @@ const retainedDocumentaryReturn = Object.freeze({
   "line": 653,
   "expressionSha256": "3ed0520975d6ad92df878c6a73954cf839bec6a9a903f113f1510ae4218dcc65",
   "targets": [
-    "docs/site/reference/helm-values.md",
-    "docs/site/reference/environment-variables.md"
+    "docs/reference/helm-values.md",
+    "docs/reference/environment-variables.md"
   ],
   "incomingEdges": [
     {
@@ -746,7 +746,7 @@ export function checkedTopLevelScriptPurposes(root, graph, classify, sources, na
   const authority = currentTopLevelPurposeAuthority(JSON.parse(bytes),fail);
   if (JSON.stringify(Object.keys(authority.sourcePins)) !== JSON.stringify(selectedSources)) fail('source roster');
   if (!selectedSources.every(source => sources.includes(source))) fail('missing selected source from native census');
-  const approvedCurrentPaths = ["docs/site/extend/lint.md", "scripts/plugin-registration-dependencies.mjs", "scripts/docs-publication.mjs", "scripts/docs-generate.mjs", "scripts/tests/api-output-publication-native-custody.test.mjs"];
+  const approvedCurrentPaths = ["docs/extend/lint.md", "scripts/plugin-registration-dependencies.mjs", "scripts/docs-publication.mjs", "scripts/docs-generate.mjs", "scripts/tests/api-output-publication-native-custody.test.mjs"];
   const bindings = currentPurposeInputBindings20261031;
   if (JSON.stringify(bindings.map(binding => binding?.path)) !== JSON.stringify(approvedCurrentPaths)) fail('current binding exact ordered roster');
   for (const binding of bindings) {
@@ -766,7 +766,7 @@ export function checkedTopLevelScriptPurposes(root, graph, classify, sources, na
     || JSON.stringify(graph.edges.filter(edge => returnContextSources.includes(edge.target))) !== JSON.stringify(documentaryReturn.incomingEdges)
     || JSON.stringify(graph.publicEntries.filter(entry => returnContextSources.includes(entry.canonicalSource) || returnContextSources.includes(entry.source))) !== JSON.stringify(documentaryReturn.publicEntries)
     || JSON.stringify(nativePackageEntries.filter(entry => returnContextSources.includes(entry.source))) !== JSON.stringify(documentaryReturn.packageEntries)
-    || JSON.stringify(documentaryReturn.targets) !== '["docs/site/reference/helm-values.md","docs/site/reference/environment-variables.md"]') fail('retained documentary return caller/native/public/target context');
+    || JSON.stringify(documentaryReturn.targets) !== '["docs/reference/helm-values.md","docs/reference/environment-variables.md"]') fail('retained documentary return caller/native/public/target context');
 
   }
   const facts = [];

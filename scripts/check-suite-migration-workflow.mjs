@@ -286,7 +286,7 @@ function documentationManifests() {
 function documentText(manifest, kind) {
   const relative = manifest.documents[kind];
   const text = fs.readFileSync(path.join(root, relative), 'utf8');
-  if (relative !== 'docs/site/reference/buster-suites.md' || !manifest.suiteSection) return text;
+  if (relative !== 'docs/reference/buster-suites.md' || !manifest.suiteSection) return text;
   const marker = `## ${manifest.suiteSection}`;
   const start = text.indexOf(marker);
   if (start < 0) throw new Error(`${relative}: missing suite section ${marker}`);
@@ -308,7 +308,7 @@ function checkSchemaDocumentation() {
     }
     const configurationReferences = [...new Set([
       manifest.documents.configurationReference,
-      'docs/site/reference/buster-runtime-configuration.md',
+      'docs/reference/buster-runtime-configuration.md',
       ...(manifest.canonicalConfigurationReferences ?? []),
     ])];
     for (const referencePath of configurationReferences) {
@@ -344,7 +344,7 @@ function checkErrorDocumentation() {
     ])].filter((code) => !nonErrorIdentifiers.has(code)).sort();
     const reference = [
       documentText(manifest, 'errorReference'),
-      fs.readFileSync(path.join(root, 'docs/site/reference/nova-project.md'), 'utf8'),
+      fs.readFileSync(path.join(root, 'docs/reference/nova-project.md'), 'utf8'),
       documentText(manifest, 'userGuide'),
     ].join('\n');
     for (const code of codes) if (!reference.includes(`\`${code}\``)) errors.push(`${manifest.documents.errorReference}: undocumented error ${code}`);

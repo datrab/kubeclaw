@@ -36,9 +36,9 @@ function fixture(t) {
     deploy: [{ ...contract, id: './scripts/deploy.sh render <name>' }],
     ci: [{ ...contract, id: '.github/workflows/probe.yml' }],
     routes: [{ ...contract, id: 'Focused package contract checks',
-      procedure: 'docs/site/extend/testing.md#package-checks' }],
-    guide: [{ ...contract, id: 'node docs/site/example.mjs verify OWNED_ROOT',
-      procedure: 'docs/site/use/example.md#verify' }],
+      procedure: 'docs/extend/testing.md#package-checks' }],
+    guide: [{ ...contract, id: 'node docs/example.mjs verify OWNED_ROOT',
+      procedure: 'docs/use/example.md#verify' }],
   };
   const save = () => write(verificationGuidancePath, JSON.stringify(guidance));
   save();
@@ -112,7 +112,7 @@ test('an internal symlink cannot turn a completion record into implementation au
 
 test('guide executable sources must match cited Git bytes even below the generated-page prefix', t => {
   const f = fixture(t);
-  const guideSource = 'docs/site/examples/proof.mjs';
+  const guideSource = 'docs/examples/proof.mjs';
   f.write(guideSource, 'export const proof = "committed";\n');
   f.guidance.guide[0].sources = [{ path: guideSource, sha256: createHash('sha256')
     .update(fs.readFileSync(path.join(f.root, guideSource))).digest('hex') }];

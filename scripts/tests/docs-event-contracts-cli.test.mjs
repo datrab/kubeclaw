@@ -18,9 +18,9 @@ test('actual CLI generates deterministically and check rejects stale/missing/unk
     fs.copyFileSync(path.join(project, file), path.join(root, file));
   }
   fs.symlinkSync(fs.realpathSync(path.join(project, 'node_modules')), path.join(root, 'node_modules'));
-  for (const dir of ['skills/app', 'docs/config', 'docs/site/reference']) fs.mkdirSync(path.join(root, dir), { recursive: true });
+  for (const dir of ['skills/app', 'docs/config', 'docs/reference']) fs.mkdirSync(path.join(root, dir), { recursive: true });
   fs.writeFileSync(path.join(root, 'skills/app/events.ts'), "export function publish(){return {schema:'wire.v1',payload:{id:'x'}}}");
-  fs.writeFileSync(path.join(root, 'docs/site/reference/events.md'), '# Authored safety boundary\n');
+  fs.writeFileSync(path.join(root, 'docs/reference/events.md'), '# Authored safety boundary\n');
   execFileSync('git', ['init', '-q', root]); execFileSync('git', ['add', 'skills'], { cwd: root });
   const census = discoverEventCandidates(root);
   fs.writeFileSync(path.join(root, 'docs/config/event-reference-bindings.json'), JSON.stringify({

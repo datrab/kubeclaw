@@ -161,7 +161,7 @@ const RECIPES = {
       "fail \"disabled Docker Hub mirror requires empty endpoint, transport and trust\"",
       "end",
       "if $settings.localRegistry",
-      "fail \"runtimeInfrastructure.localRegistry was replaced; configure runtimeInfrastructure.registry endpoint/transport/auth explicitly (docs/site/understand/platform-and-operations.md#writable-local-oci-registry)\"",
+      "fail \"runtimeInfrastructure.localRegistry was replaced; configure runtimeInfrastructure.registry endpoint/transport/auth explicitly (docs/understand/platform-and-operations.md#writable-local-oci-registry)\"",
       "end",
       "$registry := deepCopy $settings.registry",
       "$mirror := deepCopy $settings.dockerHubMirror",

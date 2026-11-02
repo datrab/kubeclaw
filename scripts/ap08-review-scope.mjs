@@ -9,28 +9,28 @@ const outputPath = 'docs/blueprint/generated/ap08-repeat-review-scope.json';
 const fixedReviewPaths = [
   'docs/blueprint/07-documentation-quality-standard.md',
   'docs/blueprint/AP08-plan.md',
-  'docs/site/extend/README.md',
-  'docs/site/extend/buster.md',
-  'docs/site/extend/contracts.md',
-  'docs/site/extend/effectful-plugin.md',
-  'docs/site/extend/first-plugin.md',
-  'docs/site/extend/host-and-engine.md',
-  'docs/site/extend/nova.md',
-  'docs/site/extend/testing.md',
+  'docs/extend/README.md',
+  'docs/extend/buster.md',
+  'docs/extend/contracts.md',
+  'docs/extend/effectful-plugin.md',
+  'docs/extend/first-plugin.md',
+  'docs/extend/host-and-engine.md',
+  'docs/extend/nova.md',
+  'docs/extend/testing.md',
 ];
 
-const cataloguePaths = fs.readdirSync(path.join(root, 'docs/site/extend/plugin-catalogue'))
+const cataloguePaths = fs.readdirSync(path.join(root, 'docs/extend/plugin-catalogue'))
   .filter(name => name.endsWith('.md'))
   .sort()
-  .map(name => `docs/site/extend/plugin-catalogue/${name}`);
+  .map(name => `docs/extend/plugin-catalogue/${name}`);
 const examplePaths = [
-  'docs/site/extend/examples/minimal-stage/package.json',
-  'docs/site/extend/examples/minimal-stage/plugin.json',
-  'docs/site/extend/examples/minimal-stage/schemas/config.schema.json',
-  'docs/site/extend/examples/minimal-stage/schemas/input.schema.json',
-  'docs/site/extend/examples/minimal-stage/schemas/result.schema.json',
-  'docs/site/extend/examples/minimal-stage/src/stage.js',
-  'docs/site/extend/examples/minimal-stage/tests/stage.test.mjs',
+  'docs/extend/examples/minimal-stage/package.json',
+  'docs/extend/examples/minimal-stage/plugin.json',
+  'docs/extend/examples/minimal-stage/schemas/config.schema.json',
+  'docs/extend/examples/minimal-stage/schemas/input.schema.json',
+  'docs/extend/examples/minimal-stage/schemas/result.schema.json',
+  'docs/extend/examples/minimal-stage/src/stage.js',
+  'docs/extend/examples/minimal-stage/tests/stage.test.mjs',
 ];
 const reviewPaths = [...fixedReviewPaths, ...cataloguePaths, ...examplePaths].sort();
 

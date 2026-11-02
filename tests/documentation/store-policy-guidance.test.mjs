@@ -19,7 +19,7 @@ function fixture(run) {
       pathMeaning: 'Selected caller root.', retentionMeaning: 'Admission is not age deletion.',
       cleanupTrigger: 'No cleanup operation is selected by this declaration.',
       failureBoundary: 'Caller must retain its original state.', retainedAuthority: 'Original records.',
-      explanation: 'docs/site/reference/stores-and-retention.md#capacity-is-not-one-universal-byte-limit',
+      explanation: 'docs/reference/stores-and-retention.md#capacity-is-not-one-universal-byte-limit',
       authorities: [{ id: 'limit', role: 'literal limit declaration', source: 'runtime.ts',
         selector: { kind: 'typescript', variable: 'LIMIT' } }] };
     const stores = [{ source: 'runtime.ts', value: 'configured-state' }];

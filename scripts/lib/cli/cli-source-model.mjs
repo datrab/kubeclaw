@@ -53,9 +53,9 @@ export function acquireCliSources(root,map,{launchTargets=[]}={}){
  root=fs.realpathSync(root);if(git(root,'rev-parse','--show-toplevel')!==root)fail('CLI_SOURCE_ROOT_UNQUALIFIED',root);
  const files=trackedFiles(root),owners=validateCliOwnership(map),selected=[],dispositions=[];
  const targets=new Map();for(const target of launchTargets){relativeSource(target.path);if(!files.has(target.path))fail('CLI_LAUNCH_TARGET_NOT_TRACKED',target.path);if(target.language&&!['typescript','shell','python','go'].includes(target.language))fail('CLI_LAUNCH_TARGET_LANGUAGE_UNQUALIFIED',target.path);const prior=targets.get(target.path);if(prior?.language&&target.language&&prior.language!==target.language)fail('CLI_LAUNCH_TARGET_LANGUAGE_AMBIGUOUS',target.path);targets.set(target.path,{...prior,...target});}
- const dirty=git(root,'diff','--name-only','HEAD','--','.').split('\n').filter(Boolean).filter(name=>!name.startsWith('docs/site/')&&!name.startsWith('docs/generated/')&&name!=='docs/blueprint/documentation-completion-matrix.json'&&!(name.startsWith('docs/blueprint/acceptance-evidence/')&&name.endsWith('.json')));
+ const dirty=git(root,'diff','--name-only','HEAD','--','.').split('\n').filter(Boolean).filter(name=>!name.startsWith('docs/')&&!name.startsWith('docs/generated/')&&name!=='docs/blueprint/documentation-completion-matrix.json'&&!(name.startsWith('docs/blueprint/acceptance-evidence/')&&name.endsWith('.json')));
  if(dirty.length)fail('CLI_SOURCE_ROOT_UNCOMMITTED',dirty.join(', '));
- const untracked=git(root,'ls-files','--others','--exclude-standard','-z').split('\0').filter(Boolean).filter(name=>!name.startsWith('docs/generated/')&&!name.startsWith('docs/site/')&&languageExtensions.has(path.posix.extname(name)));
+ const untracked=git(root,'ls-files','--others','--exclude-standard','-z').split('\0').filter(Boolean).filter(name=>!name.startsWith('docs/generated/')&&!name.startsWith('docs/')&&languageExtensions.has(path.posix.extname(name)));
  if(untracked.length)fail('CLI_SOURCE_UNTRACKED_CANDIDATE',untracked.join(', '));
  for(const [name,record]of files){
   const known=owners.get(name),target=targets.get(name),ext=path.posix.extname(name);

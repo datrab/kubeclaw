@@ -15,7 +15,7 @@ if (args.some((arg) => arg !== '--check') || new Set(args).size !== args.length)
     const check = args.includes('--check');
     const bindingPath = 'docs/config/event-reference-bindings.json';
     const inventoryPath = 'docs/generated/inventory/event-contracts.json';
-    const pagePath = 'docs/site/reference/events.md';
+    const pagePath = 'docs/reference/events.md';
     const bindings = JSON.parse(fs.readFileSync(path.join(root, bindingPath), 'utf8'));
     const census = collectEventSourceVector(root);
     if (typeof bindings.qualifiedSourceVectorSha256 !== 'string'

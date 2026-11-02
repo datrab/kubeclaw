@@ -133,7 +133,7 @@ test('publication recognizes the existing spaced metadata header without consumi
 });
 
 test('publication recognizes metadata on every existing reader page, including source-inventory fields', () => {
-  const root = fileURLToPath(new URL('../../docs/site/', import.meta.url));
+  const root = fileURLToPath(new URL('../../docs/', import.meta.url));
   function pages(dir) { return fs.readdirSync(dir, { withFileTypes: true }).flatMap(item => item.isDirectory() ? pages(path.join(dir, item.name)) : item.name.endsWith('.md') ? [path.join(dir, item.name)] : []); }
   for (const file of pages(root)) {
     const text = fs.readFileSync(file, 'utf8').replace(/^Last verified: .+$/mu, 'Last verified: generated during publication');

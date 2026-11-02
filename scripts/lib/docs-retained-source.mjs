@@ -14,7 +14,7 @@ export const retainedConfigurationInputs = Object.freeze({
 
 const digest = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
 const fullRevision = value => assert.match(value, /^[a-f0-9]{40}$/u, 'RETAINED_SOURCE_FULL_REVISION_REQUIRED');
-const generatedPath = value => value.startsWith('docs/generated/') || value.startsWith('docs/site/');
+const generatedPath = value => value.startsWith('docs/generated/') || value.startsWith('docs/');
 const completionPath = value => value === 'docs/blueprint/documentation-completion-matrix.json'
   || (value.startsWith('docs/blueprint/acceptance-evidence/') && value.endsWith('.json'));
 
@@ -175,8 +175,8 @@ export function storeRetainedLanguageBundle({ root: directory, output, bundle, c
 // No retained publication may alias a canonical inventory through a symlink.
 export function assertRetainedPageDestinations(directory, paths, { semantic = false } = {}) {
   const root = physicalGitRoot(directory);
-  const allowed = new Set(['docs/site/reference/helm-values.md', 'docs/site/reference/environment-variables.md']);
-  if (semantic) allowed.add('docs/site/reference/secrets.md');
+  const allowed = new Set(['docs/reference/helm-values.md', 'docs/reference/environment-variables.md']);
+  if (semantic) allowed.add('docs/reference/secrets.md');
   assert.deepEqual(new Set(paths), allowed, 'RETAINED_PAGE_OUTPUT_SET_INVALID');
   for (const relative of paths) {
     const filename = path.join(root, relative);

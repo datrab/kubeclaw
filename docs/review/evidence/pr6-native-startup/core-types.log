@@ -1,3 +1,0 @@
-$ node_modules/.bin/tsc --noEmit -p skills/worker/core/tsconfig.json
-
-exit_code=0

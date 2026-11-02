@@ -6,7 +6,7 @@ import path from 'node:path';
 import ts from 'typescript';
 const root = path.resolve(import.meta.dirname, '..');
 const authority = 'tests/verification/e2e/fixture-coverage.mjs';
-const page = 'docs/site/reference/buster-suites.md';
+const page = 'docs/reference/buster-suites.md';
 try {
   const source = ts.createSourceFile(authority, fs.readFileSync(path.join(root, authority), 'utf8'), ts.ScriptTarget.Latest, true, ts.ScriptKind.JS);
   if (source.parseDiagnostics.length) throw new Error('invalid coverage JavaScript');

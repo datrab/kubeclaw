@@ -74,7 +74,7 @@ const SEMANTIC_REQUIREMENTS = new Map([
   ['evidence', /\b(?:evidence|retain|record|output|receipt|digest|log)\w*/iu],
 ]);
 const useRoot = process.env.OPERATOR_TASK_USE_ROOT
-  ? path.resolve(process.env.OPERATOR_TASK_USE_ROOT) : path.join(root, 'docs/site/use');
+  ? path.resolve(process.env.OPERATOR_TASK_USE_ROOT) : path.join(root, 'docs/use');
 function markdownFiles(directory) {
   return fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
     const target = path.join(directory, entry.name);
@@ -133,7 +133,7 @@ function containsRawClusterCommand(body) {
 }
 
 for (const filePath of usePages) {
-  const relativePage = `docs/site/use/${path.relative(useRoot, filePath).split(path.sep).join('/')}`;
+  const relativePage = `docs/use/${path.relative(useRoot, filePath).split(path.sep).join('/')}`;
   const markdown = fs.readFileSync(filePath, 'utf8');
   for (const match of markdown.matchAll(/<!--\s*operator-task:\s*([a-z0-9-]+)\s*-->/gu)) {
     assert.equal(discoveredTasks.has(match[1]), false, `duplicate operator-task marker: ${match[1]}`);
@@ -207,7 +207,7 @@ for (const filePath of markdownFiles(checkedSiteRoot)) {
   }
   for (const body of shellFences(markdown)) {
     if (!commandUsesNpmCi(body)) continue;
-    if (relativePage === 'docs/site/use/quickstart.md') continue;
+    if (relativePage === 'docs/use/quickstart.md') continue;
     assert.equal(/^\s*npm\s+ci\b/mu.test(body), false,
       `${relativePage}: executable npm ci must use the canonical locked dependency procedure`);
     assert.ok(markdown.includes('quickstart.md#locked-dependency-installation'),
@@ -218,7 +218,7 @@ for (const filePath of markdownFiles(checkedSiteRoot)) {
       `${relativePage}: transitive npm ci procedure lacks retained evidence`);
   }
   const prose = markdown.replace(/^\s*(?:`{3,}|~{3,})[^\n]*\n[\s\S]*?^\s*(?:`{3,}|~{3,})\s*$/gmu, '');
-  if (relativePage !== 'docs/site/use/quickstart.md') {
+  if (relativePage !== 'docs/use/quickstart.md') {
     assert.equal(/\b(?:run|use|install|complete|before|after)\b[^\n.]*\bnpm ci\b/iu.test(prose), false,
       `${relativePage}: imperative npm ci guidance must link the canonical locked dependency procedure instead`);
   }
@@ -257,7 +257,7 @@ for (const task of registry.tasks) {
   byId.set(task.taskId, task);
   assert.equal(discoveredTasks.get(task.taskId), task.canonical.split('#')[0],
     `${task.taskId}: authored marker must be on its canonical page`);
-  assert.match(task.canonical, /^docs\/site\/use\/[a-z0-9_./-]+\.md#[a-z0-9-]+$/, `${task.taskId}: canonical authority must be a docs/site/use Markdown path with an anchor`);
+  assert.match(task.canonical, /^docs\/site\/use\/[a-z0-9_./-]+\.md#[a-z0-9-]+$/, `${task.taskId}: canonical authority must be a docs/use Markdown path with an anchor`);
   assert.equal(canonicalAuthorities.has(task.canonical), false, `${task.taskId}: duplicate canonical authority ${task.canonical}`);
   canonicalAuthorities.set(task.canonical, task.taskId);
 
@@ -282,7 +282,7 @@ for (const task of registry.tasks) {
   if (!checkedClusterBindingPages.has(relativePage)
     && /^\s*(?:kubectl|helm|\.\/scripts\/deploy\.sh)\b/mu.test(markdown)) {
     checkedClusterBindingPages.add(relativePage);
-    if (relativePage === 'docs/site/use/install.md') {
+    if (relativePage === 'docs/use/install.md') {
       for (const required of [
         '## Bind Cluster Authority', 'export KUBECONFIG="<kubeconfig-path>"',
         'kubectl config use-context "$EXPECTED_CONTEXT"', 'assert_cluster_binding()',

@@ -1,9 +1,0 @@
-{
-  "schemaVersion":"suite-documentation-manifest.v1", "suite":"api", "provider":"kubeclaw.api-flow@1",
-  "projectSchema":"skills/buster/plugins/api-flow/schemas/config.schema.json",
-  "suiteSection":"6. API Suite",
-  "documents":{"userGuide":"docs/site/reference/buster-suites.md","operatorGuide":"docs/site/reference/buster-suites.md","configurationReference":"docs/site/reference/buster-provider-configuration.md","errorReference":"docs/site/reference/buster-error-codes.md","securityModel":"docs/site/reference/buster-suites.md"},
-  "operatorFields":["allowedOrigins","allowedHostSuffixes","allowedPorts","allowedMethods","allowedRequestHeaders","allowWebSocket","maximumRequestBytes","maximumResponseBytes","maximumExecutionMs"],
-  "sourceFilesWithErrors":["skills/buster/plugins/api-flow/src/provider.js"], "errorPrefixes":["API_FLOW_"], "additionalErrors":[],
-  "configurationMarkerFields":["flowFile","maximumSteps"], "exampleFiles":["contracts/pipeline-test-gate/v1/examples/api-flow-config.json"]
-}

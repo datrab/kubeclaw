@@ -19,7 +19,7 @@ test('dynamic export index and canonical task links reach every actual named-ent
     assert.ok(link,'missing discovered export '+item.name);
     assert.ok(anchors.has(link.destination.slice(1)),'missing named-entry anchor '+link.destination);
   }
-  const canonical=fs.readFileSync(path.join(root,'docs/site/reference/sdk.md'),'utf8');
+  const canonical=fs.readFileSync(path.join(root,'docs/reference/sdk.md'),'utf8');
   const tasks=canonical.split('## Find the contract you need\n')[1].split('\n## ')[0];
   const taskLinks=markdownInlineLinks(tasks).filter(link=>link.destination.startsWith('sdk-exports.md#'));
   assert.equal(taskLinks.length,13);
@@ -28,5 +28,5 @@ test('dynamic export index and canonical task links reach every actual named-ent
   assert.match(example,/Node\.js 24/);
   const prep=markdownInlineLinks(example).find(link=>link.destination==='../extend/developer-handbook.md#prepare-a-clean-checkout');
   assert.ok(prep);
-  assert.ok(markdownAnchorEntries(fs.readFileSync(path.join(root,'docs/site/extend/developer-handbook.md'),'utf8')).some(entry=>entry.anchor==='prepare-a-clean-checkout'));
+  assert.ok(markdownAnchorEntries(fs.readFileSync(path.join(root,'docs/extend/developer-handbook.md'),'utf8')).some(entry=>entry.anchor==='prepare-a-clean-checkout'));
 });

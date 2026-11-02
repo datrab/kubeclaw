@@ -6400,8 +6400,8 @@ export const documentationExecutableRoleRecipes = {
         "sha256": "af1973d167a0c43ffe14eb828fc8d139a63ab8b696fdc4095c8e862f2d414dd8"
       },
       {
-        "path": "docs/site/use/workflows/wait-resume/platform.template.json",
-        "canonical": "docs/site/use/workflows/wait-resume/platform.template.json",
+        "path": "docs/use/workflows/wait-resume/platform.template.json",
+        "canonical": "docs/use/workflows/wait-resume/platform.template.json",
         "sha256": "8d9f160964ea4c3ff5c924c3c4c36291f5a6bfa969807721f5a8383578a5b1ef"
       },
       {
@@ -6567,8 +6567,8 @@ export const documentationExecutableRoleRecipes = {
         "sha256": "af1973d167a0c43ffe14eb828fc8d139a63ab8b696fdc4095c8e862f2d414dd8"
       },
       {
-        "path": "docs/site/use/workflows/wait-resume/platform.template.json",
-        "canonical": "docs/site/use/workflows/wait-resume/platform.template.json",
+        "path": "docs/use/workflows/wait-resume/platform.template.json",
+        "canonical": "docs/use/workflows/wait-resume/platform.template.json",
         "sha256": "8d9f160964ea4c3ff5c924c3c4c36291f5a6bfa969807721f5a8383578a5b1ef"
       },
       {
@@ -6646,8 +6646,8 @@ export const documentationExecutableRoleRecipes = {
     "authorityInputs": [],
     "purposeInputs": [
       {
-        "path": "docs/site/use/workflows/wait-resume/platform.template.json",
-        "canonical": "docs/site/use/workflows/wait-resume/platform.template.json",
+        "path": "docs/use/workflows/wait-resume/platform.template.json",
+        "canonical": "docs/use/workflows/wait-resume/platform.template.json",
         "sha256": "8d9f160964ea4c3ff5c924c3c4c36291f5a6bfa969807721f5a8383578a5b1ef"
       },
       {
@@ -6815,8 +6815,8 @@ export const documentationExecutableRoleRecipes = {
         "sha256": "58c8cfa0cda7e75cf8d2a34a81ee6e4a4b54013ed853d11490dd84aac874bd68"
       },
       {
-        "path": "docs/site/use/workflows/wait-resume/platform.template.json",
-        "canonical": "docs/site/use/workflows/wait-resume/platform.template.json",
+        "path": "docs/use/workflows/wait-resume/platform.template.json",
+        "canonical": "docs/use/workflows/wait-resume/platform.template.json",
         "sha256": "8d9f160964ea4c3ff5c924c3c4c36291f5a6bfa969807721f5a8383578a5b1ef"
       },
       {
@@ -6911,8 +6911,8 @@ export const documentationExecutableRoleRecipes = {
         "sha256": "af1973d167a0c43ffe14eb828fc8d139a63ab8b696fdc4095c8e862f2d414dd8"
       },
       {
-        "path": "docs/site/use/workflows/wait-resume/platform.template.json",
-        "canonical": "docs/site/use/workflows/wait-resume/platform.template.json",
+        "path": "docs/use/workflows/wait-resume/platform.template.json",
+        "canonical": "docs/use/workflows/wait-resume/platform.template.json",
         "sha256": "8d9f160964ea4c3ff5c924c3c4c36291f5a6bfa969807721f5a8383578a5b1ef"
       },
       {
@@ -9731,8 +9731,8 @@ export const documentationExecutableRoleRecipes = {
         "sha256": "4c0f4fdc4112201b289172c21e4123bbb976718dd10cfd7e3ba8390542f3bcec"
       },
       {
-        "path": "docs/site/reference/documentation-site.md",
-        "canonical": "docs/site/reference/documentation-site.md",
+        "path": "docs/reference/documentation-site.md",
+        "canonical": "docs/reference/documentation-site.md",
         "sha256": "a1851910ffb2832775a4a4888ee0f3d9e474d5940dcdbbfb46c6d20a861e29cb"
       }
     ]
@@ -9799,8 +9799,8 @@ export const documentationExecutableRoleRecipes = {
     ],
     "purposeInputs": [
       {
-        "path": "docs/site/reference/capabilities.md",
-        "canonical": "docs/site/reference/capabilities.md",
+        "path": "docs/reference/capabilities.md",
+        "canonical": "docs/reference/capabilities.md",
         "projection": "capability-registration-reader-columns/v1",
         "sha256": "625ebc282501239f4d23e48555f4773bf8328f680b0aebf911273819fdc8594d"
       },
@@ -9895,8 +9895,8 @@ export const documentationExecutableRoleRecipes = {
         "sha256": "af1973d167a0c43ffe14eb828fc8d139a63ab8b696fdc4095c8e862f2d414dd8"
       },
       {
-        "path": "docs/site/use/workflows/wait-resume/platform.template.json",
-        "canonical": "docs/site/use/workflows/wait-resume/platform.template.json",
+        "path": "docs/use/workflows/wait-resume/platform.template.json",
+        "canonical": "docs/use/workflows/wait-resume/platform.template.json",
         "sha256": "8d9f160964ea4c3ff5c924c3c4c36291f5a6bfa969807721f5a8383578a5b1ef"
       },
       {
@@ -10202,8 +10202,8 @@ export const documentationExecutableRoleRecipes = {
         "sha256": "86576d0f96d9787028c87e6d2b489f956b34d00284ef6ad34cdcbdc01fcf9467"
       },
       {
-        "path": "docs/site/extend/documentation-maintenance.md",
-        "canonical": "docs/site/extend/documentation-maintenance.md",
+        "path": "docs/extend/documentation-maintenance.md",
+        "canonical": "docs/extend/documentation-maintenance.md",
         "sha256": "f2e56245caa40edaac97b242b90de8d1efeb6477bfc03dc2a997d14ca6b38602"
       },
       {
@@ -10342,8 +10342,8 @@ export const documentationExecutableRoleRecipes = {
         "sha256": "4d08e2533bda82a536a9c61ab27a3fca94939a484a5a2154e012ff9507f26155"
       },
       {
-        "path": "docs/site/reference/documentation-site.md",
-        "canonical": "docs/site/reference/documentation-site.md",
+        "path": "docs/reference/documentation-site.md",
+        "canonical": "docs/reference/documentation-site.md",
         "sha256": "a1851910ffb2832775a4a4888ee0f3d9e474d5940dcdbbfb46c6d20a861e29cb"
       },
       {
@@ -11733,7 +11733,7 @@ const reviewedSdkGeneratorRecipe=frozenRecipes({
   "callSha256": "a0cc7099f51ec4b07ba83d39237ddaa8ca33916145c8e15ac55a213790897a53",
   "resultSlots": {
     "docs/generated/inventory/sdk-reference.json": "JSON.stringify(sdkReference.inventory,null,2) plus newline",
-    "docs/site/reference/sdk-exports.md": "sdkReference.generatedMarkdown"
+    "docs/reference/sdk-exports.md": "sdkReference.generatedMarkdown"
   },
   "rootRevisionPrerequisites": [
     "root=path.resolve(option(--root,process.cwd())); exact canonical worktree root only for this proposed profile. Detached allow flag/env mode requires separate receipt; do not inherit observation.",

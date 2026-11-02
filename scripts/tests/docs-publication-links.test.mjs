@@ -3,8 +3,8 @@ import path from 'node:path';
 import test from 'node:test';
 import { rebaseMarkdownLinks } from '../lib/docs-publication-links.mjs';
 
-const origin = '/repo/docs/site/extend/plugin-catalogue/fixture.md';
-const target = '/repo/docs/site/use/plugins.md';
+const origin = '/repo/docs/extend/plugin-catalogue/fixture.md';
+const target = '/repo/docs/use/plugins.md';
 
 test('shared fixture guidance reaches the same canonical procedure from the operator matrix', () => {
   const text = 'Use [the fixture](../../use/workflows/kubernetes-fixture.md#cleanup) before continuing.';

@@ -47,7 +47,7 @@ const registrationKeys = [
 const roleFiles = walk(path.join(root, 'packaging/runtime/roles'))
   .filter((target) => target.endsWith('.json'));
 const roles = roleFiles.map((target) => ({ target, manifest: readJson(target) }));
-const catalogueRoot = path.join(root, 'docs/site/extend/plugin-catalogue');
+const catalogueRoot = path.join(root, 'docs/extend/plugin-catalogue');
 const cataloguePages = walk(catalogueRoot)
   .filter((target) => target.endsWith('.md') && path.basename(target) !== 'README.md');
 

@@ -108,7 +108,7 @@ export function validateWaitTemplate(root, template, definition, capabilityProje
   assert.deepEqual(capabilityProjection, { providers: template.providers, grants: template.grants });
   return withExampleDirectory(directory => {
     const value = structuredClone(template);
-    const originalDirectory = path.join(root, 'docs/site/use/workflows/wait-resume');
+    const originalDirectory = path.join(root, 'docs/use/workflows/wait-resume');
     for (const field of ['installationRoots', 'trustedBuiltinRoots']) {
       value[field] = value[field].map(item => path.resolve(originalDirectory, item));
     }
@@ -236,7 +236,7 @@ export function validateProjectFactories(root) {
       GIT_CONFIG_KEY_0: 'core.hooksPath', GIT_CONFIG_VALUE_0: empty,
       GIT_CONFIG_KEY_1: 'init.templateDir', GIT_CONFIG_VALUE_1: empty };
     return ['first-project', 'compiled-project-input'].map(name => {
-      const source = path.join(root, 'docs/site/use/workflows/examples', `${name}.mjs`);
+      const source = path.join(root, 'docs/use/workflows/examples', `${name}.mjs`);
       const destination = path.join(parent, name);
       const output = JSON.parse(execFileSync(process.execPath, [source, destination], {
         cwd: root, encoding: 'utf8', timeout: 120000, maxBuffer: 4 * 1024 * 1024,

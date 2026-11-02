@@ -17,7 +17,7 @@ for(const [source,profile]of Object.entries(profiles)){
 test('only original four owners, no API/render/probe/test prefix role borrowing',()=>{assert.equal(Object.keys(profiles).length,4);for(const source of ['scripts/render-kubernetes-api-probe.mjs','scripts/gitops.mjs','scripts/docs-new-owner.mjs','scripts/tests/new-owner.test.mjs'])assert.equal(acquire('/missing-root',source),null);});
 test('missing baseline native entry is drift, not inferred from a docs alias',()=>{const source='scripts/plugin-system-inventory.mjs';fixture(source,({root})=>assert.throws(()=>ancestry(root,source,new Set([source]),new Set(),[]),/DOCUMENTATION_TOOL_PUBLIC_CONSUMER_UNQUALIFIED/));});
 test('vendor guide purpose remains bound after a warm positive, including its new dated appendix',()=>{
- const source='scripts/vendor-external-helm-authorities.mjs',guide='docs/site/extend/documentation-maintenance.md';
+ const source='scripts/vendor-external-helm-authorities.mjs',guide='docs/extend/documentation-maintenance.md';
  for(const mode of ['changed-scope','missing','symlink'])fixture(source,({root,write,read})=>{
   assert.equal(acquire(root,source),profiles[source]);
   const original=read(guide);
