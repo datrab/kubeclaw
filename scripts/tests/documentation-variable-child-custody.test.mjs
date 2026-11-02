@@ -47,8 +47,9 @@ const owner=functionSyntax(parentTree,'deployedStaticObjects');
 
 const namespace='fixture-namespace',recordingRoot='/finite-fixture-root';
 function execute(syntax){
- const calls=[],consumers=[];
+ const calls=[],consumers=[],sources=[];
  const sandbox={root:recordingRoot,process:Object.freeze({execPath:'/bound-node-fixture'}),
+  sourceBytes:source=>{sources.push(source);return Buffer.from('FINITE_RECORDED_SOURCE');},
   execFileSync:(binary,argv,options)=>{
    const index=calls.length;assert.ok(index<2,'UNEXPECTED_BRANCH:third subprocess');
    assert.equal(binary,'/bound-node-fixture');
@@ -67,9 +68,25 @@ function execute(syntax){
   literalLocation:()=>{throw new Error('UNEXPECTED_BRANCH:literalLocation');},
  };
  vm.createContext(sandbox);vm.runInContext(syntax,sandbox);const result=sandbox.deployedStaticObjects(namespace);
+ assert.deepEqual(sources,[
+  'scripts/render-litellm-deployment.mjs','scripts/render-postgresql-recovery.mjs',
+  'scripts/stateful-database-service.mjs','scripts/infrastructure-release.mjs',
+  'scripts/infrastructure-image-renderer.mjs','scripts/infrastructure-chart.mjs',
+  'scripts/infrastructure-oci-chart.mjs','scripts/infrastructure-chart-lock.mjs',
+  'scripts/postgresql-recovery-preflight.mjs','scripts/postgresql-recovery.sh',
+  'versions.json','my-values/infra/litellm-config.yaml',
+  'my-values/infra/litellm-deployment.yaml','my-values/infra/postgresql-recovery.yaml',
+  'my-values/infra/postgresql-values.yaml',
+ ]);
  assert.equal(calls.length,2);assert.equal(consumers.length,2);assert.equal(result.length,2);return calls;
 }
 test('exact docs argv omits preflight and retains resource consumer/options',()=>{const calls=execute(owner);assert.ok(!calls[1].argv.includes('--preflight'));});
+test('missing or substituted recovery helper source cannot satisfy the recorded closure',()=>{
+ for(const replacement of ['',"    'scripts/substituted-helper.mjs',\n"]){
+  const changed=owner.replace("    'scripts/stateful-database-service.mjs', 'scripts/infrastructure-release.mjs',\n",replacement);
+  assert.notEqual(changed,owner);assert.throws(()=>execute(changed),assert.AssertionError);
+ }
+});
 test('reintroduced documentation preflight flag fails recording argv contract',()=>{
  const changed=owner.replace("recoverySource,\n    namespace,","recoverySource,\n    '--preflight',\n    namespace,");assert.notEqual(changed,owner);assert.throws(()=>execute(changed));
 });
