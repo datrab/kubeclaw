@@ -24,6 +24,13 @@ chmod 0640 "$config"
 # Keep the cache on the mounted worker volume, not nested container overlayfs.
 # Create it as its final owner: the restricted supervisor cannot traverse a
 # builder-owned mode-0700 parent, and must not recursively change old cache data.
+# A newly mounted worker volume may still have a root-owned top directory.
+# Only initialize this fixed service-owned parent, never recurse into job data.
+if [ "$state" = /var/lib/buster-v2/buildkit ]; then
+  test ! -L /var/lib/buster-v2
+  mkdir -p /var/lib/buster-v2
+  chown builder:builder /var/lib/buster-v2
+fi
 case "$state" in /*) ;; *) echo 'BuildKit state path must be absolute' >&2; exit 1 ;; esac
 setpriv --reuid=1000 --regid=1000 --init-groups \
   sh -c 'umask 077; mkdir -p -- "$1" && test ! -L "$1" && chmod 0700 "$1" && test -w "$1"' sh "$state"

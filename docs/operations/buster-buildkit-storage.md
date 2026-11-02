@@ -7,7 +7,9 @@ Do not place the cache in the container's writable overlay layer: nested
 rootless overlay can cause automatic fallback to the native snapshotter, whose
 full-directory copies make multi-layer application images disproportionately slow.
 
-The entrypoint creates the cache as UID/GID 1000 with mode 0700. Existing
+For the fixed default path, the entrypoint initializes only the service-owned
+volume top directory for UID/GID 1000, including fresh root-owned mounts. It
+creates the cache as UID/GID 1000 with mode 0700. Existing
 builder-owned private caches work on restart; child files are not recursively
 chowned or erased. Relative paths and a symlink cache root fail closed. The
 image also creates the unmounted parent with the right owner for local usage.
