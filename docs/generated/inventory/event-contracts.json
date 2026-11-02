@@ -1,6 +1,6 @@
 {
   "schemaVersion": "event-contract-reference.v1",
-  "sourceSetSha256": "ed7e8991ff7cfa3b80cd087fb502553a4110279da91847710cc4e14f0f937a93",
+  "sourceSetSha256": "5f1212921af3dfc66be6459dfc9db85b476ce6222ea13a1b5b99d09069cfe917",
   "families": [
     {
       "id": "canonical-lifecycle-and-domain",
@@ -143789,7 +143789,7 @@
     },
     {
       "path": "scripts/docs-api-documentation-role-custody.mjs",
-      "sha256": "5f87f5969a9dd4813ae0cc27ed16cf2fd0d16c836ae9730d8fe0611448e6449f",
+      "sha256": "a23108dfdb8189ef74d9a94ee633d04e8ee8eeacb59ce118531a701b88e51f98",
       "bytes": 1319633
     },
     {
@@ -143819,8 +143819,8 @@
     },
     {
       "path": "scripts/docs-api-output-discovery.mjs",
-      "sha256": "73d8597f6fe10f0b1dbb6a1454bac263535ee58b17a8b9e6b2d9260a8f829b6f",
-      "bytes": 633131
+      "sha256": "7c81c02d8b8cc16620d37d7774bb6023d42cec4babc7e6117b6821c5725d6a1e",
+      "bytes": 636227
     },
     {
       "path": "scripts/docs-api-output-role-classification.mjs",
@@ -143974,7 +143974,7 @@
     },
     {
       "path": "scripts/docs-deployment-scalar-occurrence-custody.mjs",
-      "sha256": "98eee320042433f942326f61229956e5a2517f19d38f9a129b22b32eef0ccfd1",
+      "sha256": "626bc6818c0943fe5c8cfa0c8b8d613aa80b9748682ef63efaf5a0a53cb9747d",
       "bytes": 7604
     },
     {
@@ -145174,8 +145174,8 @@
     },
     {
       "path": "scripts/tests/api-output-publication-parser-custody.test.mjs",
-      "sha256": "3de5e39f506f3cf5b715d7c2cf88f848b84c86c3b507eae370ab4579e35df2ce",
-      "bytes": 6400
+      "sha256": "169c98b2439b36301bebdba38df6a9943a210e7b3096a2542aeb27064c55ac8b",
+      "bytes": 6769
     },
     {
       "path": "scripts/tests/api-output-publication-yaml-input-custody.test.mjs",
@@ -154765,5 +154765,5 @@
       "bytes": 3220
     }
   ],
-  "combinedSourceVectorSha256": "60f91181e8de3273b40e6c22a874e2ddab578a4d79762e7abe2fe6becdc14c73"
+  "combinedSourceVectorSha256": "77d76060f4a2edd0b87c297c055f6aaa2e9ecf8b539e48b9ff4f8a795152d382"
 }
