@@ -4776,7 +4776,7 @@
       "retry": "Keep original decisionId/payloadDigest/envelope/leaseUID/readyDigest and read original status before any new attempt. Preserve history limit, expiry and subject-change stop. Do not forge acceptance or clear retained decision history to make retry succeed.",
       "safeAction": "Keep original decisionId/payloadDigest/envelope/leaseUID/readyDigest and read original status before any new attempt. Preserve history limit, expiry and subject-change stop. Do not forge acceptance or clear retained decision history to make retry succeed.",
       "retainedData": "Keep signed envelope/decisionId/payloadDigest/leaseUID/readyDigest and committed decisions/expiry. uncertain commit requires status against original identity.",
-      "consumer": "The handler uses an anchored complete-token constructor before HTTP 409; a matching prefix, line breaks or an API-read payload are not an error-code proof. Authentication, successful response construction and individual owning recovery rules remain separate.",
+      "consumer": "The handler uses an anchored complete-token constructor before HTTP 409. A matching prefix, line breaks or an API-read payload do not prove an error code. Authentication, successful response construction and individual owning recovery rules remain separate.",
       "sources": [
         {
           "path": "cmd/buster-namespace-controller/demo-product.go",

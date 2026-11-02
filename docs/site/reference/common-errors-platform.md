@@ -213,7 +213,7 @@ Search for the exact diagnostic or constructor. Each entry distinguishes its ide
 
 **Retained evidence:** Keep signed envelope/decisionId/payloadDigest/leaseUID/readyDigest and committed decisions/expiry. uncertain commit requires status against original identity.
 
-**Consumer / translation:** The handler uses an anchored complete-token constructor before HTTP 409; a matching prefix, line breaks or an API-read payload are not an error-code proof. Authentication, successful response construction and individual owning recovery rules remain separate.
+**Consumer / translation:** The handler uses an anchored complete-token constructor before HTTP 409. A matching prefix, line breaks or an API-read payload do not prove an error code. Authentication, successful response construction and individual owning recovery rules remain separate.
 
 **Owning / consuming source:**
 
