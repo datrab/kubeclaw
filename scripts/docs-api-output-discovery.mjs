@@ -2128,6 +2128,59 @@ const reviewedGitOpsProfile = Object.freeze({
   authoritySha256: '740c850a386a080f18a942bd37630aaceb3ec266cf8c8dbcdd7a13d6d13b099d',
   // Current source binding only; the sealed observations remain historical.
   currentPackageBinding20261031: Object.freeze({"path":"package.json","sha256":"0a8f76c0a868d5b85467081f4c635421995b1792791b0acec05f80be9e93c4ef","bytes":54287,"historicalSha256":"4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3","historicalBytes":53756}),
+  // Current classifier representation only; historical observations stay sealed.
+  currentDescriptorRepresentations: Object.freeze([
+  {
+    "source": "scripts/gitops-continuous.mjs",
+    "historicalDescriptorSha256": "7967adcf260e64882325ddd89f3793180ca51a561b35d7dff14c86e746e42793",
+    "currentDescriptor": {
+      "line": 99,
+      "sink": "fs.writeFileSync",
+      "expression": "Object.entries(files)",
+      "sinkContract": null
+    }
+  },
+  {
+    "source": "scripts/gitops-rollback.mjs",
+    "historicalDescriptorSha256": "6c50c0e1da6d562186d79846f553c803a5b7bf9ba43fe9ecd1dac58098e9d2ef",
+    "currentDescriptor": {
+      "line": 62,
+      "sink": "fs.writeFileSync",
+      "expression": "Object.entries(plan.files)",
+      "sinkContract": null
+    }
+  },
+  {
+    "source": "scripts/gitops-rollback.mjs",
+    "historicalDescriptorSha256": "a3bae31a81f26a9ca4bf0ebd2d98822eed2167fef2d5f87eafb584008a2b7850",
+    "currentDescriptor": {
+      "line": 66,
+      "sink": "process.stderr.write",
+      "expression": "`${error.message}\\n`",
+      "sinkContract": null
+    }
+  },
+  {
+    "source": "scripts/gitops.mjs",
+    "historicalDescriptorSha256": "ed2cf51ac231dc5ee19e4359c37dfeaa92693f94a8e8f92b9681bfc124c15b6d",
+    "currentDescriptor": {
+      "line": 181,
+      "sink": "process.stdout.write",
+      "expression": "result.documents.map(document => yaml.dump(document, { noRefs: true, lineWidth: 120 })).join('---\\n')",
+      "sinkContract": null
+    }
+  },
+  {
+    "source": "scripts/gitops.mjs",
+    "historicalDescriptorSha256": "306e788e416b89a4503cd21f77abf1ca4de6b8d0b2e0d0947e376cf54557244a",
+    "currentDescriptor": {
+      "line": 198,
+      "sink": "process.stdout.write",
+      "expression": "`Exported ${result.groups.length} groups. Review and commit the release bundle before bootstrap.\\n`",
+      "sinkContract": null
+    }
+  }
+]),
   activationSource: 'scripts/gitops-continuous.mjs',
   activationSha256: 'f2b35d956ffaa40dc9644f7f3c22c3d7e6f34747e890f1c139de8211cd2e3734',
 });
@@ -2221,7 +2274,20 @@ export function checkedGitOpsOutputProfiles(root, graph) {
       });
     }
   }
+  const currentDescriptors = authority.descriptors.map(descriptor => {
+    const pairs = profile.currentDescriptorRepresentations.filter(pair => pair.source === descriptor.source
+      && pair.currentDescriptor.line === descriptor.line && pair.currentDescriptor.sink === descriptor.sink);
+    if (!pairs.length) return descriptor;
+    if (pairs.length !== 1 || pairs[0].historicalDescriptorSha256 !== descriptor.classifierDescriptorSha256
+      || !Object.hasOwn(authority.sourcePins, descriptor.source)
+      || JSON.stringify(Object.keys(pairs[0].currentDescriptor)) !== '["line","sink","expression","sinkContract"]') fail('current descriptor historical pairing');
+    return {...descriptor, classifierDescriptorSha256: hash(JSON.stringify(pairs[0].currentDescriptor))};
+  });
+  if (profile.currentDescriptorRepresentations.length !== 5
+    || profile.currentDescriptorRepresentations.some(pair => authority.descriptors.filter(descriptor => descriptor.source === pair.source
+      && descriptor.line === pair.currentDescriptor.line && descriptor.sink === pair.currentDescriptor.sink).length !== 1)) fail('current descriptor companion roster');
   const result = Object.freeze({sources: Object.freeze(sources), dependencies: Object.freeze(dependencies),
+    currentDescriptors: Object.freeze(currentDescriptors.map(Object.freeze)),
     outputs: Object.freeze(outputs), outputMembers: Object.freeze(outputMembers.map(Object.freeze)),
     descriptors: Object.freeze(authority.descriptors.map(Object.freeze)), witnessDigest: profile.authoritySha256,
     currentPackageBinding: binding, currentPackageBindingDigest, observationsHistorical: true});
@@ -2231,7 +2297,7 @@ export function checkedGitOpsOutputProfiles(root, graph) {
 export function gitOpsOutputProfileRole(source, role, witness) {
   if (!witness || !witness.sources.includes(source) || role.role !== 'unknown') return role;
   assert(qualifiedGitOpsProfiles.has(witness), 'API_PRODUCT_GITOPS_OUTPUT_PROFILE_UNQUALIFIED: unacquired witness');
-  const descriptor = witness.descriptors.find(item => item.source === source && item.line === role.line && item.sink === role.sink);
+  const descriptor = witness.currentDescriptors.find(item => item.source === source && item.line === role.line && item.sink === role.sink);
   if (!descriptor) return role;
   const nativeDescriptor = Object.fromEntries(['line', 'sink', 'expression', 'sinkContract'].map(key => [key, role[key] ?? null]));
   assert.equal(hash(JSON.stringify(nativeDescriptor)), descriptor.classifierDescriptorSha256,
