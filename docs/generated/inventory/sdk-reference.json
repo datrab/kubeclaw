@@ -1,7 +1,7 @@
 {
   "schemaVersion": "sdk-reference-inventory.v1",
   "purpose": "Compiler-discovered public SDK facts and finite owning callback closure; consumer explanations are authored in the documentation scripts. Not content acceptance.",
-  "sourceRevision": "7994a51e16bc752357c3a801190b12b7d6a191a4",
+  "sourceRevision": "1a0c284899d5abdcf7504ef1c15defb3b6ce52db",
   "owner": "documentation automation",
   "canonicalTarget": "docs/site/reference/sdk.md",
   "generatedTarget": "docs/site/reference/sdk-exports.md",
