@@ -161,8 +161,8 @@ extraContainers:
         port: 28891
       initialDelaySeconds: 30
       periodSeconds: 15
-      timeoutSeconds: 2
-      failureThreshold: 3
+      timeoutSeconds: 15
+      failureThreshold: 6
     volumeMounts:
       - name: workspace
         mountPath: /workspace
