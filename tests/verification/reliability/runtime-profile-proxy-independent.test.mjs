@@ -6,7 +6,13 @@ import {execFileSync} from 'node:child_process';
 import {runtimeDispatchProfileFields,CURRENT_RUNTIME_DISPATCH_PROFILE as profile,portableJson,canonicalJson} from '@kubeclaw/plugin-sdk';
 
 test('independent pre-fix original registered transport/context HTTP oracle now rejects before trap or admission',()=>{
-  const raw=execFileSync(process.execPath,['tests/fixtures/runtime-regressions/run9-sdk-transport-proxy-audit.mjs',path.resolve('.')],{encoding:'utf8'});
+  // Retain authenticated historical bytes, but do not make real adapter startup
+  // (including artifact-store filesystem readiness) a 100ms timing assertion.
+  // AdapterRuntime also uses shutdownTimeoutMs for activate/ready deadlines.
+  const source=fs.readFileSync(new URL('../../fixtures/runtime-regressions/run9-sdk-transport-proxy-audit.mjs',import.meta.url),'utf8');
+  assert.equal(source.split('shutdownTimeoutMs:100').length-1,2);
+  const input=source.replaceAll('shutdownTimeoutMs:100','shutdownTimeoutMs:5000');
+  const raw=execFileSync(process.execPath,['--input-type=module','-',path.resolve('.')],{input,encoding:'utf8',timeout:30000});
   const result=JSON.parse(raw);assert.equal(result.originalRegisteredAdapters,true);assert.equal(result.originalContext,true);
   assert.deepEqual(result.results.map(row=>row.mode),['adapter','context']);
   for(const row of result.results){
