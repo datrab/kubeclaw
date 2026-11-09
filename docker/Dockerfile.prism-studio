@@ -1,6 +1,6 @@
 # Version defaults are generated from versions.json; run npm run versions:sync.
 ARG NODE_BASE=node:24.22.2-bookworm-slim@sha256:c86ecead9e55a5210ac1727de38a4ca840bf03dcaf34dc9749addbf383b1920c
-ARG STUDIO_RUNTIME_BASE=gcr.io/distroless/nodejs24-debian13:nonroot@sha256:a6c34457f6da4295807e051411c7783739c65b997a324fed14e4fa292615ae91
+ARG STUDIO_RUNTIME_BASE=gcr.io/distroless/nodejs24-debian13:nonroot@sha256:088a01637f22908632ba09018be2e0b516f2fa6f7869c191d29491139db43c78
 FROM ${NODE_BASE} AS build
 USER root
 WORKDIR /build
