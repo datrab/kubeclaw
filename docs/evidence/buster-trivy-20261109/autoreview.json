@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "No actionable defects were identified in the provided change bundle. The security scan targets the built image digest and precedes receipt issuance, while evidence upload can run after a failed scan. Repository context could not be inspected because read-only shell execution failed with a sandbox initialization error; conclusions are limited to the supplied diff.",
+  "overall_confidence": 0.7
+}

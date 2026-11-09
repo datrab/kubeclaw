@@ -67,7 +67,7 @@ test('immutable candidate checks precede release receipts and share PR acceptanc
   const build = steps.findIndex(step => step.id === 'build');
   const verify = steps.findIndex(step => step.name === 'Verify the exact published artifact');
   const receipt = steps.findIndex(step => step.name === 'Record immutable build receipt');
-  const upload = steps.findIndex(step => step.uses?.startsWith('actions/upload-artifact@'));
+  const upload = steps.findIndex(step => step.with?.name === 'image-receipt-${{ matrix.name }}');
   assert(build < verify && verify < receipt && receipt < upload);
   assert.match(steps[verify].env.IMAGE, /@\$\{\{ steps\.build\.outputs\.digest \}\}$/u);
   for (const role of ['nova', 'prism-agent', 'buster-gateway', 'buster-runtime']) assert(steps[verify].if.includes(`"${role}"`));
@@ -79,6 +79,23 @@ test('immutable candidate checks precede release receipts and share PR acceptanc
   assert.deepEqual(main.jobs['preserve-receipts'].needs, ['build', 'reliability', 'update-policy']);
   assert.deepEqual(main.jobs['prism-live-acceptance'].needs, ['build', 'detect-build-inputs', 'reliability', 'update-policy']);
   for (const service of ['control', 'studio', 'worker', 'ingestion']) assert(main.jobs['prism-live-acceptance'].if.includes(`'prism-${service}'`));
+});
+
+test('Buster requires a digest-bound security gate before its receipt and retains failed-scan evidence', () => {
+  const steps = main.jobs.build.steps;
+  const scan = steps.findIndex(step => step.name === 'Scan the exact Buster worker before issuing its receipt');
+  const receipt = steps.findIndex(step => step.name === 'Record immutable build receipt');
+  assert.ok(scan > steps.findIndex(step => step.name === 'Verify the exact published artifact') && scan < receipt);
+  assert.equal(steps[scan].if, "matrix.name == 'buster-runtime'");
+  assert.match(steps[scan].env.IMAGE, /@\$\{\{ steps\.build\.outputs\.digest \}\}$/u);
+  assert.equal(steps[scan].run, 'bash scripts/scan-runtime-images.sh "$IMAGE"');
+  assert.equal(steps[scan].env.TRIVY_PASSWORD, '${{ github.token }}');
+  assert.equal(steps[scan]['continue-on-error'], undefined);
+  const evidence = steps.find(step => step.with?.name === 'image-security-buster-runtime');
+  assert.match(evidence.if, /!cancelled\(\)/u);
+  assert.match(evidence.if, /matrix.name == 'buster-runtime'/u);
+  assert.equal(evidence.with.path, 'dist/trivy/');
+  assert.equal(evidence.with['if-no-files-found'], 'error');
 });
 
 test('bundle publication rejects failed or cancelled image proofs while allowing code-only changes', () => {

@@ -70,7 +70,7 @@
   },
   "imageOverrides": {
     "buster-runtime": {
-      "DEBIAN_SNAPSHOT": "20261031T000000Z",
+      "DEBIAN_SNAPSHOT": "20261109T000000Z",
       "SEMGREP_VERSION": "1.183.0"
     },
     "ops-pod": {
