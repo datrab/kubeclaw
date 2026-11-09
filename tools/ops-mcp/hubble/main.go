@@ -12,7 +12,7 @@ import (
 
 func main() {
 	if err := cmd.Execute(); err != nil {
-		fmt.Fprintln(os.Stderr, err.Error())
+		fmt.Fprintf(os.Stderr, "%q\n", fmt.Sprint(err.Error()))
 		os.Exit(1)
 	}
 }

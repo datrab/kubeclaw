@@ -266,7 +266,7 @@ busterRuntimePersistence:
   storageClass: ""
 
 # Supply runtimeInfrastructure.registry in your private overlay before rendering
-# this runtime. See docs/operations/registry-clients.md for HTTPS/auth/node trust
+# this runtime. See docs/understand/platform-and-operations.md#writable-local-oci-registry for HTTPS/auth/node trust
 # and the explicitly selected anonymous HTTP lab alternative.
 
 # Cluster reads and exec go through the central MCP; only test* is authorized.

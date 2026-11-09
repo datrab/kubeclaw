@@ -27,6 +27,21 @@ try {
   const combined = await provider().execute({ ...base, configuration: { values: { minimumLinePercent: 75, combine: true } },
     inputs: [...base.inputs, { name: 'coverage-2', kind: 'artifact', artifact: artifactTwo }] });
   assert.equal(combined.outcome, 'passed'); assert.equal(combined.metrics[0].value, 75);
+  const allInputs = [...base.inputs, { name: 'coverage-2', kind: 'artifact', artifact: artifactTwo }];
+  const omittedCombine = await provider().execute({ ...base, inputs: allInputs,
+    configuration: { values: { minimumLinePercent: 75 } } });
+  assert.equal(omittedCombine.outcome, 'passed');
+  assert.equal(omittedCombine.providerDetails.values.combine, true);
+  const individual = await provider().execute({ ...base, inputs: allInputs,
+    configuration: { values: { minimumLinePercent: 75, combine: false } } });
+  assert.equal(individual.outcome, 'failed');
+  assert.equal(individual.metrics[0].value, 50);
+  const noThreshold = await provider().execute({ ...base, inputs: allInputs,
+    configuration: { values: { combine: false } } });
+  assert.equal(noThreshold.outcome, 'passed');
+  assert.equal(noThreshold.providerDetails.values.minimumLinePercent, null);
+  await assert.rejects(() => provider().execute({ ...base, inputs: [],
+    configuration: { values: {} } }), /COVERAGE_INPUT_REQUIRED/u);
   const malformed = path.join(root, 'malformed.info'); fs.writeFileSync(malformed, 'not-lcov\n');
   const malformedBytes = fs.readFileSync(malformed);
   await assert.rejects(() => provider().execute({ ...base, inputs: [{ name: 'coverage-1', kind: 'artifact', artifact: {

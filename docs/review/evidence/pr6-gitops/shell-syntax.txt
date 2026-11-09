@@ -1,2 +1,0 @@
-Command: bash -n scripts/deploy.sh scripts/deploy-argocd.sh
-Exit: 0

@@ -1,0 +1,29 @@
+{
+  "at": "2026-10-12T15:59:23.780483+00:00",
+  "baseRevision": "0ed7480ee0aee25a61acaa6cca9d559d58a735ed",
+  "branch": "docs/documentation-overhaul",
+  "pr": "https://github.com/datrab/kubeclaw/pull/13",
+  "goal": "active; overall completion unproven",
+  "previousGoalTurn": "progress: complete role evidence recorded/pushed; interrupted runtime/processes detected; current transfer prepared and checked",
+  "worktreePatchVerified": true,
+  "worktreeFiles": 16,
+  "archiveFiles": 1176,
+  "archiveBytes": 6782683,
+  "artifactHashesVerified": true,
+  "agents": "No previous agent/handle may be assumed live in Cloud. Start fresh independent identities.",
+  "readerCandidates": {
+    "diagnose": "5bc06556def06f1edb61193867ea499c9c407f092ffe7530e817d91d5e55853b",
+    "recovery": "944988014bbfecd79138d2180f47631218ecea38efef9ae4bc3239e4e76a1a52"
+  },
+  "sourceCandidate": {
+    "scanner": "39a37bf6fd28f136dc03f19993304bbf65d749e932658c12b5b8cfc2ca226386",
+    "pythonTests": "f61ed1f11ba6a3bf45c82e6f7db783164a5f7c1d33bc0ed9f80690661b6b7b41",
+    "discovery": "547109bfa0406e2c52889e92f82c2909c500ff016b91fff01d3ed9968a985034",
+    "registry": "2a24100fbfdf53302492b93fc64da99f582ad9bd9641a416032682bd3b93bccd",
+    "recipe": "f27e8c6f9fe1e929aaa7e73161672bd938583ff0d122c913cdcaff9974dc0667"
+  },
+  "currentRootRuns": "Both original and replacement handles became missing during runtime transitions; no result.json / full receiving completion was observed. Never label as PASS. Retained partial outputs are not complete runs.",
+  "newFinding": "Incomplete independent review concretely found heredoc delimiter .trim() at scanner around line5151: active trailing-space PY line silently terminates discovery (shell/YAML); passive leading-space DATA line promotes literal Python recipe (shell). Native legal witness results/probes in archive. Full reviewer final verdict still absent.",
+  "publicationDraft": "WIP publication-page edit is in patch, author final report absent. Whole audit/review required before acceptance.",
+  "prismDraft": "No shared page change completed; partial local browser/source probes retained. Add supported dev:studio fixture journey only after whole source audit."
+}

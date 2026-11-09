@@ -1,0 +1,280 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import test from 'node:test';
+import { execFileSync } from 'node:child_process';
+import { pluginSourceClosure, pluginInvocationFacts, pluginCapabilityRoutes } from '../plugin-source-closure.mjs';
+import { invocationDependencyBoundaries } from '../plugin-dependency-boundaries.mjs';
+
+const root = path.resolve(import.meta.dirname, '../..');
+const facts = (entry, exported = 'activate') => pluginInvocationFacts(pluginSourceClosure(path.join(root, entry), root), exported);
+
+test('qualifies the actual repository-reader local argv and the remote-plan snapshot argv', () => {
+  for (const entry of ['skills/nova/plugins/repository-adapter/src/adapter.ts', 'skills/nova/plugins/remote-test-gate/src/adapter.ts']) {
+    const boundary = invocationDependencyBoundaries(facts(entry), root);
+    assert.deepEqual(boundary.diagnostics, []);
+    assert.ok(boundary.records.some((item) => item.scope === 'local-command'));
+  }
+});
+
+test('documents conditional Git remote ownership and the empty child environment', () => {
+  const boundary = invocationDependencyBoundaries(facts('skills/common/plugins/git-workspace/src/adapter.ts'), root);
+  assert.deepEqual(boundary.diagnostics, []);
+  const record = boundary.records.find((item) => item.scope === 'remote-command');
+  assert.match(record.endpoint, /origin.*Repository\/system Git configuration.*pushurl/u);
+  assert.match(record.secret, /env: \{\}.*neither inherits process environment credentials nor resolves secrets.read/u);
+  assert.match(record.check, /ready\(\).*proves no remote access/u);
+  assert.match(record.endpoint, /not a remote-name allowlist/u);
+  assert.match(record.dataOwner, /only when workspaceReference is supplied/u);
+  assert.match(record.check, /Failure, cancellation or lost remote results do not establish rollback/u);
+});
+
+test('host-selected commands and lint tools retain their actual authorization and target limits', () => {
+  for (const entry of ['skills/common/plugins/command-runner/src/adapter.ts', 'skills/nova/plugins/lint/src/adapter.ts']) {
+    const boundary = invocationDependencyBoundaries(facts(entry), root);
+    assert.deepEqual(boundary.diagnostics, []);
+    const record = boundary.records.find((item) => item.scope === 'selected-program');
+    assert.ok(record);
+    assert.match(record.endpoint, /operator|Policy/u);
+    assert.ok(record.secret.length > 150 && record.check.length > 150);
+  }
+});
+
+test('locked tokenizer interfaces receive local library scope, never a fabricated remote target', () => {
+  for (const entry of ['skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts', 'skills/nova/plugins/review/src/repository-audit-stage.ts']) {
+    const boundary = invocationDependencyBoundaries(facts(entry, entry.endsWith('repository-audit-stage.ts') ? 'executeRepositoryAudit' : 'activate'), root);
+    assert.deepEqual(boundary.diagnostics, []);
+    assert.ok(boundary.records.some((item) => item.scope === 'local-library'));
+  }
+});
+
+test('host-supplied OpenClaw SDKs retain their exact subscription owner and positive checks', () => {
+  for (const [entry, exported] of [['skills/common/plugins/openclaw-agent-events/src/adapter.ts', 'activate'], ['skills/common/plugins/openclaw-agent-observer/src/index.ts', 'registerOpenClawAgentObserver']]) {
+    const boundary = invocationDependencyBoundaries(facts(entry, exported), root);
+    assert.deepEqual(boundary.diagnostics, []);
+    const record = boundary.records.find((item) => item.scope === 'host-subscription');
+    assert.ok(record);
+    assert.match(record.check, /host event|model\.usage/u);
+    assert.match(record.secret, /No credential|no credential/u);
+  }
+});
+
+test('a changed or dynamic Git command cannot inherit the local-read proof', () => {
+  const original = facts('skills/nova/plugins/repository-adapter/src/adapter.ts');
+  for (const expression of ["git(root, ['fetch', 'origin']);", 'git(root, configuredArguments);']) {
+    const selectedSources = new Map(original.selectedSources);
+    selectedSources.set(path.join(root, 'mutation.ts'), expression);
+    const boundary = invocationDependencyBoundaries({ ...original, selectedSources }, root);
+    assert.ok(boundary.diagnostics.some((item) => item.includes('subprocess target requires command dependency authority')));
+  }
+});
+
+test('an unknown third-party API cannot inherit a tokenizer or YAML parsing proof', () => {
+  const original = facts('skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts');
+  const file = path.join(root, 'skills/common/plugins/runtime-dispatch/src/openclaw.ts');
+  const changed = { ...original, externalInterfaces: [...original.externalInterfaces, { package: 'tiktoken', interface: 'remoteEncode', file, line: 1 }] };
+  const boundary = invocationDependencyBoundaries(changed, root);
+  assert.ok(boundary.diagnostics.some((item) => item.includes('external runtime implementation tiktoken')));
+});
+
+test('a new opaque host SDK operation cannot inherit the hook subscription contract', () => {
+  const original = facts('skills/common/plugins/openclaw-agent-events/src/adapter.ts');
+  const file = path.join(root, 'skills/common/plugins/openclaw-agent-events/src/adapter.ts');
+  const selectedSources = new Map(original.selectedSources);
+  selectedSources.set(file, `${selectedSources.get(file)}\nsdk.remoteOperation(endpoint);`);
+  const boundary = invocationDependencyBoundaries({ ...original, selectedSources }, root);
+  assert.ok(boundary.diagnostics.some((item) => item.includes('external runtime implementation openclaw/plugin-sdk')));
+});
+
+test('source guards cannot bless a boundary when its actual authority changed', (t) => {
+  const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'dependency-boundary-'));
+  t.after(() => fs.rmSync(temporary, { recursive: true, force: true }));
+  const file = path.join(temporary, 'skills/common/plugins/git-workspace/src/runner.ts');
+  fs.mkdirSync(path.dirname(file), { recursive: true });
+  fs.writeFileSync(file, 'changed runtime transport');
+  const diagnostic = `${file}:33: subprocess target requires command dependency authority`;
+  const boundary = invocationDependencyBoundaries({ selectedSources: new Map([[file, 'changed']]), evidence: [], diagnostics: [diagnostic] }, temporary);
+  assert.deepEqual(boundary.records, []);
+  assert.deepEqual(boundary.diagnostics, [diagnostic]);
+});
+
+test('Buster routes identify concrete client owners without claiming their configured instance', () => {
+  const routes = pluginCapabilityRoutes(path.join(root, 'skills/buster/engine/test-gates/remote-plan-service.ts'), root);
+  const exposure = routes.find((item) => item.capability === 'kubernetes.exposure');
+  assert.equal(exposure.constructor, 'TailscaleExposureCapabilityInvoker');
+  assert.match(exposure.selector, /this\.#options\.tailscaleExposure/u);
+  assert.ok(exposure.providerFiles.some((file) => file.endsWith('/tailscale-exposure-runtime.ts')));
+});
+
+test('computed secrets.read provider authority preserves mapping, denial and redacted functional proof', () => {
+  const invocation = facts('skills/common/plugins/secret-resolver/src/adapter.ts');
+  const boundary = invocationDependencyBoundaries(invocation, root, { providesCapabilities: ['secrets.read'] });
+  assert.deepEqual(boundary.diagnostics, []);
+  const record = boundary.records.find((item) => item.scope === 'credential-provider');
+  assert.match(record.endpoint, /context\.config\.environment.*names\[request\.resource\.canonicalId\].*process\.env\[environmentName\]/u);
+  assert.match(record.secret, /SECRET_DENIED.*SECRET_UNAVAILABLE/u);
+  assert.match(record.check, /ready\(\).*empty.*redacted/u);
+  const unknown = invocationDependencyBoundaries({ ...invocation, environmentInputs: [] }, root, { providesCapabilities: ['secrets.read'] });
+  assert.match(unknown.diagnostics.join(' '), /no qualified credential selector/u);
+});
+
+test('fixed durable-store subprocess authority requires compatible flock and preserves lock/recovery bounds', () => {
+  const boundary = invocationDependencyBoundaries(facts('skills/common/plugins/artifact-store/src/adapter.ts'), root);
+  const record = boundary.records.find((item) => item.service.includes('/usr/bin/flock'));
+  assert.ok(record);
+  assert.match(record.service, /GNU --exclusive.*--timeout 5.*\/bin\/sh.*\/bin\/cat/u);
+  assert.match(record.check, /BusyBox.*compatibility.*OBSERVABILITY_STORE_LOCKED.*OBSERVABILITY_STORE_UNLOCK_FAILED/u);
+  assert.ok(record.evidence.every((item) => item.endLine >= item.line));
+});
+
+test('selected artifact metadata/blob custody is direct, guarded and not inherited by foreign sources', (t) => {
+  const relative = 'skills/common/plugins/artifact-store/src/adapter.ts';
+  const invocation = facts(relative);
+  const boundary = invocationDependencyBoundaries(invocation, root);
+  const record = boundary.records.find(item => item.scope === 'local-store' && item.service.includes('FileDurableBlobStore'));
+  assert.ok(record);
+  assert.match(record.endpoint, /records\/store.json.*blobs\/sha256.*working directory.*separately.*not their combined/u);
+  assert.match(record.dataOwner, /backup\/removal.*shutdown does not erase/u);
+  assert.match(record.check, /ready\(\).*metadata only.*metadata before.*same idempotent/u);
+  assert.ok(boundary.records.some(item => item.service.includes('/usr/bin/flock')));
+  const removed = new Map(invocation.selectedSources);
+  removed.delete(path.join(root, relative));
+  removed.set(path.join(root, 'foreign.ts'), 'const records = new FileDurableRecordStore(configured,');
+  assert.ok(!invocationDependencyBoundaries({ ...invocation, selectedSources: removed }, root).records
+    .some(item => item.service.includes('FileDurableBlobStore')));
+  const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'artifact-boundary-'));
+  t.after(() => fs.rmSync(temporary, { recursive: true, force: true }));
+  // Selected constructor alone cannot qualify an unknown lifecycle/store implementation.
+  const selected = new Map([[path.join(temporary, relative), 'const records = new FileDurableRecordStore(configured,']]);
+  const missing = invocationDependencyBoundaries({ selectedSources: selected, diagnostics: [], evidence: [] }, temporary);
+  assert.ok(!missing.records.some(item => item.service.includes('FileDurableBlobStore')));
+  assert.match(missing.diagnostics.join(' '), /Selected artifact metadata\/blob custody could not be qualified/u);
+});
+
+test('agent-events is Nova-selected SDK integration, not the separate OpenClaw host extension', () => {
+  const record = invocationDependencyBoundaries(facts('skills/common/plugins/openclaw-agent-events/src/adapter.ts'), root)
+    .records.find(item => item.scope === 'host-subscription');
+  assert.match(record.endpoint, /Nova platform.*Nova process.*exact SDK version.*topology/u);
+  assert.doesNotMatch(record.endpoint, /operator installs the adapter inside/u);
+  assert.match(record.check, /Stop until.*Nova process.*real host event source/u);
+  const observer = invocationDependencyBoundaries(facts('skills/common/plugins/openclaw-agent-observer/src/index.ts', 'registerOpenClawAgentObserver'), root)
+    .records.find(item => item.scope === 'host-subscription');
+  assert.match(observer.endpoint, /installed host.*in-process diagnostic SDK/u);
+});
+
+test('selected Trivy operations distinguish local input from remote image credential projection', () => {
+  const routes = pluginCapabilityRoutes(path.join(root, 'skills/buster/engine/test-gates/remote-plan-service.ts'), root);
+  for (const [entry, operation] of [['dependency', 'dependency'], ['image', 'image'], ['kubernetes-policy', 'kubernetes-policy']]) {
+    const invocation = facts(`skills/buster/plugins/security-providers/src/${entry}.js`, 'provider');
+    const boundary = invocationDependencyBoundaries(invocation, root, { routes });
+    assert.deepEqual(boundary.diagnostics, []);
+    const record = boundary.records.find((item) => item.scope === 'runtime-client');
+    assert.ok(record.service.includes(operation));
+    if (operation === 'image') assert.match(record.secret, /registryAccess.*registryReference.*--cacert/u);
+    else assert.match(record.secret, /do not project registryAccess/u);
+    const mutation = invocationDependencyBoundaries({ ...invocation, capabilityRequests: invocation.capabilityRequests.map((item) => ({ ...item, operation: null })) }, root, { routes });
+    assert.match(mutation.diagnostics.join(' '), /operation requires resolved caller authority/u);
+  }
+});
+
+test('publication report qualifies every discovered route, host and credential boundary at the documented source revision', () => {
+  const report = JSON.parse(execFileSync(process.execPath, ['scripts/docs-publication.mjs', 'dependency-report'], { cwd: root, encoding: 'utf8', maxBuffer: 8 * 1024 * 1024 }));
+  assert.equal(report.registrationCount, report.records.length);
+  for (const record of report.records) {
+    assert.deepEqual(record.diagnostics, [], record.id);
+    assert.ok(!record.dataOwner.includes('unresolved runtime authority'), record.id);
+  }
+  for (const id of ['kubeclaw-agent-observer:kubeclaw-agent-observer', 'kubeclaw-ops:kubeclaw-ops', 'kubeclaw-prism:kubeclaw-prism', 'kubeclaw.command-runner:command']) {
+    assert.ok(!report.records.find((item) => item.id === id).reachability.includes('Nova platform grants and adapter selection'), id);
+  }
+  // These previously disappeared behind artifact exclusions/local-library prose.
+  for (const id of ['kubeclaw.review:review', 'kubeclaw.review:repository-audit', 'kubeclaw.review:repository-revalidation']) {
+    const row = report.records.find(item => item.id === id);
+    assert.match(row.serviceText, /artifacts.read.*artifacts.write/u, id);
+    assert.match(row.endpoint, /`agent`/u, id);
+    assert.match(row.secret, /binding owns its credential contract/u, id);
+    assert.match(row.reachability, /assign an actual owner.*Stop if the binding/u, id);
+    assert.doesNotMatch(row.reachability, /availability proves no configured endpoint/u, id);
+    assert.match(row.dataOwner, /not the operational ownership/u, id);
+  }
+  const fixture = report.records.find(item => item.id === 'kubeclaw.kubernetes-fixture:deployment');
+  assert.match(fixture.secret, /secret material, not provenance only/u);
+  assert.match(fixture.reachability, /initial ordinary apply errors are outside that cleanup block/u);
+  const exposure = report.records.find(item => item.id === 'kubeclaw.tailscale-exposure:exposure');
+  assert.match(exposure.reachability, /cleanupPolicy retain.*fixture default delete/u);
+  const secret = report.records.find((item) => item.id === 'kubeclaw.secret-resolver:secrets');
+  assert.ok(!secret.secret.includes('No credential selector'));
+  assert.match(secret.secret, /context\.config\.environment.*SECRET_DENIED/u);
+  // Reader prerequisites must differ by actual caller route, not just capability family.
+  const session = report.records.find((item) => item.id === 'kubeclaw.demo-auth-smoke:session');
+  const http = report.records.find((item) => item.id === 'kubeclaw.http:request');
+  const axe = report.records.find((item) => item.id === 'kubeclaw.axe:axe');
+  for (const record of [session, http]) {
+    assert.match(record.endpoint, /provider tailscale-ingress/u, record.id);
+    assert.match(record.endpoint, /fixture cannot override the network policy/u, record.id);
+    assert.match(record.secret, /HTTPS origin with both nonempty username and password/u, record.id);
+    assert.match(record.secret, /HTTP origin with neither credential field present/u, record.id);
+    assert.match(record.secret, /raw username reflection alone is not rejected/u, record.id);
+  }
+  assert.match(session.endpoint, /POST and GET.*accept, content-type and cookie/u);
+  assert.doesNotMatch(http.endpoint, /demo-auth-smoke session requires/u);
+  assert.doesNotMatch(axe.endpoint, /demo-auth-smoke session requires/u);
+  assert.match(session.secret, /usernameKey/u);
+  assert.match(session.secret, /name login JSON properties, not credentials or Secret references/u);
+  const revision = JSON.parse(fs.readFileSync(path.join(root, 'docs/generated/inventory/documentation-source-revision.json'), 'utf8')).revision;
+  const lock = execFileSync('git', ['show', `${revision}:package-lock.json`], { cwd: root, encoding: 'utf8' }).split('\n');
+  const urls = [...JSON.stringify(report).matchAll(/https:\/\/github\.com\/[^/]+\/[^/]+\/blob\/([0-9a-f]{40})\/package-lock\.json#L(\d+)-L(\d+)/gu)];
+  assert.ok(urls.length);
+  for (const match of urls) {
+    assert.equal(match[1], revision);
+    const excerpt = lock.slice(Number(match[2]) - 1, Number(match[3])).join('\n');
+    assert.match(excerpt, /"node_modules\/(?:yaml|js-tiktoken|tiktoken)"/u);
+    assert.match(excerpt, /"version":/u);
+    assert.match(excerpt, /"integrity":/u);
+  }
+});
+
+
+test('visual dependency guidance exposes unbounded startup without granting runtime containment', () => {
+  const routes = pluginCapabilityRoutes(path.join(root, 'skills/buster/engine/test-gates/remote-plan-service.ts'), root);
+  const invocation = facts('skills/buster/plugins/visual/src/provider.js', 'provider');
+  const boundary = invocationDependencyBoundaries(invocation, root, { routes });
+  assert.deepEqual(boundary.diagnostics, []);
+  const record = boundary.records.find((item) => item.scope === 'runtime-client');
+  assert.ok(record);
+  assert.match(record.endpoint, /redirected requests continue without its origin check/u);
+  assert.match(record.endpoint, /Stop capture where containment is required/u);
+  assert.match(record.check, /pending launch can outlast maximumExecutionMs or cancellation/u);
+  assert.match(record.check, /not a hard operation-wide bound/u);
+});
+
+
+test('arbitrary spread Git argv cannot borrow the exact local forwarding helper', () => {
+  const original = facts('skills/nova/plugins/repository-adapter/src/adapter.ts');
+  for (const expression of ["execFileSync('git', ['fetch', ...args]);", "spawnSync('git', ['fetch', ...args]);", "git(root, ['show', ...args]);", "execFileSync('git', ['-C', root, ...args]);"]) {
+    const selectedSources = new Map(original.selectedSources);
+    selectedSources.set(path.join(root, 'mutation.ts'), expression);
+    const boundary = invocationDependencyBoundaries({ ...original, selectedSources }, root);
+    assert.ok(boundary.diagnostics.some((item) => item.includes('subprocess target requires command dependency authority')), expression);
+    assert.ok(!boundary.records.some((item) => item.service.startsWith('Local Git revision reader:')), expression);
+  }
+});
+
+test('selected handoff and operator adapters expose sensitive durable custody and format-specific recovery', () => {
+  const handoff = invocationDependencyBoundaries(facts('skills/nova/plugins/demo-handoff/src/adapter.ts'), root);
+  const operator = invocationDependencyBoundaries(facts('skills/common/plugins/operator-messaging/src/adapter.ts'), root);
+  for (const value of [handoff, operator]) assert.deepEqual(value.diagnostics, []);
+  const local = (value) => value.records.find((item) => item.scope === 'local-store');
+  assert.match(local(handoff).dataOwner, /stateRoot.*retention.*shutdown.*does not erase/u);
+  assert.match(local(handoff).check, /uncertain initial POST.*\/status/u);
+  assert.match(local(operator).secret, /HMAC-SHA256.*not a bearer token.*confidential endpoint URL/u);
+  assert.match(local(operator).secret, /same resolved URL value is the HMAC key.*tokenSecret is not selected/u);
+  assert.match(local(operator).dataOwner, /deliveryRoot.*request payloads.*usernames\/passwords/u);
+  assert.match(local(operator).endpoint, /only for format json.*discord_webhook does not query.*validated at activation in both formats/u);
+  const unrelated = invocationDependencyBoundaries(facts('skills/common/plugins/git-workspace/src/adapter.ts'), root);
+  assert.equal(local(unrelated), undefined, 'installed adapters must not grant unrelated callers a custody record');
+  const synthetic = invocationDependencyBoundaries({ diagnostics: [], evidence: [], selectedSources: new Map() }, root,
+    { providesCapabilities: ['operator.request', 'demo.handoff'] });
+  assert.equal(local(synthetic), undefined, 'capability names alone do not select the durable adapter');
+});

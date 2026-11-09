@@ -14,7 +14,7 @@
     "reviewerModel": {
       "type": "string",
       "minLength": 1,
-      "description": "Exact model identity used by repository-audit cache keys."
+      "description": "Repository-audit cache keys use the full model identity."
     },
     "reviewerRuntime": {
       "enum": [

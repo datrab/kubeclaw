@@ -3,6 +3,7 @@
 This module builds the Cilium 1.20.1 Hubble CLI with patched gRPC and x/text
 dependencies. The entry point is copied from `cilium/cilium/hubble/main.go`
 under Apache-2.0; the command implementation remains the upstream module.
+The local wrapper quotes terminal error text as one escaped scalar; decoding it preserves the error message and exit status remains unchanged.
 It changes the client shipped in the Ops image, not the cluster's Cilium version.
 
 `go.mod` and `go.sum` lock the complete module graph. Use Go 1.26.8, matching

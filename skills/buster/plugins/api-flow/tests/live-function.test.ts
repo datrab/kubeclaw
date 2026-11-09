@@ -46,6 +46,31 @@ try {
   const result = await provider().execute(invocation, { signal, workspaceRoot: root, log() {}, invoke: (name: string, request: any) => capability.invoke(name, request, signal) } as any);
   assert.equal(result.outcome, 'passed'); assert.deepEqual(result.counts, { total: 4, passed: 4, failed: 0, skipped: 0 });
   assert.equal(calls.get('/logout'), 1); assert.equal(result.evidenceFiles[0].file, 'api-flow-result.json');
+  // Exercise endpoint selection through the real provider and actual network capability.
+  const deploymentInput = (endpoints: Array<{ name: string; url: string }>) => ({
+    name: 'deployment', kind: 'value', schemaId: 'kubeclaw.kubernetes-deployment-fixture@1',
+    value: { schemaVersion: 'kubernetes-deployment-fixture.v1', endpoints },
+  });
+  const endpointContext = { signal, workspaceRoot: root, log() {},
+    invoke: (name: string, request: any) => capability.invoke(name, request, signal) } as any;
+  const typedInvocation = (endpoints: Array<{ name: string; url: string }>, endpointName?: string) => ({
+    ...invocation, inputs: [deploymentInput(endpoints)],
+    configuration: { values: { flowFile: 'flow.json', ...(endpointName === undefined ? {} : { endpointName }) } },
+  });
+  assert.equal((await provider().execute(typedInvocation([{ name: 'sole', url: origin }]), endpointContext)).outcome, 'passed');
+  assert.equal((await provider().execute(typedInvocation([
+    { name: 'other', url: 'http://unselected.example.invalid' }, { name: 'chosen', url: origin },
+  ], 'chosen'), endpointContext)).outcome, 'passed');
+  const beforeDeniedSelection = [...calls.values()].reduce((sum, count) => sum + count, 0);
+  await assert.rejects(() => provider().execute(typedInvocation([
+    { name: 'one', url: origin }, { name: 'two', url: origin },
+  ]), endpointContext), /API_FLOW_ENDPOINT_NOT_FOUND/u);
+  await assert.rejects(() => provider().execute(typedInvocation([{ name: 'one', url: origin }], 'missing'), endpointContext),
+    /API_FLOW_ENDPOINT_NOT_FOUND/u);
+  await assert.rejects(() => provider().execute({ ...invocation,
+    inputs: [deploymentInput([{ name: 'one', url: origin }])],
+  }, endpointContext), /API_FLOW_TARGET_AMBIGUOUS/u);
+  assert.equal([...calls.values()].reduce((sum, count) => sum + count, 0), beforeDeniedSelection);
   fs.writeFileSync(path.join(root, 'repository/invalid.json'), '{"schemaVersion":"kubeclaw.api-flow.v1","steps":[{"id":"bad","path":"/","expect":{"statuz":200}}]}');
   await assert.rejects(() => provider().execute({ ...invocation, configuration: { values: { flowFile: 'invalid.json', url: origin } } }, { signal, workspaceRoot: root, log() {}, invoke: (name: string, request: any) => capability.invoke(name, request, signal) } as any), /API_FLOW_EXPECT_INVALID/u);
   fs.writeFileSync(path.join(root, 'repository/invalid.json'), '{"schemaVersion":"kubeclaw.api-flow.v1","steps":[{"id":"bad","protocol":"websocket","path":"/events","expect":{"status":101}}]}');

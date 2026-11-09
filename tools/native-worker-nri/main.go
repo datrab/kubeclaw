@@ -116,8 +116,8 @@ func newPluginStub(config configuration) (stub.Stub, error) {
 	var options []stub.Option
 	for _, identity := range []struct {
 		environment string
-		expected string
-		fallback stub.Option
+		expected    string
+		fallback    stub.Option
 	}{
 		{api.PluginNameEnvVar, "kubeclaw-native", stub.WithPluginName("kubeclaw-native")},
 		{api.PluginIdxEnvVar, "10", stub.WithPluginIdx("10")},
@@ -150,7 +150,7 @@ func run() error {
 func main() {
 	if len(os.Args) == 3 && os.Args[1] == "--check-policy" {
 		if _, err := readConfiguration(os.Args[2]); err != nil {
-			fmt.Fprintln(os.Stderr, err)
+			fmt.Fprintf(os.Stderr, "%q\n", fmt.Sprint(err))
 			os.Exit(1)
 		}
 		fmt.Println("NATIVE_NRI_POLICY_VALID")
@@ -161,7 +161,7 @@ func main() {
 		os.Exit(1)
 	}
 	if err := run(); err != nil {
-		fmt.Fprintln(os.Stderr, err)
+		fmt.Fprintf(os.Stderr, "%q\n", fmt.Sprint(err))
 		os.Exit(1)
 	}
 }

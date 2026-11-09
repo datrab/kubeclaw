@@ -29,7 +29,7 @@ function bindSidecarImages(values) {
     if (name) container.image = reference(name);
   }
 }
-fs.mkdirSync('releases/values', { recursive: true });
+if (!process.argv.includes('--check')) fs.mkdirSync('releases/values', { recursive: true });
 for (const role of family === 'ops' ? ['ops'] : ['nova', 'buster', 'prism-agent', 'prism']) {
   const values = role === 'ops' ? {} : yaml.load(sourceValues(`my-values/${role}-values.yaml`));
   if (role === 'ops') { values.codexImage = reference('codex-ops'); values.mcpImage = reference('ops-mcp'); }

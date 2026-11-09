@@ -1,5 +1,0 @@
-sourceSHA=ab79ad928cbf54072fe0b3eaabd8b5ee60dea7d1
-command=node tests/verification/contracts/check-deploy-prism-command.mts
-{"ok":true,"contract":"deploy-prism-command.v1"}
-
-exit=0

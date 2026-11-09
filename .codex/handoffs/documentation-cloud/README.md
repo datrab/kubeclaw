@@ -1,0 +1,53 @@
+# Übergabe der Dokumentationsarbeit an Codex Cloud
+
+Dies ist ein temporäres internes Übergabepaket, keine Produktdokumentation und kein finaler Abnahmenachweis. Es darf nicht veröffentlicht werden. Der Gesamtauftrag bleibt vollständig offen, soweit Einzelabnahmen fehlen.
+
+## Start in Cloud
+
+1. Verwende das Repository `datrab/kubeclaw`, PR #13 und den bestehenden Branch `docs/documentation-overhaul`. Kein neuer Branch. Prüfe Git, Remote, geltende AGENTS.md und die verfügbare Umgebung. Verwende den tatsächlichen Cloud-Checkout; lokale Pfade aus alten Berichten sind historische Provenienz.
+2. Lies `goal-objective.md`, `current-state.json`, dieses Dokument und `original-handoff.md`. Die vollständigen Qualitätsregeln, Pläne, Verträge, Fixtures und Register stehen bereits im Repository. Die Arbeitsmatrix ist `docs/blueprint/documentation-completion-matrix.json`.
+3. Stelle den gespeicherten Arbeitsbaum wieder her, bevor du Inhalte oder Checks beurteilst. Der Übergabecommit enthält die WIP-Änderungen als Patch, nicht als bereits abgenommene Änderungen am Produktbaum. Vom Repository-Root:
+
+```sh
+gzip -dc .codex/handoffs/documentation-cloud/worktree.patch.gz > /tmp/kubeclaw-cloud-worktree.patch
+git apply --check /tmp/kubeclaw-cloud-worktree.patch
+git apply /tmp/kubeclaw-cloud-worktree.patch
+```
+
+Der Patch enthält alle 14 zuvor geänderten versionierten Dateien und die zwei neuen Testdateien. Auch die fünf ausdrücklich bewahrten generierten Altstände und der unfertige Veröffentlichungsseitenentwurf sind enthalten. Prüfe alle resultierenden Bytes gegen `worktree-files.json`, automatisch mit `python3 .codex/handoffs/documentation-cloud/verify-transfer.py --worktree`. Bei bereits angewendeten oder fremden Änderungen nicht blind erneut anwenden oder überschreiben; erst die Hashes und Konflikte klären. Die exakte Wiederherstellung wurde vor Übergabe in einem separaten Verzeichnis geprüft.
+4. Entpacke `evidence.tar.gz` in ein temporäres, nicht veröffentlichtes Verzeichnis. Prüfe jeden entpackten Pfad, Byteumfang und SHA-256 gegen `evidence-index.json`; `python3 .codex/handoffs/documentation-cloud/verify-transfer.py` prüft das Archiv auch ohne Entpacken. Alle Artefakte der dort als vollständig bezeichneten neun Partitionen sind enthalten. Weitere historische Berichte liefern Kontext, aber keine automatische aktuelle Abnahme. Alte absolute Pfade müssen auf den entpackten Bestand abgebildet werden. Benötigte Produktquellen stehen im Repository; private lokale Go-Binaries, Browser, installierte Pakete, Clusterzugänge und alte Prozesshandles sind keine Cloud-Voraussetzung und kein dort vorhandener Nachweis.
+5. Lege für den vollständigen Auftrag ein Goal ohne künstliches Tokenbudget an, falls kein entsprechendes aktives Goal besteht. Ein kurzer Goaltext darf auf die verbindliche Datei `goal-objective.md` verweisen. Keine Verkleinerung des Umfangs.
+
+## Vorrangige Ausführungsregeln
+
+Der Nutzer hat am 2026-10-14 die effiziente Korrektur- und Abnahmeschleife in `goal-objective.md` bestätigt. Sie ersetzt widersprechende Wiederholungsregeln dieses Übergabepakets: fokussierte Tests während der Bearbeitung, drei unabhängige Reviews erst auf stabilem Kandidaten, Folgeprüfungen über den vollständig semantisch betroffenen Umfang und Wiederverwendung exakt belegter unveränderter Nachweise. Vollständige Paketprüfungen bleiben zur finalen Paketabnahme erforderlich. Normale lokale Regressionstests benötigen keine separate Testzweck-Abnahme. Konkrete Ausführungsverbote und fachliche Abschlussbedingungen bleiben bestehen.
+
+## Tatsächlicher Stand
+
+- AP09.8 ist nicht abgenommen. Die gesamte Dokumentation, AP09.9–13, Parität, AP10 und AP11 sind nicht fertig. Frühere Paketstatus sind gegen aktuelle Einzelbelege zu prüfen; insbesondere AP09.7 besitzt keine hier belegte finale Astra-Abnahme.
+- Aktuelle Diagnose- und Wiederherstellungsseiten haben jeweils drei getrennte unabhängige Fresh-Context-Inhaltsreviews bestanden: Source, Reader und Quality. Exakte Seitenhashes und vollständige Nachweise sind enthalten. Das ist keine Live-, vollständige Gate-, Astra- oder Paketabnahme. Nach Änderungen keine alte Gesamtfreigabe übertragen.
+- Für die letzte Werkzeugkorrektur sind 75 fokussierte Tests sowie die Autorenprüfung der Quellenbindung (56 qualifizierte Quellen, vier Bindungsgegenprüfungen, acht Verbrauchertests) bestanden. Vollständige Autorenberichte und rohe Nachweise sind enthalten. Autorenprüfung ist keine unabhängige Abnahme.
+- Die ursprüngliche gemeinsame Prüfung und ihre Wiederholungen wurden durch Laufzeitwechsel unterbrochen: Handles und Prozesse verschwanden, der abschließende Endstatus fehlt. Teilweise grüne Logs sind kein PASS. Keine dieser begonnenen 297-Test-/86-Gegenprüfungsgruppen ist hier vollständig bestanden. Historische 295-/63-Ergebnisse gelten nur für ihre alte, andere Quellfassung.
+- Ein noch nicht abgeschlossener unabhängiger Werkzeugreview fand eine konkrete weitere Lücke: `pythonShellPrograms` vergleicht Heredoc-Endmarken mit `.trim()` (etwa Zeile 5151). Führende oder folgende Leerzeichen sind keine gültige Endmarke. Dadurch verschwinden aktive Umgebungsleser oder wird passiver Text als ausführbarer Python-Code erkannt. Rechtmäßige native Gegenbeispiele stehen in `protocol-alias-heredoc-complete-source-runtime-fresh/delimiter-results.json` und den zugehörigen Programmen im Archiv. Dies ist ein tatsächlicher offener Befund, kein finaler vollständiger Reviewerbericht.
+- Die Veröffentlichungsseite wurde begonnen, aber nicht final autorengeprüft oder unabhängig abgenommen. Ihr Entwurf ist im Patch. Die bereits bestehenden Stop-Regeln für beschädigte lose JSON-Dateien und unveränderliche Generationen erhalten. Die lange selbst gepflegte Zulassungsimplementierung durch belegte Nutzung der tatsächlich vorhandenen CLI ersetzen; Präzedenz, Defaults, Verbraucher, Secrets, Fehler, Rollback und sechs Felder je Quellenkasten vollständig prüfen.
+- Der Studio-Autor hat noch keine Seitenänderung abgeschlossen. Unterstützter lokaler Einstieg: `skills/prism`, `npm run dev:studio`, Vite an `127.0.0.1:4190`. DEV verwendet einen flüchtigen Beispielzustand, umgeht Session/Control, Änderungen laufen lokal über `applyOperation`, Neuladen setzt den Beispielzustand zurück. Diese Reise muss sauber von persistenter Veröffentlichung und Nova getrennt beschrieben werden. Teilweise Browserproben sind enthalten; fehlendes Standard-Headless-Shell und alternative private Chromium-Probe sind keine bestandene gepflegte Studio-Abnahme.
+
+## Nächste Arbeit, in dieser Reihenfolge
+
+1. Arbeitsbaum und Nachweise wiederherstellen; neue Cloud-Umgebung qualifizieren. Keine alten Agenten oder Handles als lebend behandeln.
+2. Den vollständigen betroffenen Werkzeugprüfumfang unabhängig lesen und sämtliche Befunde sammeln. Danach eine zusammenhängende Korrektur einschließlich der belegten Endmarkenlücke. Prüfwerkzeuge bleiben endlich und zweckgebunden: nicht unterstützte Konstrukte verständlich mit tatsächlicher Quelle ablehnen, keinen allgemeinen Sprachinterpreter entwickeln.
+3. Fokussierte native Gegenbeispiele und benachbarte passive Fälle prüfen; bei geänderten Quellen die semantische Bindung tatsächlich prüfen, nicht nur Hashes reparieren. Neue unabhängige Fresh-Context-Reviews auf stabilem Kandidaten über den vollständig semantisch betroffenen Umfang gemäß goal-objective.md; vollständige Paketprüfung zur finalen Paketabnahme. Längere Gesamtprüfungen erst auf stabilem Kandidaten ohne bekannte offene Befunde; beobachtete Endstatus sichern. Unterbrochene Ergebnisse niemals grün melden.
+4. Parallel die beiden Dokumentationsthemen mit exklusiven Dateizuständigkeiten fertigstellen. Dann neue unabhängige Source-/Reader-/Quality-Reviews. Vorherige Autoren oder Reviewer nicht unter neuem Rollennamen wiederverwenden. GPT-6.1 Sol; `fork_turns="none"`. Finale Paket- und Gesamtabnahme mit GPT-6 Astra, `reasoning_effort="medium"` nach Sol-OK.
+5. Geprüfte Source-Änderungen committen; danach gegen die vollständige Source-SHA generieren und den Generated-Commit getrennt halten. Dokumentationsübersicht und generierte Helm-Texte sind noch veraltet. Keine manuelle Reparatur generierter Dateien.
+6. Alle Pflichtgates einschließlich tatsächlich beendetem `docs:drift:config:mutations`, erforderliche individuelle Nachweise und Acceptance-Evidence-Bundle abschließen. `evidenceValidated=false` ist keine Inhaltsabnahme. Anschließend AP09.8 final abnehmen.
+7. Erst dann verbindlicher Baum-/Paritätsübergang, restliche Pakete, unabhängig geprüfte Parität und AP10 exakt R → A → D; AP11 und finale Gesamtabnahme. Baseline: 249 Altquellen, 23 Batches, 242 fehlende und sieben ungültige Entscheidungen, keine gültige Quelle. Nicht durch bloße Digest-Änderung reparieren. Keine verfrühte Löschung.
+
+## Unveränderte Grenzen und Abschlussbedingungen
+
+Nur Dokumentation und ihre Generator-/Prüfwerkzeuge ändern, keine Produktimplementierung. Ausschließlich aktueller englischer Leserbaum `docs/site`, technische Sprache nach den ASD-STE100-Prinzipien des Repositorys; kein Kubernetes-Kurs, keine ungenutzten Alternativen ausformulieren, keine interne AP-/Review-/Handoff-Arbeitssprache. Erforderliche interne Eingaben bleiben getrennt.
+
+Die drei verpflichtenden Deployment-Nachweise EXEC-WAIT-RESUME, EXEC-CANCELLATION und EXEC-RESTART-RECOVERY fehlen. Ebenso fehlt tatsächliche Plattformübung; konzeptionelle Listen sind kein Ausführungsnachweis. Registrierte Zielumgebung, tatsächliche Releases/Images, Autorität, Checkpoints und erforderliche sichere Zugänge müssen belegbar sein. Nicht mit vorhandenen Pods oder lokalen Mocks ersetzen. EXEC-PRISM-JOURNEY, EXEC-DEMO-JOURNEY und READER-OPERATOR-01–04 sind laut Vertrag nachgelagerte Produktvalidierung und allein keine Dokumentationsblocker. Alle anderen Pflichtprüfungen bleiben erforderlich.
+
+Historische Laufzeitgrenzen: BusyBox statt GNU-flock/realpath, musl-Regex-Unterschiede, fehlende feste Go-/tar-Pfade, teils fehlende YAML/MCP-/Browser-Voraussetzungen. Neue Cloud-Umgebung selbst prüfen; keine PATH-Shims, veränderten Produktquellen oder erfundenen Live-PASS verwenden. Ehrlich belegte Produktgrenzen mit Owner, sicherem Stop und späterem Kriterium erhalten.
+
+`complete` erst bei allen Einzelanforderungen und Abnahmen, null materiellen Dokumentationsbefunden, gültiger Parität und Bereinigung, AP11/Astra, allen Pflichtchecks und sauberem synchronisiertem Branch. Der alte lokale Checkout bleibt absichtlich unverändert mit seinem WIP erhalten; der Cloud-Checkout erhält ihn über den Patch. Das Übergabepaket ist temporäre interne Transferhilfe, kein zweiter Leserbestand oder dauerhaftes Reviewarchiv.

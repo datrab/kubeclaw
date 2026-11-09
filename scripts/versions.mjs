@@ -122,7 +122,6 @@ function bindApplicationVersions(manifest, args, replaceOne) {
   replaceOne('charts/kubeclaw/Chart.yaml', /^appVersion:.*$/m, `appVersion: "${manifest.openclaw.version}"`);
   replaceOne('ops/pod/package.json', /"@openai\/codex": "[^"]+"/, `"@openai/codex": "${manifest.codex.version}"`);
   replaceOne('charts/ops-pod/Chart.yaml', /^appVersion:.*$/m, `appVersion: "${manifest.codex.version}"`);
-  replaceOne('docs/ops/ops-pod.md', /^\| Codex CLI [^ |]+ /m, `| Codex CLI ${manifest.codex.version} `);
   for (const plugin of ['acpx', 'discord']) replaceOne('charts/kubeclaw/values.yaml',
     new RegExp(`^    - "npm:@openclaw/${plugin}@[^"\\n]+"$`, 'm'), `    - "npm:@openclaw/${plugin}@${manifest.openclaw.version}"`);
   replaceOne('charts/kubeclaw/files/config/lint-policy.json', /"kubernetes_version": "[^"]+"/,
@@ -174,6 +173,9 @@ export function versionOutputs(root) {
     + ['GO_VERSION', 'HELM_VERSION', 'SHFMT_VERSION', 'KUBECONFORM_VERSION', 'KUBECTL_VERSION', 'TFLINT_VERSION', 'TRIVY_VERSION', 'BUILDKIT_VERSION', 'ROOTLESSKIT_VERSION', 'RUNC_VERSION']
       .map(key => `${key}=${args[key]}\n`).join(''));
   bindRuntimeToolInputs(manifest, args, outputs);
+  outputs.set('scripts/generated/ops-tool-versions.json', JSON.stringify({
+    schemaVersion: 1, authority: 'versions.json', codex: { version: manifest.codex.version },
+  }, null, 2) + '\n');
   return outputs;
 }
 

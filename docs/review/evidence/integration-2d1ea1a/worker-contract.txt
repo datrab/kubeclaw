@@ -1,2 +1,0 @@
-$ node tests/verification/contracts/check-pipeline-worker-core-contracts.mts
-{"ok":true,"contracts":12,"schema":"contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json"}

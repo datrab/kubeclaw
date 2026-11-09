@@ -1,0 +1,181 @@
+# kubeclaw.human-approval
+
+Status: implemented
+Audience: plugin author, operator, maintainer
+Owner: plugin-foundation
+Evidence: skills/nova/plugins/human-approval/plugin.json; skills/nova/plugins/human-approval/README.md
+Applies to: pipeline-plugin-v2; package 1.0.0
+Last verified: source facts revision 1a0c284899d5abdcf7504ef1c15defb3b6ce52db; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.
+
+## Purpose
+
+Pause a graph for general or architecture-specific human approval.
+
+## When To Use It
+
+When policy requires a recorded person to give approval for continuation, use it.
+
+## When Not To Use It
+
+Do not use it as automated validation or as a hidden default approval.
+
+## Most Important Limit
+
+The stage waits for an external decision and cannot manufacture approval.
+
+The package guide explains package-specific behavior. The shared guides explain
+the contract and lifecycle rules that apply to this package.
+
+- [Package guide](https://github.com/datrab/kubeclaw/blob/1a0c284899d5abdcf7504ef1c15defb3b6ce52db/skills/nova/plugins/human-approval/README.md)
+- [Shared extension contracts](../contracts.md)
+- [Proof and failure exercises](../testing.md#use-a-proof-ladder)
+- [Install and activate](../testing.md#install-and-activate-by-surface)
+- [Update or replace](../testing.md#update-or-replace)
+- [Disable safely](../testing.md#disable-safely)
+- [Remove and inspect remaining state](../testing.md#remove-and-inspect-remaining-state)
+- [Host and engine boundaries](../host-and-engine.md)
+
+## Package Reference
+
+- Host: `pipeline-runtime`.
+- Package identity: `kubeclaw.human-approval@1.0.0`.
+- Runtime-role manifest inclusion: `nova`
+- Manifest: [skills/nova/plugins/human-approval/plugin.json](https://github.com/datrab/kubeclaw/blob/1a0c284899d5abdcf7504ef1c15defb3b6ce52db/skills/nova/plugins/human-approval/plugin.json)
+
+## Boundaries
+
+- The manifest declares extension identity and requested authority.
+- Nova and Buster apply the selection rules for each declared surface.
+- Platform grants or resolved plans supply authority separately from package code.
+- Pipeline Core keeps canonical lifecycle authority.
+- The package cannot use undeclared capabilities.
+
+## Registration Summary
+
+| Kind | ID | Public contract or type | Module | Export |
+| --- | --- | --- | --- | --- |
+| stage | `approval` | `kubeclaw.decision.human-approval` | `src/stage.ts` | `execute` |
+| stage | `architecture-approval` | `kubeclaw.decision.architecture-approval` | `src/architecture-approval.ts` | `execute` |
+
+## stage: approval
+
+Public identifier: `kubeclaw.decision.human-approval`.
+Global registration ID: `kubeclaw.human-approval:approval`. This identifies the installed registration. Graphs select stage types. Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
+
+Required capabilities: `operator.request`, `signal.wait`
+
+Provided capabilities: None.
+
+Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/1a0c284899d5abdcf7504ef1c15defb3b6ce52db/skills/nova/plugins/human-approval/schemas/config.schema.json)
+
+Configuration fields: schema declarations. Defaults are annotations, not proof that the caller inserts a value.
+
+- `target` (string; required; minLength `1`; maxLength `1024`; pattern `^(?![\s\S]*[\r\n\u0000])\S(?:[\s\S]*\S)?$`)
+- `issuerId` (string; required; minLength `1`; maxLength `1024`; pattern `^(?![\s\S]*[\r\n\u0000])\S(?:[\s\S]*\S)?$`)
+- `timeoutMinutes` (integer; optional; default `60`; minimum `1`; maximum `525600`)
+
+Input schema: [schemas/input.schema.json](https://github.com/datrab/kubeclaw/blob/1a0c284899d5abdcf7504ef1c15defb3b6ce52db/skills/nova/plugins/human-approval/schemas/input.schema.json)
+
+Result schema: [schemas/result.schema.json](https://github.com/datrab/kubeclaw/blob/1a0c284899d5abdcf7504ef1c15defb3b6ce52db/skills/nova/plugins/human-approval/schemas/result.schema.json)
+
+Declared manifest facts:
+
+| Field | Exact declared value |
+| --- | --- |
+| `id` | `approval` |
+| `type` | `kubeclaw.decision.human-approval` |
+| `module` | `src/stage.ts` |
+| `export` | `execute` |
+| `requiredCapabilities` | `["operator.request","signal.wait"]` |
+| `configSchema` | `schemas/config.schema.json` |
+| `inputSchema` | `schemas/input.schema.json` |
+| `resultSchema` | `schemas/result.schema.json` |
+
+## stage: architecture-approval
+
+Public identifier: `kubeclaw.decision.architecture-approval`.
+Global registration ID: `kubeclaw.human-approval:architecture-approval`. This identifies the installed registration. Graphs select stage types. Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
+
+Required capabilities: `artifacts.read`, `operator.request`, `signal.wait`, `git.repository.read`, `artifacts.write`
+
+Provided capabilities: None.
+
+Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/1a0c284899d5abdcf7504ef1c15defb3b6ce52db/skills/nova/plugins/human-approval/schemas/config.schema.json)
+
+Configuration fields: schema declarations. Defaults are annotations, not proof that the caller inserts a value.
+
+- `target` (string; required; minLength `1`; maxLength `1024`; pattern `^(?![\s\S]*[\r\n\u0000])\S(?:[\s\S]*\S)?$`)
+- `issuerId` (string; required; minLength `1`; maxLength `1024`; pattern `^(?![\s\S]*[\r\n\u0000])\S(?:[\s\S]*\S)?$`)
+- `timeoutMinutes` (integer; optional; default `60`; minimum `1`; maximum `525600`)
+
+Input schema: [schemas/architecture-input.schema.json](https://github.com/datrab/kubeclaw/blob/1a0c284899d5abdcf7504ef1c15defb3b6ce52db/skills/nova/plugins/human-approval/schemas/architecture-input.schema.json)
+
+Result schema: [schemas/result.schema.json](https://github.com/datrab/kubeclaw/blob/1a0c284899d5abdcf7504ef1c15defb3b6ce52db/skills/nova/plugins/human-approval/schemas/result.schema.json)
+
+Declared manifest facts:
+
+| Field | Exact declared value |
+| --- | --- |
+| `id` | `architecture-approval` |
+| `type` | `kubeclaw.decision.architecture-approval` |
+| `module` | `src/architecture-approval.ts` |
+| `export` | `execute` |
+| `requiredCapabilities` | `["artifacts.read","operator.request","signal.wait","git.repository.read","artifacts.write"]` |
+| `configSchema` | `schemas/config.schema.json` |
+| `inputSchema` | `schemas/architecture-input.schema.json` |
+| `resultSchema` | `schemas/result.schema.json` |
+
+## Failure Behavior
+
+General approval uses config.target as the operator recipient and config.issuerId as the sole authorized signal.wait/guidance issuer. The platform configuration owner must qualify the target and issuer separately.
+
+Architecture approval first verifies a passed report. It verifies the review subject only when subject is present. An absent subject skips git.repository.read source verification. Persistence can record null.
+
+With no findings, it succeeds without executeApproval, operator.request, signal.wait or a reason. Only the findings path invokes general approval. Approved guidance on that path requires a nonempty reason. Core validates the external signal and resumes the wait.
+
+Registry validation checks declared paths, schemas, and capability names.
+Activation or the Buster loader checks executable exports. Discovery does not import package code.
+The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.
+The selected runtime owns failure recording and lifecycle state. Package code does not gain lifecycle authority.
+Adapter startup cleanup can remain pending when shutdown ignores its abort signal. Use the [startup stop rules](../../use/plugins.md#3-activate-and-prove-health).
+
+## Package Checks
+
+Historical local command record dated 2026-09-16.
+Recorded source revision: `bcf032f241b432bf920baa9ee5f727947921447d`.
+Recorded environment: `Linux workspace with Node.js 24 and BusyBox userland`.
+Recorded result: `unavailable`.
+
+Exact reason from that historical record:
+
+> The command reached a persistent-path check, but BusyBox flock has no required --timeout option.
+
+This historical quotation is not a current package-availability or readiness result.
+The next section gives the current command or no-command declaration.
+
+Run the package command:
+
+```bash
+npm test --prefix skills/nova/plugins/human-approval
+```
+
+Package test files found: 3. This is file discovery, not an executed test count.
+
+Exact package test script (run from the package directory):
+
+```text
+node tests/package-boundary.test.mjs && node tests/approval.unit.test.mjs && node ../../../../tests/verification/integration/architecture-approval.test.mts && node tests/live-function.test.ts
+```
+
+Local package checks do not prove live host or cluster readiness.
+The result above states the exact local limit. Run the package command in the target environment before activation.
+
+## Source Evidence
+
+- Manifest: [skills/nova/plugins/human-approval/plugin.json](https://github.com/datrab/kubeclaw/blob/1a0c284899d5abdcf7504ef1c15defb3b6ce52db/skills/nova/plugins/human-approval/plugin.json)
+- Package implementation guide: [skills/nova/plugins/human-approval/README.md](https://github.com/datrab/kubeclaw/blob/1a0c284899d5abdcf7504ef1c15defb3b6ce52db/skills/nova/plugins/human-approval/README.md)
+- Module for `approval`: [src/stage.ts](https://github.com/datrab/kubeclaw/blob/1a0c284899d5abdcf7504ef1c15defb3b6ce52db/skills/nova/plugins/human-approval/src/stage.ts)
+- Module for `architecture-approval`: [src/architecture-approval.ts](https://github.com/datrab/kubeclaw/blob/1a0c284899d5abdcf7504ef1c15defb3b6ce52db/skills/nova/plugins/human-approval/src/architecture-approval.ts)
+- Test: [skills/nova/plugins/human-approval/tests/approval.unit.test.mjs](https://github.com/datrab/kubeclaw/blob/1a0c284899d5abdcf7504ef1c15defb3b6ce52db/skills/nova/plugins/human-approval/tests/approval.unit.test.mjs)
+- Test: [skills/nova/plugins/human-approval/tests/live-function.test.ts](https://github.com/datrab/kubeclaw/blob/1a0c284899d5abdcf7504ef1c15defb3b6ce52db/skills/nova/plugins/human-approval/tests/live-function.test.ts)
+- Test: [skills/nova/plugins/human-approval/tests/package-boundary.test.mjs](https://github.com/datrab/kubeclaw/blob/1a0c284899d5abdcf7504ef1c15defb3b6ce52db/skills/nova/plugins/human-approval/tests/package-boundary.test.mjs)

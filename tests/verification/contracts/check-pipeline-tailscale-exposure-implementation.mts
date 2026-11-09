@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { parse as parseYaml } from 'yaml';
 import { randomUUID } from 'node:crypto';
 import { resolveExecutable } from './support/resolve-executable.mts';
 import fs from 'node:fs';
@@ -33,7 +34,64 @@ assert.match(runtime, /purpose: 'gate'[^]*provider: 'off'/u);
 assert.match(controller, /ensurePreviewExposure/u);
 assert.match(controller, /tailscale-ingress/u);
 assert.match(crd, /purpose:\s*\n\s*type: string/u);
-assert.doesNotMatch(crd, /self == oldSelf/u);
+// The Helm template contains an ordinary YAML subtree for each selected property.
+// Parse its actual indentation-delimited schema, not every unrelated CRD rule.
+function crdPropertySchema(source: string, property: string): Record<string, any> {
+  const lines = source.split('\n');
+  const matches = lines.map((line, index) => ({ line, index }))
+    .filter(({ line }) => line.trim() === `${property}:`);
+  assert.equal(matches.length, 1, `expected exactly one CRD ${property} property`);
+  const { line, index } = matches[0]!;
+  const indent = line.length - line.trimStart().length;
+  let end = index + 1;
+  while (end < lines.length && (!lines[end]!.trim()
+    || lines[end]!.length - lines[end]!.trimStart().length > indent)) end += 1;
+  const document = parseYaml(lines.slice(index, end).map(value => value.slice(indent)).join('\n'));
+  const schema = document?.[property];
+  assert.equal(schema?.type, 'object', `CRD ${property} must retain its object schema`);
+  return schema;
+}
+function assertExposureMutable(schema: Record<string, any>): void {
+  const visit = (value: any): void => {
+    if (!value || typeof value !== 'object') return;
+    if (Array.isArray(value['x-kubernetes-validations'])) {
+      for (const validation of value['x-kubernetes-validations']) {
+        assert.equal(typeof validation.rule, 'string');
+        assert.doesNotMatch(validation.rule, /\bself\s*==\s*oldSelf\b/u,
+          'exposure schema must permit generation-fenced updates');
+      }
+    }
+    for (const child of Object.values(value)) visit(child);
+  };
+  visit(schema);
+}
+function assertDecisionReceiptImmutable(schema: Record<string, any>): void {
+  const rules = schema.properties?.decisions?.items?.['x-kubernetes-validations'];
+  assert.ok(Array.isArray(rules) && rules.some(validation => validation.rule === 'self == oldSelf'
+    && validation.message === 'an existing human decision receipt is immutable'),
+  'existing human decision receipts must retain exact immutability rule');
+}
+const exposureSchema = crdPropertySchema(crd, 'exposure');
+const productSchema = crdPropertySchema(crd, 'demoProduct');
+assertExposureMutable(exposureSchema);
+assertDecisionReceiptImmutable(productSchema);
+// Current human receipt immutability must not reject mutable exposure.
+for (const rule of ['self == oldSelf', '(self == oldSelf)', 'self == oldSelf && true']) {
+  const immutableExposure = structuredClone(exposureSchema);
+  immutableExposure['x-kubernetes-validations'] = [
+    ...(immutableExposure['x-kubernetes-validations'] ?? []),
+    { rule, message: 'exposure is immutable' },
+  ];
+  assert.throws(() => assertExposureMutable(immutableExposure), /generation-fenced updates/u);
+}
+const immutableProvider = structuredClone(exposureSchema);
+immutableProvider.properties.provider['x-kubernetes-validations'] = [
+  { rule: 'self == oldSelf', message: 'exposure provider is immutable' },
+];
+assert.throws(() => assertExposureMutable(immutableProvider), /generation-fenced updates/u);
+const mutableReceipt = structuredClone(productSchema);
+mutableReceipt.properties.decisions.items['x-kubernetes-validations'] = [];
+assert.throws(() => assertDecisionReceiptImmutable(mutableReceipt), /exact immutability rule/u);
 assert.match(crd, /access is immutable/u);
 assert.match(crd, /previewUrl:\s*\n\s*type: string\s*\n\s*nullable: true/u);
 assert.match(controller, /legacyMutableExposureDigest/u);

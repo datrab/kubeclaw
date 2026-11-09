@@ -1,0 +1,148 @@
+# kubeclaw.transport-publisher
+
+Status: implemented
+Audience: plugin author, operator, maintainer
+Owner: plugin-foundation
+Evidence: skills/common/plugins/transport-publisher/plugin.json; skills/common/plugins/transport-publisher/README.md
+Applies to: pipeline-plugin-v2; package 1.0.0
+Last verified: source facts revision 1a0c284899d5abdcf7504ef1c15defb3b6ce52db; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.
+
+## Purpose
+
+Publish granted events through the configured HTTP transport.
+
+## When To Use It
+
+When a Nova extension needs transport-neutral message publication, use it.
+
+## When Not To Use It
+
+Do not use it for Redis publication. Select kubeclaw.redis-transport for that transport.
+
+## Most Important Limit
+
+The selected provider and grant control the actual transport authority.
+
+The package guide explains package-specific behavior. The shared guides explain
+the contract and lifecycle rules that apply to this package.
+
+- [Package guide](https://github.com/datrab/kubeclaw/blob/1a0c284899d5abdcf7504ef1c15defb3b6ce52db/skills/common/plugins/transport-publisher/README.md)
+- [Shared extension contracts](../contracts.md)
+- [Proof and failure exercises](../testing.md#use-a-proof-ladder)
+- [Install and activate](../testing.md#install-and-activate-by-surface)
+- [Update or replace](../testing.md#update-or-replace)
+- [Disable safely](../testing.md#disable-safely)
+- [Remove and inspect remaining state](../testing.md#remove-and-inspect-remaining-state)
+- [Host and engine boundaries](../host-and-engine.md)
+
+## Package Reference
+
+- Host: `pipeline-runtime`.
+- Package identity: `kubeclaw.transport-publisher@1.0.0`.
+- Runtime-role manifest inclusion: `nova`
+- Manifest: [skills/common/plugins/transport-publisher/plugin.json](https://github.com/datrab/kubeclaw/blob/1a0c284899d5abdcf7504ef1c15defb3b6ce52db/skills/common/plugins/transport-publisher/plugin.json)
+
+## Boundaries
+
+- The manifest declares extension identity and requested authority.
+- Nova and Buster apply the selection rules for each declared surface.
+- Platform grants or resolved plans supply authority separately from package code.
+- Pipeline Core keeps canonical lifecycle authority.
+- The package cannot use undeclared capabilities.
+
+## Registration Summary
+
+| Kind | ID | Public contract or type | Module | Export |
+| --- | --- | --- | --- | --- |
+| capability adapter | `publisher` | `publisher` | `src/adapter.ts` | `activate` |
+
+## capability adapter: publisher
+
+Public identifier: `publisher`.
+Global registration ID: `kubeclaw.transport-publisher:publisher`. This identifies the installed registration. Graphs select stage types. Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
+
+Required capabilities: `network.http`, `secrets.read`
+
+Provided capabilities: `transport.publish`
+
+Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/1a0c284899d5abdcf7504ef1c15defb3b6ce52db/skills/common/plugins/transport-publisher/schemas/config.schema.json)
+
+Configuration fields: schema declarations. Defaults are annotations, not proof that the caller inserts a value.
+
+- `deliveryRoot` (string; required; minLength `1`)
+- `maximumDeliveryRecords` (integer; optional; default `100000`; minimum `1`)
+- `maximumDeliveryBytes` (integer; optional; default `268435456`; minimum `1`)
+- `targets` (object; required)
+
+Input schema: No package-specific inputSchema field. Use the [shared runtime data contract](../contracts.md#data-and-authority-comparison).
+
+Result schema: No package-specific resultSchema field. Use the [shared runtime data contract](../contracts.md#data-and-authority-comparison).
+
+Declared manifest facts:
+
+| Field | Exact declared value |
+| --- | --- |
+| `id` | `publisher` |
+| `module` | `src/adapter.ts` |
+| `export` | `activate` |
+| `providesCapabilities` | `["transport.publish"]` |
+| `requiredCapabilities` | `["network.http","secrets.read"]` |
+| `configSchema` | `schemas/config.schema.json` |
+
+## Failure Behavior
+
+Publication persists original message bodies and reserves durable state, resolves signingSecret for HMAC-SHA256 and sends through network.http. Existing in-progress reservations can fall through to another POST. A later attempt after uncertain failure can POST again. Per-record locks and an idempotency-key header do not ensure receiver deduplication.
+
+The receiver must enforce idempotency. Before another attempt, verify this enforcement. Before another attempt, reconcile the original keys/receipts. No rollback or universal receipt lookup is guaranteed.
+
+Assign deliveryRoot access, retention, backup/removal and failure-response ownership. The current local execution check fails canonical effect-request validation. Treat the package as locally unavailable until it passes.
+
+deliveryRoot selects the local durable directory. maximumDeliveryRecords defaults to 100000 records and maximumDeliveryBytes to 268435456 bytes (256 MiB). The two limits must be positive safe integers. A full store can reject persistence of a new request/reservation before delivery with a store-full failure. It is not automatic retention or cleanup.
+
+Separate recording failure after an external effect remains uncertain and requires reconciliation.
+
+Registry validation checks declared paths, schemas, and capability names.
+Activation or the Buster loader checks executable exports. Discovery does not import package code.
+The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.
+The selected runtime owns failure recording and lifecycle state. Package code does not gain lifecycle authority.
+Adapter startup cleanup can remain pending when shutdown ignores its abort signal. Use the [startup stop rules](../../use/plugins.md#3-activate-and-prove-health).
+
+## Package Checks
+
+Historical local command record dated 2026-09-16.
+Recorded source revision: `bcf032f241b432bf920baa9ee5f727947921447d`.
+Recorded environment: `Linux workspace with Node.js 24 and BusyBox userland`.
+Recorded result: `unavailable`.
+
+Exact reason from that historical record:
+
+> The command reached a persistent-path check, but BusyBox flock has no required --timeout option.
+
+This historical quotation is not a current package-availability or readiness result.
+The next section gives the current command or no-command declaration.
+
+Run the package command:
+
+```bash
+npm test --prefix skills/common/plugins/transport-publisher
+```
+
+Package test files found: 3. This is file discovery, not an executed test count.
+
+Exact package test script (run from the package directory):
+
+```text
+node tests/config-validation.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs
+```
+
+Local package checks do not prove live host or cluster readiness.
+The result above states the exact local limit. Run the package command in the target environment before activation.
+
+## Source Evidence
+
+- Manifest: [skills/common/plugins/transport-publisher/plugin.json](https://github.com/datrab/kubeclaw/blob/1a0c284899d5abdcf7504ef1c15defb3b6ce52db/skills/common/plugins/transport-publisher/plugin.json)
+- Package implementation guide: [skills/common/plugins/transport-publisher/README.md](https://github.com/datrab/kubeclaw/blob/1a0c284899d5abdcf7504ef1c15defb3b6ce52db/skills/common/plugins/transport-publisher/README.md)
+- Module for `publisher`: [src/adapter.ts](https://github.com/datrab/kubeclaw/blob/1a0c284899d5abdcf7504ef1c15defb3b6ce52db/skills/common/plugins/transport-publisher/src/adapter.ts)
+- Test: [skills/common/plugins/transport-publisher/tests/config-validation.test.mjs](https://github.com/datrab/kubeclaw/blob/1a0c284899d5abdcf7504ef1c15defb3b6ce52db/skills/common/plugins/transport-publisher/tests/config-validation.test.mjs)
+- Test: [skills/common/plugins/transport-publisher/tests/live-function.test.ts](https://github.com/datrab/kubeclaw/blob/1a0c284899d5abdcf7504ef1c15defb3b6ce52db/skills/common/plugins/transport-publisher/tests/live-function.test.ts)
+- Test: [skills/common/plugins/transport-publisher/tests/package-boundary.test.mjs](https://github.com/datrab/kubeclaw/blob/1a0c284899d5abdcf7504ef1c15defb3b6ce52db/skills/common/plugins/transport-publisher/tests/package-boundary.test.mjs)

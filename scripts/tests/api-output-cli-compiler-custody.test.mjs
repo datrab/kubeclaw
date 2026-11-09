@@ -1,0 +1,25 @@
+import assert from 'node:assert/strict';import fs from 'node:fs';import os from 'node:os';import path from 'node:path';import test from 'node:test';import ts from 'typescript';
+import {reviewedCliNativeCompilerCapability,cliNativeCompilerTarget,rootSelectedCompilerTarget,qualifyCliNativeCompilerInput,reviewedCliNativeCompilerCaller,assertCliNativeCompilerGraphPurpose} from '../docs-api-documentation-role-custody.mjs';
+import {discoverScriptInputAcquisition} from '../docs-api-output-discovery.mjs';
+const root=fs.realpathSync(new URL('../..',import.meta.url).pathname),source='scripts/lib/cli/cli-native-driver.mjs',bytes=fs.readFileSync(path.join(root,source),'utf8');
+function capability(text=bytes,selected=source){const tree=ts.createSourceFile(selected,text,ts.ScriptTarget.Latest,true,ts.ScriptKind.JS),calls=[];const visit=n=>{if(ts.isCallExpression(n)&&n.expression.getText(tree).startsWith('createRequire'))calls.push(n);ts.forEachChild(n,visit);};visit(tree);assert(calls.length);return reviewedCliNativeCompilerCapability(root,selected,text,tree,calls[0]);}
+test('exact CLI caller-root compiler has a separate static capability and physical foundation',()=>{
+ const cap=capability();assert.equal(cap.kind,'cli-native-static-compiler-require');assert.equal(cap.runtimeAcquisitionAuthorized,false);
+ const target=cliNativeCompilerTarget(root,cap);assert.equal(target.canonicalTarget,path.join(root,'node_modules/typescript/lib/typescript.js'));assert.equal(target.capabilityKind,cap.kind);assert.equal(target.runtimeAcquisitionAuthorized,false);
+ assert.throws(()=>rootSelectedCompilerTarget(root,cap),/capability identity/);
+ for(const change of [{profile:'discoveryNoEmit'},{specifier:'other'},{source:'scripts/docs-sdk-reference.mjs'},{runtimeAcquisitionAuthorized:true}])assert.throws(()=>cliNativeCompilerTarget(root,{...cap,...change}),/CLI compiler capability/);
+});
+test('factory root declaration lock refusal and injected compiler handoffs are exact',()=>{
+ for(const [before,after]of [["path.join(root,'package.json')","path.join(root,'other.json')"],['root=fs.realpathSync(root)','root=path.resolve(root)'],["require('typescript')","require('typescript/other')"],['const require=createRequire','const alias=createRequire'],['ts.version!==locked','ts.version===locked'],['typescript:ts','typescript:undefined'],['translateTypedContracts(model,ts)','translateTypedContracts(model,{})'],["createRequire(path.join(root,'package.json'))","createRequire.call(null,path.join(root,'package.json'))"]]){assert(bytes.includes(before));assert.throws(()=>capability(bytes.replace(before,after)),/CLI compiler/);}
+});
+test('caller options alternate producer private exports and standalone commands remain refused',()=>{
+ const caller='scripts/docs-inventory.mjs',text=fs.readFileSync(path.join(root,caller),'utf8');reviewedCliNativeCompilerCaller(caller,text);
+ for(const call of ["generateNativeCliModel(root,{producerDirectory:'/tmp/other'})","generateNativeCliModel(root,{ownershipSource:'other.json'})","generateNativeCliModel(otherRoot)"]){assert.throws(()=>reviewedCliNativeCompilerCaller(caller,text.replace('generateNativeCliModel(root)',call)),/CLI compiler/);}
+ const pkg=fs.readFileSync(path.join(root,'package.json'),'utf8');for(const mode of ['command','export']){const definition=JSON.parse(pkg);if(mode==='command')definition.scripts['run:cli-driver']='node '+source;else definition.exports='./'+source;assert.throws(()=>qualifyCliNativeCompilerInput('package.json',JSON.stringify(definition)),/CLI compiler bound input/);}
+ const edge={source:caller,target:source,kind:'import',operation:"import { generateNativeCliModel } from './lib/cli/cli-native-driver.mjs';"},graph={installedFoundationDependencies:[{capabilityKind:'cli-native-static-compiler-require'}],edges:[edge]};assertCliNativeCompilerGraphPurpose(root,graph);assert.throws(()=>assertCliNativeCompilerGraphPurpose(root,{...graph,edges:[edge,{...edge,source:'tools/public.mjs'}]}),/private importer boundary/);
+});
+test('foreign cwd and roots cannot acquire the CLI profile',()=>{const temp=fs.mkdtempSync(path.join(os.tmpdir(),'docs-cli-compiler-cwd-')),cwd=process.cwd();try{const cap=capability();assert.throws(()=>cliNativeCompilerTarget(temp,cap),/canonical recovery root/);process.chdir(temp);assert.throws(()=>cliNativeCompilerTarget(root,cap),/canonical recovery root\/cwd/);}finally{process.chdir(cwd);fs.rmSync(temp,{recursive:true,force:true});}});
+test('uninjected typed adapter fallback retains ordinary factory refusal',()=>{
+ const selected='scripts/lib/cli/typed-cli-ast.mjs',text=fs.readFileSync(path.join(root,selected),'utf8');assert.throws(()=>capability(text,selected),/CLI compiler custody/);
+ const temp=fs.mkdtempSync(path.join(os.tmpdir(),'docs-cli-compiler-fallback-'));try{fs.mkdirSync(path.join(temp,'scripts/lib/cli'),{recursive:true});fs.writeFileSync(path.join(temp,'package.json'),'{}');fs.writeFileSync(path.join(temp,selected),text);assert.throws(()=>discoverScriptInputAcquisition(temp),/unsupported createRequire factory base/);}finally{fs.rmSync(temp,{recursive:true,force:true});}
+});

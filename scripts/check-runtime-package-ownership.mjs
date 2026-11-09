@@ -67,7 +67,7 @@ for (const rule of inventory.dependencyRules) {
   assert.deepEqual([...new Set(rule.mayDependOn)].sort(), expectedRules[rule.from], `invalid dependency rule: ${rule.from}`);
 }
 
-const ownerForAbsoluteFile = (file) => {
+export const ownerForAbsoluteFile = (file) => {
   const absolute = path.resolve(file);
   const mappings = [
     ['skills/common/plugin-runtime/foundation', 'shared'],

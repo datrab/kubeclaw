@@ -1,0 +1,10 @@
+{
+  "name": "@kubeclaw/docs-reader",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "markdown-it": "15.0.3",
+    "mermaid": "12.2.0",
+    "sanitize-html": "2.18.1"
+  }
+}

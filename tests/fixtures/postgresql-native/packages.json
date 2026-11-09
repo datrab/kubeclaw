@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "kubeclaw-postgresql-native-package-pins.v1",
+  "upstream": "https://www.postgresql.org/download/linux/debian/",
+  "repository": "https://apt.postgresql.org/pub/repos/apt/",
+  "signedIndexKeyFingerprint": "B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8",
+  "version": "18.6-1.pgdg12+2",
+  "packages": [
+    {
+      "Package": "postgresql-18",
+      "Version": "18.6-1.pgdg12+2",
+      "Filename": "pool/main/p/postgresql-18/postgresql-18_18.6-1.pgdg12+2_amd64.deb",
+      "Size": "7221940",
+      "SHA256": "4af50c239aaee4a5f4a8d621356b42d2343f4a1ddb5ec710eb98b2d3737103d8",
+      "signedStanzaSha256": "61a8c400aa4279fff5a7622e2d89b1798c65ff1f3292cb77711d32d43179fbb3"
+    },
+    {
+      "Package": "postgresql-client-18",
+      "Version": "18.6-1.pgdg12+2",
+      "Filename": "pool/main/p/postgresql-18/postgresql-client-18_18.6-1.pgdg12+2_amd64.deb",
+      "Size": "2134056",
+      "SHA256": "6105a64b8166ae06c2b6c681d7e600458c598151c08b0f10bf5fa25ac711d6b9",
+      "signedStanzaSha256": "c4ace51a7a941d16c46bc2e63d6c43429bb2b9a62e08dfdaa82d04c2c0838f0d"
+    },
+    {
+      "Package": "libpq5",
+      "Version": "18.6-1.pgdg12+2",
+      "Filename": "pool/main/p/postgresql-18/libpq5_18.6-1.pgdg12+2_amd64.deb",
+      "Size": "265280",
+      "SHA256": "9dc15f3f41090e632e0449693323f18c96bfd25794c439d8bcde06af6c5012f6",
+      "signedStanzaSha256": "cc0f8fdde27a6d9cb697e7b32c64a55000ba6c8dc2d0663965e649c68ef4a5b9"
+    }
+  ],
+  "scope": "Authenticated native PostgreSQL18.6 Debian12 binaries, extracted only. No product database or automatic server package installation.",
+  "signedIndex": {
+    "release": "InRelease",
+    "packages": "Packages.gz",
+    "keyring": "pgdg.gpg",
+    "packagesPath": "main/binary-amd64/Packages.gz",
+    "files": {
+      "InRelease": "2bf75a4364195200cdead59af5b5ec19250803231962fe8032e34c596e470131",
+      "Packages.gz": "99f11b71cc60e9e9b5781ba36f80b5ba2bf339cc2d7bbfd4e04074da56b42d40",
+      "pgdg.gpg": "8ca1b2fb3a2533cc44b87ee146a03858f6e8ea31c1f165dfd38dc270c04ada0f"
+    }
+  }
+}

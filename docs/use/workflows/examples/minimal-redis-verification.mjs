@@ -1,0 +1,24 @@
+import fs from 'node:fs';import path from 'node:path';import assert from 'node:assert/strict';import {pathToFileURL} from 'node:url';
+export async function verifyCompiledProject(root,sourceRoot){
+const imp=p=>import(pathToFileURL(path.join(sourceRoot,p)).href);
+const {graphSnapshot}=await imp('skills/nova/core/execution/engine-snapshots.ts');
+const {runRoot}=await imp('skills/nova/core/execution/run-root.ts');
+const {parseJournalRecords}=await imp('skills/nova/core/state/journal.ts');
+const {readRunEvidence}=await imp('skills/nova/core/state/read-run-evidence.ts');
+const {FileDurableBlobStore}=await imp('skills/common/plugin-runtime/foundation/observability/durable-records.ts');
+const {sha256Bytes,sha256Text,canonicalJson}=await imp('skills/common/plugin-runtime/sdk/src/index.ts');
+
+const marker=JSON.parse(fs.readFileSync(path.join(root,"owned-compiled-project.json"),"utf8"));for(const name of ["project.json","compiled.json"])assert.equal(sha256Bytes(fs.readFileSync(path.join(root,"project",name))).slice(7),marker.preparedInputDigests[name],"Prepared compiler input/output changed: "+name);
+const raw=path.join(root,'raw-before-audit'),load=x=>JSON.parse(fs.readFileSync(x,'utf8'));const id='run:first-project-001';
+const definition=load(path.join(root,'project/compiled.json'));const run=load(path.join(root,'compiled-run.stdout'));assert.equal(run.status,'succeeded');assert.equal(load(path.join(root,'compiled-run-result.json')).exitCode,0);assert.equal(load(path.join(root,'compiled-run-result.json')).compiledBytesUnchanged,true);
+const dir=runRoot(path.join(raw,'state'),id);const records=[];parseJournalRecords(fs.readFileSync(path.join(dir,'events.jsonl')),records,path.join(dir,'events.jsonl'));const snapshot=load(path.join(dir,'run-snapshot.json'));assert.deepEqual(snapshot.graph,graphSnapshot(definition),'The engine graph is not the same as the normalized compiler output.');const audit=load(path.join(root,'compiled-audit-pty.stdout'));assert.equal(audit.journalHead,records.at(-1).hash);assert.equal(audit.events.filter(event=>event.identity.runId===id&&['run.succeeded','run.failed','run.cancelled','run.blocked'].includes(event.type)).at(-1)?.type,'run.succeeded');assert.deepEqual(audit.events.map(x=>x.sourceRecordHash),records.map(x=>x.hash));const {digest,...unsigned}=audit;assert.equal(digest,sha256Text(canonicalJson(unsigned)));
+const proof=readRunEvidence({runId:id,journalHead:records.at(-1).hash,snapshotDigest:snapshot.digest},{storageRoot:path.join(raw,'state'),maximumBytes:8388608,orchestratorIssuerId:'local:operator'});assert.equal(proof.terminal,'run.succeeded');
+const store=new FileDurableBlobStore(path.join(raw,'artifacts'),65536,1048576);const artifacts=[];for(const ref of proof.artifacts){assert.equal(ref.producer.runId,id);assert(definition.stages.some(s=>s.id===ref.producer.stageId));const bytes=await store.get(ref.digest);assert.equal(bytes.length,ref.sizeBytes);assert.equal(sha256Bytes(bytes),ref.digest);const value=JSON.parse(bytes);artifacts.push({reference:ref,value});}
+for(const stage of definition.stages){assert.equal(run.stages[stage.id].status,'succeeded');assert(artifacts.some(x=>x.reference.producer.stageId===stage.id),'Missing original artifact for '+stage.id);}
+for(const a of artifacts.filter(x=>x.reference.namespace==='kubeclaw.lint')){assert.equal(a.value.summary.tools_failed,0);assert.equal(a.value.summary.total_blocking,0);}
+for(const a of artifacts.filter(x=>x.value.schemaVersion==='test-gate-decision.v2')){assert.equal(a.value.state,'passed');assert.equal(a.value.runId,id);assert(a.value.nodes.every(x=>x.effect==='passed'));}
+assert.equal(artifacts.filter(x=>x.value.schemaVersion==='test-gate-decision.v2').length,2,'Both original module and cumulative test decisions are necessary.');
+const manifest=load(path.join(root,'raw-tree.json'));const current=[];const walk=(dir,rel='')=>{for(const n of fs.readdirSync(dir).sort()){const p=path.join(dir,n),r=path.join(rel,n),st=fs.lstatSync(p);assert(!st.isSymbolicLink());if(st.isDirectory())walk(p,r);else{assert(st.isFile());const b=fs.readFileSync(p);current.push({path:r,bytes:b.length,sha256:sha256Bytes(b).slice(7)});}}};walk(raw);assert.deepEqual(current,manifest,'The raw evidence is not the same as its recorded manifest.');
+assert.equal(load(path.join(root,'compiled-run-command.json')).compiledSha256,sha256Bytes(fs.readFileSync(path.join(root,'project/compiled.json'))).slice(7));
+const result={status:'verified-actual-compiled-workflow',runId:id,compiledDigest:sha256Bytes(fs.readFileSync(path.join(root,'project/compiled.json'))),stageCount:definition.stages.length,artifactCount:artifacts.length,eventCount:records.length,journalHead:audit.journalHead,auditDigest:audit.digest,allOriginalArtifactsVerified:true,rawBytesPreservedBeforeAudit:true,cleanup:'pending',artifacts};fs.writeFileSync(path.join(root,'native-verification.json'),JSON.stringify(result,null,2)+'\n');return result;
+}

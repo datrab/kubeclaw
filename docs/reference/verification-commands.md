@@ -1,55 +1,43 @@
-# Verification Commands
+# Verification commands
 
-Status: generated reference
-Audience: operator, developer
+Status: current documentation and selected product check entrypoints
+Audience: operator, developer, documentation maintainer
+Owner: documentation
+Evidence: package.json; scripts/docs-reader/build.mjs; scripts/docs-reader/check-artifact.mjs
+Applies to: the selected current checkout; product tests retain their own prerequisites
+Last verified: 2026-11-02; command declaration and documentation-layout review
 
-## Summary
+## Claim-to-test map
 
-This page lists deployment verification commands plus source-backed local checks.
+| Command | Purpose | Does not prove |
+| --- | --- | --- |
+| `npm run docs:check` | Page and asset destinations, page owners, diagram sources | Runtime behavior or reference freshness |
+| `npm run docs:test` | Reader behavior and root-layout regressions | Deployed operation |
+| `npm run docs:build` | HTML, navigation, search, examples and diagrams | Successful application deployment |
+| `node scripts/docs-reader/check-artifact.mjs` | Rendered local links, anchors and output bytes | Full accessibility certification |
+| `npm run docs:serve` | Loopback reader preview on port 4173 | Public hosting |
+| `npm run docs:status:check` | Current open-issue view matches its small register | Closure of live acceptance |
 
-<!-- BEGIN GENERATED: source-backed reference -->
+Follow [Maintain the documentation](../extend/documentation-maintenance.md)
+for installation and build order. Read the changed task in the browser.
+Do not use migration ledgers, source-custody repinning or universal runtime-output
+analysis as prerequisites for this reader build.
 
-Generated from: `scripts/deploy.sh`
+## Product checks
 
-## Deployment Verification Commands
+Select the check at the changed product boundary in the
+[developer handbook](../extend/developer-handbook.md). Inspect the current
+`package.json` declaration and the component's prerequisites before execution.
+For example, `npm run verify:plugin-system-v2` requires the prepared isolation
+host described by [extension testing](../extend/testing.md); it is not a portable
+reader check. `npm run verify:prism:contracts` checks Prism contracts and types.
+Neither proves a live Studio journey or a deployed cluster.
 
-| Command | Description |
-| --- | --- |
-| `./scripts/deploy.sh nova-production-preflights <image>` | Run all required proofs after all source cutovers |
-| `./scripts/deploy.sh image` | Deploy both agents using image/runtime values |
-| `./scripts/deploy.sh image <name>` | Deploy one agent using image/runtime values |
-| `./scripts/deploy.sh smoke` | Run pod-level smoke checks for Nova + Buster |
-| `./scripts/deploy.sh smoke-agent <name>` | Run pod-level smoke checks for one agent |
-| `./scripts/deploy.sh status` | Show all pods and services |
+## Retired documentation commands
 
-
-<!-- END GENERATED -->
-
-## Local Documentation And Deployment Checks
-
-```bash
-npm run verify:plugin-system-v2
-npm run typecheck:skills
-npm run docs:inventory:check
-npm run docs:generate:check
-node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
-git diff --check
-```
-
-## Claim-To-Test Map
-
-| Claim class | Source or verifier |
-| --- | --- |
-| Documentation inventory and generated references are current | `npm run docs:inventory:check`; `npm run docs:generate:check`; `node scripts/docs-check.mjs` |
-| Core, package, capability, lifecycle, recovery, isolation, and malicious-package checks pass | `npm run verify:plugin-system-v2` |
-| Deployment manifests, NetworkPolicies, service exposure, PVCs, config mounts, and sandbox surfaces match source | `node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"` |
-| Documentation surface links and generated docs expectations stay valid | `npm run docs:check` |
-| Restart, recovery, retry, crash, and resume behavior remain source-backed | `node tests/verification/contracts/check-plugin-system-v2-phase7.mjs`; `node tests/verification/contracts/check-plugin-system-v2-resume.mjs` |
-| The complete real model-backed workflow works | `node tests/verification/e2e/run-real-pipeline-e2e.mjs --mode full` |
-| Proposed doc edits have no whitespace errors | `git diff --check` |
-| Referenced source paths/config keys exist | Use a targeted `test -e`/ `rg -q` sanity check for newly cited paths and keys before closing the docs pass. |
-
-## Generated from
-
-- `../generated/inventory/deploy-script.json`
-- `../../scripts/docs-generate.mjs`
+The old AP, parity, blueprint, raw-inventory and custody-check campaigns are no
+longer the documentation publication chain. Earlier source-pinned examples and
+reports describe their historical revisions, not additional steps to run now.
+Existing public reference pages are retained snapshots; update actual changed
+facts from their owning declarations rather than declaring them fresh because
+HTML rendered successfully.

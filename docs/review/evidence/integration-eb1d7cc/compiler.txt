@@ -1,2 +1,0 @@
-$ node tests/verification/contracts/check-project-compiler.mts
-{"ok":true,"scope":"source-launcher","modules":2,"executedStages":0}

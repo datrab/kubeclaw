@@ -28,7 +28,11 @@ const phase5 = JSON.parse(fs.readFileSync(
   'utf8',
 ));
 
-assert.equal(core.CAPABILITY_IDS.length, 24);
+assert.deepEqual(
+  [...core.CAPABILITY_IDS].sort(),
+  [...Object.keys(phase5.capabilities), ...Object.keys(phase5.runtimeCapabilities ?? {})].sort(),
+  'every capability must have exactly one reviewed plugin or runtime provider mapping',
+);
 assert.equal(Object.isFrozen(core.CAPABILITY_DEFINITIONS), true);
 assert(
   core.CAPABILITY_DEFINITIONS['git.repository.read'].operations.includes('inventory_revision'),
@@ -280,6 +284,20 @@ fs.symlinkSync(outsideRoot, workspaceEscape, 'dir');
 fs.symlinkSync(outsideRoot, policyEscape, 'dir');
 
 const cases = [
+  ['report.evidence.read', { allowedRunIds: ['run:security'] }, {
+    operation: 'snapshot', resource: { type: 'pipeline.run', canonicalId: 'run:security' }, payload: {},
+  }, { resource: { type: 'pipeline.run', canonicalId: 'run:sibling' } }],
+  ['operator.receipt', { allowedTargets: ['operator'] }, {
+    operation: 'lookup', resource: { type: 'operator.target', canonicalId: 'operator' }, payload: {},
+  }, { resource: { type: 'operator.target', canonicalId: 'other-operator' } }],
+  ['demo.handoff', { allowedNamespaces: ['owned'] }, {
+    operation: 'deliver', resource: { type: 'demo.candidate', canonicalId: 'candidate:1' },
+    payload: { namespace: 'owned' },
+  }, { payload: { namespace: 'sibling' } }],
+  ['test.plan.evidence', { allowedNamespaces: ['owned'] }, {
+    operation: 'demo', resource: { type: 'test.plan.evidence', canonicalId: 'evidence:1' },
+    payload: { namespace: 'owned' },
+  }, { payload: { namespace: 'sibling' } }],
   ['state.read', { allowedNamespaces: ['run'] }, {
     operation: 'read', resource: { type: 'state.namespace', canonicalId: 'run/item' }, payload: {},
   }, { resource: { type: 'state.namespace', canonicalId: 'sibling/item' } }],
@@ -406,7 +424,11 @@ const cases = [
     operation: 'status', resource: { type: 'agent.events', canonicalId: 'openclaw' }, payload: {},
   }, { resource: { type: 'agent.events', canonicalId: 'other-host' } }],
 ];
-assert.equal(cases.length, core.CAPABILITY_IDS.length);
+assert.deepEqual(
+  cases.map(([capability]) => capability).sort(),
+  [...core.CAPABILITY_IDS].sort(),
+  'each current capability needs an allowed request and an out-of-scope denial case',
+);
 for (const [capability, constraints, valid, deniedPatch] of cases) {
   const leaseContract = {
     schemaVersion: 'invocation-lease.v2',
