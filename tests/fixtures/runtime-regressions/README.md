@@ -45,3 +45,13 @@ the discovery self-test now positively checks the real authenticated census rout
 Full `knip:check`, `typecheck:integration`, discovery self-test and the complete
 review-plugin npm test (including pretest/posttest) pass locally. A second focused
 structured autoreview reports no actionable findings, with the same sandbox limit.
+
+Main run 42705988348 exposed a separate historical transport-fixture 100ms
+artifact-store readiness deadline. Its consumer now explicitly adapts the two
+shutdown/startup budgets to 5s in memory, retaining the authenticated original
+file and all proxy/trap/HTTP/admission assertions, with a 30s child watchdog.
+A controlled 200ms delay in the real artifact-record directory creation reproduces
+the original `ADAPTER_START_TIMEOUT:...:ready`; the adapted fixture passes with
+both original registered adapters and invocation context, zero traps/posts and
+no admitted request. This is a local scheduling regression check, not live service
+acceptance. The focused consumer and provenance checks pass (3 tests).
