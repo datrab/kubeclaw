@@ -1,4 +1,4 @@
-# Generated from release c4ab496c88758279d5a059cd854811abed221379 and byte-matched source configuration; do not edit.
+# Generated from release 0342d23d58885e94994bb727ff7b11a19249fe3d and byte-matched source configuration; do not edit.
 agentRole: buster
 gateway:
   startupDoctor:
@@ -30,7 +30,7 @@ initSetup:
       memory: 8Gi
 image:
   repository: ghcr.io/datrab/kubeclaw-buster-gateway
-  digest: sha256:cf811267e240d57ded879aeb3c4aeb3a2b6e51d598aa1ed1d2606afa7c0d69d4
+  digest: sha256:7bc1db84a6f4d00a63612b0e0a85b71933d1e84c7d7f40b35c1855e0fa585ee2
   tag: ''
   pullPolicy: IfNotPresent
 imagePullSecrets:
@@ -38,13 +38,13 @@ imagePullSecrets:
 codeBundle:
   enabled: true
   archiveUrl: >-
-    https://github.com/datrab/kubeclaw/releases/download/code-bundles-41414241326-1/buster-c4ab496c88758279d5a059cd854811abed221379.tgz
-  expectedCommit: c4ab496c88758279d5a059cd854811abed221379
+    https://github.com/datrab/kubeclaw/releases/download/code-bundles-42718613144-1/buster-0342d23d58885e94994bb727ff7b11a19249fe3d.tgz
+  expectedCommit: 0342d23d58885e94994bb727ff7b11a19249fe3d
   contractVersion: v2
   auth:
     existingSecret: github-bundle-reader
     existingSecretKey: token
-  sha256: 461d1429cd7eef5de0e136874d6b78c4e97052316bfbdeb74ddf692c25632491
+  sha256: c07c38d43321e7f25593ac35e041e07730eafcf21e4a3b6345af8c05dd4363de
 auth:
   existingSecret: openclaw-shared-secrets
   existingSecretKey: gatewayToken-buster
@@ -92,7 +92,7 @@ service:
       targetPort: buster-plan
 extraContainers:
   - name: buster-v2-runtime
-    image: ghcr.io/datrab/kubeclaw-buster-runtime@sha256:edff848ad497c77db68fcd9450f716decf3a1657e88420dc4e949dfcf1373086
+    image: ghcr.io/datrab/kubeclaw-buster-runtime@sha256:4568e5c040bd2913e0f391e5fec82074d61345e82122ab66da5760015a860f2d
     imagePullPolicy: Always
     env:
       - name: BUSTER_DIAGNOSIS_GATEWAY_TOKEN
@@ -163,8 +163,8 @@ extraContainers:
         port: 28891
       initialDelaySeconds: 30
       periodSeconds: 15
-      timeoutSeconds: 2
-      failureThreshold: 3
+      timeoutSeconds: 15
+      failureThreshold: 6
     volumeMounts:
       - name: workspace
         mountPath: /workspace
@@ -248,7 +248,7 @@ busterNamespaceBroker:
       - prism-test-ghcr
     image:
       repository: ghcr.io/datrab/kubeclaw-namespace-controller
-      digest: sha256:7f8d641e1de026d7aa1fd57bc89309a740c03fa1615cfb05fc1e1622ca213208
+      digest: sha256:a001e3e0c3473d5512e67536b31d6839043b31bd897667e87a4f60e8ab07f535
       tag: ''
       pullPolicy: IfNotPresent
 resources:
