@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "retained-runtime-regression-fixtures.v1",
+  "sourceRevision": "218343dd9101713c7892493ba856eb1aaba0809f",
+  "files": [
+    {
+      "sourcePath": "docs/architecture/plugin-system-phase6-lifecycle.json",
+      "fixturePath": "plugin-system-phase6-lifecycle.json",
+      "bytes": 1918,
+      "sha256": "5a3cb92599f9368981ce18f984bccd2b34f617b8d688520a0744bbf6d50c0933",
+      "gitBlobSha1": "fdd1a6cd38667d35b2462518cabd02756cbf0d90"
+    },
+    {
+      "sourcePath": "docs/review/evidence/run5-adapter-legacy-cli-diagnostic.mjs",
+      "fixturePath": "run5-adapter-legacy-cli-diagnostic.mjs",
+      "bytes": 6006,
+      "sha256": "d0bc4e9e042554d365f77681b140c95e35ad53d4e8d71bce826279d1476292db",
+      "gitBlobSha1": "9d3a7cec70f6070d2e34172188491447e81f80cc"
+    },
+    {
+      "sourcePath": "docs/review/evidence/run9-sdk-transport-proxy-audit.mjs",
+      "fixturePath": "run9-sdk-transport-proxy-audit.mjs",
+      "bytes": 5957,
+      "sha256": "ba948ae73e23c7ee8b13e3469c57008e15523187bc2632b31865ca3606ebf554",
+      "gitBlobSha1": "54d1d4802f9632855a326adbceabf29130d96e96"
+    },
+    {
+      "sourcePath": "docs/review/evidence/run12-prism-reader-first.txt",
+      "fixturePath": "run12-prism-reader-first.txt",
+      "bytes": 8766,
+      "sha256": "440cb8bdaab9bbde5573017076444e3dcf311812fbb7e5f74a357a08531123b3",
+      "gitBlobSha1": "94573010a2e2b349621db239224d38cad0db32d6"
+    },
+    {
+      "sourcePath": "docs/review/evidence/run12-prism-reader-first-matrix.txt",
+      "fixturePath": "run12-prism-reader-first-matrix.txt",
+      "bytes": 148798,
+      "sha256": "68127e395c371e8a3679eb96c77790ed024495efe1b5b610e98f677947ea4a02",
+      "gitBlobSha1": "97555b40dcb4fd445994e0d12ecf7748bf5c7a56"
+    }
+  ]
+}

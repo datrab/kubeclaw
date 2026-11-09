@@ -6,7 +6,7 @@ import {execFileSync} from 'node:child_process';
 import {runtimeDispatchProfileFields,CURRENT_RUNTIME_DISPATCH_PROFILE as profile,portableJson,canonicalJson} from '@kubeclaw/plugin-sdk';
 
 test('independent pre-fix original registered transport/context HTTP oracle now rejects before trap or admission',()=>{
-  const raw=execFileSync(process.execPath,['docs/review/evidence/run9-sdk-transport-proxy-audit.mjs',path.resolve('.')],{encoding:'utf8'});
+  const raw=execFileSync(process.execPath,['tests/fixtures/runtime-regressions/run9-sdk-transport-proxy-audit.mjs',path.resolve('.')],{encoding:'utf8'});
   const result=JSON.parse(raw);assert.equal(result.originalRegisteredAdapters,true);assert.equal(result.originalContext,true);
   assert.deepEqual(result.results.map(row=>row.mode),['adapter','context']);
   for(const row of result.results){

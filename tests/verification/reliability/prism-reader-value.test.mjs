@@ -5,7 +5,7 @@ import {verifiedArchitectureValue, assertArchitectureReferenceEncoding} from '..
 
 // Positive subject/ref/receipt come from the actual registered Core/ArtifactStore
 // raw, not a constructed stage context. Deliberately invalid mutations are negative.
-const raw=fs.readFileSync(new URL('../../../docs/review/evidence/run12-prism-reader-first.txt',import.meta.url),'utf8');
+const raw=fs.readFileSync(new URL('../../fixtures/runtime-regressions/run12-prism-reader-first.txt',import.meta.url),'utf8');
 const sample=JSON.parse(raw.split('\n').find(line=>line.startsWith('{"mixed":')));
 const expected=sample.artifactReference, response=sample.artifactReadReceipt.receipt.result;
 test('owning verifier accepts the actual portable original completed receipt',()=>{
@@ -47,7 +47,7 @@ test('real receipt digest/length/value corruption fails, JSON-domain rejection p
   const cyclic={};cyclic.self=cyclic;assert.throws(()=>verifiedArchitectureValue({...response,value:cyclic},expected));
 });
 test('only own expected encoding selects a codec; inherited accessors are never consulted',()=>{
-  const matrix=fs.readFileSync(new URL('../../../docs/review/evidence/run12-prism-reader-first-matrix.txt',import.meta.url),'utf8');
+  const matrix=fs.readFileSync(new URL('../../fixtures/runtime-regressions/run12-prism-reader-first-matrix.txt',import.meta.url),'utf8');
   const legacy=matrix.split('\n').filter(line=>line.startsWith('{"mixed":')).map(line=>JSON.parse(line)).find(item=>item.legacy&&!item.mixed&&item.locale==='en-US');
   assert(legacy);assert.equal(Object.hasOwn(legacy.artifactReference,'encoding'),false);
   let calls=0;const prior=Object.getOwnPropertyDescriptor(Object.prototype,'encoding');

@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import test from 'node:test';
 
 const root = fileURLToPath(new URL('../../../', import.meta.url));
-const diagnostic = fileURLToPath(new URL('../../../docs/review/evidence/run5-adapter-legacy-cli-diagnostic.mjs', import.meta.url));
+const diagnostic = fileURLToPath(new URL('../../fixtures/runtime-regressions/run5-adapter-legacy-cli-diagnostic.mjs', import.meta.url));
 
 test('archived legacy CLI diagnostic runs historical source before harness-owned legacy import writes', () => {
   const env = { ...process.env };
