@@ -110,6 +110,17 @@
         "@openai/codex"
       ]
     },
+    "scripts/docs-reader": {
+      "entry": [
+        "*.mjs"
+      ],
+      "project": [
+        "**/*.mjs"
+      ],
+      "ignoreDependencies": [
+        "mermaid"
+      ]
+    },
     "skills/buster/engine": {
       "entry": [
         "src/index.ts",

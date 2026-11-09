@@ -553,7 +553,9 @@ export function discoverServerRoutes(inputs, options = {}) {
   return distinctRoutes(routes);
 }
 
-export const discoverMethodAwareServerRoutes = discoverServerRoutes;
+export function discoverMethodAwareServerRoutes(inputs, options = {}) {
+  return discoverServerRoutes(inputs, options);
+}
 
 const GO_HTTP_METHODS = new Map([
   ['Get', 'GET'], ['Post', 'POST'], ['Put', 'PUT'], ['Patch', 'PATCH'], ['Delete', 'DELETE'],
@@ -1233,7 +1235,9 @@ export function discoverRuntimeDependencySignals(renderedObjects, options = {}) 
     || a.classification.localeCompare(b.classification) || a.signal.localeCompare(b.signal));
 }
 
-export const discoverRuntimeDependencies = discoverRuntimeDependencySignals;
+export function discoverRuntimeDependencies(renderedObjects, options = {}) {
+  return discoverRuntimeDependencySignals(renderedObjects, options);
+}
 
 function parseObjects(source, origin) {
   return YAML.parseAllDocuments(source).flatMap((document) => document.errors.length || !document.toJSON() ? [] : [{ value: document.toJSON(), origin, source: origin }]);
@@ -1294,7 +1298,8 @@ export function selfTest(root = path.resolve(import.meta.dirname, '..')) {
   assert.equal(busterPath('POST', jobPath), undefined);
   assert.equal(busterPath('DELETE', evidencePath), undefined);
   assert.equal(busterPath('DELETE', resultPath), undefined);
-  assert.equal(busterPath('GET', '/v1/plan-jobs'), undefined);
+  // The authenticated census route was added after the original discovery fixture.
+  assert.equal(busterPath('GET', '/v1/plan-jobs')?.activationState, 'active');
   const outbound = discoverOutboundConnections([path.join(root, 'skills/prism/server/product-decisions.ts')]);
   assert.deepEqual(outbound.filter((item) => item.callee === 'productController').map((item) => item.target),
     ['/v1/demo-product/status', '/v1/demo-product/decisions', '/v1/demo-product/subjects']);

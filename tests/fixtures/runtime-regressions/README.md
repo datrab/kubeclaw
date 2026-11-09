@@ -35,3 +35,13 @@ npm test --workspace @kubeclaw/plugin-review
 Structured autoreview (`--mode local`, with the focused code diff supplied as a
 `--dataset`) reported no actionable findings. Its local inspection was blocked
 by the review sandbox; actual test evidence is recorded independently.
+
+The PR static gate also needs the independently locked reader package represented
+as its own Knip workspace and installed with its committed lock. Markdown/parser
+imports remain checked against that package. Mermaid is a narrowly scoped browser
+asset dependency: the reader serves its actual module files and validates rendered
+SVGs. Existing discovery export names are retained as forwarding functions, and
+the discovery self-test now positively checks the real authenticated census route.
+Full `knip:check`, `typecheck:integration`, discovery self-test and the complete
+review-plugin npm test (including pretest/posttest) pass locally. A second focused
+structured autoreview reports no actionable findings, with the same sandbox limit.

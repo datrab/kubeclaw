@@ -162,6 +162,14 @@ const workspaces = {
     // than importing its JavaScript entrypoint, which Knip cannot infer.
     ignoreDependencies: ['@openai/codex'],
   },
+  // Independently locked reader packages own their imports, not the root package.
+  'scripts/docs-reader': {
+    entry: ['*.mjs'],
+    project: ['**/*.mjs'],
+    // Mermaid executes as a browser-served asset from node_modules/mermaid/dist.
+    // The real reader build validates its lock, module bytes and rendered SVGs.
+    ignoreDependencies: ['mermaid'],
+  },
   'tools/ops-mcp': {
     // @modelcontextprotocol/node and @hono/node-server require this peer;
     // the ops server imports the MCP transport, not Hono directly.
