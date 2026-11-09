@@ -12,7 +12,7 @@ ARG ROOTLESSKIT_VERSION=3.3.0
 ARG RUNC_VERSION=1.5.2
 WORKDIR /src
 COPY docker/runtime-binaries/ /src/
-ARG DEBIAN_SNAPSHOT=20261031T000000Z
+ARG DEBIAN_SNAPSHOT=20261109T000000Z
 RUN sh /src/install-seccomp.sh "$DEBIAN_SNAPSHOT"
 RUN --mount=type=cache,target=/go/pkg/mod --mount=type=cache,target=/root/.cache/go-build \
     sh /src/build.sh kubectl trivy buildctl buildkitd buildkit-runc rootlesskit
@@ -29,7 +29,7 @@ RUN sh /opt/kubeclaw-npm/install.sh \
     && cp -a /opt/kubeclaw-npm/node_modules/npm /usr/local/lib/node_modules/npm \
     && npm --version
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-ARG DEBIAN_SNAPSHOT=20261031T000000Z
+ARG DEBIAN_SNAPSHOT=20261109T000000Z
 ARG TARGETARCH
 ARG KUBECTL_VERSION=1.35.10
 ARG KUBECTL_SHA256_AMD64=c49a28f1f4efc4d475ed05f47f2ce8e563bf7bef69ed77fe1b924ea6d83b6327
