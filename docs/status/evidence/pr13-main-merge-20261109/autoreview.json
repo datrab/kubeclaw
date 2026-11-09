@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "No actionable merge-induced defects were identified in the visible bundle. The documentation workflow preserves the canonical reader migration and incorporates incoming trigger coverage and concurrency settings. Review confidence is limited: the supplied diff is truncated, and local read-only inspection failed because the sandbox could not initialize, preventing verification of package/lock agreement and all runtime changes against both parents.",
+  "overall_confidence": 0.35
+}

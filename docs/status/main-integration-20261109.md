@@ -31,3 +31,23 @@ Existing reference snapshots remain pinned rather than claiming unperformed rege
 - [docs/testing/buster-full-stack-fixtures.md](https://github.com/datrab/kubeclaw/blob/218343dd9101713c7892493ba856eb1aaba0809f/docs/testing/buster-full-stack-fixtures.md)
 - [docs/testing/evidence/buster-readiness-20261023.json](https://github.com/datrab/kubeclaw/blob/218343dd9101713c7892493ba856eb1aaba0809f/docs/testing/evidence/buster-readiness-20261023.json)
 - [docs/user-guides/prism-studio.md](https://github.com/datrab/kubeclaw/blob/218343dd9101713c7892493ba856eb1aaba0809f/docs/user-guides/prism-studio.md)
+
+## Resolution checks
+
+The integration is a normal merge commit, preserving both parents. No rebase,
+reset, force push, release replacement, or workload mutation was performed.
+The dependency lock installs successfully with `npm ci --ignore-scripts --include=dev`.
+`npm run docs:check` validates 209 pages and 52 assets; `npm run docs:test`
+passes all 12 tests. The version check and 23 focused version/security/workflow
+tests pass, including the unchanged Buster gate. The internal ops-tool projection
+and its Renovate/test consumers now share `scripts/generated/ops-tool-versions.json`,
+without restoring the retired public generated directory.
+
+Autoreview (`--mode commit --commit eb578ef57`) reported no actionable findings.
+Its truncated-bundle and sandbox-inspection limitations remain in the
+[complete review receipt](evidence/pr13-main-merge-20261109/autoreview.json).
+The full Chromium/reader build is delegated to the existing CI job because this
+local environment lacks the browser's system libraries. This is not a claim
+that all repository CI, deployment acceptance or a new runtime build has passed.
+Incoming immutable release files retain their original bytes, including existing
+whitespace; this conflict resolution does not rewrite release receipts.
