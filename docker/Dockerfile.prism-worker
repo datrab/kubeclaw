@@ -1,7 +1,7 @@
 # Version defaults are generated from versions.json; run npm run versions:sync.
 ARG NODE_BASE=node:24.22.2-bookworm-slim@sha256:c86ecead9e55a5210ac1727de38a4ca840bf03dcaf34dc9749addbf383b1920c
 FROM ${NODE_BASE} AS native-launcher
-ARG DEBIAN_SNAPSHOT=20261031T000000Z
+ARG DEBIAN_SNAPSHOT=20261109T000000Z
 USER root
 RUN printf '%s\n' \
       'Types: deb' \
