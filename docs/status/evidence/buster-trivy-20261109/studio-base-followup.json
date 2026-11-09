@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "studio-base-security-followup.v1",
+  "scanner": "Trivy0.76.1",
+  "date": "2026-11-09",
+  "reason": "Production selection scans all selected runtime images. Exact retained Studio distroless base contains two fixable zlib findings; update its digest without changing major OS/Node family, nonroot image or uid1000 service contract. No security gate/exemption change.",
+  "scans": [
+    {
+      "image": "gcr.io/distroless/nodejs24-debian13:nonroot@sha256:a6c34457f6da4295807e051411c7783739c65b997a324fed14e4fa292615ae91",
+      "repoDigests": [
+        "gcr.io/distroless/nodejs24-debian13@sha256:a6c34457f6da4295807e051411c7783739c65b997a324fed14e4fa292615ae91"
+      ],
+      "fixableFindings": [
+        {
+          "id": "CVE-2026-76844",
+          "package": "zlib1g",
+          "installed": "1:1.3.dfsg+really1.3.1-1+b1",
+          "fixed": "1:1.3.dfsg+really1.3.1-1+deb13u1",
+          "severity": "HIGH"
+        },
+        {
+          "id": "CVE-2026-85091",
+          "package": "zlib1g",
+          "installed": "1:1.3.dfsg+really1.3.1-1+b1",
+          "fixed": "1:1.3.dfsg+really1.3.1-1+deb13u1",
+          "severity": "HIGH"
+        }
+      ],
+      "totalHighCritical": 2
+    },
+    {
+      "image": "gcr.io/distroless/nodejs24-debian13:nonroot@sha256:088a01637f22908632ba09018be2e0b516f2fa6f7869c191d29491139db43c78",
+      "repoDigests": [
+        "gcr.io/distroless/nodejs24-debian13@sha256:088a01637f22908632ba09018be2e0b516f2fa6f7869c191d29491139db43c78"
+      ],
+      "fixableFindings": [],
+      "totalHighCritical": 0
+    }
+  ],
+  "localVersionTestsPassed": 4,
+  "limits": [
+    "These are exact base scans, not final image/production acceptance. Full image service checks and regular publication remain required."
+  ]
+}
