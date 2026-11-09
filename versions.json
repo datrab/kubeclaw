@@ -76,6 +76,15 @@
     "ops-pod": {
       "KUBECTL_VERSION": "v1.34.11",
       "HELM_VERSION": "v3.22.0"
+    },
+    "prism-control": {
+      "DEBIAN_SNAPSHOT": "20261109T000000Z"
+    },
+    "prism-ingestion": {
+      "DEBIAN_SNAPSHOT": "20261109T000000Z"
+    },
+    "prism-worker": {
+      "DEBIAN_SNAPSHOT": "20261109T000000Z"
     }
   },
   "infrastructure": {

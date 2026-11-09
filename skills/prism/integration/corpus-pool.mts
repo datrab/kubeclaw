@@ -80,6 +80,12 @@ try {
   } finally { await pool.end(); }
 } finally {
   await admin.end();
-  await owner.query(`DROP DATABASE ${database} WITH (FORCE)`);
-  await owner.end();
+  try {
+    // pg.Pool.end() can resolve before idle sockets finish closing server-side.
+    // Forcing their termination races an idle pool error after successful tests.
+    // Require actual disconnects instead; never suppress unexpected pool errors.
+    await until(async () => (await owner.query('SELECT pid FROM pg_stat_activity WHERE datname=$1', [database])).rows.length === 0,
+      'all test database connections closed before cleanup');
+    await owner.query(`DROP DATABASE ${database}`);
+  } finally { await owner.end(); }
 }

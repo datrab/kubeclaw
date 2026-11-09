@@ -1,0 +1,369 @@
+{
+  "schemaVersion": "runtime-security-prerequisite-evidence.v1",
+  "scanner": "Trivy 0.76.1",
+  "scannedAt": "2026-11-09",
+  "scans": [
+    {
+      "image": "ghcr.io/datrab/kubeclaw-nova@sha256:9175741055f0367ea9ab93e988fb09e7e98f7c6a98bd79e01ce74bc37c0a2f8d",
+      "imageID": "sha256:1be7905c45acf8d282472d410227de1ab924e9d2118dc81611820906bb2f0c30",
+      "fixableFindings": [
+        {
+          "VulnerabilityID": "CVE-2026-109518",
+          "PkgName": "apt",
+          "InstalledVersion": "2.6.1",
+          "FixedVersion": "2.6.2",
+          "Severity": "HIGH",
+          "Target": "ghcr.io/datrab/kubeclaw-nova@sha256:9175741055f0367ea9ab93e988fb09e7e98f7c6a98bd79e01ce74bc37c0a2f8d (debian 12.15)"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-109518",
+          "PkgName": "libapt-pkg6.0",
+          "InstalledVersion": "2.6.1",
+          "FixedVersion": "2.6.2",
+          "Severity": "HIGH",
+          "Target": "ghcr.io/datrab/kubeclaw-nova@sha256:9175741055f0367ea9ab93e988fb09e7e98f7c6a98bd79e01ce74bc37c0a2f8d (debian 12.15)"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-111181",
+          "PkgName": "body-parser",
+          "InstalledVersion": "2.3.0",
+          "FixedVersion": "2.4.0, 1.20.9",
+          "Severity": "HIGH",
+          "Target": "Node.js"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-102276",
+          "PkgName": "brace-expansion",
+          "InstalledVersion": "5.0.9",
+          "FixedVersion": "5.0.10, 3.0.7, 2.1.5, 1.1.19",
+          "Severity": "HIGH",
+          "Target": "Node.js"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-102278",
+          "PkgName": "brace-expansion",
+          "InstalledVersion": "5.0.9",
+          "FixedVersion": "5.0.11, 3.0.8, 2.1.6, 1.1.20",
+          "Severity": "HIGH",
+          "Target": "Node.js"
+        },
+        {
+          "VulnerabilityID": "GHSA-cg2g-xh64-v4q7",
+          "PkgName": "dompurify",
+          "InstalledVersion": "3.4.16",
+          "FixedVersion": "3.4.17",
+          "Severity": "CRITICAL",
+          "Target": "Node.js"
+        },
+        {
+          "VulnerabilityID": "GHSA-mrv2-3pqr-j5jr",
+          "PkgName": "dompurify",
+          "InstalledVersion": "3.4.16",
+          "FixedVersion": "3.4.17",
+          "Severity": "HIGH",
+          "Target": "Node.js"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-118772",
+          "PkgName": "joi",
+          "InstalledVersion": "18.2.9",
+          "FixedVersion": "17.13.9, 18.3.1",
+          "Severity": "HIGH",
+          "Target": "Node.js"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-111758",
+          "PkgName": "markdown-it",
+          "InstalledVersion": "15.0.2",
+          "FixedVersion": "14.3.3, 15.0.3",
+          "Severity": "HIGH",
+          "Target": "Node.js"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-109383",
+          "PkgName": "undici",
+          "InstalledVersion": "6.28.0",
+          "FixedVersion": "6.29.1, 7.30.1, 8.12.2",
+          "Severity": "HIGH",
+          "Target": "Node.js"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-109869",
+          "PkgName": "undici",
+          "InstalledVersion": "6.28.0",
+          "FixedVersion": "6.29.1, 7.30.1, 8.12.2",
+          "Severity": "HIGH",
+          "Target": "Node.js"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-19534",
+          "PkgName": "undici",
+          "InstalledVersion": "6.28.0",
+          "FixedVersion": "6.28.1, 7.29.1, 8.10.2",
+          "Severity": "HIGH",
+          "Target": "Node.js"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-87018",
+          "PkgName": "undici",
+          "InstalledVersion": "6.28.0",
+          "FixedVersion": "6.29.1, 7.30.1, 8.12.2",
+          "Severity": "HIGH",
+          "Target": "Node.js"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-109383",
+          "PkgName": "undici",
+          "InstalledVersion": "8.11.2",
+          "FixedVersion": "6.29.1, 7.30.1, 8.12.2",
+          "Severity": "HIGH",
+          "Target": "Node.js"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-109829",
+          "PkgName": "undici",
+          "InstalledVersion": "8.11.2",
+          "FixedVersion": "7.30.1, 8.12.2",
+          "Severity": "HIGH",
+          "Target": "Node.js"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-109869",
+          "PkgName": "undici",
+          "InstalledVersion": "8.11.2",
+          "FixedVersion": "6.29.1, 7.30.1, 8.12.2",
+          "Severity": "HIGH",
+          "Target": "Node.js"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-87018",
+          "PkgName": "undici",
+          "InstalledVersion": "8.11.2",
+          "FixedVersion": "6.29.1, 7.30.1, 8.12.2",
+          "Severity": "HIGH",
+          "Target": "Node.js"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-78661",
+          "PkgName": "golang.org/x/net",
+          "InstalledVersion": "v0.60.0",
+          "FixedVersion": "0.62.0",
+          "Severity": "HIGH",
+          "Target": "usr/local/bin/helm"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-78661",
+          "PkgName": "golang.org/x/net",
+          "InstalledVersion": "v0.60.0",
+          "FixedVersion": "0.62.0",
+          "Severity": "HIGH",
+          "Target": "usr/local/bin/tflint"
+        }
+      ]
+    },
+    {
+      "image": "node:24.22.2-bookworm-slim@sha256:c86ecead9e55a5210ac1727de38a4ca840bf03dcaf34dc9749addbf383b1920c",
+      "imageID": "sha256:9564952982df837e05d23c77e319715650fafc77b1abce39a504b920fda46a44",
+      "fixableFindings": [
+        {
+          "VulnerabilityID": "CVE-2026-109518",
+          "PkgName": "apt",
+          "InstalledVersion": "2.6.1",
+          "FixedVersion": "2.6.2",
+          "Severity": "HIGH",
+          "Target": "node:24.22.2-bookworm-slim@sha256:c86ecead9e55a5210ac1727de38a4ca840bf03dcaf34dc9749addbf383b1920c (debian 12.15)"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-109518",
+          "PkgName": "libapt-pkg6.0",
+          "InstalledVersion": "2.6.1",
+          "FixedVersion": "2.6.2",
+          "Severity": "HIGH",
+          "Target": "node:24.22.2-bookworm-slim@sha256:c86ecead9e55a5210ac1727de38a4ca840bf03dcaf34dc9749addbf383b1920c (debian 12.15)"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-102276",
+          "PkgName": "brace-expansion",
+          "InstalledVersion": "5.0.9",
+          "FixedVersion": "5.0.10, 3.0.7, 2.1.5, 1.1.19",
+          "Severity": "HIGH",
+          "Target": "Node.js"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-102278",
+          "PkgName": "brace-expansion",
+          "InstalledVersion": "5.0.9",
+          "FixedVersion": "5.0.11, 3.0.8, 2.1.6, 1.1.20",
+          "Severity": "HIGH",
+          "Target": "Node.js"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-109383",
+          "PkgName": "undici",
+          "InstalledVersion": "6.28.0",
+          "FixedVersion": "6.29.1, 7.30.1, 8.12.2",
+          "Severity": "HIGH",
+          "Target": "Node.js"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-109869",
+          "PkgName": "undici",
+          "InstalledVersion": "6.28.0",
+          "FixedVersion": "6.29.1, 7.30.1, 8.12.2",
+          "Severity": "HIGH",
+          "Target": "Node.js"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-19534",
+          "PkgName": "undici",
+          "InstalledVersion": "6.28.0",
+          "FixedVersion": "6.28.1, 7.29.1, 8.10.2",
+          "Severity": "HIGH",
+          "Target": "Node.js"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-87018",
+          "PkgName": "undici",
+          "InstalledVersion": "6.28.0",
+          "FixedVersion": "6.29.1, 7.30.1, 8.12.2",
+          "Severity": "HIGH",
+          "Target": "Node.js"
+        }
+      ]
+    },
+    {
+      "image": "docker.io/library/nginx:1.30-alpine@sha256:0e52bd054126cdc040b1276c0af347aeb02a41b9cfe305d6094767ac30e97949",
+      "imageID": "sha256:88f52f3d58a505b7e1ad96ca6969478517bcccb58418e75a54223271a64da7df",
+      "fixableFindings": [
+        {
+          "VulnerabilityID": "CVE-2026-111497",
+          "PkgName": "brotli-libs",
+          "InstalledVersion": "1.2.0-r1",
+          "FixedVersion": "1.2.1-r0",
+          "Severity": "CRITICAL",
+          "Target": "docker.io/library/nginx:1.30-alpine@sha256:0e52bd054126cdc040b1276c0af347aeb02a41b9cfe305d6094767ac30e97949 (alpine 3.24.3)"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-92392",
+          "PkgName": "curl",
+          "InstalledVersion": "8.22.0-r0",
+          "FixedVersion": "8.23.0-r0",
+          "Severity": "HIGH",
+          "Target": "docker.io/library/nginx:1.30-alpine@sha256:0e52bd054126cdc040b1276c0af347aeb02a41b9cfe305d6094767ac30e97949 (alpine 3.24.3)"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-92392",
+          "PkgName": "libcurl",
+          "InstalledVersion": "8.22.0-r0",
+          "FixedVersion": "8.23.0-r0",
+          "Severity": "HIGH",
+          "Target": "docker.io/library/nginx:1.30-alpine@sha256:0e52bd054126cdc040b1276c0af347aeb02a41b9cfe305d6094767ac30e97949 (alpine 3.24.3)"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-113351",
+          "PkgName": "libexpat",
+          "InstalledVersion": "2.9.0-r0",
+          "FixedVersion": "2.10.0-r0",
+          "Severity": "HIGH",
+          "Target": "docker.io/library/nginx:1.30-alpine@sha256:0e52bd054126cdc040b1276c0af347aeb02a41b9cfe305d6094767ac30e97949 (alpine 3.24.3)"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-115506",
+          "PkgName": "libexpat",
+          "InstalledVersion": "2.9.0-r0",
+          "FixedVersion": "2.10.0-r0",
+          "Severity": "HIGH",
+          "Target": "docker.io/library/nginx:1.30-alpine@sha256:0e52bd054126cdc040b1276c0af347aeb02a41b9cfe305d6094767ac30e97949 (alpine 3.24.3)"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-117610",
+          "PkgName": "libexpat",
+          "InstalledVersion": "2.9.0-r0",
+          "FixedVersion": "2.10.0-r0",
+          "Severity": "HIGH",
+          "Target": "docker.io/library/nginx:1.30-alpine@sha256:0e52bd054126cdc040b1276c0af347aeb02a41b9cfe305d6094767ac30e97949 (alpine 3.24.3)"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-118370",
+          "PkgName": "libexpat",
+          "InstalledVersion": "2.9.0-r0",
+          "FixedVersion": "2.10.0-r0",
+          "Severity": "HIGH",
+          "Target": "docker.io/library/nginx:1.30-alpine@sha256:0e52bd054126cdc040b1276c0af347aeb02a41b9cfe305d6094767ac30e97949 (alpine 3.24.3)"
+        }
+      ]
+    }
+  ],
+  "interpretation": {
+    "nova": "Existing unchanged-OpenClaw policy defers 96 inherited findings. Only two fixable owned findings remain: helm and tflint x/net 0.60.0.",
+    "node-base": "Prism control/ingestion retain these OS packages without a final upgrade; worker upgrades against the older snapshot.",
+    "nginx-base": "Existing Archviewer Dockerfile already fixes brotli/curl; add remaining libexpat 2.10.0-r0 for four advisories."
+  },
+  "limitations": [
+    "Prism control and Archviewer candidate registry pulls unavailable locally; source base scans are not final artifact acceptance.",
+    "OpenClaw base version/digest and existing security policy remain unchanged.",
+    "Final artifact scans, normal publication and live rollout still required."
+  ],
+  "localVerification": {
+    "go": "1.27.3",
+    "builtAndExecuted": {
+      "helm": "v3.22.1",
+      "tflint": "0.65.0"
+    },
+    "embeddedNetVersion": "v0.62.0",
+    "binarySha256": {
+      "helm": "5b09caf6658523c8f52229cae48729682aa80bbcdec44233aa6348287a0f78ac",
+      "tflint": "a492fe2fe93a3e4fc9ea17935868b6df30900857f13dfa96c5ad7cd49fad9c15"
+    },
+    "trivyRootfsHighCriticalFindings": 0,
+    "goModVerify": "both passed",
+    "versionAndLockTests": 5,
+    "versionsCheck": "passed",
+    "shellSyntax": "passed",
+    "autoreview": "clean; supplied diff and untracked files reviewed, sandbox inspection unavailable"
+  },
+  "followup": {
+    "opsCandidateReports": {
+      "run": "https://github.com/datrab/kubeclaw/actions/runs/42709524225",
+      "artifacts": [
+        13714917894,
+        13714902083
+      ],
+      "blockingFindings": [
+        {
+          "binary": "hubble",
+          "id": "CVE-2026-78661",
+          "package": "golang.org/x/net",
+          "installed": "v0.60.0",
+          "fixed": "v0.62.0"
+        },
+        {
+          "binary": "gh",
+          "id": "CVE-2026-78661",
+          "package": "golang.org/x/net",
+          "installed": "v0.60.0",
+          "fixed": "v0.62.0"
+        },
+        {
+          "binary": "helm",
+          "id": "CVE-2026-78661",
+          "package": "golang.org/x/net",
+          "installed": "v0.60.0",
+          "fixed": "v0.62.0"
+        },
+        {
+          "binary": "kubectl",
+          "id": "CVE-2026-78661",
+          "package": "golang.org/x/net",
+          "installed": "v0.60.0",
+          "fixed": "v0.62.0"
+        }
+      ]
+    },
+    "opsLockVerification": "All four go mod download all and go mod verify passed with local Go1.27.3; binary builds/scans remain CI-owned using their pinned Go1.26.10 base. Seven local version/kubectl drift tests pass.",
+    "snapshotScope": "Nov9 overrides only for Prism control, ingestion and worker; existing Buster override retained. Nova/Prism-agent/Buster-gateway retain the Oct31 snapshot and exact OpenClaw base (96 unchanged upstream findings are already policy-deferred). This avoids unrelated sudo/dnsutils Nov9 archive objects returning repeated HTTP503.",
+    "caBootstrap": "Node slim has no CA bundle. New script bootstraps ca-certificates from the mandatory signature/hash-verified Debian snapshot over HTTP, then changes package URIs to HTTPS before upgrading. No signature or TLS-verification disablement.",
+    "corpusCleanup": "Native PostgreSQL acceptance passed after replacing forced test-DB teardown with an actual zero-session barrier.",
+    "componentInputCoverage": "Both explicit script COPY consumers are declared; full runtime-component tests15/15 passed."
+  }
+}
