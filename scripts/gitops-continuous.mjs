@@ -5,6 +5,8 @@ import os from 'node:os';
 import { execFileSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
 import yaml from 'js-yaml';
+import { retainedGitOpsGroups } from './gitops-buster-scope.mjs';
+import { retainedBaseline } from './updates/retained-baseline.mjs';
 import { bootstrapDocuments, preflightGitOps } from './gitops.mjs';
 import { exportGitOpsBundle, gitOpsName } from './gitops-bundle.mjs';
 
@@ -50,6 +52,70 @@ export function continuousApplications(manifest, config = {}) {
   return documents;
 }
 
+// Network-only recovery is independent of immutable runtime image receipts.
+// Keep this explicit so routine runtime promotions cannot drop the access path.
+export function appendPrismControlAccess(documents, config, repository) {
+  if (config.prismControlAccess !== true) return documents;
+  if (config.namespace !== 'kubeclaw' || config.prismNamespace !== 'kubeclaw') throw new Error('PRISM_CONTROL_ACCESS_NAMESPACE_MISMATCH');
+  return [...documents, {
+    apiVersion: 'argoproj.io/v1alpha1', kind: 'Application',
+    // This mutable network-only support path has no selected runtime revision.
+    // Observed health avoids deadlocking the parent after unrelated main commits;
+    // immutable runtime Applications keep their strict revision health gate.
+    metadata: { name: `${config.naming.rootName}-prism-control-access`, namespace: config.argoNamespace,
+      annotations: { 'kubeclaw.io/health-mode': 'observed' } },
+    spec: {
+      project: config.naming.workloadProject,
+      source: { repoURL: repository, targetRevision: 'main',
+        path: 'gitops/production/prism-control-access', directory: { include: 'resources.yaml' } },
+      destination: { server: 'https://kubernetes.default.svc', namespace: config.namespace },
+      syncPolicy: { automated: { prune: false, selfHeal: true, allowEmpty: false }, syncOptions: ['FailOnSharedResource=true'] },
+    },
+  }];
+}
+
+// Keep an unchanged child's immutable path. A promotion of another role must
+// not create an Argo sync for byte-identical resources.
+export function retainUnchangedApplications(repository, documents) {
+  const file = path.join(repository, environment, 'apps/applications.yaml');
+  if (!fs.existsSync(file)) return documents;
+  const prior = yaml.loadAll(fs.readFileSync(file, 'utf8')).filter(Boolean);
+  for (const application of documents.filter(document => document.kind === 'Application')) {
+    const old = prior.find(document => document.kind === 'Application' && document.metadata?.name === application.metadata.name
+      && document.metadata?.namespace === application.metadata.namespace);
+    const before = old?.spec?.source, after = application.spec.source;
+    const allowed = value => /^releases\/gitops\/[a-z0-9][a-z0-9-]{0,50}\/(buster|nova|prism)$/u.exec(value ?? '');
+    const oldRole = allowed(before?.path)?.[1], newRole = allowed(after.path)?.[1];
+    if (!oldRole || oldRole !== newRole || before.repoURL !== after.repoURL || before.targetRevision !== 'main'
+      || before.directory?.include !== 'resources.yaml' || after.directory?.include !== 'resources.yaml') continue;
+    const previous = path.join(repository, before.path, 'resources.yaml');
+    const current = path.join(repository, after.path, 'resources.yaml');
+    if (!fs.existsSync(previous) || !fs.existsSync(current)
+      || !fs.readFileSync(previous).equals(fs.readFileSync(current))) continue;
+    after.path = before.path;
+    application.metadata.annotations['kubeclaw.dev/immutable-bundle-path'] = before.path;
+  }
+  return documents;
+}
+
+// Explicit policy baseline authenticates separately in CI; this gate also
+// validates active manifests before retaining only their immutable paths.
+export function retainBaselineApplications(repository, documents, config, directory) {
+  const baseline = retainedBaseline(repository, directory);
+  if (!baseline) return documents;
+  const groups = retainedGitOpsGroups(repository, { ...baseline.runtime, code: baseline.code },
+    config.namespace, config.prismNamespace, directory);
+  const active = yaml.loadAll(fs.readFileSync(path.join(repository, environment, 'apps/applications.yaml'), 'utf8')).filter(Boolean);
+  for (const { group } of groups.values()) {
+    const current = active.find(item => item.kind === 'Application' && item.metadata?.name === group.name);
+    const rendered = documents.find(item => item.kind === 'Application' && item.metadata?.name === group.name);
+    if (!rendered) throw new Error('GITOPS_ACTIVE_ROLE_APPLICATION_MISSING');
+    rendered.spec.source.path = current.spec.source.path;
+    rendered.metadata.annotations['kubeclaw.dev/immutable-bundle-path'] = current.spec.source.path;
+  }
+  return documents;
+}
+
 function configuration(repository) {
   const config = JSON.parse(fs.readFileSync(path.join(repository, environment, 'config.json'), 'utf8'));
   for (const field of ['namespace', 'prismNamespace', 'argoNamespace']) {
@@ -58,7 +124,26 @@ function configuration(repository) {
   return config;
 }
 
-export function renderContinuousEnvironment(repository, directory, url, revision, config) {
+// Maintained household definitions survive generated runtime bundle promotions.
+export function appendHouseholdApplications(repository, documents, namespace) {
+  const file = path.join(repository, environment, 'household-applications.yaml');
+  if (!fs.existsSync(file)) return documents;
+  const additional = yaml.loadAll(fs.readFileSync(file, 'utf8')).filter(Boolean);
+  const identities = new Set(documents.map(d => `${d.kind}/${d.metadata?.namespace}/${d.metadata?.name}`));
+  for (const document of additional) {
+    const identity = `${document.kind}/${document.metadata?.namespace}/${document.metadata?.name}`;
+    if (!['Application', 'AppProject'].includes(document.kind)
+      || document.apiVersion !== 'argoproj.io/v1alpha1' || document.metadata?.namespace !== namespace
+      || !gitOpsName(document.metadata?.name) || identities.has(identity)
+      || (document.kind === 'Application' && (document.spec?.syncPolicy?.automated || document.operation))) {
+      throw new Error('GITOPS_HOUSEHOLD_APPLICATION_INVALID');
+    }
+    identities.add(identity);
+  }
+  return [...documents, ...additional];
+}
+
+export function renderContinuousEnvironment(repository, directory, url, revision, config, baselineDirectory) {
   const result = bootstrapDocuments(repository, directory, url, revision, config.argoNamespace, config.naming);
   const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'gitops-continuous-'));
   try {
@@ -67,13 +152,13 @@ export function renderContinuousEnvironment(repository, directory, url, revision
     const rendered = execFileSync('helm', ['template', 'runtime', path.join(repository, 'charts/gitops'),
       '-n', config.argoNamespace, '-f', values], { encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });
     return { result: { ...result, documents: continuousDocuments(result, config.argoNamespace, config) },
-      files: { 'apps/applications.yaml': dump(continuousApplications(rendered, config)),
+      files: { 'apps/applications.yaml': dump(appendPrismControlAccess(appendHouseholdApplications(repository, retainUnchangedApplications(repository, retainBaselineApplications(repository, continuousApplications(rendered, config), config, baselineDirectory)), config.argoNamespace), config, url)),
         'bootstrap.yaml': dump(continuousDocuments(result, config.argoNamespace, config)),
         'selection.json': JSON.stringify({ directory }, null, 2) + '\n' } };
   } finally { fs.rmSync(temporary, { recursive: true, force: true }); }
 }
 
-export function exportContinuousBundle(repository, directory, config, env = process.env) {
+export function exportContinuousBundle(repository, directory, config, env = process.env, scope = 'all') {
   const variables = { ...env };
   const names = { buster: 'BUSTER_VALUES_FILE', nova: 'NOVA_VALUES_FILE', prism: 'PRISM_VALUES_FILE', 'prism-agent': 'PRISM_AGENT_VALUES_FILE' };
   for (const [role, relative] of Object.entries(config.overlays ?? {})) {
@@ -81,16 +166,16 @@ export function exportContinuousBundle(repository, directory, config, env = proc
       || relative.split('/').includes('..') || !fs.existsSync(path.join(repository, relative))) throw new Error(`GITOPS_OVERLAY_INVALID:${role}`);
     variables[names[role]] = path.join(repository, relative);
   }
-  return exportGitOpsBundle(repository, directory, config.namespace, config.prismNamespace, variables);
+  return exportGitOpsBundle(repository, directory, config.namespace, config.prismNamespace, { ...variables, GITOPS_EXPORT_SCOPE: scope });
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
   try {
     const [command, directory, url, revision] = process.argv.slice(2);
     const config = configuration(root);
-    if (command === 'export' && directory && !url) exportContinuousBundle(root, directory, config);
+    if (['export', 'export-buster'].includes(command) && directory && !url) exportContinuousBundle(root, directory, config, undefined, command === 'export-buster' ? 'buster' : 'all');
     else if (['prepare', 'check', 'preflight', 'apply'].includes(command) && directory && url && revision) {
-      const { result, files } = renderContinuousEnvironment(root, directory, url, revision, config);
+      const { result, files } = renderContinuousEnvironment(root, directory, url, revision, config, command === 'check' ? process.env.GITOPS_RETAINED_BASELINE : undefined);
       if (command === 'prepare' || command === 'check') {
         for (const [relative, bytes] of Object.entries(files)) {
           const file = path.join(root, environment, relative);
@@ -103,6 +188,6 @@ if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.ar
         if (command === 'apply') process.stdout.write(execFileSync('kubectl', ['apply', '-f', '-'],
           { input: dump(result.documents), encoding: 'utf8', timeout: 60000 }));
       }
-    } else throw new Error('Usage: gitops-continuous.mjs export releases/gitops/NAME | prepare|check|preflight|apply releases/gitops/NAME HTTPS_REPOSITORY COMMIT');
+    } else throw new Error('Usage: gitops-continuous.mjs export|export-buster releases/gitops/NAME | prepare|check|preflight|apply releases/gitops/NAME HTTPS_REPOSITORY COMMIT');
   } catch (error) { process.stderr.write(`${error.message}\n`); process.exitCode = 1; }
 }

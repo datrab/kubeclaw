@@ -12,10 +12,7 @@ metadata:
 spec:
   clusterIP: None
   selector: {app.kubernetes.io/name: {{ $name }}}
-  ports:
-    - name: health
-      port: 8080
-      targetPort: 8080
+  ports: [{name: identity, port: 8080, targetPort: 8080}]
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -52,10 +49,8 @@ spec:
           env:
             - {name: HOME, value: /home/node}
             - {name: OPS_DEFAULT_NAMESPACE, value: {{ .Values.defaultNamespace | quote }}}
-            - {name: OPS_EXEC_NAMESPACES, value: {{ join "," .Values.rbac.execNamespaces | quote }}}
-            {{- if .Values.rbac.execNamespaces }}
-            - {name: KUBECONFIG, value: /var/run/kubeclaw-ops/kubeconfig/config}
-            {{- end }}
+            - {name: OPS_MCP_URL, value: "https://{{ $name }}-mcp.{{ .Release.Namespace }}.svc:8080/mcp"}
+            - {name: CODEX_CA_CERTIFICATE, value: /var/run/kubeclaw-ops/ca/ca.crt}
             {{- if .Values.githubSecret }}
             - name: GH_TOKEN
               valueFrom:
@@ -71,45 +66,13 @@ spec:
             - {name: workspace, mountPath: /workspace}
             - {name: codex-tmp, mountPath: /tmp}
             - {name: bearer, mountPath: /var/run/kubeclaw-ops/bearer, readOnly: true}
-            {{- if .Values.rbac.execNamespaces }}
-            - {name: kube-api, mountPath: /var/run/secrets/kubernetes.io/serviceaccount, readOnly: true}
-            - {name: kubeconfig, mountPath: /var/run/kubeclaw-ops/kubeconfig, readOnly: true}
-            {{- end }}
+            - {name: mcp-ca, mountPath: /var/run/kubeclaw-ops/ca, readOnly: true}
           readinessProbe:
             exec:
               command: [python3, -c, "import json; s=json.load(open('/tmp/codex-ops-status.json')); raise SystemExit(0 if s['phase']=='remote-process-running' else 1)"]
             periodSeconds: 10
             timeoutSeconds: 3
-          # No auth/relay/API dependent liveness probe: kubectl exec must remain
-          # available while login/pairing or the OpenAI service is unavailable.
-        - name: ops-mcp
-          image: {{ .Values.mcpImage | quote }}
-          env:
-            - {name: HOST, value: "127.0.0.1"}
-            - {name: OPS_LOCAL_ONLY, value: "1"}
-            - {name: OPS_DEFAULT_NAMESPACE, value: {{ .Values.defaultNamespace | quote }}}
-            - {name: OPS_ALLOWED_NAMESPACES, value: {{ join "," .Values.rbac.namespaces | quote }}}
-            - {name: ARGOCD_NAMESPACE, value: {{ .Values.argoNamespace | quote }}}
-            - {name: OPS_MCP_BEARER_TOKEN_FILE, value: /var/run/kubeclaw-ops/bearer/token}
-          securityContext:
-            allowPrivilegeEscalation: false
-            readOnlyRootFilesystem: true
-            capabilities: {drop: [ALL]}
-          resources: {{ toYaml .Values.resources.mcp | nindent 12 }}
-          volumeMounts:
-            - {name: kube-api, mountPath: /var/run/secrets/kubernetes.io/serviceaccount, readOnly: true}
-            - {name: bearer, mountPath: /var/run/kubeclaw-ops/bearer, readOnly: true}
-          readinessProbe:
-            exec:
-              command: [node, -e, "fetch('http://127.0.0.1:8080/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
-            periodSeconds: 10
-            timeoutSeconds: 3
-          livenessProbe:
-            exec:
-              command: [node, -e, "fetch('http://127.0.0.1:8080/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
-            initialDelaySeconds: 20
-            periodSeconds: 20
-            timeoutSeconds: 3
+          # Keep onboarding available while login/relay dependencies are unavailable.
         {{- if .Values.tailscale.enabled }}
         - name: tailscale
           image: {{ .Values.tailscale.image | quote }}
@@ -135,27 +98,13 @@ spec:
             - {name: tailscale-tmp, mountPath: /tmp}
         {{- end }}
       volumes:
-        {{- if .Values.rbac.execNamespaces }}
-        - name: kubeconfig
-          configMap:
-            name: {{ $name }}-kubeconfig
-        {{- end }}
         - name: bearer
           secret:
             secretName: {{ .Values.bearerSecret }}
             defaultMode: 0440
-        - name: kube-api
-          projected:
-            defaultMode: 0440
-            sources:
-              - serviceAccountToken: {path: token, expirationSeconds: 3600}
-              - downwardAPI:
-                  items:
-                    - path: namespace
-                      fieldRef: {fieldPath: metadata.namespace}
-              - configMap:
-                  name: kube-root-ca.crt
-                  items: [{key: ca.crt, path: ca.crt}]
+        - name: mcp-ca
+          configMap:
+            name: {{ .Values.mcp.caConfigMap }}
         - {name: codex-tmp, emptyDir: {sizeLimit: 1Gi}}
         {{- if .Values.tailscale.enabled }}
         - {name: tailscale-tmp, emptyDir: {sizeLimit: 64Mi}}

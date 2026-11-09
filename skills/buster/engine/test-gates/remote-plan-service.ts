@@ -64,7 +64,9 @@ export class FileBusterPlanJobStore {
   readonly #maximumArchiveBytes: number;
   readonly #maximumResultBytes: number;
   readonly #maximumResultStoreBytes: number;
+  readonly #resultBlobRoot: string;
   readonly #admissionLock: string;
+  #admissionQueue: Promise<unknown> = Promise.resolve();
   readonly #trustedSourceAuthority: string;
   readonly #sourceAttestationPublicKey: string | Buffer;
 
@@ -77,6 +79,7 @@ export class FileBusterPlanJobStore {
     }
     this.#admissionLock = path.join(path.resolve(root), 'job-admission');
     this.#maximumResultStoreBytes = options.maximumResultStoreBytes;
+    this.#resultBlobRoot = path.join(path.resolve(root), 'results', 'blobs');
     this.#records = new FileDurableRecordStore(root, options.recordLimits);
     this.#results = new FileDurableBlobStore(path.join(root, 'results'), options.maximumResultBytes, options.maximumResultStoreBytes);
     this.#maximumArchiveBytes = options.maximumArchiveBytes;
@@ -118,9 +121,19 @@ export class FileBusterPlanJobStore {
 
   validate(job: RemotePlanJobV1): void { this.#preflight(job); }
 
+  // Queue this instance before acquiring the cross-process fence. Otherwise a
+  // second local request can exhaust flock's timeout while our own first request
+  // is still reading/writing the durable store (including large source archives).
+  #withAdmission<T>(operation: () => Promise<T>): Promise<T> {
+    const locked = () => withDurableStoreLock(this.#admissionLock, operation);
+    const result = this.#admissionQueue.then(locked, locked);
+    this.#admissionQueue = result.then(() => undefined, () => undefined);
+    return result;
+  }
+
   async accept(job: RemotePlanJobV1, now: string): Promise<RemotePlanStatusV1> {
     this.#preflight(job);
-    return withDurableStoreLock(this.#admissionLock, () => this.#accept(job, now));
+    return this.#withAdmission(() => this.#accept(job, now));
   }
 
   async #accept(job: RemotePlanJobV1, now: string): Promise<RemotePlanStatusV1> {
@@ -133,7 +146,10 @@ export class FileBusterPlanJobStore {
       }
       return structuredClone(existingRecord.payload.status);
     }
-    const reservedBytes = records.reduce((sum, record) => sum + (record.payload.status.result?.sizeBytes ?? this.#maximumResultBytes), 0);
+    // Completed and orphaned immutable blobs consume real bytes. Only active jobs
+    // can still create a result; failed/cancelled jobs cannot complete later.
+    const reservedBytes = this.#storedResultBytes(this.#resultBlobRoot) + records.reduce((sum, record) =>
+      sum + (['accepted', 'running', 'cancelling'].includes(record.payload.status.state) ? this.#maximumResultBytes : 0), 0);
     if (!Number.isSafeInteger(reservedBytes) || reservedBytes + this.#maximumResultBytes > this.#maximumResultStoreBytes) {
       throw new Error('BUSTER_REMOTE_RESULT_CAPACITY_EXCEEDED');
     }
@@ -162,6 +178,24 @@ export class FileBusterPlanJobStore {
       throw new Error('BUSTER_REMOTE_JOB_CONFLICT');
     }
     return structuredClone(accepted.status);
+  }
+
+  // Called under the cross-process admission fence shared with complete().
+  // Count unreferenced blobs too: a crash after put() may precede its status write.
+  #storedResultBytes(directory: string, depth = 0): number {
+    if (depth > 3) throw new Error('BUSTER_REMOTE_RESULT_STORE_INVALID');
+    let entries: fs.Dirent[];
+    try { entries = fs.readdirSync(directory, { withFileTypes: true }); }
+    catch (error) { if ((error as NodeJS.ErrnoException).code === 'ENOENT') return 0; throw error; }
+    let bytes = 0;
+    for (const entry of entries) {
+      const file = path.join(directory, entry.name);
+      if (entry.isDirectory()) bytes += this.#storedResultBytes(file, depth + 1);
+      else if (entry.isFile()) bytes += fs.lstatSync(file).size;
+      else throw new Error('BUSTER_REMOTE_RESULT_STORE_INVALID');
+      if (!Number.isSafeInteger(bytes) || bytes > this.#maximumResultStoreBytes) throw new Error('BUSTER_REMOTE_RESULT_CAPACITY_EXCEEDED');
+    }
+    return bytes;
   }
 
   async records(): Promise<ReadonlyArray<DurableRecord<StoredPlanJob>>> {
@@ -216,7 +250,7 @@ export class FileBusterPlanJobStore {
 
   async complete(jobId: string, result: RemotePlanResultV1, now: string): Promise<RemotePlanStatusV1> {
     validatePipelineTestGateContract('remotePlanResult', result);
-    return withDurableStoreLock(this.#admissionLock, () => this.#complete(jobId, result, now));
+    return this.#withAdmission(() => this.#complete(jobId, result, now));
   }
 
   async #complete(jobId: string, result: RemotePlanResultV1, now: string): Promise<RemotePlanStatusV1> {
@@ -265,7 +299,7 @@ export class FileBusterPlanJobStore {
     // Own the complete intent before validation or asynchronous lock acquisition.
     const intent = structuredClone(inputIntent);
     assertCompactionIntent(intent);
-    return withDurableStoreLock(this.#admissionLock, async () => {
+    return this.#withAdmission(async () => {
       const current = await this.get(intent.jobId);
       if (current.payload.schemaVersion === 'buster-plan-job-compacted-record.v1') {
         if (current.payload.compaction.intentDigest !== compactionDigest(intent)) throw new Error('BUSTER_COMPACTION_INTENT_CONFLICT');
@@ -458,6 +492,7 @@ function configuredBuildkitReadiness(options: BusterRemotePlanServiceOptions): B
 export class BusterRemotePlanService {
   readonly #options: BusterRemotePlanServiceOptions;
   readonly #now: () => Date;
+  readonly #fixtures = new Map<string, KubernetesFixtureCapabilityInvoker>();
   readonly #active = new Map<string, AbortController>();
   readonly #executions = new Map<string, Promise<void>>();
   readonly #queue = new Map<string, RemotePlanJobV1>();
@@ -545,6 +580,27 @@ export class BusterRemotePlanService {
       if (status.state === 'accepted' && !this.#active.has(job.jobId)) this.#start(job);
       return status;
     } finally { release(); }
+  }
+
+  async census() {
+    const counts: Record<RemotePlanStatusV1['state'], number> = {
+      accepted: 0, running: 0, cancelling: 0, completed: 0, failed: 0, cancelled: 0,
+    };
+    const records = await this.#options.store.records();
+    for (const { payload } of records) {
+      const state = payload.status.state;
+      if (!Object.hasOwn(counts, state)) throw new Error('BUSTER_JOB_RECORD_INVALID');
+      counts[state] += 1;
+    }
+    // A point-in-time observation, not an admission lock or a reservation.
+    return { schemaVersion: 'buster-plan-census.v1', total: records.length, counts,
+      nonterminal: counts.accepted + counts.running + counts.cancelling };
+  }
+
+  async preparingNamespaces(jobId: string) {
+    const status = await this.status(jobId);
+    return { schemaVersion: 'buster-plan-preparing-namespaces.v1', jobId,
+      namespaces: status.state === 'running' ? this.#fixtures.get(jobId)?.preparingNamespaces() ?? [] : [] };
   }
 
   async status(jobId: string): Promise<RemotePlanStatusV1> {
@@ -664,6 +720,7 @@ export class BusterRemotePlanService {
         this.#stopping = true;
         this.#queue.clear();
       }).finally(() => {
+        this.#fixtures.delete(id);
         this.#active.delete(id); this.#executions.delete(id); this.#weights.delete(id); this.#drain();
       });
       this.#executions.set(id, execution);
@@ -710,6 +767,7 @@ export class BusterRemotePlanService {
           workspaceRoot: jobRoot,
         })
         : null;
+      if (kubernetesFixture) this.#fixtures.set(job.jobId, kubernetesFixture);
       const tailscaleExposure = this.#options.allowedCapabilities.has('kubernetes.exposure')
         ? new TailscaleExposureCapabilityInvoker(this.#options.tailscaleExposure
           ?? (() => { throw new Error('BUSTER_TAILSCALE_EXPOSURE_CONFIG_REQUIRED'); })())

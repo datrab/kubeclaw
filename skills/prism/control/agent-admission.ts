@@ -17,7 +17,7 @@ export function agentReceipt(job:AgentJob) {
   if(job.state==='needs_nova' || (job.state==='accepted' && job.blocked_by))throw new Error(`NeedsNova: Prism agent job ${job.id} has an unresolved external outcome or blocked session (${String(job.blocked_by ?? job.id)}): ${JSON.stringify(job.outcome)}; it will not be replayed`);
   return {status:job.state,generationId:job.id,jobId:job.id,
     sessionKey:job.session_key,requestDigest:job.request_digest,
-    snapshotDigest:(job.request.preferences as {snapshotDigest:string}).snapshotDigest,
+    snapshotDigest:(job.request.preferences as {snapshotDigest:string}|undefined)?.snapshotDigest,
     result:job.result,outcome:job.outcome};
 }
 

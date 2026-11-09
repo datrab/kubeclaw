@@ -12,11 +12,14 @@ const RUNTIME_AGENT_TASK_PREFIX = Object.freeze([
 ]);
 
 export function buildRuntimeAgentTask(
-  payload: Readonly<Record<string, unknown>>, resultFile: string,
+  payload: Readonly<Record<string, unknown>>, resultFile: string, options: { terminalOnly?: boolean } = {},
 ): string {
   if (Buffer.byteLength(resultFile, 'utf8') > RUNTIME_RESULT_FILE_MAX_BYTES) {
     throw new Error('RUNTIME_RESULT_FILE_PATH_TOO_LONG');
   }
+  if (options.terminalOnly) return [...RUNTIME_AGENT_TASK_PREFIX.slice(0, 6),
+    'Return the exact raw JSON as your final response. Do not create or write any result file.',
+    '', JSON.stringify(payload, null, 2)].join('\n');
   return [...RUNTIME_AGENT_TASK_PREFIX,
     `Write the exact raw JSON result atomically to ${resultFile}.`,
     'Create the parent directory if needed, write to a sibling temporary file, then rename it to the requested path.',

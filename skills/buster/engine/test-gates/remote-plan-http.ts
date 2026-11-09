@@ -126,6 +126,10 @@ export function createBusterRemotePlanHttpServer(options: {
         send(response, 401, { error: 'unauthorized' }, options.maximumResponseBytes);
         return;
       }
+      if (request.method === 'GET' && request.url === '/v1/plan-jobs') {
+        send(response, 200, await options.service.census(), options.maximumResponseBytes);
+        return;
+      }
       if (request.method === 'POST' && request.url === '/v1/plan-jobs') {
         const value = await requestBody(request, options.maximumRequestBytes);
         validatePipelineTestGateContract('remotePlanJob', value);
@@ -151,6 +155,11 @@ export function createBusterRemotePlanHttpServer(options: {
           'content-digest': result.digest, 'cache-control': 'private, immutable',
         });
         response.end(bytes);
+        return;
+      }
+      const preparing = request.url?.match(/^\/v1\/plan-jobs\/([^/?#]+)\/preparing-namespaces$/u);
+      if (preparing?.[1] && request.method === 'GET') {
+        send(response, 200, await options.service.preparingNamespaces(decodeURIComponent(preparing[1])), options.maximumResponseBytes);
         return;
       }
       const id = jobId(request.url);

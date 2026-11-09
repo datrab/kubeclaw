@@ -1,4 +1,7 @@
-import {enqueueAgentJob,claimAgentJob,agentJob} from '../../../skills/prism/control/agent-jobs.ts';
+import {sha256Digest} from '@kubeclaw/worker-core';
+import {randomUUID} from 'node:crypto';
+import {reconcileAgentJob} from '../../../skills/prism/control/agent-reconciliation.ts';
+import {enqueueAgentJob,claimAgentJob,agentJob,finishAgentRun} from '../../../skills/prism/control/agent-jobs.ts';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { Pool } from 'pg';
@@ -23,6 +26,7 @@ try {
   // This regression checks pooled transactions, not deployment role grants.
   await pool.query(fs.readFileSync(migrations + '013_design_round.sql', 'utf8').split('GRANT SELECT')[0]);
   await pool.query(fs.readFileSync(migrations + '014_agent_jobs.sql', 'utf8').split('GRANT SELECT')[0]);
+  await pool.query(fs.readFileSync(migrations + '018_agent_reconciliation.sql', 'utf8').replace(/^(?:GRANT|REVOKE).*$/gmu,''));
   const repository = new RevisionRepository(pool);
   const projectId = await repository.createProject('transaction-regression', 'Transaction regression');
   const document = JSON.parse(fs.readFileSync('contracts/prism/v1/fixtures/minimal-web.json', 'utf8'));
@@ -72,6 +76,20 @@ try {
   const identity={jobId:claim.id,fence:claim.fence!,payload:revised};
   const committed=await Promise.all([repository.createDirectionSet('transaction-regression',queued.id,revised,identity),repository.createDirectionSet('transaction-regression',queued.id,revised,identity)]);
   assert.deepEqual(committed[0],committed[1]);assert.deepEqual((await agentJob(pool,queued.id)).result,committed[0]);
+  const retryProject=await repository.createProject('native-retry','Native retry');
+  await pool.query("INSERT INTO prism.design_request(id,project_id,architecture_artifact_id,architecture_digest,architecture_revision,request) VALUES(gen_random_uuid(),$1,'artifact:test','sha256:test',1,'{}')",[retryProject]);
+  const retryRound=await startDesignRound(pool,{projectId:'native-retry',subjectId:null,startKey:'retry-round',architectureDigest:'sha256:test',architectureRevision:1});
+  const retryJob=await enqueueAgentJob(pool,'control','native-retry','design-set',{projectId:'native-retry',preferences:retryRound});
+  const oldClaim=await claimAgentJob(pool,'old-native-runner');assert.equal(oldClaim?.id,retryJob.id);assert.ok(oldClaim?.fence);
+  const failure={state:'errored',error:'model auth failed before execution'};
+  await finishAgentRun(pool,retryJob.id,oldClaim.fence,failure);
+  const decision={decisionId:randomUUID(),expectedFence:oldClaim.fence,expectedOutcomeDigest:sha256Digest(failure),resolution:'retry-confirmed-no-effect' as const,reason:'Native regression has verified no external model or design execution',evidence:[`artifact:sha256:${'a'.repeat(64)}`]};
+  const reconciled=await Promise.all([reconcileAgentJob(pool,retryJob.id,'nova',decision),reconcileAgentJob(pool,retryJob.id,'nova',decision)]);
+  assert.equal(reconciled.filter(result=>!result.replayed).length,1);
+  assert.equal((await pool.query('SELECT decision_id FROM prism.agent_reconciliation WHERE job_id=$1',[retryJob.id])).rows.length,1);
+  const retried=await claimAgentJob(pool,'new-native-runner');assert.equal(retried?.id,retryJob.id);assert.notEqual(retried?.fence,oldClaim.fence);
+  assert.equal(retried?.attempt_envelope?.claim.generation,2);
+  await assert.rejects(finishAgentRun(pool,retryJob.id,oldClaim.fence,failure),/fence conflict/);
   // Every reserved connection is released after both commit and rollback.
   const probes = await Promise.all(Array.from({ length: 4 }, () => pool.query('SELECT 1 AS healthy')));
   assert.ok(probes.every(probe => probe.rows[0].healthy === 1));

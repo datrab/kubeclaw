@@ -1,0 +1,15 @@
+# Operator-owned standalone proxy; reuses existing operator OAuth and tailnet ACLs.
+apiVersion: v1
+kind: Service
+metadata:
+  name: nova-argocd-egress
+  namespace: kubeclaw
+  annotations:
+    tailscale.com/tailnet-fqdn: argocd.tail576648.ts.net
+spec:
+  type: ExternalName
+  externalName: placeholder
+  ports:
+    - name: https
+      port: 443
+      protocol: TCP

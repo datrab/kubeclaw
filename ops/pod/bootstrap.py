@@ -4,7 +4,6 @@ import ipaddress
 import json
 import os
 from pathlib import Path
-import secrets
 import subprocess
 import sys
 
@@ -26,9 +25,9 @@ def get(kind, name, ns=None):
     text = kube(args).strip()
     return json.loads(text) if text else None
 
-def apply_secret(name, values):
+def apply_secret(name, values, target_namespace=None):
     kube(['apply', '-f', '-'], json.dumps({'apiVersion': 'v1', 'kind': 'Secret',
-         'metadata': {'name': name, 'namespace': namespace}, 'type': 'Opaque', 'stringData': values}))
+         'metadata': {'name': name, 'namespace': target_namespace or namespace}, 'type': 'Opaque', 'stringData': values}))
 
 def discover():
     endpoints = get('endpoints', 'kubernetes', 'default')
@@ -54,8 +53,6 @@ def discover():
             'networkPolicy': {'apiServerCIDRs': cidrs, 'apiServerPort': ports.pop(), 'cilium': cilium}}
 
 def setup_secrets():
-    if not get('secret', 'codex-ops-bearer', namespace):
-        apply_secret('codex-ops-bearer', {'token': secrets.token_urlsafe(48)})
     if os.environ.get('OPS_COPY_PULL_SECRET', '1') == '1' and not get('secret', 'ghcr-secret', namespace):
         source = get('secret', 'ghcr-secret', os.environ.get('OPS_PULL_SECRET_SOURCE_NAMESPACE', 'kubeclaw'))
         if not source:
@@ -69,7 +66,7 @@ def setup_secrets():
             if not value:
                 raise SystemExit(variable + ' contains an empty credential')
             apply_secret(name, {key: value})
-    print('Ops credentials prepared; existing bearer and pull credentials retained')
+    print('Optional image-pull, GitHub and Tailscale credentials prepared; MCP credentials are provisioned by the declared Job')
 
 if __name__ == '__main__':
     if sys.argv[1:] == ['discover']:

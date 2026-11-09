@@ -82,7 +82,7 @@ def main():
     control_socket = config_dir / 'app-server-control' / 'app-server-control.sock'
     # Use the daemon's app-server transport directly under container supervision.
     # remote-control start requires a standalone install and launches an updater.
-    command = ['codex', '-c', 'mcp_servers.kubeclaw_ops.url="http://127.0.0.1:8080/mcp"',
+    command = ['codex', '-c', 'mcp_servers.kubeclaw_ops.url=' + json.dumps(os.environ.get('OPS_MCP_URL', 'https://codex-ops-mcp.kubeclaw-ops.svc:8080/mcp')),
                '-c', 'mcp_servers.kubeclaw_ops.bearer_token_env_var="KUBECLAW_MCP_TOKEN"',
                'app-server', '--remote-control', '--listen', 'unix://']
     while not stop.is_set():

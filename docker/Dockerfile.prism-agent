@@ -2,7 +2,7 @@
 # Prism's OpenClaw design agent. Rendering and previews run in the separate
 # Prism services; this image contains no Nova verification toolchain.
 
-ARG OPENCLAW_BASE=ghcr.io/openclaw/openclaw:2026.10.3@sha256:70b8dbd23f8d27a206f43f9828fdebc87289e50d56dc55177354c9270d764026
+ARG OPENCLAW_BASE=ghcr.io/openclaw/openclaw:2026.10.9@sha256:1a2a3ce113e435039dbeac5ae261759bb4759908563d91c81059e896b38c5d98
 
 # hadolint ignore=DL3006
 FROM ${OPENCLAW_BASE} AS gateway-assets
@@ -29,7 +29,7 @@ RUN npm ci --include=dev --ignore-scripts --no-audit --no-fund \
 /tmp/skills/common/plugins/openclaw-agent-observer/dist \
 /out/extensions/kubeclaw-agent-observer/
 
-ARG OPENCLAW_PLUGIN_VERSION=2026.10.3
+ARG OPENCLAW_PLUGIN_VERSION=2026.10.9
 ARG TARGETARCH
 
 RUN set -eux; \
@@ -72,7 +72,7 @@ FROM ${OPENCLAW_BASE}
 USER root
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-ARG DEBIAN_SNAPSHOT=20261008T000000Z
+ARG DEBIAN_SNAPSHOT=20261031T000000Z
 
 RUN test -s /etc/ssl/certs/ca-certificates.crt \
 && printf '%s\n' \
@@ -97,6 +97,7 @@ RUN test -s /etc/ssl/certs/ca-certificates.crt \
 RUN packages=(ca-certificates curl git openssh-client jq ripgrep tree) \
 && apt-get -o Acquire::Retries=5 -o APT::Update::Error-Mode=any update \
 && for package in "${packages[@]}"; do apt-cache show "${package}" >/dev/null; done \
+&& apt-get -o Acquire::Retries=5 upgrade -y --no-install-recommends \
 && apt-get -o Acquire::Retries=5 install -y --no-install-recommends "${packages[@]}" \
 && rm -rf /var/lib/apt/lists/* \
 && mkdir -p /app/skills /root/.npm
@@ -121,7 +122,7 @@ COPY --from=prism-bridge-dependencies /build/node_modules /opt/kubeclaw-prism/no
 COPY --from=prism-bridge-dependencies /build/contracts /opt/kubeclaw-prism/contracts
 COPY --from=prism-bridge-dependencies /build/skills/worker/core /opt/kubeclaw-prism/skills/worker/core
 COPY --from=prism-bridge-dependencies /build/skills/common/plugin-runtime /opt/kubeclaw-prism/skills/common/plugin-runtime
-COPY skills/prism/server/agent-bridge.mjs skills/prism/server/agent-job-runner.mjs skills/prism/server/agent-prompt.mjs skills/prism/server/preference-prompt.mjs skills/prism/server/agent-attempt.ts skills/prism/server/agent-process.ts skills/prism/server/worker-artifacts.ts /opt/kubeclaw-prism/
+COPY skills/prism/server/agent-bridge.mjs skills/prism/server/agent-job-runner.mjs skills/prism/server/agent-prompt.mjs skills/prism/server/chat-reply.mjs skills/prism/server/preference-prompt.mjs skills/prism/server/agent-attempt.ts skills/prism/server/agent-process.ts skills/prism/server/worker-artifacts.ts /opt/kubeclaw-prism/
 
 LABEL org.opencontainers.image.title="KubeClaw Prism Agent"
 LABEL org.opencontainers.image.description="OpenClaw design agent and request bridge with Prism tools"

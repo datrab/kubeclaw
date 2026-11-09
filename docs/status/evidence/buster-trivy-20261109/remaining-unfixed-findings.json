@@ -1,0 +1,4338 @@
+[
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "bsdutils",
+    "installed": "1:2.38.1-5+deb12u3",
+    "advisory": "CVE-2026-53613",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "bsdutils",
+    "installed": "1:2.38.1-5+deb12u3",
+    "advisory": "CVE-2026-53615",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "bsdutils",
+    "installed": "1:2.38.1-5+deb12u3",
+    "advisory": "CVE-2026-78410",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "curl",
+    "installed": "7.88.1-10+deb12u15",
+    "advisory": "CVE-2026-12064",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "curl",
+    "installed": "7.88.1-10+deb12u15",
+    "advisory": "CVE-2026-6276",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "curl",
+    "installed": "7.88.1-10+deb12u15",
+    "advisory": "CVE-2026-8286",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "curl",
+    "installed": "7.88.1-10+deb12u15",
+    "advisory": "CVE-2026-8458",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "curl",
+    "installed": "7.88.1-10+deb12u15",
+    "advisory": "CVE-2026-8927",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "gstreamer1.0-plugins-bad",
+    "installed": "1.22.0-4+deb12u8",
+    "advisory": "CVE-2026-119777",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "gstreamer1.0-plugins-base",
+    "installed": "1.22.0-3+deb12u7",
+    "advisory": "CVE-2026-86476",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "gstreamer1.0-plugins-good",
+    "installed": "1.22.0-5+deb12u4",
+    "advisory": "CVE-2026-46470",
+    "severity": "CRITICAL",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "gzip",
+    "installed": "1.12-1",
+    "advisory": "CVE-2026-41992",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libacl1",
+    "installed": "2.3.1-3",
+    "advisory": "CVE-2026-54369",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libaom3",
+    "installed": "3.6.0-1+deb12u3",
+    "advisory": "CVE-2023-6879",
+    "severity": "CRITICAL",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libaom3",
+    "installed": "3.6.0-1+deb12u3",
+    "advisory": "CVE-2023-39616",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libaspell15",
+    "installed": "0.60.8-4+b1",
+    "advisory": "CVE-2026-103658",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavcodec59",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-52296",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavcodec59",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-58049",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavcodec59",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-64830",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavcodec59",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-64832",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavcodec59",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-64833",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavcodec59",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-64834",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavcodec59",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-64835",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavcodec59",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-66036",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavcodec59",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-66039",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavcodec59",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-66040",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavcodec59",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-70628",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavcodec59",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-70632",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavcodec59",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-75141",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavcodec59",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-75142",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavcodec59",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-75143",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavcodec59",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-75144",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavcodec59",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-75146",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavcodec59",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-8461",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavfilter8",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-52296",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavfilter8",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-58049",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavfilter8",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-64830",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavfilter8",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-64832",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavfilter8",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-64833",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavfilter8",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-64834",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavfilter8",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-64835",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavfilter8",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-66036",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavfilter8",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-66039",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavfilter8",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-66040",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavfilter8",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-70628",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavfilter8",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-70632",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavfilter8",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-75141",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavfilter8",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-75142",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavfilter8",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-75143",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavfilter8",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-75144",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavfilter8",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-75146",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavfilter8",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-8461",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavformat59",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-52296",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavformat59",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-58049",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavformat59",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-64830",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavformat59",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-64832",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavformat59",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-64833",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavformat59",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-64834",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavformat59",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-64835",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavformat59",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-66036",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavformat59",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-66039",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavformat59",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-66040",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavformat59",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-70628",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavformat59",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-70632",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavformat59",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-75141",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavformat59",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-75142",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavformat59",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-75143",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavformat59",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-75144",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavformat59",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-75146",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavformat59",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-8461",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavutil57",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-52296",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavutil57",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-58049",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavutil57",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-64830",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavutil57",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-64832",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavutil57",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-64833",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavutil57",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-64834",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavutil57",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-64835",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavutil57",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-66036",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavutil57",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-66039",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavutil57",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-66040",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavutil57",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-70628",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavutil57",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-70632",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavutil57",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-75141",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavutil57",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-75142",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavutil57",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-75143",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavutil57",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-75144",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavutil57",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-75146",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libavutil57",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-8461",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libblkid1",
+    "installed": "2.38.1-5+deb12u3",
+    "advisory": "CVE-2026-53613",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libblkid1",
+    "installed": "2.38.1-5+deb12u3",
+    "advisory": "CVE-2026-53615",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libblkid1",
+    "installed": "2.38.1-5+deb12u3",
+    "advisory": "CVE-2026-78410",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libcjson1",
+    "installed": "1.7.15-1+deb12u4",
+    "advisory": "CVE-2026-16554",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libcjson1",
+    "installed": "1.7.15-1+deb12u4",
+    "advisory": "CVE-2026-29036",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libcjson1",
+    "installed": "1.7.15-1+deb12u4",
+    "advisory": "CVE-2026-67215",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libcjson1",
+    "installed": "1.7.15-1+deb12u4",
+    "advisory": "CVE-2026-67216",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libcjson1",
+    "installed": "1.7.15-1+deb12u4",
+    "advisory": "CVE-2026-87933",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libcups2",
+    "installed": "2.4.2-3+deb12u9",
+    "advisory": "CVE-2026-34980",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libcups2",
+    "installed": "2.4.2-3+deb12u9",
+    "advisory": "CVE-2026-55453",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libcurl3-gnutls",
+    "installed": "7.88.1-10+deb12u15",
+    "advisory": "CVE-2026-12064",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libcurl3-gnutls",
+    "installed": "7.88.1-10+deb12u15",
+    "advisory": "CVE-2026-6276",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libcurl3-gnutls",
+    "installed": "7.88.1-10+deb12u15",
+    "advisory": "CVE-2026-8286",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libcurl3-gnutls",
+    "installed": "7.88.1-10+deb12u15",
+    "advisory": "CVE-2026-8458",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libcurl3-gnutls",
+    "installed": "7.88.1-10+deb12u15",
+    "advisory": "CVE-2026-8927",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libcurl4",
+    "installed": "7.88.1-10+deb12u15",
+    "advisory": "CVE-2026-12064",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libcurl4",
+    "installed": "7.88.1-10+deb12u15",
+    "advisory": "CVE-2026-6276",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libcurl4",
+    "installed": "7.88.1-10+deb12u15",
+    "advisory": "CVE-2026-8286",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libcurl4",
+    "installed": "7.88.1-10+deb12u15",
+    "advisory": "CVE-2026-8458",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libcurl4",
+    "installed": "7.88.1-10+deb12u15",
+    "advisory": "CVE-2026-8927",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libexpat1",
+    "installed": "2.5.0-1+deb12u5",
+    "advisory": "CVE-2026-113351",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libexpat1",
+    "installed": "2.5.0-1+deb12u5",
+    "advisory": "CVE-2026-115506",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libexpat1",
+    "installed": "2.5.0-1+deb12u5",
+    "advisory": "CVE-2026-117610",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libexpat1",
+    "installed": "2.5.0-1+deb12u5",
+    "advisory": "CVE-2026-118370",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libfdisk1",
+    "installed": "2.38.1-5+deb12u3",
+    "advisory": "CVE-2026-53613",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libfdisk1",
+    "installed": "2.38.1-5+deb12u3",
+    "advisory": "CVE-2026-53615",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libfdisk1",
+    "installed": "2.38.1-5+deb12u3",
+    "advisory": "CVE-2026-78410",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libfluidsynth3",
+    "installed": "2.3.1-2",
+    "advisory": "CVE-2026-61714",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libglib2.0-0",
+    "installed": "2.74.6-2+deb12u9",
+    "advisory": "CVE-2026-58016",
+    "severity": "CRITICAL",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libglib2.0-0",
+    "installed": "2.74.6-2+deb12u9",
+    "advisory": "CVE-2026-58010",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libglib2.0-0",
+    "installed": "2.74.6-2+deb12u9",
+    "advisory": "CVE-2026-58011",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libglib2.0-0",
+    "installed": "2.74.6-2+deb12u9",
+    "advisory": "CVE-2026-58012",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libglib2.0-0",
+    "installed": "2.74.6-2+deb12u9",
+    "advisory": "CVE-2026-58013",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libglib2.0-0",
+    "installed": "2.74.6-2+deb12u9",
+    "advisory": "CVE-2026-58014",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libglib2.0-0",
+    "installed": "2.74.6-2+deb12u9",
+    "advisory": "CVE-2026-58015",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libgstreamer-gl1.0-0",
+    "installed": "1.22.0-3+deb12u7",
+    "advisory": "CVE-2026-86476",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libgstreamer-plugins-bad1.0-0",
+    "installed": "1.22.0-4+deb12u8",
+    "advisory": "CVE-2026-119777",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libgstreamer-plugins-base1.0-0",
+    "installed": "1.22.0-3+deb12u7",
+    "advisory": "CVE-2026-86476",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libharfbuzz-icu0",
+    "installed": "6.0.0+dfsg-3",
+    "advisory": "CVE-2023-25193",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libharfbuzz0b",
+    "installed": "6.0.0+dfsg-3",
+    "advisory": "CVE-2023-25193",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libjson-glib-1.0-0",
+    "installed": "1.6.6-1",
+    "advisory": "CVE-2026-120194",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libjson-glib-1.0-common",
+    "installed": "1.6.6-1",
+    "advisory": "CVE-2026-120194",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libjxl0.7",
+    "installed": "0.7.0-10+deb12u1",
+    "advisory": "CVE-2025-70103",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libldap-2.5-0",
+    "installed": "2.5.13+dfsg-5",
+    "advisory": "CVE-2023-2953",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libmbedcrypto7",
+    "installed": "2.28.3-1",
+    "advisory": "CVE-2025-47917",
+    "severity": "CRITICAL",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libmbedcrypto7",
+    "installed": "2.28.3-1",
+    "advisory": "CVE-2026-34873",
+    "severity": "CRITICAL",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libmbedcrypto7",
+    "installed": "2.28.3-1",
+    "advisory": "CVE-2026-34875",
+    "severity": "CRITICAL",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libmbedcrypto7",
+    "installed": "2.28.3-1",
+    "advisory": "CVE-2024-23775",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libmbedcrypto7",
+    "installed": "2.28.3-1",
+    "advisory": "CVE-2025-48965",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libmbedcrypto7",
+    "installed": "2.28.3-1",
+    "advisory": "CVE-2025-52496",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libmbedcrypto7",
+    "installed": "2.28.3-1",
+    "advisory": "CVE-2026-25835",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libmbedcrypto7",
+    "installed": "2.28.3-1",
+    "advisory": "CVE-2026-34872",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libmfx1",
+    "installed": "22.5.4-1",
+    "advisory": "CVE-2023-45221",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libmount1",
+    "installed": "2.38.1-5+deb12u3",
+    "advisory": "CVE-2026-53613",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libmount1",
+    "installed": "2.38.1-5+deb12u3",
+    "advisory": "CVE-2026-53615",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libmount1",
+    "installed": "2.38.1-5+deb12u3",
+    "advisory": "CVE-2026-78410",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libncurses6",
+    "installed": "6.4-4",
+    "advisory": "CVE-2025-69720",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libncursesw6",
+    "installed": "6.4-4",
+    "advisory": "CVE-2025-69720",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libopenexr-3-1-30",
+    "installed": "3.1.5-5",
+    "advisory": "CVE-2023-5841",
+    "severity": "CRITICAL",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libopenexr-3-1-30",
+    "installed": "3.1.5-5",
+    "advisory": "CVE-2026-42216",
+    "severity": "CRITICAL",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libopenexr-3-1-30",
+    "installed": "3.1.5-5",
+    "advisory": "CVE-2026-42217",
+    "severity": "CRITICAL",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libopenexr-3-1-30",
+    "installed": "3.1.5-5",
+    "advisory": "CVE-2025-12495",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libopenexr-3-1-30",
+    "installed": "3.1.5-5",
+    "advisory": "CVE-2025-12839",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libopenexr-3-1-30",
+    "installed": "3.1.5-5",
+    "advisory": "CVE-2025-12840",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libopenexr-3-1-30",
+    "installed": "3.1.5-5",
+    "advisory": "CVE-2025-64181",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libopenexr-3-1-30",
+    "installed": "3.1.5-5",
+    "advisory": "CVE-2026-27622",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libopenexr-3-1-30",
+    "installed": "3.1.5-5",
+    "advisory": "CVE-2026-34379",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libopenexr-3-1-30",
+    "installed": "3.1.5-5",
+    "advisory": "CVE-2026-34543",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libopenexr-3-1-30",
+    "installed": "3.1.5-5",
+    "advisory": "CVE-2026-34544",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libopenexr-3-1-30",
+    "installed": "3.1.5-5",
+    "advisory": "CVE-2026-34545",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libopenexr-3-1-30",
+    "installed": "3.1.5-5",
+    "advisory": "CVE-2026-34588",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libopenexr-3-1-30",
+    "installed": "3.1.5-5",
+    "advisory": "CVE-2026-40244",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libopenexr-3-1-30",
+    "installed": "3.1.5-5",
+    "advisory": "CVE-2026-40250",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libopenexr-3-1-30",
+    "installed": "3.1.5-5",
+    "advisory": "CVE-2026-41142",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libopenexr-3-1-30",
+    "installed": "3.1.5-5",
+    "advisory": "CVE-2026-59184",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libopenexr-3-1-30",
+    "installed": "3.1.5-5",
+    "advisory": "CVE-2026-59186",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libopenexr-3-1-30",
+    "installed": "3.1.5-5",
+    "advisory": "CVE-2026-59187",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libopenexr-3-1-30",
+    "installed": "3.1.5-5",
+    "advisory": "CVE-2026-59189",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libopenexr-3-1-30",
+    "installed": "3.1.5-5",
+    "advisory": "CVE-2026-59981",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libopenexr-3-1-30",
+    "installed": "3.1.5-5",
+    "advisory": "CVE-2026-59982",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libopenexr-3-1-30",
+    "installed": "3.1.5-5",
+    "advisory": "CVE-2026-68515",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libpam-systemd",
+    "installed": "252.39-1~deb12u2",
+    "advisory": "CVE-2026-16742",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libpcap0.8",
+    "installed": "1.10.3-1",
+    "advisory": "CVE-2026-0799",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libpcap0.8",
+    "installed": "1.10.3-1",
+    "advisory": "CVE-2026-6554",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libperl5.36",
+    "installed": "5.36.0-7+deb12u4",
+    "advisory": "CVE-2026-9538",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libpostproc56",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-52296",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libpostproc56",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-58049",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libpostproc56",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-64830",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libpostproc56",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-64832",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libpostproc56",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-64833",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libpostproc56",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-64834",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libpostproc56",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-64835",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libpostproc56",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-66036",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libpostproc56",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-66039",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libpostproc56",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-66040",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libpostproc56",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-70628",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libpostproc56",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-70632",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libpostproc56",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-75141",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libpostproc56",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-75142",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libpostproc56",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-75143",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libpostproc56",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-75144",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libpostproc56",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-75146",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libpostproc56",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-8461",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libpython3.11-minimal",
+    "installed": "3.11.2-6+deb12u9",
+    "advisory": "CVE-2026-11940",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libpython3.11-minimal",
+    "installed": "3.11.2-6+deb12u9",
+    "advisory": "CVE-2026-7210",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libpython3.11-stdlib",
+    "installed": "3.11.2-6+deb12u9",
+    "advisory": "CVE-2026-11940",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libpython3.11-stdlib",
+    "installed": "3.11.2-6+deb12u9",
+    "advisory": "CVE-2026-7210",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libraptor2-0",
+    "installed": "2.0.15-4+deb12u1",
+    "advisory": "CVE-2025-71436",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "librsvg2-2",
+    "installed": "2.54.7+dfsg-1~deb12u1",
+    "advisory": "CVE-2026-96889",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsmartcols1",
+    "installed": "2.38.1-5+deb12u3",
+    "advisory": "CVE-2026-53613",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsmartcols1",
+    "installed": "2.38.1-5+deb12u3",
+    "advisory": "CVE-2026-53615",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsmartcols1",
+    "installed": "2.38.1-5+deb12u3",
+    "advisory": "CVE-2026-78410",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsndfile1",
+    "installed": "1.2.0-1+deb12u1",
+    "advisory": "CVE-2026-37555",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-0",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2026-102560",
+    "severity": "CRITICAL",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-0",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2026-2369",
+    "severity": "CRITICAL",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-0",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2025-11021",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-0",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2025-14523",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-0",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2025-32908",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-0",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2025-32913",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-0",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2025-4948",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-0",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2026-0719",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-0",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2026-102555",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-0",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2026-102556",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-0",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2026-102557",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-0",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2026-102558",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-0",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2026-102559",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-0",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2026-1761",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-0",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2026-2436",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-0",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2026-3099",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-0",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2026-4271",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-0",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2026-5119",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-0",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2026-66338",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-0",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2026-85197",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-common",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2026-102560",
+    "severity": "CRITICAL",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-common",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2026-2369",
+    "severity": "CRITICAL",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-common",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2025-11021",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-common",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2025-14523",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-common",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2025-32908",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-common",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2025-32913",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-common",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2025-4948",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-common",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2026-0719",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-common",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2026-102555",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-common",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2026-102556",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-common",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2026-102557",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-common",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2026-102558",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-common",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2026-102559",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-common",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2026-1761",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-common",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2026-2436",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-common",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2026-3099",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-common",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2026-4271",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-common",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2026-5119",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-common",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2026-66338",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsoup-3.0-common",
+    "installed": "3.2.3-0+deb12u2",
+    "advisory": "CVE-2026-85197",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsqlite3-0",
+    "installed": "3.40.1-2+deb12u2",
+    "advisory": "CVE-2025-7458",
+    "severity": "CRITICAL",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsqlite3-0",
+    "installed": "3.40.1-2+deb12u2",
+    "advisory": "CVE-2026-11822",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsqlite3-0",
+    "installed": "3.40.1-2+deb12u2",
+    "advisory": "CVE-2026-11824",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsqlite3-0",
+    "installed": "3.40.1-2+deb12u2",
+    "advisory": "CVE-2026-119373",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsqlite3-0",
+    "installed": "3.40.1-2+deb12u2",
+    "advisory": "CVE-2026-119374",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsqlite3-0",
+    "installed": "3.40.1-2+deb12u2",
+    "advisory": "CVE-2026-119379",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libswresample4",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-52296",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libswresample4",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-58049",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libswresample4",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-64830",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libswresample4",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-64832",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libswresample4",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-64833",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libswresample4",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-64834",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libswresample4",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-64835",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libswresample4",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-66036",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libswresample4",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-66039",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libswresample4",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-66040",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libswresample4",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-70628",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libswresample4",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-70632",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libswresample4",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-75141",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libswresample4",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-75142",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libswresample4",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-75143",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libswresample4",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-75144",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libswresample4",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-75146",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libswresample4",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-8461",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libswscale6",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-52296",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libswscale6",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-58049",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libswscale6",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-64830",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libswscale6",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-64832",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libswscale6",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-64833",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libswscale6",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-64834",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libswscale6",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-64835",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libswscale6",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-66036",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libswscale6",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-66039",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libswscale6",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-66040",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libswscale6",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-70628",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libswscale6",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-70632",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libswscale6",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-75141",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libswscale6",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-75142",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libswscale6",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-75143",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libswscale6",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-75144",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libswscale6",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-75146",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libswscale6",
+    "installed": "7:5.1.9-0+deb12u1",
+    "advisory": "CVE-2026-8461",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsystemd-shared",
+    "installed": "252.39-1~deb12u2",
+    "advisory": "CVE-2026-16742",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libsystemd0",
+    "installed": "252.39-1~deb12u2",
+    "advisory": "CVE-2026-16742",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libtiff6",
+    "installed": "4.5.0-6+deb12u4",
+    "advisory": "CVE-2023-52355",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libtiff6",
+    "installed": "4.5.0-6+deb12u4",
+    "advisory": "CVE-2026-12912",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libtiff6",
+    "installed": "4.5.0-6+deb12u4",
+    "advisory": "CVE-2026-36849",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libtiff6",
+    "installed": "4.5.0-6+deb12u4",
+    "advisory": "CVE-2026-52490",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libtinfo6",
+    "installed": "6.4-4",
+    "advisory": "CVE-2025-69720",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libudev1",
+    "installed": "252.39-1~deb12u2",
+    "advisory": "CVE-2026-16742",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libuuid1",
+    "installed": "2.38.1-5+deb12u3",
+    "advisory": "CVE-2026-53613",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libuuid1",
+    "installed": "2.38.1-5+deb12u3",
+    "advisory": "CVE-2026-53615",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libuuid1",
+    "installed": "2.38.1-5+deb12u3",
+    "advisory": "CVE-2026-78410",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libx11-6",
+    "installed": "2:1.8.4-2+deb12u2",
+    "advisory": "CVE-2026-88806",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libx11-data",
+    "installed": "2:1.8.4-2+deb12u2",
+    "advisory": "CVE-2026-88806",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libx11-xcb1",
+    "installed": "2:1.8.4-2+deb12u2",
+    "advisory": "CVE-2026-88806",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libxi6",
+    "installed": "2:1.8-1+b1",
+    "advisory": "CVE-2026-109089",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libxi6",
+    "installed": "2:1.8-1+b1",
+    "advisory": "CVE-2026-109090",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libxml2",
+    "installed": "2.9.14+dfsg-1.3~deb12u6",
+    "advisory": "CVE-2026-6653",
+    "severity": "CRITICAL",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libxml2",
+    "installed": "2.9.14+dfsg-1.3~deb12u6",
+    "advisory": "CVE-2026-74860",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libxml2",
+    "installed": "2.9.14+dfsg-1.3~deb12u6",
+    "advisory": "CVE-2026-86138",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libxml2",
+    "installed": "2.9.14+dfsg-1.3~deb12u6",
+    "advisory": "CVE-2026-86140",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libxml2",
+    "installed": "2.9.14+dfsg-1.3~deb12u6",
+    "advisory": "CVE-2026-86142",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libxml2",
+    "installed": "2.9.14+dfsg-1.3~deb12u6",
+    "advisory": "CVE-2026-86143",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libxml2",
+    "installed": "2.9.14+dfsg-1.3~deb12u6",
+    "advisory": "CVE-2026-86144",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libxrender1",
+    "installed": "1:0.9.10-1.1",
+    "advisory": "CVE-2026-88807",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "libxtst6",
+    "installed": "2:1.2.3-1.1",
+    "advisory": "CVE-2026-94286",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-99083",
+    "severity": "CRITICAL",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2013-7445",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2019-19449",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2019-19814",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2021-3847",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2021-3864",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2023-52452",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2023-52586",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2023-52624",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2023-52751",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2023-53218",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2024-21803",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2024-26669",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2024-26836",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2024-26913",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2024-26914",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2024-26944",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2024-38570",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2024-38630",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2024-41045",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2024-41935",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2024-42118",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2024-42162",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2024-44941",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2024-44942",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2024-44951",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2024-46729",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2024-46811",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2024-46813",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2024-47691",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2024-50217",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2024-50226",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2024-50282",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2024-53068",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2024-53147",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2024-53168",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2024-53179",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2024-53218",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2024-56538",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2024-56775",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2024-57900",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2024-57982",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2025-21927",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2025-21967",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2025-21969",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2025-21985",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2025-23133",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2025-37750",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2025-37776",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2025-37777",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2025-37861",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2025-37952",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2025-37957",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2025-38069",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2025-38081",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2025-38182",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2025-38204",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2025-38248",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2025-38369",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2025-38582",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2025-38585",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2025-38595",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2025-38636",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2025-38722",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2025-38734",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2025-39744",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2025-39797",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2025-39810",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2025-39859",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2025-39952",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2025-40137",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2025-40333",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2025-40354",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2025-68809",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2025-71068",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2025-71073",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2025-71152",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-100072",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-23171",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-23208",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-23226",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-23327",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-23361",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-31432",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-31493",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-31527",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-31568",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-31729",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-43049",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-43125",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-43185",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-43250",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-45893",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-45943",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-45957",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-46054",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-46068",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-46130",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-46181",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-46219",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-46241",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-46293",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-52991",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-53000",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-53091",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-53115",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-53117",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-53118",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-53120",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-53129",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-53143",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-53156",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-53179",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-53262",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-53272",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-53330",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-64001",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-64017",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-64026",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-64138",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-64305",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-64320",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-64341",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-64348",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-64389",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-64392",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-64400",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-64424",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-64556",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-68409",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-68426",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-68470",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-72042",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-72098",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-72130",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-74269",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-74345",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-74752",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-80837",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-80841",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-89465",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-89526",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-89530",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-89545",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-89564",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-89631",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-89633",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-89638",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-89652",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-89659",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-89675",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-89676",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-89708",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-89713",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-89761",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-89811",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-89972",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-90036",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-90111",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-90206",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-90227",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-90315",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-93817",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-98111",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-98222",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-98364",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-98466",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-98490",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-98549",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-98715",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-98716",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-98725",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-98741",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-98742",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-98769",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-98805",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-98853",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-98857",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-99056",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-99109",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-99152",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-99153",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-99167",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-99233",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-99235",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-99236",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-99239",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-99246",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-99272",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-99281",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "linux-libc-dev",
+    "installed": "6.1.190-1",
+    "advisory": "CVE-2026-99284",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "mount",
+    "installed": "2.38.1-5+deb12u3",
+    "advisory": "CVE-2026-53613",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "mount",
+    "installed": "2.38.1-5+deb12u3",
+    "advisory": "CVE-2026-53615",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "mount",
+    "installed": "2.38.1-5+deb12u3",
+    "advisory": "CVE-2026-78410",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "ncurses-base",
+    "installed": "6.4-4",
+    "advisory": "CVE-2025-69720",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "ncurses-bin",
+    "installed": "6.4-4",
+    "advisory": "CVE-2025-69720",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "openssh-client",
+    "installed": "1:9.2p1-2+deb12u10",
+    "advisory": "CVE-2026-60002",
+    "severity": "CRITICAL",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "openssh-client",
+    "installed": "1:9.2p1-2+deb12u10",
+    "advisory": "CVE-2026-106553",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "openssh-client",
+    "installed": "1:9.2p1-2+deb12u10",
+    "advisory": "CVE-2026-106555",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "openssh-client",
+    "installed": "1:9.2p1-2+deb12u10",
+    "advisory": "CVE-2026-106583",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "openssh-client",
+    "installed": "1:9.2p1-2+deb12u10",
+    "advisory": "CVE-2026-59999",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "openssh-client",
+    "installed": "1:9.2p1-2+deb12u10",
+    "advisory": "CVE-2026-60000",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "perl",
+    "installed": "5.36.0-7+deb12u4",
+    "advisory": "CVE-2026-9538",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "perl-base",
+    "installed": "5.36.0-7+deb12u4",
+    "advisory": "CVE-2026-9538",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "perl-modules-5.36",
+    "installed": "5.36.0-7+deb12u4",
+    "advisory": "CVE-2026-9538",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "python3.11",
+    "installed": "3.11.2-6+deb12u9",
+    "advisory": "CVE-2026-11940",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "python3.11",
+    "installed": "3.11.2-6+deb12u9",
+    "advisory": "CVE-2026-7210",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "python3.11-minimal",
+    "installed": "3.11.2-6+deb12u9",
+    "advisory": "CVE-2026-11940",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "python3.11-minimal",
+    "installed": "3.11.2-6+deb12u9",
+    "advisory": "CVE-2026-7210",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "systemd",
+    "installed": "252.39-1~deb12u2",
+    "advisory": "CVE-2026-16742",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "systemd-sysv",
+    "installed": "252.39-1~deb12u2",
+    "advisory": "CVE-2026-16742",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "util-linux",
+    "installed": "2.38.1-5+deb12u3",
+    "advisory": "CVE-2026-53613",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "util-linux",
+    "installed": "2.38.1-5+deb12u3",
+    "advisory": "CVE-2026-53615",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "util-linux",
+    "installed": "2.38.1-5+deb12u3",
+    "advisory": "CVE-2026-78410",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "util-linux-extra",
+    "installed": "2.38.1-5+deb12u3",
+    "advisory": "CVE-2026-53613",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "util-linux-extra",
+    "installed": "2.38.1-5+deb12u3",
+    "advisory": "CVE-2026-53615",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "util-linux-extra",
+    "installed": "2.38.1-5+deb12u3",
+    "advisory": "CVE-2026-78410",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "xserver-common",
+    "installed": "2:21.1.7-3+deb12u13",
+    "advisory": "CVE-2023-5574",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "xserver-common",
+    "installed": "2:21.1.7-3+deb12u13",
+    "advisory": "CVE-2026-55999",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "xserver-common",
+    "installed": "2:21.1.7-3+deb12u13",
+    "advisory": "CVE-2026-56000",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "xserver-common",
+    "installed": "2:21.1.7-3+deb12u13",
+    "advisory": "CVE-2026-88812",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "xserver-common",
+    "installed": "2:21.1.7-3+deb12u13",
+    "advisory": "CVE-2026-93516",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "xserver-common",
+    "installed": "2:21.1.7-3+deb12u13",
+    "advisory": "CVE-2026-93521",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "xserver-common",
+    "installed": "2:21.1.7-3+deb12u13",
+    "advisory": "CVE-2026-93523",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "xvfb",
+    "installed": "2:21.1.7-3+deb12u13",
+    "advisory": "CVE-2023-5574",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "xvfb",
+    "installed": "2:21.1.7-3+deb12u13",
+    "advisory": "CVE-2026-55999",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "xvfb",
+    "installed": "2:21.1.7-3+deb12u13",
+    "advisory": "CVE-2026-56000",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "xvfb",
+    "installed": "2:21.1.7-3+deb12u13",
+    "advisory": "CVE-2026-88812",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "xvfb",
+    "installed": "2:21.1.7-3+deb12u13",
+    "advisory": "CVE-2026-93516",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "xvfb",
+    "installed": "2:21.1.7-3+deb12u13",
+    "advisory": "CVE-2026-93521",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "xvfb",
+    "installed": "2:21.1.7-3+deb12u13",
+    "advisory": "CVE-2026-93523",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "zlib1g",
+    "installed": "1:1.2.13.dfsg-1",
+    "advisory": "CVE-2023-45853",
+    "severity": "CRITICAL",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "zlib1g",
+    "installed": "1:1.2.13.dfsg-1",
+    "advisory": "CVE-2026-76844",
+    "severity": "HIGH",
+    "fixed": ""
+  },
+  {
+    "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+    "package": "zlib1g",
+    "installed": "1:1.2.13.dfsg-1",
+    "advisory": "CVE-2026-85091",
+    "severity": "HIGH",
+    "fixed": ""
+  }
+]

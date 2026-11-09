@@ -67,3 +67,12 @@ to Service TCP80/443 were refused; the MagicDNS hostname was unresolved. The
 repository's central default-deny rules lacked an explicit Nova→Argo allowance.
 These observations motivate this path but do not alone prove which live component
 rejected it. Source tests and review are separate from operator/tailnet/live checks.
+
+## Observed failure, 2026-11-01
+
+The operations API reported `nova-argocd-access`: OutOfSync / Missing, operation
+Failed, with `failed to discover server resources for group version cilium.io/v2`.
+This proves the deployment incompatibility, not successful HTTPS connectivity.
+Familyclaw was separately OutOfSync / Healthy at comparison revision 8c828786.
+The current operations identity explicitly denies namespace `familyclaw`; do not
+work around that restriction through another pod or silently expand its own grant.

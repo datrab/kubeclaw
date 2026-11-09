@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "familyclaw-argo-registration-checks.v1",
+  "familyclawMainRevision": "1a872d7",
+  "runtimeBaseline": "27af7e8439c1356f059bf97fec0edf10edd8b210",
+  "focusedGitOpsTests": {
+    "total": 7,
+    "passed": 7
+  },
+  "combinedGitOpsTests": {
+    "total": 18,
+    "passed": 17,
+    "failed": 1,
+    "existingFailure": "gitops-buster-scope.test.mjs:67; reproduced on unchanged runtime baseline"
+  },
+  "generatedEnvironmentDriftCheck": "passed",
+  "argoControllerObservation": false,
+  "liveHouseholdDeployment": false,
+  "reviewCommand": "autoreview --mode local --codex-bin /app/extensions/codex/node_modules/.bin/codex --no-web-search",
+  "review": {
+    "findings": [],
+    "overall_correctness": "patch is correct",
+    "overall_explanation": "No actionable defects were identified in the provided change bundle. Local inspection was unavailable because the shell sandbox failed to initialize, so this assessment is limited to the supplied diff and file contents.",
+    "overall_confidence": 0.64
+  }
+}

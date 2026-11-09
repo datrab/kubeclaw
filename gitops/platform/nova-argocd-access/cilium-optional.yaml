@@ -1,0 +1,35 @@
+# Optional only on a cluster with the cilium.io/v2 API; not in the default Argo source.
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: nova-argocd-access
+  namespace: kubeclaw
+spec:
+  description: Nova can probe internal Argo and reach only its dedicated Tailscale HTTPS proxy.
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: kubeclaw
+      app.kubernetes.io/instance: agent-nova
+      app.kubernetes.io/component: nova
+  # Add to the existing default-deny model; do not introduce isolation by itself.
+  enableDefaultDeny:
+    egress: false
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: argocd
+            app.kubernetes.io/name: argocd-server
+      toPorts:
+        - ports:
+            - port: '8080'
+              protocol: TCP
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: tailscale
+            tailscale.com/managed: 'true'
+            tailscale.com/parent-resource: nova-argocd-egress
+            tailscale.com/parent-resource-ns: kubeclaw
+      toPorts:
+        - ports:
+            - port: '443'
+              protocol: TCP

@@ -88,6 +88,7 @@ spec:
               valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: worker-secret } }
             {{- end }}
             {{- if eq $name "control" }}
+            - { name: PRISM_STUDIO_PUBLIC_URL, value: {{ $.Values.studio.publicUrl | quote }} }
             {{- include "prism.productDecisions.env" $ | nindent 12 }}
             {{- if $.Values.workerTrust.spiffe.enabled }}
             - { name: PRISM_WORKER_URL, value: "http://127.0.0.1:18081" }

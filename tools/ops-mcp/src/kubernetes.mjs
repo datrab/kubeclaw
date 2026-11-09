@@ -25,7 +25,8 @@ export function createKubeRequest({
     return new Promise((resolve, reject) => {
       const req = request(origin, {
         method: 'GET', path, ca, rejectUnauthorized: true, agent: false,
-        headers: { Authorization: `Bearer ${token}`, Accept: asText ? 'text/plain' : 'application/json' },
+        headers: { Authorization: `Bearer ${token}`, // Log requests still pass API content negotiation before streaming plain text.
+          Accept: asText ? 'application/json, */*' : 'application/json' },
       }, res => {
         const chunks = [];
         let bytes = 0;

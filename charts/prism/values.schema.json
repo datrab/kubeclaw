@@ -523,6 +523,36 @@
           "type": "string",
           "minLength": 9,
           "maxLength": 128
+        },
+        "recovery": {
+          "type": "object",
+          "additionalProperties": false,
+          "oneOf": [
+            {
+              "maxProperties": 0
+            },
+            {
+              "required": [
+                "runId",
+                "verificationCronJobUid",
+                "databaseProofCronJobUid"
+              ]
+            }
+          ],
+          "properties": {
+            "runId": {
+              "type": "string",
+              "pattern": "^[a-z0-9]([a-z0-9-]{0,18}[a-z0-9])?$"
+            },
+            "verificationCronJobUid": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+            },
+            "databaseProofCronJobUid": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+            }
+          }
         }
       }
     }

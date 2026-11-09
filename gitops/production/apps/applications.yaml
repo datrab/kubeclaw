@@ -27,6 +27,8 @@ spec:
     - group: admissionregistration.k8s.io
       kind: ValidatingAdmissionPolicyBinding
   namespaceResourceWhitelist:
+    - group: networking.k8s.io
+      kind: NetworkPolicy
     - group: ''
       kind: ServiceAccount
     - group: ''
@@ -41,8 +43,6 @@ spec:
       kind: Service
     - group: apps
       kind: Deployment
-    - group: networking.k8s.io
-      kind: NetworkPolicy
     - group: policy
       kind: PodDisruptionBudget
     - group: apps
@@ -64,7 +64,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: '0'
     kubeclaw.dev/helm-releases: '["agent-buster"]'
-    kubeclaw.dev/immutable-bundle-path: releases/gitops/runtime-38542596018-1/buster
+    kubeclaw.dev/immutable-bundle-path: releases/gitops/runtime-41414241326-1/buster
   labels:
     kubeclaw.dev/gitops-project: kubeclaw
 spec:
@@ -72,7 +72,7 @@ spec:
   source:
     repoURL: https://github.com/datrab/kubeclaw.git
     targetRevision: main
-    path: releases/gitops/runtime-38542596018-1/buster
+    path: releases/gitops/runtime-41414241326-1/buster
     directory:
       include: resources.yaml
   destination:
@@ -100,7 +100,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: '0'
     kubeclaw.dev/helm-releases: '["prism","agent-prism"]'
-    kubeclaw.dev/immutable-bundle-path: releases/gitops/runtime-38542596018-1/prism
+    kubeclaw.dev/immutable-bundle-path: releases/gitops/runtime-41414241326-1/prism
   labels:
     kubeclaw.dev/gitops-project: kubeclaw
 spec:
@@ -108,7 +108,7 @@ spec:
   source:
     repoURL: https://github.com/datrab/kubeclaw.git
     targetRevision: main
-    path: releases/gitops/runtime-38542596018-1/prism
+    path: releases/gitops/runtime-41414241326-1/prism
     directory:
       include: resources.yaml
   destination:
@@ -136,7 +136,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: '1'
     kubeclaw.dev/helm-releases: '["agent-nova"]'
-    kubeclaw.dev/immutable-bundle-path: releases/gitops/runtime-38542596018-1/nova
+    kubeclaw.dev/immutable-bundle-path: releases/gitops/runtime-41414241326-1/nova
   labels:
     kubeclaw.dev/gitops-project: kubeclaw
 spec:
@@ -144,7 +144,7 @@ spec:
   source:
     repoURL: https://github.com/datrab/kubeclaw.git
     targetRevision: main
-    path: releases/gitops/runtime-38542596018-1/nova
+    path: releases/gitops/runtime-41414241326-1/nova
     directory:
       include: resources.yaml
   destination:
@@ -163,3 +163,100 @@ spec:
         duration: 10s
         factor: 2
         maxDuration: 1m
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: familyclaw
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: '-1'
+spec:
+  description: Family household stack; separate from Kubeclaw runtime permissions.
+  sourceRepos:
+    - ssh://git@ssh.github.com:443/datrab/Familyclaw.git
+  destinations:
+    - namespace: familyclaw
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist: []
+  namespaceResourceWhitelist:
+    - group: ''
+      kind: ConfigMap
+    - group: ''
+      kind: PersistentVolumeClaim
+    - group: ''
+      kind: Service
+    - group: ''
+      kind: ServiceAccount
+    - group: rbac.authorization.k8s.io
+      kind: Role
+    - group: rbac.authorization.k8s.io
+      kind: RoleBinding
+    - group: apps
+      kind: Deployment
+    - group: apps
+      kind: StatefulSet
+    - group: batch
+      kind: Job
+    - group: batch
+      kind: CronJob
+    - group: networking.k8s.io
+      kind: NetworkPolicy
+    - group: networking.k8s.io
+      kind: Ingress
+  orphanedResources:
+    warn: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: familyclaw
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: '10'
+    kubeclaw.io/health-mode: observed
+    argocd.argoproj.io/ignore-healthcheck: 'true'
+    argocd.argoproj.io/sync-options: Prune=false,Delete=false
+spec:
+  project: familyclaw
+  source:
+    repoURL: ssh://git@ssh.github.com:443/datrab/Familyclaw.git
+    targetRevision: main
+    path: deploy/helm/family-stack
+    helm:
+      releaseName: familyclaw
+      valueFiles:
+        - values-household.yaml
+        - values-production.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: familyclaw
+  syncPolicy:
+    syncOptions:
+      - FailOnSharedResource=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kubeclaw-prism-control-access
+  namespace: argocd
+  annotations:
+    kubeclaw.io/health-mode: observed
+spec:
+  project: kubeclaw
+  source:
+    repoURL: https://github.com/datrab/kubeclaw.git
+    targetRevision: main
+    path: gitops/production/prism-control-access
+    directory:
+      include: resources.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kubeclaw
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
+      allowEmpty: false
+    syncOptions:
+      - FailOnSharedResource=true

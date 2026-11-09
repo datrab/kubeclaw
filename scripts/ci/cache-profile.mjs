@@ -1,0 +1,12 @@
+import fs from 'node:fs';
+const [role, profile = 'gha-min', namespace] = process.argv.slice(2);
+if (!/^[a-z][a-z-]+$/u.test(role ?? '') || !['gha-min', 'gha-max', 'registry-max'].includes(profile)) throw new Error('Invalid cache profile');
+const owner = process.env.GITHUB_REPOSITORY_OWNER?.toLowerCase();
+if (!/^[a-z0-9-]+$/u.test(owner ?? '')) throw new Error('Missing repository owner');
+if (namespace !== undefined && !/^[a-z0-9-]{1,100}$/u.test(namespace)) throw new Error('Invalid cache namespace');
+const scope = namespace ?? role;
+const registry = `type=registry,ref=ghcr.io/${owner}/kubeclaw-${role}:build-cache-${scope}-amd64`;
+const from = profile === 'registry-max' ? registry : `type=gha,scope=${scope}`;
+const to = profile === 'registry-max' ? `${registry},mode=max,ignore-error=true` : `type=gha,scope=${scope},mode=${profile.slice(4)},ignore-error=true`;
+const strict = value => namespace === undefined ? value : value.replace('ignore-error=true', 'ignore-error=false');
+fs.appendFileSync(process.env.GITHUB_OUTPUT, `from=${from}\nto=${strict(to)}\nprofile=${profile}\n`);

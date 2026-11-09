@@ -1,0 +1,33 @@
+{{- if .Values.busterApiEgress }}
+{{- if ne .Values.agentRole "buster" }}
+{{- fail "busterApiEgress is restricted to the Buster role" }}
+{{- end }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "kubeclaw.fullname" . }}-kubernetes-api
+  labels:
+    {{- include "kubeclaw.labels" . | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: kubeclaw
+      app.kubernetes.io/instance: {{ .Release.Name }}
+      kubeclaw/role: buster
+  policyTypes: [Egress]
+  egress:
+    {{- range .Values.busterApiEgress }}
+    {{- if not (regexMatch "^[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+/32$" .cidr) }}
+    {{- fail "busterApiEgress requires individual API server IPv4 /32 addresses" }}
+    {{- end }}
+    {{- if not (has (int .port) (list 443 6443)) }}
+    {{- fail "busterApiEgress supports only API ports 443 and 6443" }}
+    {{- end }}
+    - to:
+        - ipBlock:
+            cidr: {{ .cidr | quote }}
+      ports:
+        - protocol: TCP
+          port: {{ .port }}
+    {{- end }}
+{{- end }}

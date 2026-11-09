@@ -1,8 +1,23 @@
 {{- if .Values.postgresql.enabled }}
+{{- $recovery := .Values.backup.recovery }}
+{{- if $recovery }}
+{{- if not (regexMatch "^[a-z0-9]([a-z0-9-]{0,18}[a-z0-9])?$" (required "backup.recovery.runId is required" $recovery.runId)) }}
+{{- fail "backup.recovery.runId must be a short DNS label" }}
+{{- end }}
+{{- range $key := list "verificationCronJobUid" "databaseProofCronJobUid" }}
+{{- if not (regexMatch "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$" (required (printf "backup.recovery.%s is required" $key) (index $recovery $key))) }}
+{{- fail (printf "backup.recovery.%s must be an existing CronJob UID" $key) }}
+{{- end }}
+{{- end }}
+{{- end }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: prism-backup-script
+  {{- if $recovery }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-3"
+  {{- end }}
 data:
   prism-backup.sh: |
 {{ .Files.Get "files/prism-backup.sh" | indent 4 }}
@@ -21,70 +36,31 @@ spec:
   failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
-      # Applies to scheduled jobs and manual jobs copied from this template.
-      # Keep a bounded diagnostic window without retaining failed pods forever.
-      ttlSecondsAfterFinished: 3600
-      backoffLimit: 0
-      activeDeadlineSeconds: {{ add $.Values.backup.maximumDurationSeconds 30 }}
-      template:
-        metadata:
-          labels: { app: prism-backup }
-          annotations:
-            checksum/backup-script: {{ $.Files.Get "files/prism-backup.sh" | sha256sum }}
-        spec:
-          serviceAccountName: prism-backup
-          imagePullSecrets: {{ toYaml $.Values.imagePullSecrets | nindent 12 }}
-          automountServiceAccountToken: false
-          # Immutable objects are mode 0600 and owned by Prism's UID 1000.
-          # The source mount stays read-only; fsGroup only owns the backup PVC.
-          securityContext: { runAsNonRoot: true, runAsUser: 1000, runAsGroup: 1000, fsGroup: 1000, seccompProfile: { type: RuntimeDefault } }
-          restartPolicy: Never
-          containers:
-            # Container names are Kubernetes merge keys. Preserve the original
-            # Helm identities so adoption updates the existing process instead
-            # of retaining the old backup/restore program as a second container.
-            - name: {{ if eq $mode "backup" }}proof{{ else if eq $mode "database-proof" }}restore-proof{{ else }}{{ $mode }}{{ end }}
-              image: {{ $.Values.postgresql.image | quote }}
-              command: ["bash", "/backup-program/prism-backup.sh", {{ $mode | quote }}]
-              # The legacy containers put their shell program in args. Explicit
-              # deletion is needed when it is absent from last-applied state.
-              args: null
-              env:
-                - { name: BACKUP_ROOT, value: /backups }
-                - { name: BACKUP_MAXIMUM_BYTES, value: {{ $.Values.backup.maximumBytes | quote }} }
-                - { name: BACKUP_MAXIMUM_RETAINED_BYTES, value: {{ $.Values.backup.maximumRetainedBytes | quote }} }
-                - { name: BACKUP_MAXIMUM_DURATION_SECONDS, value: {{ $.Values.backup.maximumDurationSeconds | quote }} }
-                {{- if eq $mode "backup" }}
-                - { name: ARTIFACT_ROOT, value: /artifacts }
-                - { name: PRISM_BACKUP_IMAGE, value: {{ include "prism.imageRef" $.Values.images.control | quote }} }
-                {{- end }}
-                {{- if ne $mode "verify" }}
-                - { name: PGCONNECT_TIMEOUT, value: "15" }
-                - { name: PGHOST, value: prism-postgresql }
-                - { name: PGDATABASE, value: prism }
-                - { name: PGUSER, value: postgres }
-                - name: PGPASSWORD
-                  valueFrom:
-                    secretKeyRef:
-                      name: {{ $.Values.postgresql.existingSecret }}
-                      key: password
-                {{- end }}
-              securityContext: { allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: ["ALL"] } }
-              resources: {{ toYaml $.Values.backup.resources | nindent 16 }}
-              volumeMounts:
-                - { name: backups, mountPath: /backups }
-                - { name: program, mountPath: /backup-program, readOnly: true }
-                {{- if eq $mode "backup" }}
-                - { name: artifacts, mountPath: /artifacts, readOnly: true }
-                {{- end }}
-          volumes:
-            - name: backups
-              persistentVolumeClaim: { claimName: prism-backups }
-            - name: program
-              configMap: { name: prism-backup-script }
-            {{- if eq $mode "backup" }}
-            - name: artifacts
-              persistentVolumeClaim: { claimName: prism-artifacts, readOnly: true }
-            {{- end }}
+{{ include "prism.backupJobSpec" (dict "Values" $.Values "Files" $.Files "mode" $mode) | indent 6 }}
+{{- end }}
+{{- if $recovery }}
+{{- range $run := list (dict "mode" "verify" "cronJob" "prism-backup-verification" "uid" $recovery.verificationCronJobUid "wave" "-2") (dict "mode" "database-proof" "cronJob" "prism-restore-proof" "uid" $recovery.databaseProofCronJobUid "wave" "-1") }}
+---
+# Explicit recovery for existing CronJobs only. Their controller records a
+# successful owned Job, including an adopted manual run, in lastSuccessfulTime.
+# Keep completion evidence until the controller observes it; TTL bounds retention.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ printf "%s-recovery-%s" $run.cronJob $recovery.runId }}
+  ownerReferences:
+    - apiVersion: batch/v1
+      kind: CronJob
+      name: {{ $run.cronJob }}
+      uid: {{ $run.uid | quote }}
+      controller: true
+      blockOwnerDeletion: false
+  annotations:
+    argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/sync-wave: {{ $run.wave | quote }}
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+spec:
+{{ include "prism.backupJobSpec" (dict "Values" $.Values "Files" $.Files "mode" $run.mode) | indent 2 }}
+{{- end }}
 {{- end }}
 {{- end }}

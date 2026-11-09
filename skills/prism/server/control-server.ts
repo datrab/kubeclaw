@@ -1,3 +1,6 @@
+import {startChat,chatHistory,requestChatDesignSet} from '../control/agent-chat.ts';
+import { projectDesignStatus } from '../control/project-status.ts';
+import { handleAgentReconciliation } from './agent-reconciliation-routes.ts';
 import { productAuthorityHandler } from './product-decisions.ts';
 import { assembleBaselineArchive, BASELINE_V2 } from '@kubeclaw/prism-contracts-v1/baseline-archive';
 import { handleAgentJobs } from './agent-job-routes.ts';
@@ -146,6 +149,7 @@ private runWorker(
       await pool.query("SELECT 1");
       return json(response, 200, { status: "ready" });
     }
+    if (await handleAgentReconciliation(request,response,url,{db:pool,spiffeEnabled,trustedNovaId:trustedNovaSpiffeId,readBody:body,readArtifact:id=>artifacts.get(id),writeArtifact:bytes=>artifacts.put(bytes)})) return;
     if (await handleInternalArtifact(request, response, url, {
       artifacts, spiffeEnabled, workerSecret, trustedWorkerSpiffeId, trustedControlSpiffeId, trustedPrismAgentSpiffeId,
     })) return;
@@ -224,7 +228,7 @@ private runWorker(
         await requestClient.query("INSERT INTO prism.design_request(id,project_id,architecture_artifact_id,architecture_digest,architecture_revision,request,status) VALUES($1,$2,$3,$4,$5,$6::jsonb,'active') ON CONFLICT(project_id,architecture_revision) DO UPDATE SET architecture_artifact_id=excluded.architecture_artifact_id,architecture_digest=excluded.architecture_digest,request=excluded.request,status='active'",[randomUUID(),project.rows[0]!.id,designRequest.architecture.artifactId,designRequest.architecture.contentDigest,designRequest.architecture.revision,JSON.stringify(designRequest)]);
       });
       if (!designRequest.approvalId){
-        const preferences=await startDesignRound(pool,{projectId:projectKey,subjectId:preferenceSubjectId,startKey:`dispatch:${key}`,architectureDigest:designRequest.architecture.contentDigest,architectureRevision:designRequest.architecture.revision});
+        const preferences=await startDesignRound(pool,{projectId:projectKey,subjectId:preferenceSubjectId,startKey:`dispatch:${key}`,architectureDigest:designRequest.architecture.contentDigest,architectureRevision:designRequest.architecture.revision},{resumeActive:true});
         const agent=await admitDesignAgent(pool,`${trustedControlSpiffeId}/prism/main/v2`,projectKey,preferences);
         return json(response,202,{result:{status:'waiting',projectId:project.rows[0]!.id},preferences,agent});
       }
@@ -240,6 +244,12 @@ private runWorker(
       });
     }
     if(await handleAgentJobs(request,response,url,{db:pool,spiffeEnabled,trustedAgentId:trustedPrismAgentSpiffeId,readBody:body}))return;
+    if (url.pathname === '/v1/agent/chat-design-set' && request.method === 'POST') {
+      if (!spiffeEnabled) throw new Error('Prism agent tools require SPIFFE worker trust');
+      authorizeProxiedSpiffePeer(request.headers,request.socket.remoteAddress,new Set([trustedPrismAgentSpiffeId]));
+      const input=await body(request) as {jobId:string;fence:string};
+      return json(response,202,await requestChatDesignSet(pool,input.jobId,input.fence));
+    }
     if (url.pathname === "/v1/agent/design-sets" && request.method === "POST") {
       if (!spiffeEnabled) throw new Error("Prism agent tools require SPIFFE worker trust");
       authorizeProxiedSpiffePeer(request.headers,request.socket.remoteAddress,new Set([trustedPrismAgentSpiffeId]));
@@ -269,7 +279,10 @@ private runWorker(
       if(!input.projectId||!input.documentId||!input.instruction||!Number.isSafeInteger(input.expectedRevision))throw new Error("complete Prism revision input is required");
       const owner=await pool.query<{external_id:string}>("SELECT p.external_id FROM prism.design_document d JOIN prism.project p ON p.id=d.project_id WHERE d.id=$1",[input.documentId]);
       if(owner.rows[0]?.external_id!==input.projectId)throw new Error("document does not belong to the Prism project");
-      const generation = await requirePreferenceGeneration(pool,input.generationId,input.projectId,{operation:"revise",documentId:input.documentId,expectedRevision:input.expectedRevision});
+      const job=await agentJob(pool,input.jobId);
+      // Chat uses the same fenced document transaction, but never creates preference evidence.
+      if(job.operation==='chat' && (job.request.documentId!==input.documentId || job.request.projectId!==input.projectId || job.request.expectedRevision!==input.expectedRevision || job.request.instruction!==input.instruction || input.generationId!==job.id))throw new Error('Chat revision does not match its admitted target');
+      const generation = job.operation==='chat' ? {generationId:job.id} : await requirePreferenceGeneration(pool,input.generationId,input.projectId,{operation:"revise",documentId:input.documentId,expectedRevision:input.expectedRevision});
       const current=await repository.revision(input.documentId,input.expectedRevision!);
       const document=validatePrism<PrismDocument>("designDocument",input.document);
       if(document.meta.revision!==input.expectedRevision!+1)throw new Error("Prism agent must increment the document revision exactly once");
@@ -277,6 +290,14 @@ private runWorker(
       return json(response,200,{status:"updated",document:updated});
     }
     const actor = this.authenticated(request);
+    const chat=/^\/v1\/documents\/([0-9a-f-]+)\/chat$/.exec(url.pathname);
+    if(chat && request.method==='GET')return json(response,200,await chatHistory(pool,chat[1]!,userKey(actor.user)));
+    if(chat && request.method==='POST'){
+      const input=await body(request) as {message:string};
+      return json(response,202,await startChat(pool,chat[1]!,userKey(actor.user),directionIdempotencyKey(request.headers['idempotency-key']),input.message));
+    }
+    const projectStatus=/^\/v1\/projects\/([0-9a-f-]+)\/status$/.exec(url.pathname);
+    if(projectStatus && request.method==='GET')return json(response,200,await projectDesignStatus(pool,projectStatus[1]!));
     const agentStatus=/^\/v1\/agent-jobs\/([0-9a-f-]+)$/.exec(url.pathname);
     if(agentStatus && request.method==='GET')return json(response,200,agentReceipt(await agentJob(pool,agentStatus[1]!)));
     if (url.pathname === "/v1/projects" && request.method === "GET") {
@@ -381,9 +402,9 @@ private runWorker(
       url.pathname,
     );
     if (selectDirection && request.method === "POST") {
-      const input = (await body(request)) as { documentId?: string };
+      const input = (await body(request)) as { documentId?: string;expectedRevision?:number };
       if (!input.documentId) throw new Error("documentId is required");
-      const result = await decideDirection(pool, userKey(actor.user), selectDirection[1]!, directionIdempotencyKey(request.headers["idempotency-key"]), {action: "selected", documentId: input.documentId});
+      const result = await decideDirection(pool, userKey(actor.user), selectDirection[1]!, directionIdempotencyKey(request.headers["idempotency-key"]), {action: "selected", documentId: input.documentId,...(input.expectedRevision===undefined?{}:{expectedRevision:input.expectedRevision})});
       return json(response, 200, result);
     }
     const current = /^\/v1\/documents\/([0-9a-f-]+)$/.exec(url.pathname);

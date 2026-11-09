@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-readonly TRIVY_VERSION="0.74.0"
-readonly TRIVY_AMD64_SHA256="2ae6fe3ee734b7fdf11335663e18c75ea12dccc76062f09f164a3b0f8be4371a"
-readonly TRIVY_ARM64_SHA256="b94ce1976bbf3c15b514b605ee88be7c6d94a29be2302847ff01cb794d47aad5"
+readonly TRIVY_VERSION="0.76.1"
+readonly TRIVY_AMD64_SHA256="c7cbe3137fb8a48a17574bede3dd6beb16742d1e9772929940fc90082c39d9c0"
+readonly TRIVY_ARM64_SHA256="e174dff2a6dba5e3ae41f8d0537a6324405bd08132497340304c6b20e0f16a1f"
 
 usage() {
   cat <<'EOF'
@@ -108,6 +108,13 @@ for image in "$@"; do
   fi
 done
 
+# Authenticate the unchanged pinned upstream before evaluating its consumers.
+if node --input-type=module -e 'import {usesOpenclaw} from "./scripts/updates/upstream-security-policy.mjs"; process.exit(process.argv.slice(1).some(usesOpenclaw)?0:1)' "$@"; then
+  upstream_reference="$(node --input-type=module -e 'import {openclawReference} from "./scripts/updates/upstream-security-policy.mjs"; console.log(openclawReference())')"
+  # This reference cannot match usesOpenclaw, so recursion is bounded to one level.
+  bash "${BASH_SOURCE[0]}" "$upstream_reference"
+fi
+
 trivy_executable="$(install_trivy "$(uname -m)")"
 installed_version="$($trivy_executable --version | awk '/^Version:/ { print $2; exit }')"
 if [[ $installed_version != "$TRIVY_VERSION" ]]; then
@@ -124,21 +131,41 @@ mkdir -p "$database_cache"
 scan_failed=0
 for image in "$@"; do
   digest="${image##*@sha256:}"
-  report="$report_dir/${digest}.txt"
+  report="$report_dir/${digest}.json"
+  table="$report_dir/${digest}.txt"
+  diagnostics="$report_dir/${digest}.stderr.log"
+  # Do not let an earlier successful scan hide a failed retry.
+  rm -f -- "$report" "$table" "$diagnostics"
   echo "Scanning $image with Trivy $TRIVY_VERSION"
+  scanner_exit=0
   if "$trivy_executable" image \
     --cache-dir "$database_cache" \
+    --db-repository "${TRIVY_DB_REPOSITORY:-ghcr.io/aquasecurity/trivy-db:2}" \
+    --java-db-repository "${TRIVY_JAVA_DB_REPOSITORY:-ghcr.io/aquasecurity/trivy-java-db:1}" \
     --scanners vuln \
     --severity HIGH,CRITICAL \
     --exit-code 1 \
-    --format table \
+    --format json \
     --output "$report" \
-    "$image"; then
+    "$image" 2> >(tee "$diagnostics" >&2); then
     :
   else
-    scan_failed=1
+    scanner_exit=$?
   fi
-  cat "$report"
+  if [[ -s "$report" ]]; then
+    if "$trivy_executable" convert --format table --output "$table" "$report"; then
+      cat "$table"
+    else
+      scan_failed=2
+    fi
+  else
+    echo "Scanner produced no report for $image" >&2
+    scan_failed=2
+  fi
+  # Keep the full unfiltered report; only the gate decision exempts unfixed findings.
+  gate_exit=0
+  node scripts/updates/security-gate.mjs "$image" "$report_dir" "$scanner_exit" || gate_exit=$?
+  if (( gate_exit > scan_failed )); then scan_failed=$gate_exit; fi
   echo "Saved report: $report"
 done
 

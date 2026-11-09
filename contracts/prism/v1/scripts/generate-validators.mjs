@@ -68,7 +68,7 @@ const generated = standaloneCode(ajv, validators)
   )
   .replace(
     /const (\w+) = require\("ajv-formats\/dist\/formats"\)\.fullFormats\["date-time"\];/u,
-    'import formatsModule from "ajv-formats/dist/formats.js";const $1 = formatsModule.fullFormats["date-time"];',
+    'import { fullFormats } from "ajv-formats/dist/formats.js";const $1 = fullFormats["date-time"];',
   );
 if (/\b(?:eval|Function)\s*\(/u.test(generated) || /\brequire\s*\(/u.test(generated)) {
   throw new Error("generated Prism validators are not browser CSP-safe");

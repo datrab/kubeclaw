@@ -9,7 +9,8 @@ export class AgentProcess implements WorkerAttemptOperation<WorkerAttemptEnvelop
   private streamsClosed=false;
   private readonly executable:string;
   private readonly args:string[];
-  constructor(executable:string,args:string[]) {this.executable=executable;this.args=args;}
+  private readonly onStdout:((chunk:Buffer)=>void)|undefined;
+  constructor(executable:string,args:string[],onStdout?:(chunk:Buffer)=>void) {this.executable=executable;this.args=args;this.onStdout=onStdout;}
   prepare(_limits:WorkerAttemptLimitsV2){return undefined;}
   execute(context:WorkerAttemptContext<WorkerAttemptEnvelopeV2>) {
     if(this.child)throw new Error('Prism external action has already been started');
@@ -17,7 +18,7 @@ export class AgentProcess implements WorkerAttemptOperation<WorkerAttemptEnvelop
     const child=spawn(this.executable,this.args,{stdio:['ignore','pipe','pipe'],detached:true});
     this.child=child;
     this.closed=new Promise(resolve=>child.once('close',()=>{this.streamsClosed=true;resolve();}));
-    child.stdout!.on('data',(chunk:Buffer)=>context.log('stdout',chunk));
+    child.stdout!.on('data',(chunk:Buffer)=>{context.log('stdout',chunk);this.onStdout?.(chunk);});
     child.stderr!.on('data',(chunk:Buffer)=>context.log('stderr',chunk));
     return new Promise<{summary:string;specialistResult:{schemaId:string;schemaDigest:string;values:{localProcessClosed:boolean}};evidence:[];exitCode:number|null;signal:string|null}>((resolve,reject)=>{
       child.once('error',reject);

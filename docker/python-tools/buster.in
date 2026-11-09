@@ -2,4 +2,4 @@
 ruff==0.15.22
 mypy==2.3.0
 pip-audit==2.10.1
-semgrep==1.170.1
+semgrep==1.183.0

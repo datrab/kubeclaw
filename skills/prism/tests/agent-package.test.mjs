@@ -10,13 +10,17 @@ test('actual agent image COPY context imports the real bridge, prompt, WorkerCor
  try{
   const dockerfile=await readFile('docker/Dockerfile.prism-agent','utf8');
   const line=dockerfile.split('\n').find(value=>value.startsWith('COPY skills/prism/server/agent-bridge.mjs '));assert.ok(line);
-  const sources=line.split(/\s+/).slice(1,-1);assert.ok(sources.includes('skills/prism/server/preference-prompt.mjs'));
+  const sources=line.split(/\s+/).slice(1,-1);assert.ok(sources.includes('skills/prism/server/preference-prompt.mjs'));assert.ok(sources.includes('skills/prism/server/chat-reply.mjs'));
   for(const source of sources)await cp(source,join(target,basename(source)));
   await mkdir(join(target,'node_modules/@kubeclaw'),{recursive:true});
   await mkdir(join(target,'skills/worker'),{recursive:true});await cp('skills/worker/core',join(target,'skills/worker/core'),{recursive:true});
   await mkdir(join(target,'contracts/pipeline-worker-core'),{recursive:true});await cp('contracts/pipeline-worker-core/v1',join(target,'contracts/pipeline-worker-core/v1'),{recursive:true});
+  await mkdir(join(target,'skills/common'),{recursive:true});await cp('skills/common/plugin-runtime',join(target,'skills/common/plugin-runtime'),{recursive:true});
+  await symlink('../../skills/common/plugin-runtime/foundation',join(target,'node_modules/@kubeclaw/plugin-foundation'));
+  await symlink('../../skills/common/plugin-runtime/sdk',join(target,'node_modules/@kubeclaw/plugin-sdk'));
   await symlink('../../skills/worker/core',join(target,'node_modules/@kubeclaw/worker-core'));
   await symlink('../../contracts/pipeline-worker-core/v1',join(target,'node_modules/@kubeclaw/pipeline-worker-core-contract'));
+  for(const name of ['pipeline-observability','pipeline-test-gate']){await mkdir(join(target,'contracts',name),{recursive:true});await cp(`contracts/${name}/v1`,join(target,'contracts',name,'v1'),{recursive:true});await symlink(`../../contracts/${name}/v1`,join(target,`node_modules/@kubeclaw/${name}-contract`));}
   const installed=new Set();
   const dependency=async(name)=>{
    if(installed.has(name))return;installed.add(name);

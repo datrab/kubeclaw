@@ -1604,3 +1604,23 @@ security verification for that exact cluster. See
 - Helm history, Pod image IDs, events, and smoke output.
 - Failed output and the successful retry as separate records.
 - Independent access owner and the last successful access check.
+
+## Buster startup and API compatibility
+
+Pinned Buster images can fail before opening the plan API when their restricted
+supervisor recursively changes ownership of builder-owned private result
+directories. `busterRuntimeStartupFix: true` mounts a chart-owned launcher that
+changes only that exact handoff in a temporary copy of the image entrypoint.
+Existing job stores and run archives are never traversed or rewritten. Already
+corrected entrypoints are accepted; unknown ownership contracts fail closed.
+The AX41 overlay enables this compatibility fix without rebuilding images.
+
+`busterApiEgress` lists individual API service/backend IPv4 addresses and ports.
+The AX41 entries cover the service on 443 and its node backend on 6443, because
+network policy can evaluate traffic after Service DNAT. The policy selects only
+the Buster release and its namespace controller, retains their existing RBAC,
+and does not grant other nodes, ports, or workloads access.
+
+See [persistent rootless BuildKit storage](buster-buildkit-storage.md) for cache
+ownership and recovery boundaries. These source settings do not authorize a live
+operation or establish that the selected release provides the same contracts.

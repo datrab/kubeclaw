@@ -1,0 +1,62 @@
+{
+  "observedAt": "2026-10-31T21:15:54Z",
+  "scope": "First live Argo deployment; no private document content, credentials or household identifiers recorded.",
+  "familyclawRevision": "4666d431aed675c2896f5b33d4b409dd90004bcc",
+  "bootstrapRevision": "cf02816661b07550c7e96b943f8e2099ecba53ad",
+  "argocd": {
+    "familyclaw": {"sync": "Synced", "health": "Healthy", "operation": "Succeeded"},
+    "familyclaw-initialization": {"sync": "Synced", "health": "Healthy"},
+    "familyclaw-repository": {"sync": "Synced", "health": "Healthy"},
+    "householdAutomaticSync": false,
+    "householdPruned": false
+  },
+  "workloads": {
+    "core": {"desired": 1, "ready": 1, "restarts": 0},
+    "database": {"desired": 1, "ready": 1, "restarts": 0},
+    "firefly": {"desired": 1, "ready": 1, "restarts": 0},
+    "openclaw": {"desired": 1, "ready": 1, "restarts": 0},
+    "migration": {"succeeded": 1, "failed": 0},
+    "boundClaims": 4
+  },
+  "privateInitialization": {
+    "originalObjectsPreservedOnFinalRun": 8,
+    "originalObjectsRecreatedOnFinalRun": 0,
+    "immutableSeedPreserved": true,
+    "runtimeApiConfigurationCreatedSeparately": true,
+    "databaseTls": "verify-full"
+  },
+  "paperless": {
+    "existingInstallationReused": true,
+    "authenticatedFromCoreHttpStatus": 200,
+    "visibleDocuments": 120,
+    "readerIsStaff": false,
+    "readerIsSuperuser": false,
+    "readerPasswordLoginEnabled": false,
+    "readerPermissions": ["view_correspondent", "view_customfield", "view_document", "view_documenttype", "view_storagepath", "view_tag"],
+    "futureDocumentViewWorkflowEnabled": true,
+    "searchIndexRebuiltAsPaperlessServiceUser": true,
+    "reindexExitCode": 0,
+    "mcpSearchSucceeded": true,
+    "mcpSearchMatches": 11,
+    "mcpExactRevisionReadSucceeded": true,
+    "mcpOriginalReadSucceeded": true,
+    "originalContentType": "application/pdf",
+    "originalBytes": 75900
+  },
+  "mcp": {
+    "unauthenticatedHttpStatus": 401,
+    "authenticatedHttpStatus": 200,
+    "openclawToCoreHttpStatus": 200,
+    "nativeOpenclawProbeExitCode": 0,
+    "nativeTools": ["familyclaw__documents_get", "familyclaw__documents_original", "familyclaw__documents_search", "familyclaw__reviews_list"]
+  },
+  "validation": {
+    "familyclawInitializerAndChartTestsPassed": 20,
+    "bootstrapPermissionSyncAndProjectionTestsPassed": 5,
+    "productionHelmLint": "passed",
+    "bootstrapKustomizeRender": "passed",
+    "deploymentTruthCheck": "passed"
+  },
+  "remainingOnboarding": ["Native model/subscription login", "Optional private chat/channel enrollment", "Optional authenticated user ingress"],
+  "notClaimed": ["Model-driven household conversation", "Future document workflow exercised with a new upload", "Coordinated backup/restore acceptance"]
+}

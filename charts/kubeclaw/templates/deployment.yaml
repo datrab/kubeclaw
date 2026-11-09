@@ -25,7 +25,11 @@ spec:
         {{- end }}
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap-gateway.yaml") . | sha256sum }}
+        checksum/ops-mcp-client: {{ include (print $.Template.BasePath "/ops-mcp-client.yaml") . | sha256sum }}
         checksum/swarm-config: {{ include (print $.Template.BasePath "/configmap-swarm-config.yaml") . | sha256sum }}
+        {{- if and (eq .Values.agentRole "buster") .Values.busterRuntimeStartupFix }}
+        checksum/buster-runtime-startup: {{ include (print $.Template.BasePath "/configmap-buster-startup.yaml") . | sha256sum }}
+        {{- end }}
         {{- if .Values.workerTrust.spiffe.enabled }}
         checksum/worker-trust: {{ index ((include (print $.Template.BasePath "/configmap-worker-trust.yaml") .) | fromYaml).data "envoy.yaml" | sha256sum }}
         {{- end }}
@@ -47,7 +51,7 @@ spec:
 
       {{- if .Values.serviceAccount.create }}
       serviceAccountName: {{ include "kubeclaw.fullname" . }}
-      automountServiceAccountToken: {{ .Values.serviceAccount.automount | default false }}
+      automountServiceAccountToken: false
       {{- else }}
       automountServiceAccountToken: false
       {{- end }}
@@ -284,6 +288,7 @@ spec:
               NODE
               fi
               echo "==> Migrating OpenClaw persistent state before setup commands"
+              node /init-config/sync-ops-mcp-config.mjs /home/node/.openclaw/openclaw.json /init-config/openclaw.json
               exec node /app/openclaw.mjs doctor --fix --non-interactive
           env:
             - name: HOME
@@ -324,6 +329,9 @@ spec:
                 - ALL
           resources: {{- toYaml .Values.gateway.startupDoctor.resources | nindent 12 }}
           volumeMounts:
+            - name: init-config
+              mountPath: /init-config
+              readOnly: true
             - name: config
               mountPath: /home/node/.openclaw
             - name: workspace
@@ -613,6 +621,7 @@ spec:
               fi
 
               echo "==> 4a. OpenClaw Plugin Cache"
+              node /init-config/sync-ops-mcp-config.mjs /config/openclaw.json /init-config/openclaw.json
               if [ -d /opt/openclaw-plugin-home ]; then
                 IMAGE_PLUGIN_CACHE_VERSION=""
                 CONFIG_PLUGIN_CACHE_VERSION=""
@@ -1331,11 +1340,10 @@ spec:
               value: {{ .Values.agentRole | default "default" | quote }}
             - name: KUBECLAW_CONTAINER_ROLE
               value: "agent"
-            {{- if .Values.busterNamespaceBroker.leaseClient.verificationRead.enabled }}
-            - name: TAILSCALE_OPERATOR_NAMESPACE
-              value: {{ .Values.busterNamespaceBroker.leaseClient.verificationRead.tailscaleOperatorNamespace | quote }}
-            - name: TAILSCALE_OAUTH_SECRET_NAME
-              value: {{ .Values.busterNamespaceBroker.leaseClient.verificationRead.tailscaleOAuthSecretName | quote }}
+            {{- if .Values.opsMcp.enabled }}
+            - {name: OPS_MCP_URL, value: {{ .Values.opsMcp.url | quote }}}
+            - {name: OPS_MCP_TOKEN_FILE, value: /var/run/ops-mcp-client/token/token}
+            - {name: OPS_MCP_CA_FILE, value: /var/run/ops-mcp-client/ca/ca.crt}
             {{- end }}
             - name: KUBECLAW_CODE_BUNDLE_ENABLED
               value: {{ .Values.codeBundle.enabled | default false | quote }}
@@ -1502,6 +1510,11 @@ spec:
               mountPath: /tmp
             - name: tmp
               mountPath: /home/node/.cache
+            {{- if .Values.opsMcp.enabled }}
+            - {name: ops-mcp-token, mountPath: /var/run/ops-mcp-client/token, readOnly: true}
+            - {name: ops-mcp-ca, mountPath: /var/run/ops-mcp-client/ca, readOnly: true}
+            - {name: ops-mcp-client, mountPath: /opt/ops-mcp-client, readOnly: true}
+            {{- end }}
             {{- with .Values.extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
@@ -1642,6 +1655,15 @@ spec:
       # VOLUMES
       # ---------------------------------------------------------------
       volumes:
+        {{- if .Values.opsMcp.enabled }}
+        - name: ops-mcp-token
+          secret: {secretName: {{ required "opsMcp.tokenSecret is required" .Values.opsMcp.tokenSecret }}, defaultMode: 0440}
+        - name: ops-mcp-ca
+          configMap: {name: {{ .Values.opsMcp.caConfigMap }}}
+        - name: ops-mcp-client
+          configMap: {name: {{ include "kubeclaw.fullname" . }}-ops-mcp-client}
+        {{- end }}
+
         {{- include "kubeclaw.demoReadyClientVolumes" . | nindent 8 }}
         {{- range $name, $client := dict "registry" .Values.runtimeInfrastructure.registry "dockerHubMirror" .Values.runtimeInfrastructure.dockerHubMirror }}
         {{- if $client.caSecretName }}
@@ -1662,6 +1684,11 @@ spec:
           {{- end }}
         - name: runtime-config
           emptyDir: {}
+        {{- if and (eq .Values.agentRole "buster") .Values.busterRuntimeStartupFix }}
+        - name: buster-runtime-startup
+          configMap:
+            name: {{ include "kubeclaw.fullname" . }}-runtime-startup
+        {{- end }}
         - name: workspace
           {{- if .Values.persistence.workspace.enabled }}
           persistentVolumeClaim:

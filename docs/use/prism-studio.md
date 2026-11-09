@@ -3118,3 +3118,16 @@ It also records the non-Home-view canvas fix. Those changes have their own
 source and release boundary: do not assume an older installed Studio or the
 pinned local sample above contains them. The record does not establish live
 Samsung acceptance or authorize publication of a design baseline.
+
+## Projects awaiting their first design
+
+Project names in the chooser are links even before a design exists. Open a
+project to distinguish waiting, active generation and a stopped attempt needing
+Nova’s attention. Refresh reads the existing request; it never starts another
+design. Use **Back to projects** to return to the list. Once a design is present,
+the project link opens its document. Merely opening a project does not authorize
+reconciliation or retry.
+
+The latest merged operator guidance additionally records persisted provider login,
+preview/mobile editing and fenced job reconciliation. Keep those release-specific
+contracts with their [immutable upstream operator guide](https://github.com/datrab/kubeclaw/blob/218343dd9101713c7892493ba856eb1aaba0809f/docs/operations/prism-operator-guide.md); do not treat historical captures as new live acceptance.

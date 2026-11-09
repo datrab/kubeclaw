@@ -19,11 +19,12 @@ export async function submitRevision(client:RevisionClient,pending:PendingRevisi
  if(pending.jobId && receipt.jobId!==pending.jobId)throw new Error('Prism revision job identity changed; original request retained');
  const accepted={...pending,jobId:receipt.jobId};client.storage.setItem(key(client),JSON.stringify(accepted));return accepted;
 }
-export async function waitForRevision(client:RevisionClient,pending:PendingRevision){
+export async function waitForRevision(client:RevisionClient,pending:PendingRevision,onProgress?:(status:string)=>void){
  if(!pending.jobId)throw new Error('Persisted Prism revision job identity is required');
  for(let attempt=0;attempt<300;attempt++){
   const response=await fetch(new URL(`/v1/agent-jobs/${encodeURIComponent(pending.jobId)}`,client.origin));
   const receipt=await roundResponse<{status:string;result:PrismDocument|null}>(response,`Reconcile Prism revision job ${pending.jobId}`,value=>responseObject(value)&&typeof value.status==='string','an agent job status');
+  onProgress?.(receipt.status);
   if(receipt.status==='completed'){
    if(!receipt.result?.meta || receipt.result.meta.revision!==pending.baseRevision+1)throw new Error('Prism revision receipt has an invalid document; request retained');
    client.storage.removeItem(key(client));return receipt.result;

@@ -37,10 +37,27 @@ function fixture(run) {
     const buster = path.join(root, 'registry.yaml'), prism = path.join(root, 'native.yaml');
     fs.writeFileSync(buster, yaml.dump({ runtimeInfrastructure: { registry: { endpoint: 'https://registry.example.test', transport: 'https', authSecretName: 'registry-test' } } }));
     fs.writeFileSync(prism, yaml.dump({ worker: { native: { nodeName: 'native-render-test', namespace: 'agents', policyDigest: nativePoolPolicy(policy, 'prism').policyDigest } } }));
-    const env = { ...process.env, CODE_BUNDLE_GITHUB_REPOSITORY: 'datrab/kubeclaw', BUSTER_VALUES_FILE: buster, PRISM_VALUES_FILE: prism };
+    // Synthetic all-role releases must not inherit a production Buster-only baseline.
+    const env = { ...process.env, GITOPS_RETAINED_BASELINE: '', CODE_BUNDLE_GITHUB_REPOSITORY: 'datrab/kubeclaw', BUSTER_VALUES_FILE: buster, PRISM_VALUES_FILE: prism };
     run({ root, git, commit, sourceCommit, images, env });
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 }
+test('selected nested image digests are readable with the system awk', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'selected-digest-'));
+  try {
+    const file = path.join(root, 'values.yaml');
+    const expected = `sha256:${'a'.repeat(64)}`;
+    fs.writeFileSync(file, yaml.dump({ images: { control: { digest: expected }, studio: { digest: `sha256:${'b'.repeat(64)}` } } }));
+    const script = fs.readFileSync(path.join(source, 'scripts/deploy.sh'), 'utf8');
+    const start = script.indexOf('yaml_get_nested_section_key() {');
+    const trimStart = script.indexOf('yaml_trim_scalar() {');
+    const trimEnd = script.indexOf('\n}', trimStart) + 2;
+    const end = script.indexOf('\n}', start) + 2;
+    const output = execFileSync('bash', ['-c', `${script.slice(trimStart, trimEnd)}\n${script.slice(start, end)}\nyaml_get_nested_section_key "$1" images control digest`, 'test', file], { encoding: 'utf8' });
+    assert.equal(output.trim(), expected);
+  } finally { fs.rmSync(root, { recursive: true, force: true }); }
+});
+
 const directory = 'releases/gitops/reviewed-test';
 const url = 'https://github.com/datrab/kubeclaw.git';
 
@@ -163,7 +180,8 @@ test('activation preflight requires Secrets, sole ownership, native binding and 
   };
   preflightGitOps(root, result, 'argocd', run);
   assert.ok(calls.some(call => call[0] === process.execPath && call[1].endsWith('/scripts/native-worker-node-preflight.mjs')));
-  assert.ok(calls.some(call => call[2] === 'namespace' && call[3] === 'tailscale'));
+  assert.ok(calls.some(call => call[2] === 'namespace' && call[3] === 'tailscale'), 'legacy grant retirement still targets its existing operator namespace');
+  assert.ok(!calls.some(call => call[2] === 'secret' && call[3] === 'operator-oauth'), 'Nova no longer receives or preflights the operator OAuth Secret');
   cases.rootOwner = { metadata: { labels: {} } };
   assert.throws(() => preflightGitOps(root, result, 'argocd', run), /BOOTSTRAP_OWNER_CONFLICT/); cases.rootOwner = null;
   cases.releases = [{ name: 'agent-buster' }];

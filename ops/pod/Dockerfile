@@ -1,6 +1,6 @@
 # Version defaults are generated from versions.json; run npm run versions:sync.
 ARG OPS_NODE_BASE=node:24.21.0-alpine3.24@sha256:be80f76cf40ec8e42b9bec49f60a55e0660f30af58d3e5a25530785b30ea67e2
-ARG OPS_TOOLS_GO_BASE=golang:1.26.9-alpine3.24@sha256:cdfd4fe2da6b225d8b40c6b7a105736e548e83ff56d5d8f9394446eeb5eb84e0
+ARG OPS_TOOLS_GO_BASE=golang:1.26.10-alpine3.24@sha256:5cb67f19c5e7994dcb80c074f7cfca8aeeada45bbdca035f73df269cefdcce61
 
 FROM ${OPS_TOOLS_GO_BASE} AS gh-build
 ARG TARGETARCH=amd64
@@ -61,7 +61,7 @@ FROM ${OPS_NODE_BASE}
 ARG OPS_NPM_TAR_VERSION=7.5.21
 ARG OPS_NPM_BRACE_VERSION=5.0.12
 ARG OPS_NPM_HTTP_CACHE_VERSION=4.3.0
-ARG OPS_NPM_UNDICI_VERSION=6.28.1
+ARG OPS_NPM_UNDICI_VERSION=6.29.1
 ARG OPS_NPM_IP_VERSION=10.3.1
 RUN apk upgrade --no-cache \
     && apk add --no-cache bash ca-certificates git openssh-client jq curl python3 tini ripgrep netcat-openbsd \

@@ -119,7 +119,7 @@ AGENT_HELM_TIMEOUT="${AGENT_HELM_TIMEOUT:-45m}"
 AGENT_ROLLOUT_TIMEOUT="${AGENT_ROLLOUT_TIMEOUT:-45m}"
 CODE_BUNDLE_RELEASE_TAG="${CODE_BUNDLE_RELEASE_TAG:-agent-code-bundles}"
 CODE_BUNDLE_PREFLIGHT_SKIP="${CODE_BUNDLE_PREFLIGHT_SKIP:-false}"
-BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE="${BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE:-moby/buildkit:v0.26.2-rootless@sha256:0ffa2fcf6b8757c47d569b3ef0f03f9d5eb3b9ff5ce68d858f994f89b749da0c}"
+BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE="${BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE:-moby/buildkit:v0.34.1-rootless@sha256:f68752a5a94acfcdad2d07867b7075601a421638e17fc5f28efc1c814d0c4f89}"
 BUILDKIT_ROOTLESS_PREFLIGHT_TIMEOUT="${BUILDKIT_ROOTLESS_PREFLIGHT_TIMEOUT:-180s}"
 
 export NAMESPACE
@@ -419,18 +419,18 @@ yaml_get_nested_section_key() {
       in_subsection = 0
     }
 
-    in_section && $0 ~ ("^[[:space:]]{2}" subsection ":[[:space:]]*$") {
+    in_section && $0 ~ ("^  " subsection ":[[:space:]]*$") {
       in_subsection = 1
       next
     }
 
-    in_section && in_subsection && $0 ~ /^[[:space:]]{2}[A-Za-z0-9_-]+:[[:space:]]*$/ && $0 !~ ("^[[:space:]]{2}" subsection ":[[:space:]]*$") {
+    in_section && in_subsection && $0 ~ /^  [A-Za-z0-9_-]+:[[:space:]]*$/ && $0 !~ ("^  " subsection ":[[:space:]]*$") {
       in_subsection = 0
     }
 
-    in_section && in_subsection && $0 ~ ("^[[:space:]]{4}" key ":[[:space:]]*") {
+    in_section && in_subsection && $0 ~ ("^    " key ":[[:space:]]*") {
       value = $0
-      sub("^[[:space:]]{4}" key ":[[:space:]]*", "", value)
+      sub("^    " key ":[[:space:]]*", "", value)
       print value
       exit
     }
@@ -531,7 +531,8 @@ default_bundle_archive_url() {
 }
 
 default_bundle_expected_commit() {
-  printf '%s\n' "$SELECTED_RUNTIME_COMMIT"
+  local variable="SELECTED_${1^^}_COMMIT"
+  printf '%s\n' "${!variable}"
 }
 
 bundle_values_field() {
@@ -539,12 +540,13 @@ bundle_values_field() {
 }
 
 require_selected_runtime() {
-  SELECTED_RUNTIME_COMMIT="$(node "$REPO_DIR/scripts/updates/deployment-release.mjs" verify "$REPO_DIR" runtime)" || return 1
-  local role expected contract
+  local role expected contract selected
   for role in nova buster prism; do
+    selected="$(node "$REPO_DIR/scripts/updates/deployment-release.mjs" verify "$REPO_DIR" runtime "$role")" || return 1
+    printf -v "SELECTED_${role^^}_COMMIT" '%s' "$selected"
     expected="$(bundle_env_for_role "$role" expected_commit)"
     contract="$(bundle_env_for_role "$role" contract_version)"
-    [[ -z $expected || $expected == "$SELECTED_RUNTIME_COMMIT" ]] || { err "${role} bundle must match selected runtime commit ${SELECTED_RUNTIME_COMMIT}"; return 1; }
+    [[ -z $expected || $expected == "$selected" ]] || { err "${role} bundle must match selected runtime commit ${selected}"; return 1; }
     [[ $contract == v2 ]] || { err "${role} bundle contract must be v2"; return 1; }
   done
 }
@@ -1349,7 +1351,7 @@ deploy_agent() {
     fi
 
     if [[ -z $bundle_expected_commit ]]; then
-      if ! bundle_expected_commit="$(default_bundle_expected_commit)"; then
+      if ! bundle_expected_commit="$(default_bundle_expected_commit "$role")"; then
         err "${role} code deploy requires $(tr '[:lower:]' '[:upper:]' <<<"$role")_CODE_BUNDLE_EXPECTED_COMMIT matching the selected runtime receipt"
         return 1
       fi
@@ -1687,7 +1689,7 @@ cmd_prism() {
     fi
   fi
   if [[ -z $prism_bundle_expected_commit ]]; then
-    if ! prism_bundle_expected_commit="$(default_bundle_expected_commit)"; then
+    if ! prism_bundle_expected_commit="$(default_bundle_expected_commit prism)"; then
       err "Prism deploy requires PRISM_CODE_BUNDLE_EXPECTED_COMMIT matching the selected runtime receipt"
       return 1
     fi

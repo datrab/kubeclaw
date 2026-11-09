@@ -216,3 +216,37 @@ test('SQL proof uses only its newly created DB and never drops a failed creation
     assert(!error.stdout.includes('PASSED')); return error.code !== 0;
   });
 });
+
+test('recovery replays the existing checks sequentially with CronJob ownership and unchanged safeguards', async () => {
+  const { stdout } = await execute(process.env.HELM_BIN ?? 'helm', ['template', 'prism', 'charts/prism', '-n', 'default', '-f', 'charts/prism/ci-values.yaml',
+    '--set', 'backup.recovery.runId=smoke',
+    '--set', 'backup.recovery.verificationCronJobUid=11111111-1111-1111-1111-111111111111',
+    '--set', 'backup.recovery.databaseProofCronJobUid=22222222-2222-2222-2222-222222222222']);
+  const docs = loadAll(stdout) as any[];
+  const runs = docs.filter(doc => doc?.kind === 'Job' && doc.metadata.name.includes('-recovery-'));
+  assert.equal(runs.length, 2, 'recovery never creates a new backup');
+  const scriptConfig = docs.find(doc => doc?.kind === 'ConfigMap' && doc.metadata.name === 'prism-backup-script');
+  assert.equal(scriptConfig.metadata.annotations['argocd.argoproj.io/sync-wave'], '-3');
+  for (const [index, cronName, uid] of [[0, 'prism-backup-verification', '11111111-1111-1111-1111-111111111111'], [1, 'prism-restore-proof', '22222222-2222-2222-2222-222222222222']] as const) {
+    const run = runs[index];
+    const cron = docs.find(doc => doc?.kind === 'CronJob' && doc.metadata.name === cronName);
+    assert.equal(run.metadata.name, `${cronName}-recovery-smoke`);
+    assert.deepEqual(run.metadata.ownerReferences, [{ apiVersion: 'batch/v1', kind: 'CronJob', name: cronName, uid, controller: true, blockOwnerDeletion: false }]);
+    assert.equal(run.metadata.annotations['argocd.argoproj.io/hook'], 'Sync');
+    assert.equal(run.metadata.annotations['argocd.argoproj.io/sync-wave'], String(index - 2));
+    assert.equal(run.metadata.annotations['argocd.argoproj.io/hook-delete-policy'], 'BeforeHookCreation', 'retain success until the CronJob controller observes it');
+    assert.deepEqual(run.spec, cron.spec.jobTemplate.spec, 'replay uses the regular program, identity, secrets, mounts and bounds');
+    assert.equal(cron.spec.schedule, index === 0 ? '0 3 * * 0' : '0 4 * * 0');
+    assert.equal(run.spec.template.spec.automountServiceAccountToken, false);
+  }
+  assert(!docs.some(doc => ['Role', 'RoleBinding', 'ClusterRole', 'ClusterRoleBinding'].includes(doc?.kind)), 'recovery needs no Kubernetes API privileges');
+});
+
+test('recovery is disabled by default and refuses incomplete or invalid existing-CronJob bindings', async () => {
+  const helm = process.env.HELM_BIN ?? 'helm';
+  const args = ['template', 'prism', 'charts/prism', '-n', 'default', '-f', 'charts/prism/ci-values.yaml'];
+  const { stdout } = await execute(helm, args);
+  assert(!(loadAll(stdout) as any[]).some(doc => doc?.metadata?.name?.includes('-recovery-')));
+  await assert.rejects(execute(helm, [...args, '--set', 'backup.recovery.runId=smoke']), /verificationCronJobUid|databaseProofCronJobUid|oneOf/);
+  await assert.rejects(execute(helm, [...args, '--set', 'backup.recovery.runId=smoke', '--set', 'backup.recovery.verificationCronJobUid=wrong', '--set', 'backup.recovery.databaseProofCronJobUid=wrong']), /pattern|CronJob UID/);
+});

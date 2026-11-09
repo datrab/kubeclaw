@@ -142,7 +142,15 @@ export class HttpRemotePlanTransport implements RemotePlanTransport {
     }, this.#maximumResponseBytes, 'NOVA_REMOTE_PLAN_RESPONSE', true);
     let parsed: unknown;
     try { parsed = JSON.parse(bytes.toString('utf8')); }
-    catch (error) { throw new Error('NOVA_REMOTE_PLAN_RESPONSE_INVALID', { cause: error }); }
+    catch (error) {
+      // Proxies may return plaintext/HTML for HTTP errors. Preserve the HTTP
+      // classification so polling can reconnect to the same job, not abort on
+      // JSON parsing or blindly repeat an uncertain submission.
+      if (!response.ok) throw new RemotePlanTransportError(
+        `NOVA_REMOTE_PLAN_HTTP_${response.status}:NON_JSON_RESPONSE`, retryableStatus(response.status),
+      );
+      throw new Error('NOVA_REMOTE_PLAN_RESPONSE_INVALID', { cause: error });
+    }
     if (!response.ok) {
       const message = parsed && typeof parsed === 'object' && 'error' in parsed ? String(parsed.error) : response.statusText;
       throw new RemotePlanTransportError(

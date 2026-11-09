@@ -48,9 +48,22 @@ test('actual Python wheel installs repeat the complete inventory and execute ins
       assert.equal(result.status, 1, result.stderr);
       assert.match(result.stdout, expected);
     }
-    const environment = { ...process.env, SEMGREP_ENABLE_VERSION_CHECK: '0', SEMGREP_SEND_METRICS: 'off' };
+    const environment = { ...process.env, SEMGREP_ENABLE_VERSION_CHECK: '0', SEMGREP_SEND_METRICS: 'off',
+      SEMGREP_SETTINGS_FILE: path.join(temporary, 'semgrep-settings.yml'),
+      SEMGREP_LOG_FILE: path.join(temporary, 'semgrep.log') };
     const semgrepVersion = fs.readFileSync(path.join(root, 'docker/python-tools/buster.in'), 'utf8').split('\n').find(line => line.startsWith('semgrep==')).slice('semgrep=='.length);
     assert.equal(run(path.join(bin, 'semgrep'), ['--version'], { env: environment, timeout: 60000 }).trim(), semgrepVersion);
+    const rule = path.join(temporary, 'rule.yml');
+    fs.writeFileSync(rule, 'rules:\n  - id: lock-smoke-eval\n    pattern: eval(...)\n    languages: [python]\n    severity: ERROR\n    message: unsafe eval\n');
+    const unsafe = path.join(temporary, 'unsafe.py');
+    fs.writeFileSync(unsafe, 'eval("1 + 1")\n');
+    const scan = spawnSync(path.join(bin, 'semgrep'), ['scan', '--config', rule, '--json', '--metrics', 'off',
+      '--disable-version-check', '--no-git-ignore', '--error', unsafe],
+    { encoding: 'utf8', timeout: 60000, env: environment });
+    assert.equal(scan.status, 1, scan.stderr);
+    const report = JSON.parse(scan.stdout);
+    assert.equal(report.errors.length, 0);
+    assert.ok(report.results.some(result => result.check_id.endsWith('lock-smoke-eval')));
   } finally { fs.rmSync(temporary, { recursive: true, force: true }); }
 });
 

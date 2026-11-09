@@ -1,9 +1,12 @@
+import { retainedBaseline } from './retained-baseline.mjs';
+import { verifyReleaseSources } from './verify-release-source.mjs';
 import fs from 'node:fs';
 import { execFileSync } from 'node:child_process';
-import { isDeepStrictEqual } from 'node:util';
-import { validateCodeReceipt, selectedCode } from './code-release.mjs';
+import { validateCodeReceipt, compatibleCode } from './code-release.mjs';
 import { inputDigest, isDeploymentInput } from './runtime-inputs.mjs';
 import { validateReleaseReceipt } from './deployment-release.mjs';
+import { runtimePublicationCommand, busterRenderConfigurationCompatible, assertRuntimePublicationScope } from './runtime-publication-scope.mjs';
+import { componentSource } from './runtime-components.mjs';
 
 const root = process.cwd(), repo = process.env.GITHUB_REPOSITORY, token = process.env.GITHUB_TOKEN;
 const id = process.env.SOURCE_RUN_ID, attempt = process.env.SOURCE_RUN_ATTEMPT;
@@ -36,7 +39,11 @@ const published = await receipt(`code-bundles-${id}-${attempt}`, 'runtime-code.j
 if (!published) { console.log('No deployment inputs published; nothing to promote.'); process.exit(0); }
 const code = validateCodeReceipt(published.value);
 for (const [role, bundle] of Object.entries(code.bundles)) {
-  const assets = published.release.assets.filter(item => item.name === `${role}-${code.commit}.tgz`);
+  const source = componentSource(code, role, 'bundle');
+  // Retained sources are authenticated against their own original release by
+  // verify-release-source before the selection can be committed or pushed.
+  if (source.sourceRunId !== Number(id) || source.sourceRunAttempt !== Number(attempt)) continue;
+  const assets = published.release.assets.filter(item => item.name === `${role}-${source.commit}.tgz`);
   if (assets.length !== 1 || assets[0].browser_download_url !== bundle.url || assets[0].digest !== `sha256:${bundle.sha256}`) throw new Error('PUBLISHED_BUNDLE_DIGEST_MISMATCH');
 }
 const git = args => execFileSync('git', args, { encoding: 'utf8' }).trim();
@@ -48,7 +55,8 @@ if (inputDigest(root, head, isDeploymentInput) !== inputDigest(root, run.head_sh
 const priorFile = 'releases/runtime-code.json';
 if (fs.existsSync(priorFile)) {
   const prior = validateCodeReceipt(JSON.parse(fs.readFileSync(priorFile, 'utf8')));
-  if (isDeepStrictEqual(prior, code)) { console.log('Already selected.'); process.exit(0); }
+  // Identical code does not imply identical images or reconciled GitOps state.
+  // Replays must still authenticate image evidence and enforce publication scope.
   git(['merge-base', '--is-ancestor', prior.commit, code.commit]);
   if (prior.commit === code.commit && (prior.sourceRunId > code.sourceRunId
     || (prior.sourceRunId === code.sourceRunId && prior.sourceRunAttempt > code.sourceRunAttempt))) throw new Error('OLDER_SOURCE_ATTEMPT');
@@ -56,8 +64,23 @@ if (fs.existsSync(priorFile)) {
 const built = await receipt(`runtime-images-${id}-${attempt}`, 'runtime-images.json', true);
 if (!built && !fs.existsSync('releases/runtime-images.json')) throw new Error('INITIAL_IMAGE_BUILD_REQUIRED');
 const images = validateReleaseReceipt(built?.value ?? JSON.parse(fs.readFileSync('releases/runtime-images.json', 'utf8')), 'runtime');
+const baselineDirectory = code.retainedBaseline;
+if (baselineDirectory !== images.retainedBaseline) throw new Error('RETAINED_BASELINE_MISMATCH');
+const baseline = retainedBaseline(root, baselineDirectory);
+if (baseline) await verifyReleaseSources({ root, repo, token, baselineDirectory });
+// Choose scope before replacing the selected receipts. Conservative full
+// rendering is required whenever role chart/value inputs have changed.
+const priorImages = baseline?.runtime ?? (fs.existsSync('releases/runtime-images.json')
+  ? JSON.parse(fs.readFileSync('releases/runtime-images.json', 'utf8')) : undefined);
+const priorCode = baseline?.code ?? (fs.existsSync(priorFile) ? JSON.parse(fs.readFileSync(priorFile, 'utf8')) : undefined);
+const configurationUnchanged = priorCode && busterRenderConfigurationCompatible(root, priorCode.commit, run.head_sha,
+  baseline && process.env.RUNTIME_PUBLICATION_SCOPE === 'buster' ? 'retain-active-nova-prism' : undefined);
+const exportCommand = runtimePublicationCommand(priorImages && { ...priorImages, code: priorCode },
+  { ...images, code }, configurationUnchanged);
+assertRuntimePublicationScope(exportCommand, process.env.RUNTIME_PUBLICATION_SCOPE);
+// Validate the candidate before mutating either selected receipt.
+compatibleCode(root, images, code);
 fs.mkdirSync('releases', { recursive: true });
 fs.writeFileSync(priorFile, JSON.stringify(code, null, 2) + '\n');
-selectedCode(root, images);
 if (built) fs.writeFileSync('releases/runtime-images.json', JSON.stringify(images, null, 2) + '\n');
-fs.appendFileSync(process.env.GITHUB_OUTPUT, `selected=true\ndirectory=releases/gitops/runtime-${id}-${attempt}\n`);
+fs.appendFileSync(process.env.GITHUB_OUTPUT, `retained_baseline=${baselineDirectory ?? ''}\nexport_command=${exportCommand}\nselected=true\ndirectory=releases/gitops/runtime-${id}-${attempt}\n`);

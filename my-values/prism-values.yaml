@@ -19,7 +19,7 @@ images:
 imagePullSecrets:
   - name: ghcr-secret
 control: { replicas: 1, resources: { requests: { cpu: 500m, memory: 1Gi }, limits: { cpu: "4", memory: 4Gi } } }
-studio: { replicas: 1, resources: { requests: { cpu: 250m, memory: 256Mi }, limits: { cpu: "2", memory: 1Gi } } }
+studio: { publicUrl: "https://prism-studio.tail576648.ts.net", replicas: 1, resources: { requests: { cpu: 250m, memory: 256Mi }, limits: { cpu: "2", memory: 1Gi } } }
 worker: { replicas: 1, resources: { requests: { cpu: "1", memory: 2Gi }, limits: { cpu: "8", memory: 8Gi } } }
 ingestion: { enabled: false, replicas: 1 }
 postgresql:

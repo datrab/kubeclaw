@@ -37,6 +37,7 @@ node_modules/
 **/package-lock.json
 !/package-lock.json
 !/docker/nova-tools/package-lock.json
+!/docker/npm-tools/package-lock.json
 !/docker/openclaw-tools/package-lock.json
 !/skills/common/plugins/openclaw-agent-observer/package-lock.json
 !/spikes/prism/*/package-lock.json
@@ -49,3 +50,6 @@ skills/common/plugin-runtime/foundation/isolation/plugin-sandbox
 
 # Ansible (if using infrastructure layer)
 *.retry
+
+# Public generated compiler/tool pins, not runtime secrets.
+!/docker/runtime-binaries/versions.env

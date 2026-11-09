@@ -1,10 +1,28 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import test from 'node:test';
+import os from 'node:os';
+import path from 'node:path';
+import { execFileSync } from 'node:child_process';
 import YAML from 'yaml';
+import { runtimeImages } from '../../../scripts/updates/runtime-components.mjs';
 
 const read = name => YAML.parse(fs.readFileSync(`.github/workflows/${name}.yaml`, 'utf8'));
 const main = read('build-images'), pr = read('role-images'), updates = read('update-checks'), promote = read('promote-runtime');
+
+test('a release proposal verifies provenance and scans private immutable images without publication authority', () => {
+  assert.ok(promote.on.pull_request.paths.includes('releases/runtime-images.json'));
+  assert.equal(promote.jobs.prepare.if, "github.event_name == 'workflow_dispatch'");
+  const proposal = promote.jobs['verify-proposal'];
+  assert.equal(proposal.if, "github.event_name == 'pull_request'");
+  assert.deepEqual(proposal.permissions, { contents: 'read', actions: 'read', packages: 'read' });
+  assert.equal(proposal.steps[0].with['persist-credentials'], false);
+  const verification = proposal.steps.findIndex(step => step.run === 'node scripts/updates/verify-release-source.mjs');
+  const scan = proposal.steps.findIndex(step => step.run?.includes('bash scripts/scan-runtime-images.sh'));
+  assert.ok(verification >= 0 && scan > verification, 'scan only receipt-bound successful main artifacts');
+  assert.equal(proposal.steps[scan].env.TRIVY_PASSWORD, '${{ github.token }}');
+  assert.ok(proposal.steps.every(step => !/git push|gh pr create|deploy\.sh|gitops-continuous.*(?:prepare|apply)/u.test(step.run ?? '')), 'proposal checks cannot promote or deploy');
+});
 
 test('update checks validate previous release selections while replacements build', () => {
   const run = updates.jobs.policy.steps.find(step => step.name === 'Check generated versions and release receipt validation').run;
@@ -29,12 +47,13 @@ test('each runtime is built once per event and PR builds cannot publish', () => 
   assert.equal(pr.on.push, undefined);
   assert.equal(pr.on.workflow_call, undefined);
   assert.deepEqual(pr.permissions, { contents: 'read' });
-  const names = main.jobs.build.strategy.matrix.name;
-  assert.deepEqual(names, pr.jobs.image.strategy.matrix.name);
+  assert.match(main.jobs.build.strategy.matrix.name, /fromJSON\(needs.detect-build-inputs.outputs.image_matrix\)/u);
+  assert.match(pr.jobs.image.strategy.matrix.name, /fromJSON\(needs.inputs.outputs.image_matrix\)/u);
+  const names = runtimeImages;
   assert.equal(new Set(names).size, 10);
   for (const name of names) assert(fs.existsSync(`docker/Dockerfile.${name}`));
   for (const job of [main.jobs.build, pr.jobs.image]) {
-    assert.equal(job.steps.filter(step => step.uses?.startsWith('docker/build-push-action@')).length, 1);
+    assert.equal(job.steps.filter(step => step.uses?.startsWith('docker/build-push-action@') && step.with.target !== 'toolchain').length, 1);
     assert.equal(job.steps.some(step => step.run?.includes('docker build')), false);
   }
   const proof = pr.jobs.image.steps.find(step => step.uses?.startsWith('docker/build-push-action@'));
@@ -48,7 +67,7 @@ test('immutable candidate checks precede release receipts and share PR acceptanc
   const build = steps.findIndex(step => step.id === 'build');
   const verify = steps.findIndex(step => step.name === 'Verify the exact published artifact');
   const receipt = steps.findIndex(step => step.name === 'Record immutable build receipt');
-  const upload = steps.findIndex(step => step.uses?.startsWith('actions/upload-artifact@'));
+  const upload = steps.findIndex(step => step.with?.name === 'image-receipt-${{ matrix.name }}');
   assert(build < verify && verify < receipt && receipt < upload);
   assert.match(steps[verify].env.IMAGE, /@\$\{\{ steps\.build\.outputs\.digest \}\}$/u);
   for (const role of ['nova', 'prism-agent', 'buster-gateway', 'buster-runtime']) assert(steps[verify].if.includes(`"${role}"`));
@@ -57,19 +76,37 @@ test('immutable candidate checks precede release receipts and share PR acceptanc
   assert(pr.jobs.image.steps.some(step => step.run === shared));
   assert.equal(steps[receipt].if, undefined);
   assert.equal(steps[upload].if, undefined);
-  assert.equal(main.jobs['preserve-receipts'].needs, 'build');
-  assert.equal(main.jobs['prism-live-acceptance'].needs, 'build');
+  assert.deepEqual(main.jobs['preserve-receipts'].needs, ['build', 'reliability', 'update-policy']);
+  assert.deepEqual(main.jobs['prism-live-acceptance'].needs, ['build', 'detect-build-inputs', 'reliability', 'update-policy']);
+  for (const service of ['control', 'studio', 'worker', 'ingestion']) assert(main.jobs['prism-live-acceptance'].if.includes(`'prism-${service}'`));
+});
+
+test('Buster requires a digest-bound security gate before its receipt and retains failed-scan evidence', () => {
+  const steps = main.jobs.build.steps;
+  const scan = steps.findIndex(step => step.name === 'Scan the exact Buster worker before issuing its receipt');
+  const receipt = steps.findIndex(step => step.name === 'Record immutable build receipt');
+  assert.ok(scan > steps.findIndex(step => step.name === 'Verify the exact published artifact') && scan < receipt);
+  assert.equal(steps[scan].if, "matrix.name == 'buster-runtime'");
+  assert.match(steps[scan].env.IMAGE, /@\$\{\{ steps\.build\.outputs\.digest \}\}$/u);
+  assert.equal(steps[scan].run, 'bash scripts/scan-runtime-images.sh "$IMAGE"');
+  assert.equal(steps[scan].env.TRIVY_PASSWORD, '${{ github.token }}');
+  assert.equal(steps[scan]['continue-on-error'], undefined);
+  const evidence = steps.find(step => step.with?.name === 'image-security-buster-runtime');
+  assert.match(evidence.if, /!cancelled\(\)/u);
+  assert.match(evidence.if, /matrix.name == 'buster-runtime'/u);
+  assert.equal(evidence.with.path, 'dist/trivy/');
+  assert.equal(evidence.with['if-no-files-found'], 'error');
 });
 
 test('bundle publication rejects failed or cancelled image proofs while allowing code-only changes', () => {
   const job = main.jobs['bundle-skills'];
   assert(job.needs.includes('build'));
   // Exercise the repository-owned expression; GitHub executes the actual job graph in CI.
-  const evaluate = Function('needs', 'github', 'always', `return (${job.if.replaceAll("needs.update-policy", "needs[\"update-policy\"]").replaceAll("needs.detect-build-inputs", "needs[\"detect-build-inputs\"]")});`);
+  const evaluate = Function('needs', 'github', 'always', `return (${job.if.replaceAll("needs.update-policy", "needs[\"update-policy\"]").replaceAll("needs.prepare-bundles", "needs[\"prepare-bundles\"]").replaceAll("needs.detect-build-inputs", "needs[\"detect-build-inputs\"]")});`);
   for (const result of ['success', 'failure', 'cancelled', 'skipped']) {
     for (const changed of ['true', 'false']) {
       for (const event of ['push', 'workflow_dispatch']) {
-        const needs = { build: { result }, reliability: { result: 'success' },
+        const needs = { 'prepare-bundles': { result: 'success' }, build: { result }, reliability: { result: 'success' },
           'update-policy': { result: 'success' }, 'detect-build-inputs': { outputs: { image_inputs_changed: changed, deployment_inputs_changed: 'true' } } };
         const allowed = result === 'success' || (result === 'skipped' && changed === 'false');
         assert.equal(evaluate(needs, { event_name: event }, () => true), allowed);
@@ -78,4 +115,103 @@ test('bundle publication rejects failed or cancelled image proofs while allowing
       }
     }
   }
+});
+
+
+test('bundle checksum assets remain nonempty with zero, one or all changed roles', () => {
+  const run = main.jobs['prepare-bundles'].steps.find(step => step.name === 'Record bundle checksums and source identity').run;
+  // Execute the actual workflow checksum command against each publication shape.
+  const checksum = run.slice(run.indexOf('(cd dist;'));
+  assert(checksum.startsWith('(cd dist;'));
+  for (const roles of [[], ['buster'], ['nova', 'buster', 'prism']]) {
+    const root = fs.mkdtempSync(path.join(os.tmpdir(), 'bundle-checksums-'));
+    try {
+      fs.mkdirSync(path.join(root, 'dist'));
+      fs.writeFileSync(path.join(root, 'dist/runtime-code.json'), '{"bundles":{}}\n');
+      for (const role of roles) fs.writeFileSync(path.join(root, `dist/${role}-test.tgz`), `bundle:${role}`);
+      execFileSync('bash', ['-e', '-o', 'pipefail', '-c', checksum], { cwd: root, env: { ...process.env, GITHUB_SHA: 'test' } });
+      const manifest = fs.readFileSync(path.join(root, 'dist/SHA256SUMS-test.txt'), 'utf8');
+      assert.equal(manifest.trim().split('\n').length, roles.length + 1);
+      assert.match(manifest, /  \.\/runtime-code\.json\n/u);
+      execFileSync('sha256sum', ['--check', 'SHA256SUMS-test.txt'], { cwd: path.join(root, 'dist') });
+      // A changed receipt must invalidate the published checksum even without bundles.
+      fs.appendFileSync(path.join(root, 'dist/runtime-code.json'), ' ');
+      assert.throws(() => execFileSync('sha256sum', ['--check', 'SHA256SUMS-test.txt'], { cwd: path.join(root, 'dist'), stdio: 'pipe' }));
+    } finally { fs.rmSync(root, { recursive: true, force: true }); }
+  }
+});
+
+test('runtime refresh plan reaches detector, bundles and reusable receipt collector unchanged', () => {
+  assert.equal(main.on.workflow_dispatch.inputs.runtime_refresh_plan.type, 'string');
+  assert.equal(main.on.workflow_dispatch.inputs.runtime_refresh_plan.default, '');
+  const expression = "${{ inputs.runtime_refresh_plan || '' }}";
+  assert.equal(main.env.RUNTIME_REFRESH_PLAN, expression);
+  assert.equal(main.jobs['preserve-receipts'].with.runtime_refresh_plan, expression);
+  const receipt = read('publish-image-receipts');
+  assert.equal(receipt.on.workflow_call.inputs.runtime_refresh_plan.default, '');
+  const collector = receipt.jobs.preserve.steps.find(step => step.env?.FAMILY);
+  assert.equal(collector.env.RUNTIME_REFRESH_PLAN, '${{ inputs.runtime_refresh_plan }}');
+  for (const name of ['detect-build-inputs', 'prepare-bundles', 'bundle-skills']) {
+    assert.equal(main.jobs[name].env?.RUNTIME_REFRESH_PLAN, undefined,
+      `${name} must inherit the same workflow plan without overriding it`);
+  }
+});
+
+test('retained components are authenticated before either receipt producer runs', () => {
+  const bundles = main.jobs['prepare-bundles'];
+  assert.ok(bundles, 'bundle publisher job exists');
+  assert.equal(bundles.permissions.actions, 'read');
+  const check = (steps, producer) => {
+    const auth = steps.findIndex(step => step.run === 'node scripts/updates/verify-release-source.mjs');
+    assert.ok(auth >= 0);
+    assert.ok(auth < steps.findIndex(step => step.name === producer));
+    assert.equal(steps[auth].env.GITHUB_TOKEN, '${{ github.token }}');
+    return steps[auth];
+  };
+  check(bundles.steps, 'Build changed role bundles');
+  const receipt = read('publish-image-receipts');
+  assert.equal(check(receipt.jobs.preserve.steps,
+    'Preserve immutable source record beyond CI artifact retention').if, "inputs.family == 'runtime'");
+});
+
+
+test('immutable baseline is identical for planners, authentication and both producers', () => {
+  const expression = "${{ inputs.retained_baseline || '' }}";
+  assert.equal(main.on.workflow_dispatch.inputs.retained_baseline.default, '');
+  assert.equal(main.env.GITOPS_RETAINED_BASELINE, expression);
+  assert.equal(main.jobs['preserve-receipts'].with.retained_baseline, expression);
+  const receipt = read('publish-image-receipts');
+  assert.equal(receipt.on.workflow_call.inputs.retained_baseline.default, '');
+  assert.equal(receipt.env.GITOPS_RETAINED_BASELINE, expression);
+  for (const name of ['detect-build-inputs', 'prepare-bundles', 'bundle-skills']) {
+    assert.equal(main.jobs[name].env?.GITOPS_RETAINED_BASELINE, undefined);
+    for (const step of main.jobs[name].steps) {
+      assert.equal(step.env?.GITOPS_RETAINED_BASELINE, undefined);
+    }
+  }
+  for (const step of receipt.jobs.preserve.steps) {
+    assert.equal(step.env?.GITOPS_RETAINED_BASELINE, undefined);
+  }
+});
+
+ test('reusable policy authenticates the identical explicit baseline before drift validation', () => {
+  const expression = "${{ inputs.retained_baseline || '' }}";
+  assert.equal(main.jobs['update-policy'].with.retained_baseline, expression);
+  assert.equal(updates.on.workflow_call.inputs.retained_baseline.default, '');
+  assert.equal(updates.env.GITOPS_RETAINED_BASELINE, expression);
+  const steps = updates.jobs.policy.steps;
+  const auth = steps.findIndex(step => step.name === 'Authenticate explicit retained baseline before policy validation');
+  const policy = steps.findIndex(step => step.name === 'Check generated versions and release receipt validation');
+  assert.ok(auth >= 0 && auth < policy);
+  assert.equal(steps[auth].if, "inputs.retained_baseline != ''");
+  assert.equal(steps[auth].run, 'node scripts/updates/verify-release-source.mjs');
+  assert.equal(steps[auth].env.GITHUB_TOKEN, '${{ github.token }}');
+  assert.match(steps[policy].run, /gitops-continuous\.mjs check/);
+});
+
+ test('receipt verifier dependencies are installed before source authentication', () => {
+  const steps = read('publish-image-receipts').jobs.preserve.steps;
+  const install = steps.findIndex(step => step.run === 'npm ci --ignore-scripts --no-audit --no-fund');
+  const auth = steps.findIndex(step => step.name === 'Authenticate selected receipts before retaining runtime images');
+  assert.ok(install >= 0 && install < auth);
 });

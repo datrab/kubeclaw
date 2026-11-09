@@ -53,6 +53,12 @@ async function grantPrismRoles(client: PoolClient): Promise<void> {
   await client.query('GRANT USAGE ON SCHEMA prism TO prism_runtime, prism_readonly');
   await client.query('GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA prism TO prism_runtime');
   await client.query('GRANT SELECT ON ALL TABLES IN SCHEMA prism TO prism_readonly');
+  await protectPrismReconciliationAudit(client);
   await client.query('ALTER DEFAULT PRIVILEGES FOR ROLE prism_migrator IN SCHEMA prism GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO prism_runtime');
   await client.query('ALTER DEFAULT PRIVILEGES FOR ROLE prism_migrator IN SCHEMA prism GRANT SELECT ON TABLES TO prism_readonly');
+}
+
+/** Bootstrap reruns grants on existing tables; do not make attempt history mutable. */
+export async function protectPrismReconciliationAudit(client: Pick<PoolClient,'query'>): Promise<void> {
+  await client.query("DO $$ BEGIN IF to_regclass('prism.agent_reconciliation') IS NOT NULL THEN REVOKE UPDATE, DELETE, TRUNCATE ON prism.agent_reconciliation FROM prism_runtime; END IF; END $$");
 }

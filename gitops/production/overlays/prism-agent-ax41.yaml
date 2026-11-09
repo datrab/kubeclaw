@@ -1,0 +1,9 @@
+# Gateway plus CLI admission for the same durable design job exceeded 2 GiB.
+# This is an ordinary Pod budget, separate from the native renderer host pool.
+resources:
+  requests:
+    cpu: 500m
+    memory: 2Gi
+  limits:
+    cpu: '2'
+    memory: 8Gi

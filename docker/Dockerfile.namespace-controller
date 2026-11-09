@@ -1,5 +1,5 @@
 # Version defaults are generated from versions.json; run npm run versions:sync.
-ARG CONTROLLER_GO_BASE=golang:1.22-bookworm@sha256:3d699e4d15d0f8f13c9195c0632a16702b8cbdece2955af1c23b37ae5d55a253
+ARG CONTROLLER_GO_BASE=golang:1.26.10-alpine3.24@sha256:a2012b4a1d1f9f7e9f44e0d39b805a901e856b1dd80b4e6ee4338db547050308
 ARG CONTROLLER_RUNTIME_BASE=gcr.io/distroless/static-debian12:nonroot@sha256:afa5c872c891853ca7fcf1f12c3edb23f7eeef36189728842dd51042ff57f7ab
 
 # =============================================================================

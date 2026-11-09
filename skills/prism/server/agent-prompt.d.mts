@@ -2,6 +2,6 @@
 export function agentPrompt(job: {
   id: string;
   fence: string | null;
-  operation: 'design-set' | 'revise';
+  operation: 'design-set' | 'revise' | 'chat';
   request: Record<string, unknown>;
 }): string;

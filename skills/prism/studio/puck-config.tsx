@@ -36,6 +36,8 @@ const nodeTypes = [
   "output",
 ];
 export const config: Config<Props> = {
+  // Document metadata is not a node operation; do not offer an unsaved page-title field.
+  root: { fields: {} },
   components: {
     Stack: {
       fields: {

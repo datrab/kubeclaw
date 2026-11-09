@@ -1,0 +1,868 @@
+{
+  "schemaVersion": "kubeclaw-gitops-bundle.v1",
+  "receipt": {
+    "schemaVersion": 1,
+    "commit": "fc13d3e89bc92d5410d17d191878dc23484dad9d",
+    "images": {
+      "nova": "ghcr.io/datrab/kubeclaw-nova@sha256:21bbeda9585eb53584e390c36854648ddb4cc7359e726d607ca5ad553e418cf7",
+      "prism-agent": "ghcr.io/datrab/kubeclaw-prism-agent@sha256:2054278d44f5523f110e0f6c91d21d838a4077e896524f45ccf93a39e14aa47d",
+      "buster-gateway": "ghcr.io/datrab/kubeclaw-buster-gateway@sha256:2f02f44e47af2269623a84562bdb8ccc9abf1f772635ea0d32ad77a21b7d48af",
+      "buster-runtime": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:b2f79c26146b67e1de8d7ed9cb98a4e454c8769dcaa3021177bab649adef3c3b",
+      "namespace-controller": "ghcr.io/datrab/kubeclaw-namespace-controller@sha256:2411b8830c1ef4b750bb1479abb1cb614afac54e38f59e329324bc087aaa35bf",
+      "archviewer": "ghcr.io/datrab/kubeclaw-archviewer@sha256:b0d561e14b20aed5e9a308a6bfc112b6fdc1929e1f1bf7dc836c0aba0dc7e773",
+      "prism-control": "ghcr.io/datrab/kubeclaw-prism-control@sha256:40de287ee05073d2db74c26d3e955fab684d211168edb1c0079c72aed417689e",
+      "prism-studio": "ghcr.io/datrab/kubeclaw-prism-studio@sha256:e275d9db52aa6c880ec7efcd1bf4d35bce0bcd0ab84b9a33744fccd48c6b4e3e",
+      "prism-worker": "ghcr.io/datrab/kubeclaw-prism-worker@sha256:de084768a1fd59f5c6b1b2903d3daad25c160a9fae571c308ebc51643bd2e9fc",
+      "prism-ingestion": "ghcr.io/datrab/kubeclaw-prism-ingestion@sha256:b1b537ccd303b210731d4b4d0f1066f40a284f659125bbc49356ff94c4b789c0"
+    },
+    "sourceRunId": 40262283722,
+    "sourceRunAttempt": 1,
+    "imageSources": {
+      "nova": {
+        "commit": "308fbb39bfdf52a59a38b27a27e2c80529cb0937",
+        "sourceRunId": 40000895109,
+        "sourceRunAttempt": 1
+      },
+      "prism-agent": {
+        "commit": "308fbb39bfdf52a59a38b27a27e2c80529cb0937",
+        "sourceRunId": 40000895109,
+        "sourceRunAttempt": 1
+      },
+      "buster-gateway": {
+        "commit": "a9042c6c4daa1439ce312b770b37502ae52d3e85",
+        "sourceRunId": 40246516019,
+        "sourceRunAttempt": 1
+      },
+      "buster-runtime": {
+        "commit": "fc13d3e89bc92d5410d17d191878dc23484dad9d",
+        "sourceRunId": 40262283722,
+        "sourceRunAttempt": 1
+      },
+      "namespace-controller": {
+        "commit": "a9042c6c4daa1439ce312b770b37502ae52d3e85",
+        "sourceRunId": 40246516019,
+        "sourceRunAttempt": 1
+      },
+      "archviewer": {
+        "commit": "308fbb39bfdf52a59a38b27a27e2c80529cb0937",
+        "sourceRunId": 40000895109,
+        "sourceRunAttempt": 1
+      },
+      "prism-control": {
+        "commit": "308fbb39bfdf52a59a38b27a27e2c80529cb0937",
+        "sourceRunId": 40000895109,
+        "sourceRunAttempt": 1
+      },
+      "prism-studio": {
+        "commit": "308fbb39bfdf52a59a38b27a27e2c80529cb0937",
+        "sourceRunId": 40000895109,
+        "sourceRunAttempt": 1
+      },
+      "prism-worker": {
+        "commit": "308fbb39bfdf52a59a38b27a27e2c80529cb0937",
+        "sourceRunId": 40000895109,
+        "sourceRunAttempt": 1
+      },
+      "prism-ingestion": {
+        "commit": "308fbb39bfdf52a59a38b27a27e2c80529cb0937",
+        "sourceRunId": 40000895109,
+        "sourceRunAttempt": 1
+      }
+    },
+    "retainedBaseline": "releases/gitops/runtime-40246516019-1",
+    "code": {
+      "schemaVersion": 1,
+      "commit": "fc13d3e89bc92d5410d17d191878dc23484dad9d",
+      "sourceRunId": 40262283722,
+      "sourceRunAttempt": 1,
+      "bundles": {
+        "nova": {
+          "url": "https://github.com/datrab/kubeclaw/releases/download/code-bundles-40000895109-1/nova-308fbb39bfdf52a59a38b27a27e2c80529cb0937.tgz",
+          "sha256": "77c9a4a62814115a6af775ec213860d8dfe576d98bd4a7872f4a6513aaff22fc",
+          "contractVersion": "v2",
+          "source": {
+            "commit": "308fbb39bfdf52a59a38b27a27e2c80529cb0937",
+            "sourceRunId": 40000895109,
+            "sourceRunAttempt": 1
+          }
+        },
+        "buster": {
+          "url": "https://github.com/datrab/kubeclaw/releases/download/code-bundles-40262283722-1/buster-fc13d3e89bc92d5410d17d191878dc23484dad9d.tgz",
+          "sha256": "16a0bce7ef38151bc28ec02298bb0b984eed72aea6a145bbc7b7e76dd731d609",
+          "contractVersion": "v2"
+        },
+        "prism": {
+          "url": "https://github.com/datrab/kubeclaw/releases/download/code-bundles-40000895109-1/prism-308fbb39bfdf52a59a38b27a27e2c80529cb0937.tgz",
+          "sha256": "91a4923da7b0cba535520e6cadc3b33f1063f5267f06de70e41571b972c5d44e",
+          "contractVersion": "v2",
+          "source": {
+            "commit": "308fbb39bfdf52a59a38b27a27e2c80529cb0937",
+            "sourceRunId": 40000895109,
+            "sourceRunAttempt": 1
+          }
+        }
+      },
+      "retainedBaseline": "releases/gitops/runtime-40246516019-1"
+    }
+  },
+  "groups": [
+    {
+      "role": "buster",
+      "name": "kubeclaw-buster",
+      "namespace": "kubeclaw",
+      "helmReleases": [
+        "agent-buster"
+      ],
+      "path": "releases/gitops/runtime-40262283722-1/buster",
+      "wave": 0,
+      "manifestDigest": "3f33c7af79bc8dc723c282b78ab0d2ba89f07da53d2b3bdb0c8e00225e08b48c",
+      "resources": [
+        {
+          "apiVersion": "networking.k8s.io/v1",
+          "kind": "NetworkPolicy",
+          "namespace": "kubeclaw",
+          "name": "agent-buster-kubernetes-api"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "ServiceAccount",
+          "namespace": "kubeclaw",
+          "name": "agent-buster-namespace-controller"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "ServiceAccount",
+          "namespace": "kubeclaw",
+          "name": "agent-buster"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "ConfigMap",
+          "namespace": "kubeclaw",
+          "name": "agent-buster-runtime-startup"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "ConfigMap",
+          "namespace": "kubeclaw",
+          "name": "agent-buster-config"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "ConfigMap",
+          "namespace": "kubeclaw",
+          "name": "agent-buster-swarm-config"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "ConfigMap",
+          "namespace": "kubeclaw",
+          "name": "agent-buster-worker-trust"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "ConfigMap",
+          "namespace": "kubeclaw",
+          "name": "agent-buster-ops-mcp-client"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "PersistentVolumeClaim",
+          "namespace": "kubeclaw",
+          "name": "agent-buster-runtime-state"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "PersistentVolumeClaim",
+          "namespace": "kubeclaw",
+          "name": "agent-buster-config"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "PersistentVolumeClaim",
+          "namespace": "kubeclaw",
+          "name": "agent-buster-workspace"
+        },
+        {
+          "apiVersion": "apiextensions.k8s.io/v1",
+          "kind": "CustomResourceDefinition",
+          "namespace": "",
+          "name": "busternamespaceleases.kubeclaw.forgestack.ai"
+        },
+        {
+          "apiVersion": "rbac.authorization.k8s.io/v1",
+          "kind": "ClusterRole",
+          "namespace": "",
+          "name": "agent-buster-controller-secrets"
+        },
+        {
+          "apiVersion": "rbac.authorization.k8s.io/v1",
+          "kind": "ClusterRole",
+          "namespace": "",
+          "name": "agent-buster-namespace-deployer"
+        },
+        {
+          "apiVersion": "rbac.authorization.k8s.io/v1",
+          "kind": "ClusterRole",
+          "namespace": "",
+          "name": "agent-buster-namespace-tester"
+        },
+        {
+          "apiVersion": "rbac.authorization.k8s.io/v1",
+          "kind": "ClusterRole",
+          "namespace": "",
+          "name": "agent-buster-namespace-controller"
+        },
+        {
+          "apiVersion": "rbac.authorization.k8s.io/v1",
+          "kind": "ClusterRoleBinding",
+          "namespace": "",
+          "name": "agent-buster-namespace-controller"
+        },
+        {
+          "apiVersion": "rbac.authorization.k8s.io/v1",
+          "kind": "Role",
+          "namespace": "kubeclaw",
+          "name": "agent-buster-namespace-controller-source-secrets"
+        },
+        {
+          "apiVersion": "rbac.authorization.k8s.io/v1",
+          "kind": "Role",
+          "namespace": "kubeclaw",
+          "name": "agent-buster-namespace-lease-client"
+        },
+        {
+          "apiVersion": "rbac.authorization.k8s.io/v1",
+          "kind": "RoleBinding",
+          "namespace": "kubeclaw",
+          "name": "agent-buster-namespace-controller-source-secrets"
+        },
+        {
+          "apiVersion": "rbac.authorization.k8s.io/v1",
+          "kind": "RoleBinding",
+          "namespace": "kubeclaw",
+          "name": "agent-buster-namespace-lease-client"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "Service",
+          "namespace": "kubeclaw",
+          "name": "agent-buster"
+        },
+        {
+          "apiVersion": "apps/v1",
+          "kind": "Deployment",
+          "namespace": "kubeclaw",
+          "name": "agent-buster-namespace-controller"
+        },
+        {
+          "apiVersion": "apps/v1",
+          "kind": "Deployment",
+          "namespace": "kubeclaw",
+          "name": "agent-buster"
+        },
+        {
+          "apiVersion": "admissionregistration.k8s.io/v1",
+          "kind": "ValidatingAdmissionPolicy",
+          "namespace": "",
+          "name": "agent-buster-63a1240a-namespace-fence"
+        },
+        {
+          "apiVersion": "admissionregistration.k8s.io/v1",
+          "kind": "ValidatingAdmissionPolicyBinding",
+          "namespace": "",
+          "name": "agent-buster-63a1240a-namespace-fence"
+        }
+      ],
+      "images": [
+        "envoyproxy/envoy:v1.39.0@sha256:d59f7f5fa10cff6d5892b6c5e7df5c9297ddfb2c3683e33fbfb82da24de4fa66",
+        "ghcr.io/datrab/kubeclaw-buster-gateway@sha256:2f02f44e47af2269623a84562bdb8ccc9abf1f772635ea0d32ad77a21b7d48af",
+        "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:b2f79c26146b67e1de8d7ed9cb98a4e454c8769dcaa3021177bab649adef3c3b",
+        "ghcr.io/datrab/kubeclaw-namespace-controller@sha256:2411b8830c1ef4b750bb1479abb1cb614afac54e38f59e329324bc087aaa35bf"
+      ],
+      "requiredSecrets": [
+        {
+          "name": "buster-ops-bearer",
+          "keys": []
+        },
+        {
+          "name": "ghcr-secret",
+          "keys": []
+        },
+        {
+          "name": "git-deploy-key-buster",
+          "keys": []
+        },
+        {
+          "name": "github-bundle-reader",
+          "keys": [
+            "token"
+          ]
+        },
+        {
+          "name": "openclaw-shared-secrets",
+          "keys": [
+            "busterV2Token",
+            "discordToken-buster",
+            "discordWebhook",
+            "gatewayToken-buster",
+            "litellmApiKey"
+          ]
+        },
+        {
+          "name": "pipeline-test-gate-source-attestation",
+          "keys": [
+            "publicKey"
+          ]
+        },
+        {
+          "name": "redis-secrets",
+          "keys": [
+            "redis-password"
+          ]
+        }
+      ]
+    },
+    {
+      "role": "prism",
+      "name": "kubeclaw-prism",
+      "namespace": "kubeclaw",
+      "helmReleases": [
+        "prism",
+        "agent-prism"
+      ],
+      "path": "releases/gitops/runtime-40262283722-1/prism",
+      "wave": 0,
+      "manifestDigest": "4f726ff6409c29a5c7069dc21e3ce5a958fb37eb118b9b3b6d836a891b2855e0",
+      "resources": [
+        {
+          "apiVersion": "networking.k8s.io/v1",
+          "kind": "NetworkPolicy",
+          "namespace": "kubeclaw",
+          "name": "prism-default-deny"
+        },
+        {
+          "apiVersion": "networking.k8s.io/v1",
+          "kind": "NetworkPolicy",
+          "namespace": "kubeclaw",
+          "name": "prism-dns"
+        },
+        {
+          "apiVersion": "networking.k8s.io/v1",
+          "kind": "NetworkPolicy",
+          "namespace": "kubeclaw",
+          "name": "prism-application-paths"
+        },
+        {
+          "apiVersion": "networking.k8s.io/v1",
+          "kind": "NetworkPolicy",
+          "namespace": "kubeclaw",
+          "name": "prism-studio-control"
+        },
+        {
+          "apiVersion": "networking.k8s.io/v1",
+          "kind": "NetworkPolicy",
+          "namespace": "kubeclaw",
+          "name": "prism-worker-control"
+        },
+        {
+          "apiVersion": "networking.k8s.io/v1",
+          "kind": "NetworkPolicy",
+          "namespace": "kubeclaw",
+          "name": "prism-worker-egress"
+        },
+        {
+          "apiVersion": "networking.k8s.io/v1",
+          "kind": "NetworkPolicy",
+          "namespace": "kubeclaw",
+          "name": "prism-openclaw-agent"
+        },
+        {
+          "apiVersion": "networking.k8s.io/v1",
+          "kind": "NetworkPolicy",
+          "namespace": "kubeclaw",
+          "name": "prism-studio-entry"
+        },
+        {
+          "apiVersion": "networking.k8s.io/v1",
+          "kind": "NetworkPolicy",
+          "namespace": "kubeclaw",
+          "name": "prism-postgresql"
+        },
+        {
+          "apiVersion": "networking.k8s.io/v1",
+          "kind": "NetworkPolicy",
+          "namespace": "kubeclaw",
+          "name": "prism-database-clients"
+        },
+        {
+          "apiVersion": "networking.k8s.io/v1",
+          "kind": "NetworkPolicy",
+          "namespace": "kubeclaw",
+          "name": "prism-test-runner"
+        },
+        {
+          "apiVersion": "policy/v1",
+          "kind": "PodDisruptionBudget",
+          "namespace": "kubeclaw",
+          "name": "prism-studio"
+        },
+        {
+          "apiVersion": "policy/v1",
+          "kind": "PodDisruptionBudget",
+          "namespace": "kubeclaw",
+          "name": "prism-worker"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "ServiceAccount",
+          "namespace": "kubeclaw",
+          "name": "prism-control"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "ServiceAccount",
+          "namespace": "kubeclaw",
+          "name": "prism-studio"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "ServiceAccount",
+          "namespace": "kubeclaw",
+          "name": "prism-worker"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "ServiceAccount",
+          "namespace": "kubeclaw",
+          "name": "prism-ingestion"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "ServiceAccount",
+          "namespace": "kubeclaw",
+          "name": "prism-backup"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "ServiceAccount",
+          "namespace": "kubeclaw",
+          "name": "prism-test-runner"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "ConfigMap",
+          "namespace": "kubeclaw",
+          "name": "prism-backup-script"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "ConfigMap",
+          "namespace": "kubeclaw",
+          "name": "prism-worker-trust"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "ConfigMap",
+          "namespace": "kubeclaw",
+          "name": "prism-postgresql-init"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "PersistentVolumeClaim",
+          "namespace": "kubeclaw",
+          "name": "prism-backups"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "PersistentVolumeClaim",
+          "namespace": "kubeclaw",
+          "name": "prism-artifacts"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "Service",
+          "namespace": "kubeclaw",
+          "name": "prism-postgresql"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "Service",
+          "namespace": "kubeclaw",
+          "name": "prism-studio"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "Service",
+          "namespace": "kubeclaw",
+          "name": "prism-control"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "Service",
+          "namespace": "kubeclaw",
+          "name": "prism-control-internal"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "Service",
+          "namespace": "kubeclaw",
+          "name": "prism-worker"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "Service",
+          "namespace": "kubeclaw",
+          "name": "prism-worker-internal"
+        },
+        {
+          "apiVersion": "apps/v1",
+          "kind": "Deployment",
+          "namespace": "kubeclaw",
+          "name": "prism-control"
+        },
+        {
+          "apiVersion": "apps/v1",
+          "kind": "Deployment",
+          "namespace": "kubeclaw",
+          "name": "prism-studio"
+        },
+        {
+          "apiVersion": "apps/v1",
+          "kind": "Deployment",
+          "namespace": "kubeclaw",
+          "name": "prism-worker"
+        },
+        {
+          "apiVersion": "apps/v1",
+          "kind": "StatefulSet",
+          "namespace": "kubeclaw",
+          "name": "prism-postgresql"
+        },
+        {
+          "apiVersion": "batch/v1",
+          "kind": "CronJob",
+          "namespace": "kubeclaw",
+          "name": "prism-backup"
+        },
+        {
+          "apiVersion": "batch/v1",
+          "kind": "CronJob",
+          "namespace": "kubeclaw",
+          "name": "prism-backup-verification"
+        },
+        {
+          "apiVersion": "batch/v1",
+          "kind": "CronJob",
+          "namespace": "kubeclaw",
+          "name": "prism-restore-proof"
+        },
+        {
+          "apiVersion": "networking.k8s.io/v1",
+          "kind": "Ingress",
+          "namespace": "kubeclaw",
+          "name": "prism-studio"
+        },
+        {
+          "apiVersion": "batch/v1",
+          "kind": "Job",
+          "namespace": "kubeclaw",
+          "name": "prism-backup-storage-check"
+        },
+        {
+          "apiVersion": "batch/v1",
+          "kind": "Job",
+          "namespace": "kubeclaw",
+          "name": "prism-migrate"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "ServiceAccount",
+          "namespace": "kubeclaw",
+          "name": "agent-prism"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "ConfigMap",
+          "namespace": "kubeclaw",
+          "name": "agent-prism-config"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "ConfigMap",
+          "namespace": "kubeclaw",
+          "name": "agent-prism-swarm-config"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "ConfigMap",
+          "namespace": "kubeclaw",
+          "name": "agent-prism-worker-trust"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "ConfigMap",
+          "namespace": "kubeclaw",
+          "name": "agent-prism-workspace"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "PersistentVolumeClaim",
+          "namespace": "kubeclaw",
+          "name": "agent-prism-config"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "PersistentVolumeClaim",
+          "namespace": "kubeclaw",
+          "name": "agent-prism-workspace"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "Service",
+          "namespace": "kubeclaw",
+          "name": "agent-prism"
+        },
+        {
+          "apiVersion": "apps/v1",
+          "kind": "Deployment",
+          "namespace": "kubeclaw",
+          "name": "agent-prism"
+        }
+      ],
+      "images": [
+        "envoyproxy/envoy:v1.39.0@sha256:d59f7f5fa10cff6d5892b6c5e7df5c9297ddfb2c3683e33fbfb82da24de4fa66",
+        "ghcr.io/datrab/kubeclaw-prism-agent@sha256:2054278d44f5523f110e0f6c91d21d838a4077e896524f45ccf93a39e14aa47d",
+        "ghcr.io/datrab/kubeclaw-prism-control@sha256:40de287ee05073d2db74c26d3e955fab684d211168edb1c0079c72aed417689e",
+        "ghcr.io/datrab/kubeclaw-prism-studio@sha256:e275d9db52aa6c880ec7efcd1bf4d35bce0bcd0ab84b9a33744fccd48c6b4e3e",
+        "ghcr.io/datrab/kubeclaw-prism-worker@sha256:de084768a1fd59f5c6b1b2903d3daad25c160a9fae571c308ebc51643bd2e9fc",
+        "pgvector/pgvector:pg17@sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f"
+      ],
+      "requiredSecrets": [
+        {
+          "name": "ghcr-secret",
+          "keys": []
+        },
+        {
+          "name": "git-deploy-key-nova",
+          "keys": []
+        },
+        {
+          "name": "github-bundle-reader",
+          "keys": [
+            "token"
+          ]
+        },
+        {
+          "name": "openclaw-shared-secrets",
+          "keys": [
+            "gatewayToken-prism",
+            "litellmApiKey"
+          ]
+        },
+        {
+          "name": "prism-postgresql-auth",
+          "keys": [
+            "admin-url",
+            "migrator-password",
+            "migrator-url",
+            "password",
+            "readonly-password",
+            "runtime-password",
+            "runtime-url"
+          ]
+        },
+        {
+          "name": "prism-runtime",
+          "keys": [
+            "ingestion-secret",
+            "ingress-secret",
+            "session-secret"
+          ]
+        },
+        {
+          "name": "redis-secrets",
+          "keys": [
+            "redis-password"
+          ]
+        }
+      ]
+    },
+    {
+      "role": "nova",
+      "name": "kubeclaw-nova",
+      "namespace": "kubeclaw",
+      "helmReleases": [
+        "agent-nova"
+      ],
+      "path": "releases/gitops/runtime-40262283722-1/nova",
+      "wave": 1,
+      "manifestDigest": "b03ccbfc4e7b24898bd0dc61b88b53906e862c915130dedf5a2189051ff3eaea",
+      "resources": [
+        {
+          "apiVersion": "networking.k8s.io/v1",
+          "kind": "NetworkPolicy",
+          "namespace": "kubeclaw",
+          "name": "agent-nova-archviewer"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "ServiceAccount",
+          "namespace": "kubeclaw",
+          "name": "agent-nova"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "ConfigMap",
+          "namespace": "kubeclaw",
+          "name": "agent-nova-config"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "ConfigMap",
+          "namespace": "kubeclaw",
+          "name": "agent-nova-swarm-config"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "ConfigMap",
+          "namespace": "kubeclaw",
+          "name": "agent-nova-worker-trust"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "ConfigMap",
+          "namespace": "kubeclaw",
+          "name": "agent-nova-ops-mcp-client"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "PersistentVolumeClaim",
+          "namespace": "kubeclaw",
+          "name": "agent-nova-config"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "PersistentVolumeClaim",
+          "namespace": "kubeclaw",
+          "name": "agent-nova-workspace"
+        },
+        {
+          "apiVersion": "rbac.authorization.k8s.io/v1",
+          "kind": "ClusterRole",
+          "namespace": "",
+          "name": "agent-nova-verification-read"
+        },
+        {
+          "apiVersion": "rbac.authorization.k8s.io/v1",
+          "kind": "ClusterRoleBinding",
+          "namespace": "",
+          "name": "agent-nova-verification-read"
+        },
+        {
+          "apiVersion": "rbac.authorization.k8s.io/v1",
+          "kind": "Role",
+          "namespace": "kubeclaw",
+          "name": "agent-nova-namespace-lease-client"
+        },
+        {
+          "apiVersion": "rbac.authorization.k8s.io/v1",
+          "kind": "Role",
+          "namespace": "tailscale",
+          "name": "agent-nova-verification-secret-9f5def8f"
+        },
+        {
+          "apiVersion": "rbac.authorization.k8s.io/v1",
+          "kind": "RoleBinding",
+          "namespace": "kubeclaw",
+          "name": "agent-nova-namespace-lease-client"
+        },
+        {
+          "apiVersion": "rbac.authorization.k8s.io/v1",
+          "kind": "RoleBinding",
+          "namespace": "tailscale",
+          "name": "agent-nova-verification-secret-9f5def8f"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "Service",
+          "namespace": "kubeclaw",
+          "name": "agent-nova-archviewer"
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "Service",
+          "namespace": "kubeclaw",
+          "name": "agent-nova"
+        },
+        {
+          "apiVersion": "apps/v1",
+          "kind": "Deployment",
+          "namespace": "kubeclaw",
+          "name": "agent-nova"
+        },
+        {
+          "apiVersion": "networking.k8s.io/v1",
+          "kind": "Ingress",
+          "namespace": "kubeclaw",
+          "name": "agent-nova-archviewer"
+        }
+      ],
+      "images": [
+        "envoyproxy/envoy:v1.39.0@sha256:d59f7f5fa10cff6d5892b6c5e7df5c9297ddfb2c3683e33fbfb82da24de4fa66",
+        "ghcr.io/datrab/kubeclaw-archviewer@sha256:b0d561e14b20aed5e9a308a6bfc112b6fdc1929e1f1bf7dc836c0aba0dc7e773",
+        "ghcr.io/datrab/kubeclaw-nova@sha256:21bbeda9585eb53584e390c36854648ddb4cc7359e726d607ca5ad553e418cf7"
+      ],
+      "requiredSecrets": [
+        {
+          "name": "ghcr-secret",
+          "keys": []
+        },
+        {
+          "name": "git-deploy-key-nova",
+          "keys": []
+        },
+        {
+          "name": "github-bundle-reader",
+          "keys": [
+            "token"
+          ]
+        },
+        {
+          "name": "nova-archviewer-auth",
+          "keys": [
+            "htpasswd"
+          ]
+        },
+        {
+          "name": "nova-ops-bearer",
+          "keys": []
+        },
+        {
+          "name": "openclaw-shared-secrets",
+          "keys": [
+            "busterV2Token",
+            "discordToken-nova",
+            "discordWebhook",
+            "gatewayToken-buster",
+            "gatewayToken-nova",
+            "litellmApiKey",
+            "stitchApiKey"
+          ]
+        },
+        {
+          "name": "pipeline-test-gate-source-attestation",
+          "keys": [
+            "privateKey"
+          ]
+        },
+        {
+          "name": "redis-secrets",
+          "keys": [
+            "redis-password"
+          ]
+        }
+      ]
+    }
+  ]
+}

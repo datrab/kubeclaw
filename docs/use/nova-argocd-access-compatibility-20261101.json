@@ -1,0 +1,53 @@
+{
+  "sourceRevision": "5f1e289222aba67f1f983aa7ab213f12857eee28",
+  "sourceHashes": {
+    "gitops/platform/bootstrap/nova-argocd-access.yaml": "27e96468e1b0ac5cf21d6474e2acb5b2c0ae2ea43009666e2509af04f942d30f",
+    "gitops/platform/nova-argocd-access/cilium-optional.yaml": "60cde6cdf551cc3bad37141d696d5d1bab1e9d253620a007d78ab8096296320d",
+    "gitops/platform/nova-argocd-access/resources.yaml": "2482b0508ed07a827fb97727edc9b843b103d269a819b9be71d5681b23bf487f",
+    "scripts/platform-services.mjs": "df1d4cfa9be0dce3b386579f3918ac3abad76f59cb08e1c28663b44fe801a6cb",
+    "tests/verification/deployment/nova-argocd-access.test.mjs": "038810545d7a2272d6a2bd8bea859e4474995653f61ea9d359170ab53ca50b53",
+    "versions.json": "31dbc7b7b7480e4690620754bc60f73da50d1e98fc2bac3010207821825032c1"
+  },
+  "dependencies": {
+    "js-yaml": "4.3.1",
+    "argparse": "2.0.1"
+  },
+  "decision": {
+    "decisionDigest": "sha256:8b474b606095ef98c9d4c1d2f43758aa99017cd2dfe958b13d28f9d743bee5b4",
+    "jobId": "job:0acf59f02a700f18c89e45c25118c06834b0d8952a38eae724a33ea2816dd353",
+    "nodes": [
+      {
+        "effect": "passed",
+        "kind": "test",
+        "mode": "blocking",
+        "nodeId": "unit/production",
+        "reason": "all declared checks passed"
+      }
+    ],
+    "planId": "plan:argo-compat",
+    "resultDigest": "sha256:e528f4100ca772cfc78ac41e958f42295775d6b77b388543881624238298cafb",
+    "reviews": [],
+    "runId": "run:argo-compat:3e9b6539-b4d9-4a8c-8514-a95b4dca930f",
+    "schemaVersion": "test-gate-decision.v1",
+    "state": "passed"
+  },
+  "counts": {
+    "failed": 0,
+    "passed": 4,
+    "skipped": 0,
+    "total": 4
+  },
+  "importComplete": true,
+  "evidenceDigests": [
+    "sha256:cc66f0bf43bad624446565d7b55d8529aecd089c170b325b7ed09e9399f7778a"
+  ],
+  "cleanupErrors": [],
+  "review": "clean supplied-diff review; reviewer shell sandbox unavailable",
+  "scope": "Source render and selector tests only; not live connectivity acceptance",
+  "observedBefore": {
+    "nova-argocd-access": "OutOfSync/Missing: cilium.io/v2 discovery failed",
+    "familyclaw": "OutOfSync/Healthy, comparison 8c828786",
+    "familyclawOps": "OPS_NAMESPACE_FORBIDDEN"
+  },
+  "liveVerified": false
+}

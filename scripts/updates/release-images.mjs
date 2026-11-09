@@ -1,5 +1,8 @@
+import { retainedBaseline } from './retained-baseline.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
+import { changedImages, runtimeRefresh } from './runtime-inputs.mjs';
+import { runtimeImages, componentSource, validSource } from './runtime-components.mjs';
 
 // Production build receipts are downloaded from one successful, verified workflow run.
 export function collectReceipts(directory, commit, expected) {
@@ -16,11 +19,53 @@ export function collectReceipts(directory, commit, expected) {
   if (Object.keys(images).length !== expected.length) throw new Error('Release is missing required images');
   return { schemaVersion: 1, commit, images };
 }
+export function collectRuntimeReceipts(directory, commit, prior, source, root = process.cwd(), force = false) {
+  if (!source || Object.keys(source).some(key => !['sourceRunId', 'sourceRunAttempt'].includes(key))
+    || !validSource({ commit, ...source })) throw new Error('Verified runtime source identity required');
+  const expected = changedImages(root, prior, commit, force);
+  for (const name of runtimeImages.filter(name => !expected.includes(name))) {
+    if (!validSource(componentSource(prior, name, 'image'))) throw new Error(`Invalid retained image source:${name}`);
+  }
+  const built = collectReceipts(directory, commit, expected);
+  return { ...built, ...source,
+    images: Object.fromEntries(runtimeImages.map(name => [name, built.images[name] ?? prior?.images[name]])),
+    imageSources: Object.fromEntries(runtimeImages.map(name => [name, built.images[name] ? { commit, ...source } : componentSource(prior, name, 'image')])) };
+}
+
+// Build scope is deliberately independent of rollout scope. Call only after
+// authenticating the exact baseline; never modify the original build receipts.
+export function selectRuntimeImageReceipts(built, prior, scope) {
+  if (scope === 'all') return built;
+  if (scope !== 'buster') throw new Error('RUNTIME_PUBLICATION_SCOPE_REQUIRED');
+  if (!prior) throw new Error('Invalid retained image baseline');
+  const selected = { ...built, images: { ...built.images }, imageSources: { ...built.imageSources } };
+  for (const name of runtimeImages) {
+    if (['buster-gateway', 'buster-runtime', 'namespace-controller'].includes(name)) continue;
+    const source = componentSource(prior, name, 'image');
+    const image = prior?.images?.[name];
+    if (!validSource(source) || typeof image !== 'string'
+      || !new RegExp(`^ghcr\\.io/[a-z0-9_-]+/kubeclaw-${name}@sha256:[a-f0-9]{64}$`, 'u').test(image)) {
+      throw new Error(`Invalid retained image source:${name}`);
+    }
+    selected.images[name] = image;
+    selected.imageSources[name] = source;
+  }
+  return selected;
+}
 if (process.argv[1] === import.meta.filename) {
+  const receiptScope = process.env.RUNTIME_RECEIPT_SCOPE ?? 'all';
+  if (!['all', 'buster'].includes(receiptScope)) throw new Error('RUNTIME_PUBLICATION_SCOPE_REQUIRED');
+  if (receiptScope === 'buster' && !process.env.GITOPS_RETAINED_BASELINE) throw new Error('RETAINED_BASELINE_REQUIRED');
   const [directory, commit, output, family = "runtime"] = process.argv.slice(2);
   if (!["runtime", "ops"].includes(family)) throw new Error("Unknown release family");
   const names = family === 'ops' ? ['codex-ops', 'ops-mcp'] : ['nova', 'prism-agent', 'buster-gateway', 'buster-runtime', 'namespace-controller', 'archviewer', 'prism-control', 'prism-studio', 'prism-worker', 'prism-ingestion'];
-  const release = collectReceipts(directory, commit, names);
+  const priorFile = 'releases/runtime-images.json';
+  const prior = family === 'runtime' ? (retainedBaseline(process.cwd(), process.env.GITOPS_RETAINED_BASELINE)?.runtime
+    ?? (fs.existsSync(priorFile) ? JSON.parse(fs.readFileSync(priorFile, 'utf8')) : undefined)) : undefined;
+  const source = { sourceRunId: Number(process.env.SOURCE_RUN_ID), sourceRunAttempt: Number(process.env.SOURCE_RUN_ATTEMPT) };
+  const built = family === 'runtime' ? collectRuntimeReceipts(directory, commit, prior, source, process.cwd(), runtimeRefresh().images) : collectReceipts(directory, commit, names);
+  const release = family === 'runtime' ? selectRuntimeImageReceipts(built, prior, receiptScope) : built;
+  if (family === 'runtime' && receiptScope === 'buster') release.retainedBaseline = process.env.GITOPS_RETAINED_BASELINE;
   release.sourceRunId = Number(process.env.SOURCE_RUN_ID);
   if (!Number.isSafeInteger(release.sourceRunId) || release.sourceRunId < 1) throw new Error("Verified source run ID required");
   release.sourceRunAttempt = Number(process.env.SOURCE_RUN_ATTEMPT);

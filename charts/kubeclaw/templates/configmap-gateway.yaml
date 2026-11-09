@@ -10,6 +10,8 @@ metadata:
   labels:
     {{- include "kubeclaw.labels" . | nindent 4 }}
 data:
+  sync-ops-mcp-config.mjs: |
+{{ .Files.Get "files/sync-ops-mcp-config.mjs" | indent 4 }}
   reset-managed-plugin-projects.mjs: |
 {{ .Files.Get "files/reset-managed-plugin-projects.mjs" | indent 4 }}
   restore-managed-plugin-config.mjs: |
@@ -25,6 +27,8 @@ data:
         "lastRunCommand": "configure",
         "lastRunMode": "local"
       },
+      {{/* Prism logins are operator-owned persistent state, not a chart-managed account order. */}}
+      {{- if ne .Values.agentRole "prism" }}
       "auth": {
         "profiles": {
           "openai:d.trabucco@tutamail.com": {
@@ -44,6 +48,7 @@ data:
           ]
         }
       },
+      {{- end }}
       "acp": {
         "enabled": true,
         "backend": "acpx",
@@ -79,6 +84,9 @@ data:
         }
       },
       "agents": {
+        {{- if eq .Values.agentRole "buster" }}
+        "ownership": "explicit",
+        {{- end }}
         "defaults": {
           "systemAgent": {
             "agentId": "main"
@@ -151,7 +159,28 @@ data:
           "contextInjection": "never"
         },
         "entries": {
+          {{- if eq .Values.agentRole "buster" }}
+          "buster-diagnosis": {
+            "skills": [],
+            "tools": {
+              "profile": "full",
+              "allow": ["ops__namespace_overview", "ops__get_pod", "ops__get_events", "ops__get_pod_logs"],
+              "deny": ["group:runtime", "group:fs", "group:sessions", "exec", "process", "sessions_spawn", "sessions_send", "subagents", "ops__exec_pod"]
+            }
+          },
+          {{- end }}
           "main": {
+            {{- if eq .Values.agentRole "buster" }}
+            {{/* The HTTP core-tool ingress freezes restrictive allowlists before MCP
+                 materialization. Keep the coding profile's core exclusions as denies
+                 so delegated diagnosis retains MCP access, without new core rights.
+                 Deny gateway too: full would otherwise grant config reads that
+                 coding did not permit. Buster diagnostics need no gateway admin. */}}
+            "tools": {
+              "profile": "full",
+              "deny": ["gateway", "browser", "canvas", "show_widget", "message", "heartbeat_respond", "openclaw", "nodes", "computer", "mobile_ui", "agents_list", "transcripts", "tts", "pdf"]
+            },
+            {{- end }}
             "subagents": {
               "allowAgents": [
                 "*"
@@ -193,6 +222,26 @@ data:
           "enabled": true
         }
       },
+      {{- if .Values.opsMcp.enabled }}
+      "mcp": {
+        "servers": {
+          "ops": {
+            "enabled": true,
+            "transport": "stdio",
+            "command": "node",
+            "args": ["/opt/ops-mcp-client/stdio.mjs"],
+            "env": {
+              "OPS_MCP_URL": {{ .Values.opsMcp.url | quote }},
+              "OPS_MCP_TOKEN_FILE": "/var/run/ops-mcp-client/token/token",
+              "OPS_MCP_CA_FILE": "/var/run/ops-mcp-client/ca/ca.crt"
+            },
+            "connectionTimeoutMs": 15000,
+            "requestTimeoutMs": 135000,
+            "supportsParallelToolCalls": false
+          }
+        }
+      },
+      {{- end }}
       "commands": {
         "native": "auto",
         "nativeSkills": "auto",

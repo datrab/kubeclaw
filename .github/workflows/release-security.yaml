@@ -16,6 +16,8 @@ jobs:
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
           node-version: 24
+      - name: Test security report generation
+        run: node --test tests/verification/deployment/release-security-report.test.mjs
       - run: node scripts/versions.mjs --check
       - name: Scan pinned inputs and selected release with current advisory data
         env:
@@ -23,18 +25,22 @@ jobs:
           TRIVY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
         run: node scripts/updates/scan-releases.mjs
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
-        if: always()
+        if: ${{ !cancelled() }}
         with:
           name: release-security-reports
           path: dist/trivy
           if-no-files-found: error
       - name: Track a failed security rescan
-        if: failure()
+        if: failure() && github.ref == 'refs/heads/main'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           title='Release security rescan needs attention'
-          printf 'Daily verification failed. Inspect [the scan run](https://github.com/%s/actions/runs/%s) and its reports. This may be a vulnerability, a scanner failure, or a missing initial release selection. No failed scan counts as a pass.\n' "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID" > "$RUNNER_TEMP/security-issue.md"
+          if test -s dist/trivy/security-issue.md; then
+            cp dist/trivy/security-issue.md "$RUNNER_TEMP/security-issue.md"
+          else
+            printf 'Security verification did not produce a report. Inspect [the failed run](https://github.com/%s/actions/runs/%s). This is a scan/infrastructure failure, not a clean vulnerability result.\n' "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID" > "$RUNNER_TEMP/security-issue.md"
+          fi
           number="$(gh issue list --repo "$GITHUB_REPOSITORY" --state open --search "$title in:title" --json number,title --jq '.[] | select(.title == "Release security rescan needs attention") | .number' | head -1)"
           if test -n "$number"; then
             gh issue edit "$number" --repo "$GITHUB_REPOSITORY" --body-file "$RUNNER_TEMP/security-issue.md"

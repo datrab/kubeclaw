@@ -3,10 +3,12 @@
   "prismNamespace": "kubeclaw",
   "argoNamespace": "argocd",
   "runtimeAutoSync": true,
+  "prismControlAccess": true,
   "overlays": {
     "buster": "gitops/production/overlays/buster-ax41.yaml",
     "nova": "gitops/production/overlays/nova-ax41.yaml",
-    "prism": "gitops/production/overlays/prism-ax41.yaml"
+    "prism": "gitops/production/overlays/prism-ax41.yaml",
+    "prism-agent": "gitops/production/overlays/prism-agent-ax41.yaml"
   },
   "naming": {
     "rootName": "kubeclaw",

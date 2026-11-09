@@ -357,7 +357,7 @@ spec:
             - protocol: TCP
               port: "443"
 ---
-# Nova and Buster request leases using their existing RBAC. Other agents do not.
+# Only Buster requests namespace leases. Other agents reach cluster tools through the Ops MCP.
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
@@ -369,7 +369,7 @@ spec:
     matchExpressions:
       - key: app.kubernetes.io/component
         operator: In
-        values: [nova, buster]
+        values: [buster]
   egress:
     - toEntities: [kube-apiserver]
       toPorts:

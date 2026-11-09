@@ -1,4 +1,4 @@
-# Generated from release fc2cd5b73c78cb12aac4fceaf23ac0b64b8eff90 and byte-matched source configuration; do not edit.
+# Generated from release c4ab496c88758279d5a059cd854811abed221379 and byte-matched source configuration; do not edit.
 agentRole: prism
 gateway:
   startupDoctor:
@@ -13,7 +13,7 @@ gateway:
         memory: 4Gi
 image:
   repository: ghcr.io/datrab/kubeclaw-prism-agent
-  digest: sha256:4c83f7b2d0788c5c853f50a1ceeca75a348b1f7aa7e74044fe13b95028e119e1
+  digest: sha256:b3995d5682b3cdaf8beed90711c29b462560c99dc1b3e8757a18f64813034acb
   tag: ''
   pullPolicy: IfNotPresent
 imagePullSecrets:
@@ -22,13 +22,13 @@ runAsRoot: false
 codeBundle:
   enabled: true
   archiveUrl: >-
-    https://github.com/datrab/kubeclaw/releases/download/code-bundles-38542596018-1/prism-92518c7ce206baf67a573e0e78f97269ae06447b.tgz
-  expectedCommit: 92518c7ce206baf67a573e0e78f97269ae06447b
+    https://github.com/datrab/kubeclaw/releases/download/code-bundles-41414241326-1/prism-c4ab496c88758279d5a059cd854811abed221379.tgz
+  expectedCommit: c4ab496c88758279d5a059cd854811abed221379
   contractVersion: v2
   auth:
     existingSecret: github-bundle-reader
     existingSecretKey: token
-  sha256: dcbd4a27720f3ea31aa67e462af2111520819429d8515b401ad50b3e06732ac0
+  sha256: 0d73cf06bc99aa01da094e84f806438e9a9a5da9bee2344c476b398651429656
 auth:
   existingSecret: openclaw-shared-secrets
   existingSecretKey: gatewayToken-prism
@@ -50,9 +50,9 @@ commands:
 agent:
   project: prism
   model:
-    primary: openai/gpt-5.6-sol
+    primary: openai/gpt-6.1-sol
     fallbacks:
-      - openai/gpt-5.5
+      - openai/gpt-6-astra
   git:
     enabled: true
     secretName: git-deploy-key-nova
@@ -72,10 +72,10 @@ extraEnv:
   - name: PRISM_CONTROL_URL
     value: http://127.0.0.1:28080
   - name: PRISM_STUDIO_PUBLIC_URL
-    value: https://prism-studio
+    value: https://prism-studio.tail576648.ts.net
 extraContainers:
   - name: prism-agent-bridge
-    image: ghcr.io/datrab/kubeclaw-prism-agent@sha256:4c83f7b2d0788c5c853f50a1ceeca75a348b1f7aa7e74044fe13b95028e119e1
+    image: ghcr.io/datrab/kubeclaw-prism-agent@sha256:b3995d5682b3cdaf8beed90711c29b462560c99dc1b3e8757a18f64813034acb
     imagePullPolicy: Always
     command:
       - node
@@ -86,7 +86,7 @@ extraContainers:
       - name: PRISM_CONTROL_URL
         value: http://127.0.0.1:28080
       - name: PRISM_STUDIO_PUBLIC_URL
-        value: https://prism-studio
+        value: https://prism-studio.tail576648.ts.net
       - name: OPENCLAW_GATEWAY_TOKEN
         valueFrom:
           secretKeyRef:

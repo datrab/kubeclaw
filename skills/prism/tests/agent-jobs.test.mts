@@ -111,3 +111,39 @@ test('provably unstarted superseded work is retired without taking over the new 
   const retired=await agentJob(db,old.id);assert.equal(retired.state,'superseded');assert.equal(retired.fence,null);
  }finally{await db.close();}
 });
+
+test('explicit reconciliation preserves failure, fences a fresh attempt and is idempotent after execution',async()=>{
+ const {reconcileAgentJob}=await import('../control/agent-reconciliation.ts');
+ const {sha256Digest}=await import('@kubeclaw/worker-core');
+ const {db,admit}=await setup();try{
+  const queued=await admit();const old=await claimAgentJob(db,'old-runner');assert.ok(old?.fence);
+  const outcome={state:'errored',error:'Gateway rejected all model auth before execution'};
+  await finishAgentRun(db,queued.id,old.fence,outcome);
+  const decision={decisionId:randomUUID(),expectedFence:old.fence,expectedOutcomeDigest:sha256Digest(outcome),resolution:'retry-confirmed-no-effect' as const,reason:'Verified gateway rejected before any model execution; no active run or effects.',evidence:[`artifact:sha256:${'a'.repeat(64)}`]};
+  await assert.rejects(reconcileAgentJob(db,queued.id,'nova',{...decision,expectedFence:randomUUID()}),/STALE/);
+  const result=await reconcileAgentJob(db,queued.id,'nova',decision);assert.equal(result.replayed,false);
+  const history=await db.query<{prior_attempt:AgentJob}>('SELECT prior_attempt FROM prism.agent_reconciliation WHERE decision_id=$1',[decision.decisionId]);
+  assert.deepEqual(history.rows[0]!.prior_attempt.outcome,outcome);assert.deepEqual(history.rows[0]!.prior_attempt.attempt_envelope,old.attempt_envelope);
+  const next=await claimAgentJob(db,'new-runner');assert.equal(next?.id,queued.id);assert.notEqual(next?.fence,old.fence);
+  assert.equal(next?.attempt_envelope?.attemptNumber,2);assert.equal(next?.attempt_envelope?.claim.generation,2);
+  await assert.rejects(finishAgentRun(db,queued.id,old.fence,outcome),/fence conflict/);
+  assert.equal((await reconcileAgentJob(db,queued.id,'nova',decision)).replayed,true);
+  assert.equal((await agentJob(db,queued.id)).state,'running');
+  await assert.rejects(reconcileAgentJob(db,queued.id,'nova',{...decision,reason:'Changed decision reason'}),/CONFLICT/);
+  await assert.rejects(reconcileAgentJob(db,queued.id,'foreign',decision),/CONFLICT/);
+ }finally{await db.close();}
+});
+
+test('reconciliation rejects committed results, retaining the failure',async()=>{
+ const {reconcileAgentJob}=await import('../control/agent-reconciliation.ts');const {sha256Digest}=await import('@kubeclaw/worker-core');
+ const {db,repo,admit,designs}=await setup();try{
+  const queued=await admit();const old=await claimAgentJob(db,'runner');assert.ok(old?.fence);
+  const outcome={state:'errored',error:'completion uncertain'};
+  await repo.createDirectionSet('project:one',queued.id,designs,{jobId:queued.id,fence:old.fence,payload:{designs}});
+  await finishAgentRun(db,queued.id,old.fence,outcome);
+  const decision={decisionId:randomUUID(),expectedFence:old.fence,expectedOutcomeDigest:sha256Digest(outcome),resolution:'retry-confirmed-no-effect' as const,reason:'This must not clear a committed design',evidence:[`artifact:sha256:${'a'.repeat(64)}`]};
+  await assert.rejects(reconcileAgentJob(db,queued.id,'nova',decision),/COMMITTED_RESULT/);
+  assert.equal((await db.query('SELECT decision_id FROM prism.agent_reconciliation')).rows.length,0);
+  assert.equal((await agentJob(db,queued.id)).state,'needs_nova');
+ }finally{await db.close();}
+});

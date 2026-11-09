@@ -34,8 +34,8 @@
   },
   "dependencies": {
     "@kubeclaw/pipeline-worker-core-contract": "1.0.0",
-    "@kubeclaw/worker-core": "*",
     "@kubeclaw/prism-contracts-v1": "1.0.0",
+    "@kubeclaw/worker-core": "*",
     "@puckeditor/core": "0.23.0",
     "pg": "8.16.3",
     "playwright": "1.62.1",
@@ -50,6 +50,6 @@
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "5.1.4",
-    "vite": "7.3.6"
+    "vite": "7.3.7"
   }
 }

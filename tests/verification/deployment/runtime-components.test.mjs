@@ -1,0 +1,453 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { execFileSync } from 'node:child_process';
+import test from 'node:test';
+import yaml from 'js-yaml';
+import { changedImages, changedBundles, runtimeRefresh } from '../../../scripts/updates/runtime-inputs.mjs';
+import { runtimeImages, runtimeRoles, componentSource, imageInput } from '../../../scripts/updates/runtime-components.mjs';
+import { collectRuntimeReceipts } from '../../../scripts/updates/release-images.mjs';
+import { selectedRelease, validateRenderedRelease } from '../../../scripts/updates/deployment-release.mjs';
+import { verifyReleaseSources } from '../../../scripts/updates/verify-release-source.mjs';
+
+import { compatibleCode, selectRuntimeCodeReceipt, selectedCode } from '../../../scripts/updates/code-release.mjs';
+
+const sourceRoot = path.resolve(import.meta.dirname, '../../..');
+const image = (name, digit) => `ghcr.io/datrab/kubeclaw-${name}@sha256:${digit.repeat(64)}`;
+async function fixture(run) {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'runtime-components-'));
+  const git = args => execFileSync('git', ['-C', root, ...args], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
+  const write = (file, value) => { fs.mkdirSync(path.dirname(path.join(root, file)), { recursive: true }); fs.writeFileSync(path.join(root, file), value); };
+  const commit = () => { git(['add', '.']); git(['-c', 'user.name=Test', '-c', 'user.email=test@example.invalid', 'commit', '-qm', 'fixture']); return git(['rev-parse', 'HEAD']); };
+  try {
+    for (const directory of ['packaging/runtime', 'charts', 'my-values']) fs.cpSync(path.join(sourceRoot, directory), path.join(root, directory), { recursive: true });
+    for (const file of fs.readdirSync(path.join(sourceRoot, 'skills'), { recursive: true })) {
+      if (file.endsWith('/plugin.json')) write(`skills/${file}`, fs.readFileSync(path.join(sourceRoot, 'skills', file)));
+    }
+    const buster = yaml.load(fs.readFileSync(path.join(root, 'my-values/buster-values.yaml'), 'utf8'));
+    buster.runtimeInfrastructure ??= {};
+    buster.runtimeInfrastructure.registry = { endpoint: 'https://registry.example.test', transport: 'https', authSecretName: 'registry-test' };
+    write('my-values/buster-values.yaml', yaml.dump(buster));
+    const prism = yaml.load(fs.readFileSync(path.join(root, 'my-values/prism-values.yaml'), 'utf8'));
+    prism.worker.native = { ...prism.worker.native, nodeName: 'worker-test', namespace: 'kubeclaw', policyDigest: 'a'.repeat(64) };
+    write('my-values/prism-values.yaml', yaml.dump(prism));
+    write('skills/buster/engine/test-gates/diagnostics.ts', 'old');
+    write('skills/nova/core/engine.ts', 'old');
+    write('skills/common/plugin-runtime/sdk/index.ts', 'old');
+    write('cmd/buster-namespace-controller/main.go', 'old');
+    git(['init', '-q']);
+    const initial = commit();
+    const images = { schemaVersion: 1, commit: initial, sourceRunId: 1, sourceRunAttempt: 1,
+      images: Object.fromEntries(runtimeImages.map(name => [name, image(name, 'a')])) };
+    const code = { schemaVersion: 1, commit: initial, sourceRunId: 1, sourceRunAttempt: 1,
+      bundles: Object.fromEntries(runtimeRoles.map(role => [role, { url: `https://github.com/datrab/kubeclaw/releases/download/code-bundles-1-1/${role}-${initial}.tgz`, sha256: 'a'.repeat(64), contractVersion: 'v2' }])) };
+    write('releases/runtime-images.json', JSON.stringify(images)); write('releases/runtime-code.json', JSON.stringify(code));
+    commit();
+    return await run({ root, git, write, commit, initial, images, code });
+  } finally { fs.rmSync(root, { recursive: true, force: true }); }
+}
+
+test('Buster controller, engine, plugin and chart edits select only their actual consumers', () => fixture(({ root, write, commit, images, code }) => {
+  write('cmd/buster-namespace-controller/main.go', 'new controller');
+  let head = commit();
+  assert.deepEqual(changedImages(root, images, head), ['namespace-controller']);
+  assert.deepEqual(changedBundles(root, code, head), []);
+  write('skills/buster/engine/test-gates/diagnostics.ts', 'new diagnostics');
+  write('skills/buster/plugins/kubernetes-fixture/src/provider.js', 'new provider');
+  write('charts/kubeclaw/templates/buster-namespace-controller.yaml', '# new controller config');
+  head = commit();
+  assert.deepEqual(changedImages(root, images, head), ['buster-runtime', 'namespace-controller']);
+  assert.deepEqual(changedBundles(root, code, head), ['buster']);
+  // Deleting input is a change too, even after a preceding build failed.
+  fs.unlinkSync(path.join(root, 'skills/buster/engine/test-gates/diagnostics.ts'));
+  const afterFailure = commit();
+  assert.deepEqual(changedImages(root, images, afterFailure), ['buster-runtime', 'namespace-controller']);
+  assert.deepEqual(changedBundles(root, code, afterFailure), ['buster']);
+}));
+
+test('shared dependencies, packaging metadata, manual refreshes and unrelated documentation remain safe', () => fixture(({ root, write, commit, images, code }) => {
+  write('docs/notes.md', 'documentation only');
+  let head = commit();
+  assert.deepEqual(changedImages(root, images, head), []); assert.deepEqual(changedBundles(root, code, head), []);
+  assert.deepEqual(changedImages(root, images, head, true), runtimeImages);
+  assert.deepEqual(changedBundles(root, code, head, true), runtimeRoles);
+  write('skills/common/plugin-runtime/sdk/index.ts', 'shared API change'); head = commit();
+  assert.deepEqual(changedImages(root, images, head), ['prism-agent', 'buster-runtime', 'prism-control', 'prism-studio', 'prism-worker', 'prism-ingestion']);
+  assert.deepEqual(changedBundles(root, code, head), runtimeRoles);
+  const manifest = JSON.parse(fs.readFileSync(path.join(root, 'packaging/runtime/roles/nova.json')));
+  manifest.packages = manifest.packages.filter(id => id !== 'nova-core');
+  write('packaging/runtime/roles/nova.json', JSON.stringify(manifest)); head = commit();
+  assert(changedBundles(root, code, head).includes('nova'));
+}));
+
+test('rollback baseline cannot silently retain Prism after shared image inputs changed', () => fixture(({ root, write, commit, images }) => {
+  write('skills/common/plugin-runtime/sdk/index.ts', 'shared API change');
+  const head = commit();
+  const expected = ['prism-agent', 'buster-runtime', 'prism-control', 'prism-studio', 'prism-worker', 'prism-ingestion'];
+  assert.deepEqual(changedImages(root, images, head), expected);
+  fs.mkdirSync(path.join(root, 'receipt-input'));
+  // Buster-only artifacts cannot certify that the old Prism inputs were built.
+  write('receipt-input/buster-runtime.json', JSON.stringify({ name: 'buster-runtime', commit: head, image: image('buster-runtime', 'b') }));
+  const before = JSON.stringify(images);
+  assert.throws(() => collectRuntimeReceipts(path.join(root, 'receipt-input'), head, images,
+    { sourceRunId: 2, sourceRunAttempt: 1 }, root), /Release is missing required images/u);
+  assert.equal(JSON.stringify(images), before);
+  // Adding the old producer's authentic artifact is still cross-commit, not a
+  // new build. Retention needs an explicit role-bound plan, not artifact mixing.
+  write('receipt-input/prism-agent.json', JSON.stringify({ name: 'prism-agent', commit: images.commit, image: images.images['prism-agent'] }));
+  assert.throws(() => collectRuntimeReceipts(path.join(root, 'receipt-input'), head, images,
+    { sourceRunId: 2, sourceRunAttempt: 1 }, root), /cross-commit image receipt/u);
+  assert.equal(JSON.stringify(images), before);
+}));
+
+test('partial build publication retains old images and bundles, and Helm preserves Nova and Prism pod templates', () => fixture(({ root, write, commit, images, code }) => {
+  const materialize = () => execFileSync(process.execPath, [path.join(sourceRoot, 'scripts/updates/materialize-release.mjs')], { cwd: root });
+  const render = role => execFileSync('helm', ['template', `agent-${role}`, path.join(root, `charts/${role === 'prism' ? 'prism' : 'kubeclaw'}`), '-n', 'kubeclaw', '-f', path.join(root, `releases/values/${role}.yaml`)], { encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
+  const templates = manifest => yaml.loadAll(manifest).filter(doc => doc?.spec?.template).map(doc => [doc.kind, doc.metadata.name, doc.spec.template]);
+  materialize();
+  const before = Object.fromEntries(['nova', 'buster', 'prism-agent', 'prism'].map(role => [role, render(role)]));
+  write('cmd/buster-namespace-controller/main.go', 'new');
+  write('skills/buster/engine/test-gates/diagnostics.ts', 'new');
+  const head = commit();
+  fs.mkdirSync(path.join(root, 'receipt-input'));
+  for (const name of ['buster-runtime', 'namespace-controller']) write(`receipt-input/${name}.json`, JSON.stringify({ name, commit: head, image: image(name, 'b') }));
+  const next = collectRuntimeReceipts(path.join(root, 'receipt-input'), head, images, { sourceRunId: 2, sourceRunAttempt: 1 }, root);
+  write('releases/runtime-images.json', JSON.stringify(next));
+  for (const name of runtimeImages) {
+    assert.equal(next.images[name], ['buster-runtime', 'namespace-controller'].includes(name) ? image(name, 'b') : images.images[name]);
+    assert.equal(componentSource(next, name, 'image').commit, ['buster-runtime', 'namespace-controller'].includes(name) ? head : images.commit);
+  }
+  write('dist/buster-' + head + '.tgz', 'fixture archive bytes');
+  execFileSync(process.execPath, [path.join(sourceRoot, 'scripts/updates/code-release.mjs'), 'dist', head, 'datrab/kubeclaw'], {
+    cwd: root, env: { ...process.env, GITOPS_RETAINED_BASELINE: '', GITHUB_SHA: head, GITHUB_RUN_ID: '2', GITHUB_RUN_ATTEMPT: '1', GITHUB_EVENT_NAME: 'push' },
+  });
+  const nextCode = JSON.parse(fs.readFileSync(path.join(root, 'dist/runtime-code.json')));
+  for (const role of ['nova', 'prism']) {
+    assert.equal(nextCode.bundles[role].url, code.bundles[role].url);
+    assert.equal(componentSource(nextCode, role, 'bundle').commit, code.commit);
+  }
+  write('releases/runtime-code.json', JSON.stringify(nextCode));
+  assert.deepEqual(changedImages(root, next, head), []); assert.deepEqual(changedBundles(root, nextCode, head), []);
+  materialize();
+  const selected = selectedRelease(root, 'runtime');
+  for (const role of ['nova', 'prism-agent', 'prism']) {
+    const after = render(role);
+    assert.deepEqual(templates(after), templates(before[role]), role);
+    validateRenderedRelease(after, after, selected, role !== 'prism');
+  }
+  assert.notDeepEqual(templates(render('buster')), templates(before.buster));
+  const expected = execFileSync(process.execPath, [path.join(sourceRoot, 'scripts/updates/deployment-release.mjs'), 'verify', root, 'runtime', 'nova'], { cwd: root, encoding: 'utf8' }).trim();
+  assert.equal(expected, code.commit);
+  // A receipt cannot conceal a missing or unexpected build artifact.
+  fs.unlinkSync(path.join(root, 'receipt-input/namespace-controller.json'));
+  assert.throws(() => collectRuntimeReceipts(path.join(root, 'receipt-input'), head, images, { sourceRunId: 2, sourceRunAttempt: 1 }, root), /missing/);
+}));
+
+// Local API fixtures exercise provenance validation; no fixture represents a real build.
+test('mixed provenance resolves each retained artifact to its producing successful run and rejects forgery', async () => fixture(async ({ root, write, commit, images, code }) => {
+  write('cmd/buster-namespace-controller/main.go', 'new'); const head = commit();
+  const next = { ...images, commit: head, sourceRunId: 2, images: { ...images.images, 'namespace-controller': image('namespace-controller', 'b') },
+    imageSources: Object.fromEntries(runtimeImages.map(name => [name, { commit: name === 'namespace-controller' ? head : images.commit, sourceRunId: name === 'namespace-controller' ? 2 : 1, sourceRunAttempt: 1 }])) };
+  const nextCode = { ...code, commit: head, sourceRunId: 2, bundles: Object.fromEntries(runtimeRoles.map(role => [role, { ...code.bundles[role], source: componentSource(code, role, 'bundle') }])) };
+  const receipts = { 'runtime-images-1-1': images, 'runtime-images-2-1': next, 'code-bundles-1-1': code, 'code-bundles-2-1': nextCode };
+  const assets = new Map(); const releases = {};
+  let counter = 0;
+  for (const [tag, receipt] of Object.entries(receipts)) {
+    const id = ++counter; assets.set(id, structuredClone(receipt));
+    releases[tag] = { target_commitish: receipt.commit, assets: [{ id, name: tag.startsWith('code') ? 'runtime-code.json' : 'runtime-images.json', size: 1000 },
+      ...Object.entries(receipt.bundles ?? {}).filter(([, bundle]) => !bundle.source).map(([role, bundle]) => ({ name: `${role}-${receipt.commit}.tgz`, browser_download_url: bundle.url, digest: `sha256:${bundle.sha256}` }))] };
+  }
+  write('releases/runtime-images.json', JSON.stringify(next)); write('releases/runtime-code.json', JSON.stringify(nextCode));
+  const runs = { 1: { head_sha: images.commit }, 2: { head_sha: head } };
+  const fetchImpl = async url => {
+    const route = url.split('/repos/datrab/kubeclaw/')[1];
+    const run = route.match(/^actions\/runs\/(\d+)\/attempts\/1$/u);
+    const value = run ? { conclusion: 'success', head_branch: 'main', head_repository: { full_name: 'datrab/kubeclaw' }, path: '.github/workflows/build-images.yaml', event: 'push', ...runs[run[1]] }
+      : route.startsWith('releases/tags/') ? releases[route.slice('releases/tags/'.length)] : assets.get(Number(route.slice('releases/assets/'.length)));
+    return new Response(JSON.stringify(value), { status: value ? 200 : 404 });
+  };
+  const verify = () => verifyReleaseSources({ root, repo: 'datrab/kubeclaw', token: 'test', fetchImpl });
+  await verify();
+  const baselineDirectory = 'releases/gitops/runtime-1-1';
+  write(`${baselineDirectory}/bundle.receipt`, JSON.stringify({ schemaVersion: 'kubeclaw-gitops-bundle.v1', receipt: { ...images, code } }));
+  const verifyBaseline = () => verifyReleaseSources({ root, repo: 'datrab/kubeclaw', token: 'test', fetchImpl, baselineDirectory });
+  await verifyBaseline();
+  await assert.rejects(() => verifyReleaseSources({ root, repo: 'datrab/kubeclaw', token: 'test', fetchImpl, baselineDirectory: '../escape' }), /PATH_INVALID/);
+  write(`${baselineDirectory}/bundle.receipt`, JSON.stringify({ schemaVersion: 'kubeclaw-gitops-bundle.v1', receipt: { ...images, images: { ...images.images, nova: image('nova', 'f') }, code } }));
+  await assert.rejects(verifyBaseline, /preserved successful-source receipt/);
+  write(`${baselineDirectory}/bundle.receipt`, JSON.stringify({ schemaVersion: 'kubeclaw-gitops-bundle.v1', receipt: { ...images, code } }));
+  runs[1].conclusion = 'failure'; await assert.rejects(verifyBaseline, /successful/); delete runs[1].conclusion;
+  runs[1].conclusion = 'failure'; await assert.rejects(verify, /successful/); delete runs[1].conclusion;
+  // Local selection edits must not mutate the immutable API receipt fixture.
+  // Even an authentic older component cannot be substituted into a different
+  // published selection: a new successful-source receipt is required first.
+  const synthetic = structuredClone(next);
+  synthetic.images['namespace-controller'] = images.images['namespace-controller'];
+  synthetic.imageSources['namespace-controller'] = componentSource(images, 'namespace-controller', 'image');
+  write('releases/runtime-images.json', JSON.stringify(synthetic));
+  await assert.rejects(verify, /preserved successful-source receipt/);
+  assert.equal(assets.get(2).images['namespace-controller'], next.images['namespace-controller']);
+  next.images.nova = image('nova', 'f'); write('releases/runtime-images.json', JSON.stringify(next));
+  await assert.rejects(verify, /preserved successful-source receipt/);
+  // If the published selection itself names a forged retained value, the
+  // independent original producer receipt must still reject it.
+  assets.set(2, structuredClone(next));
+  await assert.rejects(verify, /original build/);
+}));
+
+
+test('component dependency declarations cover every explicit Docker COPY source', () => {
+  const tracked = execFileSync('git', ['ls-files', '-z'], { encoding: 'utf8' }).split('\0').filter(Boolean);
+  for (const name of runtimeImages) {
+    const dockerfile = fs.readFileSync(`docker/Dockerfile.${name}`, 'utf8');
+    for (const line of dockerfile.split('\n')) {
+      if (!line.startsWith('COPY ') || line.startsWith('COPY --from=')) continue;
+      const sources = line.slice(5).trim().split(/\s+/u).slice(0, -1);
+      for (const source of sources) {
+        if (source === '.') continue; // Prism workspace builds are declared explicitly.
+        const prefix = source.replace(/\/$/u, '');
+        const files = tracked.filter(file => file === prefix || file.startsWith(`${prefix}/`));
+        assert(files.length > 0, `No tracked COPY input: ${name}/${source}`);
+        for (const file of files) assert(imageInput(name, file), `Missing image dependency: ${name}/${file}`);
+      }
+    }
+  }
+});
+
+
+test('same-code replay still checks image publication scope before receipt writes', () => fixture(({ root, write, initial, images, code }) => {
+  const next = structuredClone(images);
+  next.images['prism-agent'] = image('prism-agent', 'b');
+  const assets = Object.entries(code.bundles).map(([role, bundle], index) => ({
+    id: index + 10, name: `${role}-${initial}.tgz`, browser_download_url: bundle.url,
+    digest: `sha256:${bundle.sha256}`,
+  }));
+  const routes = {
+    'actions/runs/1/attempts/1': { conclusion: 'success', path: '.github/workflows/build-images.yaml',
+      head_branch: 'main', event: 'push', head_repository: { full_name: 'datrab/kubeclaw' }, head_sha: initial },
+    'releases/tags/code-bundles-1-1': { target_commitish: initial, assets: [
+      ...assets, { id: 1, name: 'runtime-code.json', size: 1000 }] },
+    'releases/assets/1': code,
+    'releases/tags/runtime-images-1-1': { target_commitish: initial, assets: [
+      { id: 2, name: 'runtime-images.json', size: 1000 }] },
+    'releases/assets/2': next,
+  };
+  write('mock-fetch.mjs', `const routes = ${JSON.stringify(routes)};
+    globalThis.fetch = async url => {
+      const route = String(url).split('/repos/datrab/kubeclaw/')[1];
+      if (!(route in routes)) throw new Error('Unexpected API route: ' + route);
+      return new Response(JSON.stringify(routes[route]), { status: 200 });
+    };`);
+  const beforeCode = fs.readFileSync(path.join(root, 'releases/runtime-code.json'), 'utf8');
+  const beforeImages = fs.readFileSync(path.join(root, 'releases/runtime-images.json'), 'utf8');
+  assert.throws(() => execFileSync(process.execPath, ['--import', path.join(root, 'mock-fetch.mjs'),
+    path.join(sourceRoot, 'scripts/updates/select-runtime-deployment.mjs')], {
+    cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'],
+    env: { ...process.env, GITHUB_REPOSITORY: 'datrab/kubeclaw', GITHUB_TOKEN: 'fixture-only',
+      SOURCE_RUN_ID: '1', SOURCE_RUN_ATTEMPT: '1', RUNTIME_PUBLICATION_SCOPE: 'buster',
+      GITHUB_OUTPUT: path.join(root, 'selection-output') },
+  }), error => /RUNTIME_PUBLICATION_SCOPE_EXCEEDED:buster/u.test(error.stderr));
+  assert.equal(fs.readFileSync(path.join(root, 'releases/runtime-code.json'), 'utf8'), beforeCode);
+  assert.equal(fs.readFileSync(path.join(root, 'releases/runtime-images.json'), 'utf8'), beforeImages);
+  assert.equal(fs.existsSync(path.join(root, 'selection-output')), false);
+}));
+
+test('incompatible Buster candidate leaves both selected receipts and outputs untouched', () => fixture(({ root, write, commit, initial, images, code }) => {
+  write('docker/Dockerfile.buster-runtime', 'incompatible new runtime inputs');
+  const head = commit();
+  code = structuredClone(code);
+  code.commit = head;
+  for (const bundle of Object.values(code.bundles)) bundle.url = bundle.url.replace(initial, head);
+  code.bundles.buster.sha256 = 'b'.repeat(64);
+  const next = structuredClone(images);
+  next.commit = head;
+  next.imageSources = Object.fromEntries(runtimeImages.map(name => [name, { commit: initial, sourceRunId: 1, sourceRunAttempt: 1 }]));
+  const assets = Object.entries(code.bundles).map(([role, bundle], index) => ({
+    id: index + 10, name: `${role}-${head}.tgz`, browser_download_url: bundle.url,
+    digest: `sha256:${bundle.sha256}`,
+  }));
+  const routes = {
+    'actions/runs/1/attempts/1': { conclusion: 'success', path: '.github/workflows/build-images.yaml',
+      head_branch: 'main', event: 'push', head_repository: { full_name: 'datrab/kubeclaw' }, head_sha: head },
+    'releases/tags/code-bundles-1-1': { target_commitish: head, assets: [
+      ...assets, { id: 1, name: 'runtime-code.json', size: 1000 }] },
+    'releases/assets/1': code,
+    'releases/tags/runtime-images-1-1': { target_commitish: head, assets: [
+      { id: 2, name: 'runtime-images.json', size: 1000 }] },
+    'releases/assets/2': next,
+  };
+  write('mock-fetch.mjs', `const routes = ${JSON.stringify(routes)};
+    globalThis.fetch = async url => {
+      const route = String(url).split('/repos/datrab/kubeclaw/')[1];
+      if (!(route in routes)) throw new Error('Unexpected API route: ' + route);
+      return new Response(JSON.stringify(routes[route]), { status: 200 });
+    };`);
+  const beforeCode = fs.readFileSync(path.join(root, 'releases/runtime-code.json'), 'utf8');
+  const beforeImages = fs.readFileSync(path.join(root, 'releases/runtime-images.json'), 'utf8');
+  // Permit full scope only in this offline fixture to reach the later compatibility gate.
+  assert.throws(() => execFileSync(process.execPath, ['--import', path.join(root, 'mock-fetch.mjs'),
+    path.join(sourceRoot, 'scripts/updates/select-runtime-deployment.mjs')], {
+    cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'],
+    env: { ...process.env, GITHUB_REPOSITORY: 'datrab/kubeclaw', GITHUB_TOKEN: 'fixture-only',
+      SOURCE_RUN_ID: '1', SOURCE_RUN_ATTEMPT: '1', RUNTIME_PUBLICATION_SCOPE: 'all',
+      GITHUB_OUTPUT: path.join(root, 'selection-output') },
+  }), error => /CODE_RELEASE_REQUIRES_NEW_IMAGES/u.test(error.stderr));
+  assert.equal(fs.readFileSync(path.join(root, 'releases/runtime-code.json'), 'utf8'), beforeCode);
+  assert.equal(fs.readFileSync(path.join(root, 'releases/runtime-images.json'), 'utf8'), beforeImages);
+  assert.equal(fs.existsSync(path.join(root, 'selection-output')), false);
+}));
+
+ test('retained role images match their own bundle source, not another role or global code', () => fixture(({ root, write, commit, initial, images, code }) => {
+  write('docker/Dockerfile.prism-agent', 'new Prism image inputs');
+  const head = commit();
+  const nextCode = structuredClone(code);
+  nextCode.commit = head;
+  for (const role of runtimeRoles) nextCode.bundles[role].source = { commit: initial, sourceRunId: 1, sourceRunAttempt: 1 };
+  write('releases/runtime-code.json', JSON.stringify(nextCode));
+  const retained = { ...images, imageSources: Object.fromEntries(runtimeImages.map(name => [name, { commit: initial, sourceRunId: 1, sourceRunAttempt: 1 }])) };
+  assert.deepEqual(selectedCode(root, retained), nextCode);
+  // A new image cannot be paired with the old role bundle merely because global code matches.
+  retained.imageSources['prism-agent'].commit = head;
+  assert.throws(() => selectedCode(root, retained), /CODE_RELEASE_REQUIRES_NEW_IMAGES/);
+  // Image-only legacy receipts retain their conservative global compatibility gate.
+  assert.throws(() => selectedCode(root, images), /CODE_RELEASE_REQUIRES_NEW_IMAGES/);
+}));
+
+
+test('receipt creation rejects invalid new and retained producer identities before collection', () => fixture(({ root, write, initial, images }) => {
+  fs.mkdirSync(path.join(root, 'receipt-input'));
+  const directory = path.join(root, 'receipt-input');
+  const before = JSON.stringify(images);
+  for (const source of [{}, { sourceRunId: 0, sourceRunAttempt: 1 }, { sourceRunId: 2, sourceRunAttempt: 0 },
+    { sourceRunId: 2, sourceRunAttempt: 1, commit: 'a'.repeat(40) },
+    { sourceRunId: 2, sourceRunAttempt: 1, images: {} },
+    { sourceRunId: 2, sourceRunAttempt: 1, schemaVersion: 99 }]) {
+    assert.throws(() => collectRuntimeReceipts(directory, initial, images, source, root), /Verified runtime source identity required/u);
+  }
+  const malformed = structuredClone(images);
+  malformed.imageSources = { nova: { commit: initial, sourceRunId: 1, sourceRunAttempt: 0 } };
+  assert.throws(() => collectRuntimeReceipts(directory, initial, malformed,
+    { sourceRunId: 2, sourceRunAttempt: 1 }, root), /Invalid retained image source:nova/u);
+  assert.equal(JSON.stringify(images), before);
+  const valid = collectRuntimeReceipts(directory, initial, images, { sourceRunId: 2, sourceRunAttempt: 1 }, root);
+  assert.deepEqual(valid.images, images.images);
+  assert.deepEqual(valid.imageSources.nova, componentSource(images, 'nova', 'image'));
+}));
+
+
+test('explicit refresh is bounded and cannot suppress shared-input rebuilds', () => fixture(({ root, write, commit, images, code }) => {
+  write('docs/refresh.md', 'refresh fixture');
+  const head = commit();
+  assert.deepEqual(changedImages(root, images, head, ['buster-runtime', 'namespace-controller']), ['buster-runtime', 'namespace-controller']);
+  assert.deepEqual(changedBundles(root, code, head, ['buster']), ['buster']);
+  for (const invalid of [null, 'buster', ['unknown'], ['buster', 'buster']]) {
+    assert.throws(() => changedBundles(root, code, head, invalid), /INVALID_RUNTIME_REFRESH_COMPONENTS/u);
+  }
+  assert.throws(() => changedImages(root, images, head, ['buster']), /INVALID_RUNTIME_REFRESH_COMPONENTS/u);
+  write('skills/common/plugin-runtime/sdk/index.ts', 'shared change');
+  const shared = commit();
+  assert.ok(changedImages(root, images, shared, ['namespace-controller']).includes('prism-control'));
+  assert.deepEqual(changedBundles(root, code, shared, ['buster']), runtimeRoles);
+}));
+
+
+test('refresh transport is shared, bounded and dispatch-only', () => {
+  assert.deepEqual(runtimeRefresh({}), { images: false, bundles: false });
+  assert.deepEqual(runtimeRefresh({ GITHUB_EVENT_NAME: 'workflow_dispatch' }), { images: true, bundles: true });
+  const plan = { images: ['buster-runtime', 'namespace-controller'], bundles: ['buster'] };
+  const env = { GITHUB_EVENT_NAME: 'workflow_dispatch', RUNTIME_REFRESH_PLAN: JSON.stringify(plan) };
+  assert.deepEqual(runtimeRefresh(env), plan);
+  assert.throws(() => runtimeRefresh({ ...env, GITHUB_EVENT_NAME: 'push' }), /REQUIRES_DISPATCH/u);
+  for (const invalid of ['null', '[]', '{', '{}', '{"images":true,"bundles":[]}',
+    '{"images":[],"bundles":[],"extra":true}', '{"images":["nova","nova"],"bundles":[]}',
+    '{"images":[],"bundles":["unknown"]}']) {
+    assert.throws(() => runtimeRefresh({ ...env, RUNTIME_REFRESH_PLAN: invalid }), /INVALID_RUNTIME_REFRESH/u);
+  }
+});
+
+
+test('dispatch collector and bundle CLI preserve non-refreshed component origins', () => fixture(({ root, write, commit, initial, images, code }) => {
+  write('docs/refresh-cli.md', 'bounded dispatch');
+  const head = commit();
+  const plan = { images: ['buster-runtime', 'namespace-controller'], bundles: ['buster'] };
+  // Synthetic receipts must not inherit the caller's production baseline.
+  const env = { ...process.env, GITOPS_RETAINED_BASELINE: '', GITHUB_EVENT_NAME: 'workflow_dispatch',
+    GITHUB_SHA: head, RUNTIME_REFRESH_PLAN: JSON.stringify(plan),
+    SOURCE_RUN_ID: '2', SOURCE_RUN_ATTEMPT: '1' };
+  for (const name of plan.images) write(`receipt-input/${name}.json`, JSON.stringify({
+    name, commit: head, image: `ghcr.io/datrab/kubeclaw-${name}@sha256:${'b'.repeat(64)}`,
+  }));
+  const run = (script, args) => execFileSync(process.execPath, [path.join(sourceRoot, 'scripts/updates', script), ...args],
+    { cwd: root, env, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
+  assert.deepEqual(JSON.parse(run('code-release.mjs', ['--roles'])), ['buster']);
+  run('release-images.mjs', ['receipt-input', head, 'receipt-output/default.json', 'runtime']);
+  // A conflicting current selection must not override an explicit active baseline.
+  env.GITOPS_RETAINED_BASELINE = 'releases/gitops/runtime-1-1';
+  write(`${env.GITOPS_RETAINED_BASELINE}/bundle.receipt`, JSON.stringify({
+    schemaVersion: 'kubeclaw-gitops-bundle.v1', receipt: { ...images, code },
+  }));
+  write('releases/runtime-images.json', '{}');
+  write('releases/runtime-code.json', '{}');
+  assert.deepEqual(JSON.parse(run('code-release.mjs', ['--roles'])), ['buster']);
+  run('release-images.mjs', ['receipt-input', head, 'receipt-output/runtime-images.json', 'runtime']);
+  const result = JSON.parse(fs.readFileSync(path.join(root, 'receipt-output/runtime-images.json'), 'utf8'));
+  assert.deepEqual(result, JSON.parse(fs.readFileSync(path.join(root, 'receipt-output/default.json'), 'utf8')));
+  for (const name of runtimeImages) {
+    if (plan.images.includes(name)) {
+      assert.deepEqual(result.imageSources[name], { commit: head, sourceRunId: 2, sourceRunAttempt: 1 });
+    } else {
+      assert.equal(result.images[name], images.images[name]);
+      assert.deepEqual(result.imageSources[name], componentSource(images, name, 'image'));
+      assert.equal(result.imageSources[name].commit, initial);
+    }
+  }
+  assert.equal(fs.readFileSync(path.join(root, 'releases/runtime-code.json'), 'utf8'), '{}');
+}));
+
+ test('explicit retained baseline permits only exact Nova/Prism bundles and keeps Buster current', () => fixture(({ root, write, commit, initial, images, code }) => {
+  write('skills/common/plugin-runtime/sdk/index.ts', 'new shared runtime');
+  const head = commit();
+  const baseline = 'releases/gitops/retained-code-test';
+  write(`${baseline}/bundle.receipt`, JSON.stringify({ schemaVersion: 'kubeclaw-gitops-bundle.v1', receipt: { ...images, code } }));
+  const built = { ...code, commit: head, bundles: Object.fromEntries(Object.entries(code.bundles).map(([role, bundle]) => [role, { ...bundle, url: bundle.url.replace(initial, head) }])) };
+  const candidate = { ...selectRuntimeCodeReceipt(built, code, 'buster'), retainedBaseline: baseline };
+  const selectedImages = { ...images, commit: head, retainedBaseline: baseline,
+    imageSources: Object.fromEntries(runtimeImages.map(name => [name, { commit: name === 'archviewer' || name === 'nova' || name.startsWith('prism-') ? initial : head, sourceRunId: 1, sourceRunAttempt: 1 }])) };
+  assert.equal(compatibleCode(root, selectedImages, candidate), candidate);
+  for (const role of ['nova', 'prism']) {
+    for (const mutate of [bundle => { bundle.sha256 = 'b'.repeat(64); }, bundle => { bundle.source.sourceRunId++; }]) {
+      const bad = structuredClone(candidate); mutate(bad.bundles[role]);
+      assert.throws(() => compatibleCode(root, selectedImages, bad), /RETAINED_CODE_BUNDLE_MISMATCH|CODE_BUNDLE_INVALID/);
+    }
+  }
+  const stale = structuredClone(candidate); stale.bundles.buster = { ...code.bundles.buster, source: { commit: initial, sourceRunId: 1, sourceRunAttempt: 1 } };
+  assert.throws(() => compatibleCode(root, selectedImages, stale), /CODE_BUNDLE_INPUTS_CHANGED/);
+  const unscoped = structuredClone(candidate); delete unscoped.retainedBaseline;
+  const unscopedImages = { ...selectedImages }; delete unscopedImages.retainedBaseline;
+  assert.throws(() => compatibleCode(root, unscopedImages, unscoped), /CODE_BUNDLE_INPUTS_CHANGED/);
+}));
+
+test('Prism-only payload refreshes Buster bundle provenance for its broad image payload', () => fixture(({ root, write, commit, images, code }) => {
+  write('skills/prism/src/studio/mobile.ts', 'mobile viewport fix');
+  const head = commit();
+  assert(changedImages(root, images, head).includes('buster-runtime'));
+  assert.deepEqual(changedBundles(root, code, head, false, true), ['buster', 'prism']);
+  const roles = execFileSync(process.execPath, [path.join(sourceRoot, 'scripts/updates/code-release.mjs'), '--roles'], {
+    cwd: root, encoding: 'utf8', env: { ...process.env, GITHUB_SHA: head, GITHUB_EVENT_NAME: 'push',
+      GITOPS_RETAINED_BASELINE: '', RUNTIME_RECEIPT_SCOPE: 'all', RUNTIME_REFRESH_PLAN: '' },
+  });
+  assert.deepEqual(JSON.parse(roles), ['buster', 'prism']);
+  const candidate = { ...code, commit: head, sourceRunId: 2, bundles: {
+    ...code.bundles,
+    nova: { ...code.bundles.nova, source: { commit: code.commit, sourceRunId: 1, sourceRunAttempt: 1 } },
+    ...Object.fromEntries(['buster', 'prism'].map(role => [role, {
+      ...code.bundles[role], url: `https://github.com/datrab/kubeclaw/releases/download/code-bundles-2-1/${role}-${head}.tgz`,
+    }])),
+  } };
+  const nextImages = { ...images, commit: head, imageSources: Object.fromEntries(runtimeImages.map(name => [name, {
+    commit: changedImages(root, images, head).includes(name) ? head : images.commit,
+    sourceRunId: 1, sourceRunAttempt: 1,
+  }])) };
+  assert.equal(compatibleCode(root, nextImages, candidate), candidate);
+}));

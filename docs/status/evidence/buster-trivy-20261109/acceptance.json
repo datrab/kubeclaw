@@ -1,0 +1,89 @@
+{
+  "sourceCommit": "860987cace95723269a50067c5ba55d691b53d52",
+  "image": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc",
+  "job": "https://github.com/datrab/kubeclaw/actions/runs/42691192660/job/129411550999",
+  "securityArtifact": "https://github.com/datrab/kubeclaw/actions/runs/42691192660/artifacts/13708771376",
+  "reportSHA256": "30d091448905726b7438cce930bb0ea1e80ee26370724f1ef37f7a53ec20ddaf",
+  "scannedAt": "2026-11-09T20:38:06.748690077Z",
+  "severity": "HIGH,CRITICAL",
+  "fixableFindings": 0,
+  "unfixedFindings": 542,
+  "baselineFixableFindingsRemoved": 8,
+  "verifiedPackageVersions": [
+    {
+      "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+      "package": "apt",
+      "version": "2.6.2"
+    },
+    {
+      "target": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:5c1fcb0efeb1c038c96b2f8e82209185694802451eda77c6a62d98a6c9c9a8cc (debian 12.15)",
+      "package": "libapt-pkg6.0",
+      "version": "2.6.2"
+    },
+    {
+      "target": "usr/local/bin/buildctl",
+      "package": "golang.org/x/net",
+      "version": "v0.62.0"
+    },
+    {
+      "target": "usr/local/bin/buildkit-runc",
+      "package": "golang.org/x/net",
+      "version": "v0.62.0"
+    },
+    {
+      "target": "usr/local/bin/buildkitd",
+      "package": "golang.org/x/net",
+      "version": "v0.62.0"
+    },
+    {
+      "target": "usr/local/bin/kubectl",
+      "package": "golang.org/x/net",
+      "version": "v0.62.0"
+    },
+    {
+      "target": "usr/local/bin/rootlesskit",
+      "package": "golang.org/x/net",
+      "version": "v0.62.0"
+    },
+    {
+      "target": "usr/local/bin/trivy",
+      "package": "golang.org/x/net",
+      "version": "v0.62.0"
+    }
+  ],
+  "localTests": {
+    "passed": 27,
+    "failed": 0
+  },
+  "runtimeProof": [
+    "restricted-capability cgroup ownership",
+    "rootless BuildKit build and registry publication",
+    "Chromium browser launch and rendering"
+  ],
+  "policy": "Unchanged. Full HIGH/CRITICAL report retained; existing policy defers only findings without published fixes. No new CVE ignores, severity reductions, or upstream exceptions.",
+  "workflowBoundary": "The image job is the acceptance scope. The separate Prepare Skill Bundles job rejected this manual dispatch because receipt_scope=buster omitted retained_baseline. No bundle/deployment acceptance or production rollout is claimed.",
+  "jobConclusion": "success",
+  "jobCompletedAt": "2026-11-09T20:39:34Z",
+  "ciSteps": [
+    {
+      "name": "Build changed toolchain only",
+      "conclusion": "success"
+    },
+    {
+      "name": "Build & Push",
+      "conclusion": "success"
+    },
+    {
+      "name": "Verify the exact published artifact",
+      "conclusion": "success"
+    },
+    {
+      "name": "Scan the exact Buster worker before issuing its receipt",
+      "conclusion": "success"
+    },
+    {
+      "name": "Record immutable build receipt",
+      "conclusion": "success"
+    }
+  ]
+}

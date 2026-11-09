@@ -10,16 +10,16 @@ export async function handleAgentJobs(request:IncomingMessage,response:ServerRes
   authorizeProxiedSpiffePeer(request.headers,request.socket.remoteAddress,new Set([options.trustedAgentId]));
   let result:unknown;
   if(url.pathname==='/v1/agent/jobs/claim' && request.method==='POST'){
-    const input=await options.readBody(request) as {runnerId:string};
-    result={job:await claimAgentJob(options.db,input.runnerId)};
+    const input=await options.readBody(request) as {runnerId:string;profileDigest?:string};
+    result={job:typeof input.profileDigest==='string'?await claimAgentJob(options.db,input.runnerId,input.profileDigest):null};
   }else{
     const match=/^\/v1\/agent\/jobs\/([0-9a-f-]+)(\/finish)?$/u.exec(url.pathname);
     if(!match)throw new Error('unknown agent job route');
     if(request.method==='GET' && !match[2])result={job:await agentJob(options.db,match[1]!)};
     else if(request.method==='POST' && match[2]){
-      const input=await options.readBody(request) as {fence:string;outcome:Record<string,unknown>};
+      const input=await options.readBody(request) as {fence:string;outcome:Record<string,unknown>;reply?:string};
       if(!input.outcome || typeof input.outcome!=='object')throw new Error('agent outcome is required');
-      result={job:await finishAgentRun(options.db,match[1]!,input.fence,input.outcome)};
+      result={job:await finishAgentRun(options.db,match[1]!,input.fence,input.outcome,input.reply)};
     }else throw new Error('unsupported agent job method');
   }
   response.writeHead(200,{'content-type':'application/json','cache-control':'no-store'});

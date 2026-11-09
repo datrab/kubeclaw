@@ -127,3 +127,14 @@ test('installed pg int8 parser strings cannot bypass the original architecture t
   assert.deepEqual((await db.query<{request:unknown}>('SELECT request FROM prism.design_request WHERE id=$1',[id])).rows[0]?.request,request);
  }finally{await db.close();}
 });
+
+test('pipeline active-round resume does not change preference subject or weaken explicit Studio CAS',async()=>{
+ const {db,architecture,start}=await setup();try{
+  await architecture(1);const original=await start(1,'original');
+  const input={projectId:'project-rounds',subjectId:'user-one',startKey:'retry',architectureDigest:'digest-1',architectureRevision:1};
+  assert.equal((await startDesignRound(db,input,{resumeActive:true})).generationId,original.generationId);
+  await assert.rejects(startDesignRound(db,{...input,subjectId:'another-user'},{resumeActive:true}),/preference subject conflicts/);
+  await assert.rejects(startDesignRound(db,{...input,startKey:'studio-explicit'}),/parent has changed/);
+  assert.equal((await db.query('SELECT id FROM prism.design_round')).rows.length,1);
+ }finally{await db.close();}
+});

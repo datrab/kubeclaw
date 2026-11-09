@@ -14,7 +14,8 @@ test("desktop startup and failure panels remain visible", () => {
   assert.match(css, /\.mobile-nav,\.sheet\{display:none\}/u);
   assert.match(app, /No design requests yet\./u);
   assert.match(app, /Projects appear here after Nova sends an architecture to Prism\./u);
-  assert.match(app, /Design generation pending\./u);
+  assert.match(app, /No designs yet\. Open the project to see its status\./u);
+  assert.doesNotMatch(app, /Design generation pending\./u);
   assert.doesNotMatch(app, /createProject|Create project|Design directions could not be created/u);
 });
 test("Puck insertion becomes a typed canonical operation", () => {

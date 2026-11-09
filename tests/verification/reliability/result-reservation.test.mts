@@ -7,6 +7,7 @@ import path from 'node:path';
 import { execFileSync, spawn } from 'node:child_process';
 import { buildRegistry, discoverPackages, resolveTestPlan, createRemotePlanJob } from '@kubeclaw/nova-core';
 import { buildCommittedSourceSnapshot } from '../../../skills/nova/core/test-gates/source-snapshot.ts';
+import { FileDurableBlobStore } from '@kubeclaw/plugin-foundation/observability/durable-records';
 import { FileBusterPlanJobStore } from '../../../skills/buster/engine/test-gates/remote-plan-service.ts';
 
 test('result admission reserves capacity across competing processes and reconstruction', { timeout: 30000 }, async () => {
@@ -57,5 +58,53 @@ test('result admission reserves capacity across competing processes and reconstr
     assert.equal((await reconstructed.records()).length, 2);
     assert.equal((await reconstructed.accept(first, new Date().toISOString())).jobId, first.jobId, 'accepted identity remains readable at capacity');
     await assert.rejects(() => reconstructed.accept(job('reservation:fourth'), new Date().toISOString()), /RESULT_CAPACITY_EXCEEDED/);
+    // A slow local holder must not make another request in this same store
+    // fail at flock's five-second cross-process contention deadline.
+    let entered!: () => void, release!: () => void;
+    const holding = new Promise<void>(resolve => { entered = resolve; });
+    const released = new Promise<void>(resolve => { release = resolve; });
+    class SlowStore extends FileBusterPlanJobStore {
+      first = true;
+      override async records() {
+        if (this.first) { this.first = false; entered(); await released; }
+        return super.records();
+      }
+    }
+    const slow = new SlowStore(state, options);
+    const firstRead = slow.accept(first, new Date().toISOString());
+    await holding;
+    const secondRead = slow.accept(first, new Date().toISOString());
+    // Observe rejections immediately so the old implementation fails the
+    // assertion, rather than leaking an unhandled rejection while we wait.
+    const outcomes = Promise.allSettled([firstRead, secondRead]);
+    try { await new Promise(resolve => setTimeout(resolve, 5800)); }
+    finally { release(); }
+    for (const outcome of await outcomes) {
+      assert.equal(outcome.status, 'fulfilled', outcome.status === 'rejected' ? String(outcome.reason) : undefined);
+      if (outcome.status === 'fulfilled') assert.equal(outcome.value.jobId, first.jobId);
+    }
+    await assert.rejects(() => slow.accept(job('reservation:fifth'), new Date().toISOString()), /RESULT_CAPACITY_EXCEEDED/);
+    assert.equal((await slow.accept(first, new Date().toISOString())).jobId, first.jobId, 'rejection does not poison the local queue');
+    const beforeTerminal = await slow.records();
+    await slow.transition(beforeTerminal[0]!.payload.job.jobId, ['accepted'], 'failed', new Date().toISOString(), { error: 'fixture failure' });
+    await slow.transition(beforeTerminal[1]!.payload.job.jobId, ['accepted'], 'cancelled', new Date().toISOString(), { error: 'fixture cancellation' });
+    const reopened = new FileBusterPlanJobStore(state, options);
+    const replacement = job('reservation:after-failed-and-cancelled');
+    assert.equal((await reopened.accept(replacement, new Date().toISOString())).state, 'accepted', 'terminal jobs release unused reservations after reconstruction');
+    const secondReplacement = job('reservation:second-replacement');
+    await reopened.accept(secondReplacement, new Date().toISOString());
+    await assert.rejects(() => reopened.accept(job('reservation:still-bounded'), new Date().toISOString()), /RESULT_CAPACITY_EXCEEDED/);
+    for (const item of [replacement, secondReplacement]) await reopened.transition(item.jobId, ['accepted'], 'failed', new Date().toISOString(), { error: 'fixture failure' });
+    // Model crashes between immutable result put() and status persistence. These
+    // bytes must count even though no completed job references the blobs yet.
+    const blobs = new FileDurableBlobStore(path.join(state, 'results'), options.maximumResultBytes, options.maximumResultStoreBytes);
+    await blobs.put(Buffer.alloc(65536, 1));
+    await reopened.accept(job('reservation:orphan-plus-two-active'), new Date().toISOString());
+    await assert.rejects(() => reopened.accept(job('reservation:orphan-plus-second-active'), new Date().toISOString()), /RESULT_CAPACITY_EXCEEDED/);
+    const orphanActive = (await reopened.records()).find(row => row.payload.job.idempotencyKey === 'reservation:orphan-plus-two-active')!;
+    await reopened.transition(orphanActive.payload.job.jobId, ['accepted'], 'failed', new Date().toISOString(), { error: 'fixture failure' });
+    await blobs.put(Buffer.alloc(65536, 2));
+    await assert.rejects(() => new FileBusterPlanJobStore(state, options).accept(job('reservation:orphan-store-full'), new Date().toISOString()), /RESULT_CAPACITY_EXCEEDED/);
+
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 });

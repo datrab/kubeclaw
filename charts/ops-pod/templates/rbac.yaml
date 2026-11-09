@@ -3,12 +3,23 @@ kind: ServiceAccount
 metadata: {name: {{ .Release.Name }}}
 automountServiceAccountToken: false
 ---
+apiVersion: v1
+kind: ServiceAccount
+metadata: {name: {{ .Release.Name }}-mcp}
+automountServiceAccountToken: false
+---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata: {name: {{ .Release.Namespace }}-{{ .Release.Name }}-reader}
 rules:
   - apiGroups: [""]
     resources: [pods, pods/log, services, events, persistentvolumeclaims]
+    verbs: [get, list]
+  - apiGroups: [discovery.k8s.io]
+    resources: [endpointslices]
+    verbs: [get, list]
+  - apiGroups: [metrics.k8s.io]
+    resources: [pods]
     verbs: [get, list]
   - apiGroups: [apps]
     resources: [deployments, statefulsets, daemonsets, replicasets]
@@ -25,6 +36,23 @@ rules:
   - apiGroups: [argoproj.io]
     resources: [applications]
     verbs: [get, list]
+---
+# Only MCP has this credential. Client policy grants global reads to Ops alone;
+# exec is deliberately absent from this ClusterRole.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata: {name: {{ .Release.Namespace }}-{{ .Release.Name }}-all-namespace-reader}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ .Release.Namespace }}-{{ .Release.Name }}-reader
+{{- if .Values.rbac.readAllNamespaces }}
+subjects:
+  - {kind: ServiceAccount, name: {{ .Release.Name }}-mcp, namespace: {{ .Release.Namespace }}}
+{{- else }}
+# Revoke without relying on Argo pruning.
+subjects: []
+{{- end }}
 {{- range .Values.rbac.namespaces }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -37,7 +65,7 @@ roleRef:
   kind: ClusterRole
   name: {{ $.Release.Namespace }}-{{ $.Release.Name }}-reader
 subjects:
-  - {kind: ServiceAccount, name: {{ $.Release.Name }}, namespace: {{ $.Release.Namespace }}}
+  - {kind: ServiceAccount, name: {{ $.Release.Name }}-mcp, namespace: {{ $.Release.Namespace }}}
 {{- end }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -45,10 +73,13 @@ kind: ClusterRole
 metadata: {name: {{ .Release.Namespace }}-{{ .Release.Name }}-cluster-reader}
 rules:
   - apiGroups: [""]
-    resources: [nodes]
+    resources: [persistentvolumes, nodes{{ if .Values.rbac.readAllNamespaces }}, namespaces{{ end }}]
     verbs: [get, list]
   - apiGroups: [cilium.io]
     resources: [ciliumclusterwidenetworkpolicies]
+    verbs: [get, list]
+  - apiGroups: [storage.k8s.io]
+    resources: [storageclasses]
     verbs: [get, list]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -59,7 +90,7 @@ roleRef:
   kind: ClusterRole
   name: {{ .Release.Namespace }}-{{ .Release.Name }}-cluster-reader
 subjects:
-  - {kind: ServiceAccount, name: {{ .Release.Name }}, namespace: {{ .Release.Namespace }}}
+  - {kind: ServiceAccount, name: {{ .Release.Name }}-mcp, namespace: {{ .Release.Namespace }}}
 {{- range .Values.rbac.execNamespaces }}
 {{- if or (not (kindIs "string" .)) (not (regexMatch "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$" .)) (gt (len .) 63) }}
 {{- fail "rbac.execNamespaces must contain valid namespace names" }}
@@ -88,5 +119,5 @@ roleRef:
   kind: Role
   name: {{ $.Release.Namespace }}-{{ $.Release.Name }}-exec
 subjects:
-  - {kind: ServiceAccount, name: {{ $.Release.Name }}, namespace: {{ $.Release.Namespace }}}
+  - {kind: ServiceAccount, name: {{ $.Release.Name }}-mcp, namespace: {{ $.Release.Namespace }}}
 {{- end }}

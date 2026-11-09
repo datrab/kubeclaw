@@ -82,8 +82,8 @@
         "policy_packs": [
           "kubeclaw-default"
         ],
-        "kubernetes_version": "1.35.6",
-        "schema_location": "/opt/kubeclaw-kubernetes-schemas/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "kubernetes_version": "1.35.10",
+        "schema_location": "/opt/kubeclaw-kubernetes-schemas/v1.35.10-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
         "limits": {
           "max_files": 128,
           "max_file_bytes": 1048576,

@@ -139,14 +139,17 @@ try {
       throw new Error(`unexpected kubectl operation: ${args.join(' ')}`);
     },
   });
-  await assert.rejects(() => deadlineCapability.invoke('kubernetes.fixture', { operation: 'prepare',
+  const failedReadiness = await deadlineCapability.invoke('kubernetes.fixture', { operation: 'prepare',
     resource: { type: 'kubernetes.fixture', canonicalId: 'kubernetes-fixture:attempt:deadline' }, payload: {
       leaseName: 'test-deadline', namespaceName: 'test-deadline', namespacePrefix: 'test', project: 'proof',
       immutableImage: `registry.local/app@${digest}`, imageDigest: digest, manifestPath: deadlinePath,
       manifestDigest: `sha256:${crypto.createHash('sha256').update(deadlineManifest).digest('hex')}`,
       serviceName: 'app', servicePort: 8080, retentionSeconds: 300, retentionMode: 'delete',
       readinessTimeoutMs: 1_000, secretReferences: [],
-    } } as any, new AbortController().signal), /KUBERNETES_FIXTURE_READINESS_TIMEOUT/u);
+    } } as any, new AbortController().signal);
+  assert.equal(failedReadiness.ok, false);
+  assert.equal(failedReadiness.errorCode, 'KUBERNETES_FIXTURE_READINESS_TIMEOUT');
+  assert.ok(failedReadiness.failureEvidence);
   assert.ok(podTimeouts.length > 1);
   assert.ok(podTimeouts.every((timeout) => timeout > 0 && timeout <= 1_000),
     `pod polls exceeded their remaining readiness budget: ${podTimeouts.join(',')}`);

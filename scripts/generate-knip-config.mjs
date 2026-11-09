@@ -194,6 +194,7 @@ const config = {
     'gofmt',
     'flock',
     'setpriv',
+    'sha256sum',
     'systemd-analyze',
     'uv',
     'go',

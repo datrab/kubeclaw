@@ -1,0 +1,65 @@
+name: Runtime cache comparison
+on:
+  pull_request:
+    paths:
+      - .github/workflows/cache-benchmark*.yaml
+      - scripts/ci/cache-profile.mjs
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/cache-benchmark*.yaml
+      - scripts/ci/cache-profile.mjs
+  workflow_dispatch:
+    inputs:
+      role:
+        description: Image to compare, using the same commit for cold and warm builds
+        type: choice
+        options: [buster-gateway, nova, buster-runtime, prism-agent]
+        default: buster-gateway
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: cache-comparison-${{ github.event_name == 'pull_request' && github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+jobs:
+  gha:
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        profile: [gha-min, gha-max]
+    uses: ./.github/workflows/cache-benchmark-case.yaml
+    with:
+      profile: ${{ matrix.profile }}
+      role: ${{ inputs.role || 'buster-gateway' }}
+  registry:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    permissions:
+      contents: read
+      packages: write
+    uses: ./.github/workflows/cache-benchmark-case.yaml
+    with:
+      profile: registry-max
+      role: ${{ inputs.role || 'buster-gateway' }}
+  timings:
+    name: CI timings
+    needs: [gha, registry]
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version: 24
+      - name: Record separate cold/warm durations and remote cache transfers
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/ci/timings.mjs
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: cache-comparison-timings
+          path: dist/ci-timings/
+          if-no-files-found: error

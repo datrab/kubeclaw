@@ -8,6 +8,7 @@
     "../../buster/engine/**/*.ts"
   ],
   "compilerOptions": {
+    "allowJs": true,
     "exactOptionalPropertyTypes": true,
     "noUncheckedIndexedAccess": true
   }

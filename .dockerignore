@@ -7,6 +7,8 @@
 !docker/Dockerfile.prism-agent
 !docker/nova-tools/
 !docker/nova-tools/**
+!docker/npm-tools/
+!docker/npm-tools/**
 !docker/python-tools/
 !docker/python-tools/**
 !docker/go-tools/
@@ -39,6 +41,9 @@ tests/verification/*
 tests/verification/contracts/*
 !tests/verification/contracts/check-pipeline-container-build-production.mts
 !tests/verification/contracts/check-pipeline-container-build-recovery.mts
+!tests/verification/deployment/
+tests/verification/deployment/*
+!tests/verification/deployment/buster-buildkit-state.mjs
 !tests/verification/live/
 !tests/verification/live/**
 
@@ -91,3 +96,8 @@ contracts/agent-observability/v1/dist/
 **/*.sops.yaml.dec
 secrets.yml.dec
 keys.txt
+
+# Locked source builds and public generated version pins.
+!docker/runtime-binaries/
+!docker/runtime-binaries/**
+!docker/runtime-binaries/versions.env

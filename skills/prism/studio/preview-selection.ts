@@ -1,0 +1,2 @@
+// Shared exact bytes: the parent CSP hashes only this trusted selection bridge.
+export const previewSelectionScript = "addEventListener('click',event=>{const node=event.target.closest('[data-prism-id]');const action=event.target.closest('[data-prism-action]');if(!node&&!action)return;event.preventDefault();if(node)parent.postMessage({schema:'prism.selection.v1',nodeId:node.dataset.prismId},'*');if(action){const owner=action.closest('[data-prism-id]');parent.postMessage({schema:'prism.action.v1',nodeId:owner?.dataset.prismId,action:action.dataset.prismAction},'*')}});";

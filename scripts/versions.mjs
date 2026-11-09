@@ -32,6 +32,7 @@ function dockerfileVersions(name, source, args, overrides, used) {
     const usedOverrides = new Set();
     const content = source.replace(/^ARG ([A-Z0-9_]+)=(\S+)$/gm, (line, key) => {
       if (['KUBECLAW_BUILD_REVISION', 'TARGETARCH'].includes(key)) return line;
+      if (key === 'KUBECLAW_TOOLCHAIN' && ['docker/Dockerfile.nova', 'docker/Dockerfile.buster-runtime'].includes(name) && line === 'ARG KUBECLAW_TOOLCHAIN=toolchain') return line;
       if (name === 'docker/Dockerfile.buster-runtime' && key === 'TRIVY_DATABASE_REFRESH') return line;
       if (!Object.hasOwn(args, key)) throw new Error(`${name}: unmanaged version argument ${key}`);
       used.add(key);
@@ -41,6 +42,7 @@ function dockerfileVersions(name, source, args, overrides, used) {
     for (const key of Object.keys(overrides)) if (!usedOverrides.has(key)) throw new Error(`${name}: unused override ${key}`);
     for (const match of content.matchAll(/^FROM (\S+)/gm)) {
       if (!/^\$\{[A-Z0-9_]+\}$/.test(match[1])) throw new Error(`${name}: base must reference a managed ARG`);
+      if (match[1] === '${KUBECLAW_TOOLCHAIN}' && /^FROM \S+ AS toolchain$/m.test(content) && content.includes('ARG KUBECLAW_TOOLCHAIN=toolchain')) continue;
       if (!Object.hasOwn(args, match[1].slice(2, -1))) throw new Error(`${name}: unknown base argument`);
     }
   return content;
@@ -167,8 +169,11 @@ export function versionOutputs(root) {
     `BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE="${'${BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE:-'}${manifest.imageOverrides?.['buster-runtime']?.BUILDKIT_BASE ?? args.BUILDKIT_BASE}}"`);
   bindInfrastructureVersions(manifest, replaceOne);
   bindApplicationVersions(manifest, args, replaceOne);
+  outputs.set('docker/runtime-binaries/versions.env', '# Generated from versions.json; run npm run versions:sync.\n'
+    + ['GO_VERSION', 'HELM_VERSION', 'SHFMT_VERSION', 'KUBECONFORM_VERSION', 'KUBECTL_VERSION', 'TFLINT_VERSION', 'TRIVY_VERSION', 'BUILDKIT_VERSION', 'ROOTLESSKIT_VERSION', 'RUNC_VERSION']
+      .map(key => `${key}=${args[key]}\n`).join(''));
   bindRuntimeToolInputs(manifest, args, outputs);
-  outputs.set('docs/generated/inventory/ops-tool-versions.json', JSON.stringify({
+  outputs.set('scripts/generated/ops-tool-versions.json', JSON.stringify({
     schemaVersion: 1, authority: 'versions.json', codex: { version: manifest.codex.version },
   }, null, 2) + '\n');
   return outputs;

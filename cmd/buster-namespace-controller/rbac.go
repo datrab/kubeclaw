@@ -1,6 +1,9 @@
 package main
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"strings"
+)
 
 // Credential provisioning and inventory share one exact authority contract.
 func (c *controller) credentialAccessObjects(namespace string, request *testCredentialRequest) []map[string]interface{} {
@@ -47,6 +50,16 @@ func (c *controller) expectedNamespaceRBAC(item *lease, namespace string) ([]map
 		}
 		out = append(out, c.namespaceRoleBinding(namespace, name, subjects))
 	}
+	// The Ops reconciler adds these two exact platform bindings to all test*
+	// namespaces. Recognize their authority without creating or managing them.
+	// Pod labels and binding labels are not an authority exemption.
+	if c.opsMCPNamespace != "" && c.opsMCPRelease != "" && strings.HasPrefix(strings.ToLower(namespace), "test") {
+		for _, suffix := range []string{"reader", "test-exec"} {
+			role := c.opsMCPNamespace + "-" + c.opsMCPRelease + "-" + suffix
+			out = append(out, c.namespaceRoleBinding(namespace, role, []serviceAccountRef{{Namespace: c.opsMCPNamespace, Name: c.opsMCPRelease + "-mcp"}}))
+		}
+	}
+
 	credentials, err := c.credentialRequest(item)
 	if err != nil {
 		return nil, err

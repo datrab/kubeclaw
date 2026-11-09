@@ -69,10 +69,7 @@ jobs:
         ports:
           - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U kubeclaw_test -d postgres"
-          --health-interval 5s
-          --health-timeout 5s
-          --health-retries 10
+          --health-cmd "pg_isready -U kubeclaw_test -d postgres" --health-interval 5s --health-timeout 5s --health-retries 10
     env:
       PRISM_TEST_PG_URL: postgres://kubeclaw_test:isolated_native_test_only@127.0.0.1:5432/postgres
     steps:
@@ -128,3 +125,6 @@ jobs:
         run: |
           npm run test:review-operations
           node --test scripts/tests/integration/repository-review-supervisor-adoption.mjs
+concurrency:
+  group: ${{ github.workflow }}-ci-remediation-native-${{ github.event_name == 'pull_request' && github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}

@@ -1,3 +1,4 @@
+import { chatReply } from './chat-reply.mjs';
 import { randomUUID } from 'node:crypto';
 import { checkWorkerResourceResultBinding } from '@kubeclaw/pipeline-worker-core-contract';
 import { WorkerAttemptExecutor } from '@kubeclaw/worker-core';
@@ -18,30 +19,35 @@ export class AgentJobRunner {
   runnerId=`prism-bridge-${randomUUID()}`;
   stopping=new AbortController();
   active;
-  constructor(controlUrl){this.controlUrl=controlUrl;}
+  constructor(controlUrl,gatewayReady=async()=>{try{return (await fetch('http://127.0.0.1:18789/readyz',{signal:AbortSignal.timeout(2000)})).ok;}catch{return false;}}){this.controlUrl=controlUrl;this.gatewayReady=gatewayReady;}
   async tick(){
     if(this.active || this.stopping.signal.aborted)return;
     this.active=this.runOne();
     try{await this.active;}finally{this.active=undefined;}
   }
   async runOne(){
-    const {job}=await controlRequest(this.controlUrl,'/v1/agent/jobs/claim',{runnerId:this.runnerId},AbortSignal.timeout(10_000));
+    // Do not claim durable work while the colocated Gateway is still starting or draining.
+    if(!await this.gatewayReady() || this.stopping.signal.aborted)return;
+    this.launcherProfile ??= agentAttempt({id:randomUUID(),fence:randomUUID(),expires_at:new Date(Date.now()+900000),request_digest:'sha256:'+'0'.repeat(64),request:{}},this.runnerId).then(envelope=>envelope.profile.profileDigest);
+    const profileDigest=await this.launcherProfile;
+    const {job}=await controlRequest(this.controlUrl,'/v1/agent/jobs/claim',{runnerId:this.runnerId,profileDigest},AbortSignal.timeout(10_000));
     if(!job)return;
     // Once this claim is durable, any uncertainty is NeedsNova. Never replay a failed launch.
-    let outcome;
+    let outcome,reply;const stdout=[];let stdoutBytes=0;
     try{
       const envelope=job.attempt_envelope;
       if(!envelope || envelope.claim.workerId!==this.runnerId || envelope.attemptId!==job.fence || envelope.executionId!==job.id)throw new Error('Prism accepted attempt identity is missing or conflicts with claim');
       const localProfile=(await agentAttempt(job,this.runnerId)).profile;
       if(localProfile.profileDigest!==envelope.profile.profileDigest)throw new Error('Prism local launcher implementation does not match Control accepted profile');
       const artifacts=new WorkerArtifactClient(new URL(this.controlUrl),'',true);
-      const executor=new WorkerAttemptExecutor({envelope,operation:new AgentProcess('openclaw',['agent','--agent','main','--session-key',job.session_key,'--message',agentPrompt(job),'--json','--timeout','900']),signal:this.stopping.signal,receiptNamespace:'prism-agent-launcher',
+      const executor=new WorkerAttemptExecutor({envelope,operation:new AgentProcess('openclaw',['agent','--agent','main','--session-key',job.session_key,'--message',agentPrompt(job),'--json','--timeout','900'],job.operation==='chat'?chunk=>{stdoutBytes+=chunk.length;if(stdoutBytes<=1048576)stdout.push(chunk);}:undefined),signal:this.stopping.signal,receiptNamespace:'prism-agent-launcher',
         storeFullLog:(id,content,{signal})=>artifacts.upload(`${id}-logs`,'worker-log','text/plain',Buffer.from(content),signal)});
       outcome=await executor.execute();
       const binding=checkWorkerResourceResultBinding(envelope,outcome);
       if(!binding.ok)throw new Error(`Prism agent resource receipt binding failed: ${binding.errors.join('; ')}`);
+      if(job.operation==='chat' && outcome.state==='completed')reply=chatReply(Buffer.concat(stdout).toString('utf8'));
     }catch(error){outcome={state:'errored',error:error instanceof Error?error.message:String(error)};}
-    await controlRequest(this.controlUrl,`/v1/agent/jobs/${job.id}/finish`,{fence:job.fence,outcome},AbortSignal.timeout(10_000));
+    await controlRequest(this.controlUrl,`/v1/agent/jobs/${job.id}/finish`,{fence:job.fence,outcome,...(reply?{reply}:{})},AbortSignal.timeout(10_000));
   }
   async stop(){this.stopping.abort(new Error('Prism bridge is shutting down; external gateway outcome may be unresolved'));await this.active;}
 }

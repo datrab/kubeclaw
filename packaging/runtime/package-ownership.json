@@ -22,7 +22,7 @@
     { "id": "telemetry-contract", "source": "contracts/telemetry/v1", "owner": "shared", "roles": ["nova", "buster"], "bundle": { "kind": "assets", "target": "skills/contracts/telemetry/v1" } },
     { "id": "pipeline-test-gate-contract", "source": "contracts/pipeline-test-gate/v1", "owner": "shared", "roles": ["nova", "buster", "prism"], "bundle": { "kind": "node-package" } },
     { "id": "pipeline-worker-core-contract", "source": "contracts/pipeline-worker-core/v1", "owner": "shared", "roles": ["nova", "buster", "prism"], "bundle": { "kind": "node-package" } },
-    { "id": "prism-contract", "source": "contracts/prism/v1", "owner": "prism", "roles": ["prism"], "bundle": { "kind": "node-package" } },
+    { "id": "prism-contract", "source": "contracts/prism/v1", "owner": "prism", "roles": ["nova", "prism"], "bundle": { "kind": "node-package" } },
     { "id": "pipeline-observability-contract", "source": "contracts/pipeline-observability/v1", "owner": "shared", "roles": ["nova", "buster", "prism"], "bundle": { "kind": "node-package" } }
   ],
   "legacyMixedCoreUnits": [

@@ -186,7 +186,11 @@ function job(key: string): RemotePlanJobV1 {
 }
 const startupInterrupted = job('dispatch:startup-recovery');
 await busterStore.accept(startupInterrupted, '2026-08-10T01:00:00.000Z');
+assert.equal((await service.census()).counts.accepted, 1);
+assert.equal((await service.census()).nonterminal, 1, 'accepted work must prevent an idle census');
 await busterStore.transition(startupInterrupted.jobId, ['accepted'], 'running', '2026-08-10T01:00:01.000Z');
+assert.equal((await service.census()).counts.running, 1);
+assert.equal((await service.census()).nonterminal, 1, 'running work must prevent an idle census');
 const runtime = new BusterRemotePlanRuntime({
   service, host: '127.0.0.1', port: 0, token,
   maximumRequestBytes: 8 * 1024 * 1024, maximumResponseBytes: 8 * 1024 * 1024,
@@ -199,6 +203,19 @@ assert.equal((await service.status(startupInterrupted.jobId)).state, 'failed',
 assert.equal((await (await fetch(`http://127.0.0.1:${port}/healthz`)).json() as { live: boolean }).live, true);
 assert.equal((await fetch(`http://127.0.0.1:${port}/bootstrapz`)).status, 200);
 assert.equal((await fetch(`http://127.0.0.1:${port}/readyz`)).status, 200, 'no BuildKit dependency is invented when container.build is disabled');
+const censusUrl = `http://127.0.0.1:${port}/v1/plan-jobs`;
+assert.equal((await fetch(censusUrl)).status, 401, 'census requires authentication');
+assert.equal((await fetch(censusUrl, { headers: { authorization: 'Bearer wrong-token' } })).status, 401);
+const censusBefore = await busterStore.records();
+const censusResponse = await fetch(censusUrl, { headers: { authorization: `Bearer ${token}` } });
+assert.equal(censusResponse.status, 200);
+assert.equal(censusResponse.headers.get('cache-control'), 'no-store');
+assert.deepEqual(await censusResponse.json(), {
+  schemaVersion: 'buster-plan-census.v1', total: 1,
+  counts: { accepted: 0, running: 0, cancelling: 0, completed: 0, failed: 1, cancelled: 0 },
+  nonterminal: 0,
+}, 'census exposes only fixed aggregate counts, not job metadata');
+assert.deepEqual(await busterStore.records(), censusBefore, 'census must not mutate durable records');
 const unavailableStore = new FileBusterPlanJobStore(path.join(temporary, 'unavailable-buildkit-state'), {
   recordLimits: { maximumRecords: 100, maximumBytes: 16 * 1024 * 1024, maximumRecordBytes: 8 * 1024 * 1024 },
   maximumArchiveBytes: 1024 * 1024, maximumResultBytes: 16 * 1024 * 1024, maximumResultStoreBytes: 100 * 16 * 1024 * 1024,
@@ -340,6 +357,14 @@ try {
     const spiffePort = (spiffeServer.address() as AddressInfo).port;
     const statusUrl = `http://127.0.0.1:${spiffePort}/v1/plan-jobs/${encodeURIComponent(normalJob.jobId)}`;
     assert.equal((await fetch(statusUrl)).status, 401, 'missing verified peer identity must fail closed');
+    const preparingUrl = `${statusUrl}/preparing-namespaces`;
+    assert.equal((await fetch(preparingUrl)).status, 401);
+    const preparing = await fetch(preparingUrl, { headers: {
+      'x-forwarded-client-cert': `By=spiffe://kubeclaw.internal/proxy;URI=${novaSpiffeId}`,
+    } });
+    assert.equal(preparing.status, 200);
+    assert.deepEqual(await preparing.json(), { schemaVersion: 'buster-plan-preparing-namespaces.v1',
+      jobId: normalJob.jobId, namespaces: [] });
     assert.equal((await fetch(statusUrl, { headers: {
       'x-forwarded-client-cert': 'URI=spiffe://kubeclaw.internal/ns/kubeclaw/sa/prism-control',
     } })).status, 401, 'an authenticated but unauthorized workload must be rejected');

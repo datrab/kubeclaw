@@ -1,7 +1,7 @@
 # Version defaults are generated from versions.json; run npm run versions:sync.
 ARG OPS_MCP_NODE_BASE=node:24.21.0-alpine3.24@sha256:be80f76cf40ec8e42b9bec49f60a55e0660f30af58d3e5a25530785b30ea67e2
 
-ARG OPS_TOOLS_GO_BASE=golang:1.26.9-alpine3.24@sha256:cdfd4fe2da6b225d8b40c6b7a105736e548e83ff56d5d8f9394446eeb5eb84e0
+ARG OPS_TOOLS_GO_BASE=golang:1.26.10-alpine3.24@sha256:5cb67f19c5e7994dcb80c074f7cfca8aeeada45bbdca035f73df269cefdcce61
 
 FROM ${OPS_TOOLS_GO_BASE} AS hubble-build
 ARG TARGETARCH=amd64
@@ -20,7 +20,7 @@ RUN GOPROXY=off CGO_ENABLED=0 GOOS=linux GOARCH=${TARGETARCH} go build -mod=read
 FROM ${OPS_MCP_NODE_BASE}
 
 WORKDIR /app
-RUN apk upgrade --no-cache
+RUN apk upgrade --no-cache && apk add --no-cache openssl
 
 COPY package.json package-lock.json ./
 RUN npm ci --omit=dev --ignore-scripts \

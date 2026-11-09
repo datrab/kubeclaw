@@ -41,15 +41,16 @@ async function remoteResult(context: AdapterActivationContext, target: OpenClawT
 }
 
 interface OpenClawResultRequest {
-  readonly payload: JsonRecord; readonly relative: string; readonly key: string;
+  readonly payload: JsonRecord; readonly relative: string; readonly key: string; readonly runId?: string;
   readonly startedAt: string; readonly state: OpenClawSessionState; readonly token: string;
 }
 
-function terminalAssistantText(value: unknown): string {
+function terminalAssistantText(value: unknown, runId?: string): string {
   const details = openClawToolDetails(value);
   if (!record(details) || !Array.isArray(details.messages)) throw new Error('OPENCLAW_SESSION_HISTORY_INVALID');
   const candidates = details.messages.filter((message) => record(message) && message.role === 'assistant'
-    && record(message.__openclaw) && message.__openclaw.runTerminal === true);
+    && record(message.__openclaw) && message.__openclaw.runTerminal === true
+    && (runId === undefined || message.__openclaw.runId === runId));
   if (candidates.length !== 1) throw new Error('OPENCLAW_SESSION_TERMINAL_OUTPUT_AMBIGUOUS');
   const content = candidates[0]?.content;
   if (!Array.isArray(content)) throw new Error('OPENCLAW_SESSION_OUTPUT_NOT_JSON');
@@ -99,11 +100,22 @@ async function localResult(context: AdapterActivationContext, target: OpenClawTa
   }
 }
 
+async function terminalOnlyResult(context: AdapterActivationContext, target: OpenClawTarget,
+  request: OpenClawResultRequest): Promise<JsonRecord> {
+  if (!request.runId) throw new Error('OPENCLAW_TERMINAL_RUN_ID_REQUIRED');
+  const history = await gateway(context, target, request.token, 'sessions_history',
+    { sessionKey: request.key, limit: 1, includeTools: false });
+  const details = openClawToolDetails(history);
+  if (!record(details) || details.sessionKey !== request.key) throw new Error('OPENCLAW_SESSION_HISTORY_IDENTITY_MISMATCH');
+  return { content: terminalAssistantText(history, request.runId) };
+}
+
 export async function readOpenClawResult(
   context: AdapterActivationContext, target: OpenClawTarget, request: OpenClawResultRequest,
 ): Promise<Readonly<{ result: unknown; outputText: string }>> {
   const { payload, relative, key, startedAt, state, token } = request;
-  const durable = target.resultEndpoint && target.resultTokenSecret
+  const durable = target.terminalOnly ? await terminalOnlyResult(context, target, request)
+    : target.resultEndpoint && target.resultTokenSecret
     ? await remoteResult(context, target, relative)
     : await localResult(context, target, relative, key, token, state);
   const content = requiredText(durable.content, 'RESULT_FILE');

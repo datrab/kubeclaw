@@ -1,22 +1,42 @@
 # Version defaults are generated from versions.json; run npm run versions:sync.
-ARG BUILDKIT_BASE=moby/buildkit:v0.26.2-rootless@sha256:0ffa2fcf6b8757c47d569b3ef0f03f9d5eb3b9ff5ce68d858f994f89b749da0c
-ARG BUSTER_NODE_BASE=node:24-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e
+ARG BUILDKIT_BASE=moby/buildkit:v0.34.1-rootless@sha256:f68752a5a94acfcdad2d07867b7075601a421638e17fc5f28efc1c814d0c4f89
+ARG BUSTER_NODE_BASE=node:24.22.2-bookworm-slim@sha256:c86ecead9e55a5210ac1727de38a4ca840bf03dcaf34dc9749addbf383b1920c
 
 # Buster's v2 suite worker and colocated rootless image builder.
+ARG KUBECLAW_TOOLCHAIN=toolchain
+ARG RUNTIME_GO_BASE=golang:1.27.3-bookworm@sha256:d9b6a1beb9474adc2a1ce842573639b44b2a0dd49b6669f51d3821baf9ec37c9
+FROM ${RUNTIME_GO_BASE} AS runtime-binaries
+ARG TARGETARCH
+ARG BUILDKIT_VERSION=0.34.1
+ARG ROOTLESSKIT_VERSION=3.3.0
+ARG RUNC_VERSION=1.5.2
+WORKDIR /src
+COPY docker/runtime-binaries/ /src/
+ARG DEBIAN_SNAPSHOT=20261109T000000Z
+RUN sh /src/install-seccomp.sh "$DEBIAN_SNAPSHOT"
+RUN --mount=type=cache,target=/go/pkg/mod --mount=type=cache,target=/root/.cache/go-build \
+    sh /src/build.sh kubectl trivy buildctl buildkitd buildkit-runc rootlesskit
+
 FROM ${BUILDKIT_BASE} AS buildkit
-FROM ${BUSTER_NODE_BASE}
+FROM ${BUSTER_NODE_BASE} AS toolchain
 
 USER root
+# Buster invokes npm for user projects; replace the base image's vulnerable
+# bundled CLI with a separately integrity-locked upstream distribution.
+COPY docker/npm-tools/ /opt/kubeclaw-npm/
+RUN sh /opt/kubeclaw-npm/install.sh \
+    && rm -rf /usr/local/lib/node_modules/npm \
+    && cp -a /opt/kubeclaw-npm/node_modules/npm /usr/local/lib/node_modules/npm \
+    && npm --version
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-ARG DEBIAN_SNAPSHOT=20260713T000000Z
+ARG DEBIAN_SNAPSHOT=20261109T000000Z
 ARG TARGETARCH
-ARG KUBECLAW_BUILD_REVISION=unknown
-ARG KUBECTL_VERSION=1.35.6
-ARG KUBECTL_SHA256_AMD64=5d11e2ba01ea68ffd053f56e27738e2b4330013ee67f7e46c6da6c585d3c9926
-ARG KUBECTL_SHA256_ARM64=c0f97f31c9ddc22d4951d543a1a7125a9af4b31e895ad4aa99899c4ba2a6ff0b
-ARG TRIVY_VERSION=0.74.0
-ARG TRIVY_SHA256_AMD64=2ae6fe3ee734b7fdf11335663e18c75ea12dccc76062f09f164a3b0f8be4371a
-ARG TRIVY_SHA256_ARM64=b94ce1976bbf3c15b514b605ee88be7c6d94a29be2302847ff01cb794d47aad5
+ARG KUBECTL_VERSION=1.35.10
+ARG KUBECTL_SHA256_AMD64=c49a28f1f4efc4d475ed05f47f2ce8e563bf7bef69ed77fe1b924ea6d83b6327
+ARG KUBECTL_SHA256_ARM64=283f1be6a46b3695b625e25030106b8ffe18bd0d3a900f5b65c259ca407f04f5
+ARG TRIVY_VERSION=0.76.1
+ARG TRIVY_SHA256_AMD64=c7cbe3137fb8a48a17574bede3dd6beb16742d1e9772929940fc90082c39d9c0
+ARG TRIVY_SHA256_ARM64=e174dff2a6dba5e3ae41f8d0537a6324405bd08132497340304c6b20e0f16a1f
 
 COPY --from=buildkit /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 # The dated Debian snapshot pins the complete dependency graph coherently.
@@ -36,34 +56,21 @@ RUN printf '%s\n' \
       > /etc/apt/sources.list.d/debian.sources \
     && rm -f /etc/apt/sources.list \
     && printf 'Acquire::Check-Valid-Until "false";\n' > /etc/apt/apt.conf.d/99snapshot \
-    && packages=(bash ca-certificates curl git openssh-client jq python3 python3-pip uidmap libcap2-bin fuse-overlayfs iproute2 iptables tini util-linux build-essential shellcheck yamllint ripgrep tree netcat-openbsd nmap) \
+    && packages=(bash ca-certificates curl git openssh-client jq python3 python3-pip uidmap libcap2-bin libseccomp2 fuse-overlayfs iproute2 iptables tini util-linux build-essential shellcheck yamllint ripgrep tree netcat-openbsd nmap) \
     && apt-get -o Acquire::Retries=5 -o APT::Update::Error-Mode=any update \
+    && apt-get -o Acquire::Retries=5 upgrade -y --no-install-recommends \
     && apt-get -o Acquire::Retries=5 install -y --no-install-recommends "${packages[@]}" \
     && rm -rf /var/lib/apt/lists/* \
     && chmod 0755 /usr/bin/newuidmap /usr/bin/newgidmap \
     && setcap cap_setuid=ep /usr/bin/newuidmap \
     && setcap cap_setgid=ep /usr/bin/newgidmap
 
-COPY --from=buildkit /usr/bin/buildkitd /usr/local/bin/buildkitd
-COPY --from=buildkit /usr/bin/buildctl /usr/local/bin/buildctl
-COPY --from=buildkit /usr/bin/buildkit-runc /usr/local/bin/buildkit-runc
-COPY --from=buildkit /usr/bin/rootlesskit /usr/local/bin/rootlesskit
+COPY --from=runtime-binaries /out/buildkitd /usr/local/bin/buildkitd
+COPY --from=runtime-binaries /out/buildctl /usr/local/bin/buildctl
+COPY --from=runtime-binaries /out/buildkit-runc /usr/local/bin/buildkit-runc
+COPY --from=runtime-binaries /out/rootlesskit /usr/local/bin/rootlesskit
 
 RUN set -eux; \
-    arch="${TARGETARCH:-amd64}"; \
-    case "$arch" in \
-      amd64) kubectl_sha="$KUBECTL_SHA256_AMD64"; trivy_arch=64bit; trivy_sha="$TRIVY_SHA256_AMD64" ;; \
-      arm64) kubectl_sha="$KUBECTL_SHA256_ARM64"; trivy_arch=ARM64; trivy_sha="$TRIVY_SHA256_ARM64" ;; \
-      *) exit 1 ;; \
-    esac; \
-    curl -fsSL "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/${arch}/kubectl" -o /tmp/kubectl; \
-    printf '%s  %s\n' "$kubectl_sha" /tmp/kubectl | sha256sum -c -; \
-    install -m 0755 /tmp/kubectl /usr/local/bin/kubectl; \
-    trivy_archive="trivy_${TRIVY_VERSION}_Linux-${trivy_arch}.tar.gz"; \
-    curl -fsSL "https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/${trivy_archive}" -o "/tmp/${trivy_archive}"; \
-    printf '%s  %s\n' "$trivy_sha" "/tmp/${trivy_archive}" | sha256sum -c -; \
-    tar -xzf "/tmp/${trivy_archive}" -C /usr/local/bin trivy; \
-    rm /tmp/kubectl "/tmp/${trivy_archive}"; \
     groupmod --new-name builder node; \
     usermod --login builder --home /home/builder --move-home --shell /bin/bash node; \
     groupadd --gid 1001 buster-suite; \
@@ -72,23 +79,41 @@ RUN set -eux; \
     usermod --append --groups buster-suite,buster-buildkit builder; \
     printf 'builder:100000:65536\n' >> /etc/subuid; \
     printf 'builder:100000:65536\n' >> /etc/subgid; \
-    mkdir -p /app /home/builder/.openclaw/v2-jobs /home/builder/.local/share/buildkit /home/builder/.config/buildkit /home/builder/.cache/trivy /run/user/1000/buildkit; \
+    mkdir -p /app /home/builder/.openclaw/v2-jobs /home/builder/.local/share/buildkit /home/builder/.config/buildkit /home/builder/.cache/trivy /run/user/1000/buildkit /var/lib/buster-v2; \
     chown -R builder:builder /app /home/builder /run/user/1000; \
+    chown builder:builder /var/lib/buster-v2; \
     chown root:builder /home/builder/.config /home/builder/.config/buildkit; \
     chmod 0750 /home/builder/.config /home/builder/.config/buildkit
+
+
+# Rebuild the locked upstream source with patched transitive modules/compiler.
+COPY --from=runtime-binaries /out/kubectl /usr/local/bin/kubectl
+COPY --from=runtime-binaries /out/trivy /usr/local/bin/trivy
 
 ARG RUFF_VERSION=0.15.22
 ARG MYPY_VERSION=2.3.0
 ARG PIP_AUDIT_VERSION=2.10.1
-ARG SEMGREP_VERSION=1.170.1
+ARG SEMGREP_VERSION=1.183.0
+# Retain Debian's security-maintained pip for pip-api, not the build wheel's
+# independent (and otherwise unpatched) vendored dependency copies.
 COPY docker/python-tools/buster.txt /opt/kubeclaw-python-locks/buster.txt
 RUN grep -F "ruff==${RUFF_VERSION} " /opt/kubeclaw-python-locks/buster.txt \
     && grep -F "mypy==${MYPY_VERSION} " /opt/kubeclaw-python-locks/buster.txt \
     && grep -F "pip-audit==${PIP_AUDIT_VERSION} " /opt/kubeclaw-python-locks/buster.txt \
     && grep -F "semgrep==${SEMGREP_VERSION} " /opt/kubeclaw-python-locks/buster.txt \
     && pip install --break-system-packages --no-cache-dir --require-hashes --only-binary=:all: \
-      -r /opt/kubeclaw-python-locks/buster.txt
+      -r /opt/kubeclaw-python-locks/buster.txt \
+    && python3 -m pip uninstall --break-system-packages --yes pip \
+    && python3 -c 'import pip; assert pip.__file__.startswith("/usr/lib/python3/dist-packages/pip/"), pip.__file__'
 
+# Stable tools can be supplied by a content-keyed, digest-pinned CI image.
+# Local and PR builds retain the identical in-file toolchain by default.
+# hadolint ignore=DL3006
+FROM ${KUBECLAW_TOOLCHAIN} AS runtime
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+ARG TARGETARCH
+
+ARG KUBECLAW_BUILD_REVISION=unknown
 ENV PATH="/app/node_modules/.bin:${PATH}" \
     PLAYWRIGHT_BROWSERS_PATH=/ms-playwright \
     KUBECLAW_BUILD_REVISION=${KUBECLAW_BUILD_REVISION}
@@ -126,12 +151,15 @@ RUN test -n "$TRIVY_DATABASE_REFRESH" && setpriv --reuid=1000 --regid=1000 --ini
 COPY scripts/registry-client-config.mjs /app/scripts/registry-client-config.mjs
 COPY docker/buster-runtime-entrypoint.sh /usr/local/bin/buster-runtime-entrypoint
 RUN chmod 0755 /usr/local/bin/buster-runtime-entrypoint
+COPY tests/verification/deployment/buster-buildkit-state.mjs /tmp/buster-buildkit-state.mjs
+RUN setpriv --bounding-set=-dac_override,-dac_read_search,-fowner -- node /tmp/buster-buildkit-state.mjs \
+    && rm /tmp/buster-buildkit-state.mjs
 
 ENV HOME=/home/builder \
     XDG_RUNTIME_DIR=/run/user/1000 \
     NODE_PATH=/app/node_modules \
     BUILDKIT_HOST=unix:///run/user/1000/buildkit/buildkitd.sock \
-    BUILDKIT_STATE_DIR=/home/builder/.local/share/buildkit \
+    BUILDKIT_STATE_DIR=/var/lib/buster-v2/buildkit \
     BUSTER_V2_STATE_DIR=/home/builder/.openclaw/v2-jobs \
     BUSTER_V2_RUN_DIR=/tmp/buster-v2-runs \
     BUSTER_V2_MAX_ARCHIVE_BYTES=67108864 \

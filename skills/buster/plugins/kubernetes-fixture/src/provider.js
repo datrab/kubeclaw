@@ -1,5 +1,7 @@
+import { testSecretContract, validateTestSecretBindings } from './test-secrets.js';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
+import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const DIGEST = /^sha256:[a-f0-9]{64}$/u;
@@ -16,6 +18,10 @@ function object(value, label) {
 
 function configuration(invocation) {
   const value = object(invocation.configuration.values, 'root');
+  const allowed = new Set(['image', 'serviceName', 'servicePort', 'serviceTargetPort',
+    'namespacePrefix', 'retention', 'readinessTimeoutSeconds', 'secretReferences',
+    'testCredentials', 'fullStack', 'verifiedImages', 'podReplacementSelectors', 'testSecrets']);
+  if (Object.keys(value).some(key => !allowed.has(key))) throw new Error('KUBERNETES_FIXTURE_CONFIG_UNKNOWN');
   const imageInputs = invocation.inputs.filter((item) => item.name === 'image');
   if (invocation.inputs.some((item) => !['image', 'checked-manifest'].includes(item.name))) {
     throw new Error('KUBERNETES_FIXTURE_INPUT_UNKNOWN');
@@ -28,6 +34,22 @@ function configuration(invocation) {
   const matched = typeof image.reference === 'string' ? IMAGE.exec(image.reference) : null;
   if (!matched || typeof image.digest !== 'string' || !DIGEST.test(image.digest) || matched[1] !== image.digest) {
     throw new Error('KUBERNETES_FIXTURE_IMAGE_INVALID');
+  }
+  const fullStack = value.fullStack;
+  if (fullStack !== undefined && (fullStack !== true || !Array.isArray(value.verifiedImages)
+    || value.verifiedImages.length < 1 || value.verifiedImages.length > 32
+    || new Set(value.verifiedImages).size !== value.verifiedImages.length
+    || !value.verifiedImages.includes(image.reference)
+    || value.verifiedImages.some((item) => typeof item !== 'string' || !IMAGE.test(item)))) {
+    throw new Error('KUBERNETES_FIXTURE_IMAGE_INVENTORY_INVALID');
+  }
+  if (fullStack === undefined && value.verifiedImages !== undefined) throw new Error('KUBERNETES_FIXTURE_FULL_STACK_REQUIRED');
+  const podReplacementSelectors = value.podReplacementSelectors ?? [];
+  if (!Array.isArray(podReplacementSelectors) || podReplacementSelectors.length > 8
+    || (podReplacementSelectors.length && !fullStack) || podReplacementSelectors.some(selector =>
+      !selector || typeof selector !== 'object' || Array.isArray(selector) || !Object.keys(selector).length
+      || Object.entries(selector).some(([key, value]) => !key || typeof value !== 'string' || value.length > 63))) {
+    throw new Error('KUBERNETES_FIXTURE_REPLACEMENT_SELECTORS_INVALID');
   }
   if (typeof value.serviceName !== 'string' || !DNS_LABEL.test(value.serviceName)) throw new Error('KUBERNETES_FIXTURE_SERVICE_NAME_INVALID');
   if (!Number.isSafeInteger(value.servicePort) || value.servicePort < 1 || value.servicePort > 65535) throw new Error('KUBERNETES_FIXTURE_SERVICE_PORT_INVALID');
@@ -56,7 +78,9 @@ function configuration(invocation) {
     || typeof testCredentials.secretName !== 'string' || !DNS_LABEL.test(testCredentials.secretName))) {
     throw new Error('KUBERNETES_FIXTURE_TEST_CREDENTIALS_INVALID');
   }
-  return { immutableImage: image.reference, imageDigest: image.digest, serviceName: value.serviceName,
+  const testSecrets = testSecretContract(value.testSecrets);
+  validateTestSecretBindings(testSecrets, [], {fullStack,namespacePrefix,retentionSeconds,secretReferences,testCredentials});
+  return { ...(testSecrets ? {testSecrets} : {}), ...(fullStack ? { fullStack: true, verifiedImages: [...value.verifiedImages].sort(), podReplacementSelectors } : {}), immutableImage: image.reference, imageDigest: image.digest, serviceName: value.serviceName,
     servicePort: value.servicePort, namespacePrefix, retentionMode, retentionSeconds,
     readinessTimeoutSeconds, secretReferences: [...new Set(secretReferences)],
     ...(serviceTargetPort === undefined ? {} : { serviceTargetPort }),
@@ -87,7 +111,8 @@ function capabilityRequest(invocation, config, manifest) {
   const names = identity(invocation, config.namespacePrefix);
   return {
     operation: 'prepare', resource: { type: 'kubernetes.fixture', canonicalId: `kubernetes-fixture:${invocation.attemptId}` },
-    payload: { ...names, namespacePrefix: config.namespacePrefix, project: invocation.moduleId ?? invocation.runId,
+    payload: { ...names, ...(config.testSecrets ? {testSecrets:config.testSecrets} : {}), namespacePrefix: config.namespacePrefix, project: invocation.moduleId ?? invocation.runId,
+      ...(config.fullStack ? { fullStack: true, verifiedImages: config.verifiedImages, podReplacementSelectors: config.podReplacementSelectors } : {}),
       immutableImage: config.immutableImage, imageDigest: config.imageDigest, manifestPath: manifest.file,
       manifestDigest: manifest.artifact.contentDigest, serviceName: config.serviceName, servicePort: config.servicePort,
       ...(config.serviceTargetPort === undefined ? {} : { serviceTargetPort: config.serviceTargetPort }),
@@ -102,13 +127,55 @@ function details(values) {
   return { schemaId, schemaDigest: `sha256:${crypto.createHash('sha256').update(schemaId).digest('hex')}`, values };
 }
 
+// Reuse log evidence so default failed-node collection retains the JSON snapshot.
+// Publication errors remain separate from the original readiness failure.
+function failureArtifact(invocation, context, evidence) {
+  try {
+    const bytes = Buffer.from(`${JSON.stringify(evidence)}\n`);
+    if (!Number.isSafeInteger(invocation.limits?.artifactFiles) || invocation.limits.artifactFiles < 1
+      || !Number.isSafeInteger(invocation.limits?.artifactBytes)
+      || bytes.length > Math.min(128 * 1024, invocation.limits.artifactBytes)) {
+      return { files: [], error: 'budget-exceeded' };
+    }
+    const root = fs.realpathSync(context.workspaceRoot);
+    const directory = fs.realpathSync(path.resolve(root, invocation.workspace.evidence));
+    if (directory !== root && !directory.startsWith(`${root}${path.sep}`)) return { files: [], error: 'path-denied' };
+    const file = 'kubernetes-fixture-failure.json';
+    fs.writeFileSync(path.join(directory, file), bytes, { flag: 'wx', mode: 0o600 });
+    return { files: [{ evidenceId: 'kubernetes-fixture-failure', type: 'log', file, mediaType: 'application/json' }], error: null };
+  } catch (error) {
+    return { files: [], error: error?.code === 'EEXIST' ? 'already-exists' : 'write-failed' };
+  }
+}
+
 export function provider() {
   return {
     async execute(invocation, context) {
       const config = configuration(invocation);
       const manifest = manifestInput(invocation);
       const result = await context.invoke('kubernetes.fixture', capabilityRequest(invocation, config, manifest));
-      if (result.ok !== true) throw new Error('KUBERNETES_FIXTURE_PREPARATION_FAILED');
+      if (result.ok !== true) {
+        if (!result.failureEvidence) throw new Error('KUBERNETES_FIXTURE_PREPARATION_FAILED');
+        const artifact = failureArtifact(invocation, context, result.failureEvidence);
+        const evidence = result.failureEvidence;
+        const pod = evidence.pods?.[0];
+        const container = [...(pod?.initContainerStatuses ?? []), ...(pod?.containerStatuses ?? [])]
+          .find(item => item.state?.waiting || item.state?.terminated?.exitCode);
+        const condition = pod?.conditions?.find(item => item.status === 'False');
+        const detail = container?.state?.waiting ?? container?.state?.terminated ?? condition ?? evidence.events?.at(-1);
+        // Evidence is already redacted and bounded by the fixture runtime.
+        const diagnosis = evidence.diagnosis;
+        const diagnostic = (diagnosis
+          ? [diagnosis.status, diagnosis.component, diagnosis.errorMessage, diagnosis.cause].filter(Boolean).join(': ')
+          : [detail?.reason, detail?.message].filter(Boolean).join(': ')).slice(0, 1200);
+        const summary = `${String(result.errorCode)} in ${String(result.namespace)}${diagnostic ? `: ${diagnostic}` : ''}; see fixture failure evidence.`;
+        return { schemaVersion: 'provider-result.v1', outcome: 'failed', summary,
+          counts: { total: 1, passed: 0, failed: 1, skipped: 0 },
+          findings: [{ id: 'kubernetes-fixture:readiness', severity: 'high', rule: 'kubernetes.fixture.readiness', message: summary }],
+          metrics: [], evidenceFiles: artifact.files, reports: [], outputs: [], exitCode: null, signal: null,
+          providerDetails: details({ failureEvidence: result.failureEvidence, errorCode: result.errorCode,
+            failureArtifactError: artifact.error }) };
+      }
       if (config.testCredentials && !result.generatedCredentials) throw new Error('KUBERNETES_FIXTURE_CREDENTIAL_PROVENANCE_MISSING');
       const deployment = { schemaVersion: 'kubernetes-deployment-fixture.v1', leaseName: result.leaseName,
         namespace: result.namespace,
@@ -129,7 +196,8 @@ export function provider() {
         ],
         exitCode: null, signal: null, providerDetails: details({ leaseName: result.leaseName, namespace: result.namespace,
           manifestDigest: manifest.artifact.contentDigest, immutableImage: config.immutableImage,
-          retentionMode: config.retentionMode, expiresAt: result.expiresAt }) };
+          retentionMode: config.retentionMode, expiresAt: result.expiresAt,
+          ...(result.podReplacements ? { podReplacements: result.podReplacements } : {}) }) };
     },
     async cleanup(invocation, context) {
       const config = configuration(invocation);
@@ -137,10 +205,10 @@ export function provider() {
       const names = identity(invocation, config.namespacePrefix);
       const released = await context.invoke('kubernetes.fixture', { operation: 'release',
         resource: { type: 'kubernetes.fixture', canonicalId: `kubernetes-fixture:${invocation.attemptId}` },
-        payload: { ...names, namespacePrefix: config.namespacePrefix } });
+        payload: { ...names, ...(config.testSecrets ? {testSecrets:config.testSecrets} : {}), namespacePrefix: config.namespacePrefix } });
       if (released?.ok !== true) throw new Error('KUBERNETES_FIXTURE_RELEASE_FAILED');
     },
   };
 }
 
-export const testContract = Object.freeze({ configuration, identity, mediaType: MEDIA_TYPE });
+export const testContract = Object.freeze({ configuration, identity, capabilityRequest, mediaType: MEDIA_TYPE });

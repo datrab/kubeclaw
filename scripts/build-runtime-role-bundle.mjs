@@ -3,6 +3,7 @@ import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { runtimeDependencyPlan } from './lib/runtime-dependency-plan.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
 const [role, outputValue, commit, contractVersion, builtAt] = process.argv.slice(2);
@@ -126,15 +127,15 @@ const internalPackageNames = new Set([...ownership.packages.flatMap((entry) => {
   return packageJson.name ? [packageJson.name] : [];
 })]);
 const dependencyQueue = [];
-function collectDependencies(sourceRoot) {
+function collectDependencies(sourceRoot, target) {
   const manifestPath = path.join(sourceRoot, 'package.json');
   if (!fs.existsSync(manifestPath)) return;
   const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
-  for (const name of Object.keys(manifest.dependencies ?? {})) {
-    if (!internalPackageNames.has(name)) dependencyQueue.push(name);
-  }
-  for (const name of Object.keys(manifest.optionalDependencies ?? {})) {
-    if (!internalPackageNames.has(name) && fs.existsSync(path.join(root, 'node_modules', name, 'package.json'))) dependencyQueue.push(name);
+  const optionalNames = new Set(Object.keys(manifest.optionalDependencies ?? {}));
+  for (const name of new Set([...Object.keys(manifest.dependencies ?? {}), ...optionalNames, ...Object.keys(manifest.peerDependencies ?? {})])) {
+    const optionalPeer = !Object.hasOwn(manifest.dependencies ?? {}, name)
+      && manifest.peerDependenciesMeta?.[name]?.optional === true;
+    if (!internalPackageNames.has(name)) dependencyQueue.push({ name, origin: sourceRoot, optional: optionalNames.has(name) || optionalPeer, target });
   }
 }
 for (const packageId of roleManifest.packages) {
@@ -151,10 +152,10 @@ for (const packageId of roleManifest.packages) {
     continue;
   }
   const files = selectedFiles(sourceRoot);
-  collectDependencies(sourceRoot);
   const before = contentDigest(sourceRoot, files);
   const nodePackage = entry.bundle.kind === 'node-package' ? internalPackageTarget(sourceRoot) : null;
   const target = nodePackage ? path.posix.join('skills/packages', packageId) : entry.bundle.target;
+  collectDependencies(sourceRoot, target);
   copySelection(sourceRoot, files, target);
   if (nodePackage) {
     const link = path.posix.join('skills/node_modules', nodePackage.name);
@@ -171,9 +172,9 @@ for (const pluginId of roleManifest.plugins) {
   const sourceRoot = catalog.get(pluginId);
   assert(sourceRoot, `unknown runtime plugin: ${pluginId}`);
   const files = selectedFiles(sourceRoot);
-  collectDependencies(sourceRoot);
   const before = contentDigest(sourceRoot, files);
   const target = path.posix.join('skills/plugins', path.basename(sourceRoot));
+  collectDependencies(sourceRoot, target);
   copySelection(sourceRoot, files, target);
   const packageManifestPath = path.join(sourceRoot, 'package.json');
   const nodePackage = fs.existsSync(packageManifestPath) ? internalPackageTarget(sourceRoot) : null;
@@ -195,9 +196,9 @@ for (const extensionId of roleManifest.extensions) {
   assert(sourceRoot, `unknown runtime extension: ${extensionId}`);
   execFileSync(process.execPath, [path.join(sourceRoot, 'scripts/sync-contract.mjs')], { stdio: 'inherit' });
   const files = selectedFiles(sourceRoot);
-  collectDependencies(sourceRoot);
   const before = contentDigest(sourceRoot, files);
   const target = path.posix.join('skills/plugins', path.basename(sourceRoot));
+  collectDependencies(sourceRoot, target);
   copySelection(sourceRoot, files, target);
   assertSelectionUnchanged(sourceRoot, files, before, `runtime extension ${extensionId}`);
   trackSelection(sourceRoot, files, before, `runtime extension ${extensionId}`);
@@ -205,29 +206,20 @@ for (const extensionId of roleManifest.extensions) {
 }
 
 const dependencyRecords = [];
-const installedDependencies = new Set();
-while (dependencyQueue.length > 0) {
-  const name = dependencyQueue.shift();
-  if (installedDependencies.has(name)) continue;
-  installedDependencies.add(name);
-  const sourceRoot = path.join(root, 'node_modules', name);
-  assert(fs.existsSync(path.join(sourceRoot, 'package.json')), `runtime dependency is not installed: ${name}`);
+const dependencyPlan = runtimeDependencyPlan(dependencyQueue, internalPackageNames);
+for (const { name, sourceRoot, target } of dependencyPlan.packages) {
   const manifest = JSON.parse(fs.readFileSync(path.join(sourceRoot, 'package.json'), 'utf8'));
   const files = selectedFiles(sourceRoot, undefined, ['node_modules', 'test', 'tests', '.github']);
   const before = contentDigest(sourceRoot, files);
-  const target = path.posix.join('skills/node_modules', name);
   copySelection(sourceRoot, files, target);
   assertSelectionUnchanged(sourceRoot, files, before, `runtime dependency ${name}`, undefined,
     ['node_modules', 'test', 'tests', '.github']);
   trackSelection(sourceRoot, files, before, `runtime dependency ${name}`, undefined,
     ['node_modules', 'test', 'tests', '.github']);
   dependencyRecords.push({ name, version: manifest.version, sourceDigest: before, files: files.length, target });
-  for (const dependency of Object.keys(manifest.dependencies ?? {})) {
-    if (!internalPackageNames.has(dependency)) dependencyQueue.push(dependency);
-  }
-  for (const dependency of Object.keys(manifest.optionalDependencies ?? {})) {
-    if (!internalPackageNames.has(dependency) && fs.existsSync(path.join(root, 'node_modules', dependency, 'package.json'))) dependencyQueue.push(dependency);
-  }
+}
+for (const { target, destination } of dependencyPlan.links) {
+  writeSymlink(target, path.posix.relative(path.posix.dirname(target), destination));
 }
 
 const facadeLines = [

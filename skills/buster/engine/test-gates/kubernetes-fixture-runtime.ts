@@ -1,4 +1,8 @@
+import { testSecretContract, validateTestSecretBindings } from '@kubeclaw/plugin-kubernetes-fixture-provider/src/test-secrets.js';
 import crypto from 'node:crypto';
+import { collectFixtureFailureEvidence } from './kubernetes-fixture-diagnostics.ts';
+import { validateFixtureNetworkPolicy } from './kubernetes-network-envelope.ts';
+import { fixturePodIsReady } from './kubernetes-pod-readiness.ts';
 import { assertGeneratedCredentialLease,generatedDemoCredentials } from './generated-demo-credentials.ts';
 import { runProcessInput } from './process-input.ts';
 import fs from 'node:fs';
@@ -44,7 +48,57 @@ async function executeProcess(command: string, args: readonly string[], options:
   return { stdout, stderr };
 }
 
+export interface FixtureFailureDiagnosisInput {
+  readonly namespace: string;
+  readonly leaseName: string;
+  readonly errorCode: string;
+  readonly failureEvidence: Readonly<Record<string, unknown>>;
+  readonly signal: AbortSignal;
+}
+
+// Operator-configured diagnosis is advisory; it never changes the native failure.
+// The dispatcher must return secret-filtered findings, never raw private logs.
+export interface FixtureFailureDiagnosis {
+  readonly status: 'diagnosed' | 'inconclusive' | 'unavailable';
+  readonly component: string;
+  readonly errorMessage: string;
+  readonly cause: string | null;
+  readonly evidence: readonly string[];
+  readonly nextStep: string;
+}
+export interface FixtureFailureDiagnosisOptions {
+  readonly timeoutMs: number;
+  readonly cancellationGraceMs?: number;
+  readonly diagnose: (input: FixtureFailureDiagnosisInput) => Promise<unknown>;
+}
+
+export function parseFixtureFailureDiagnosis(value: unknown): FixtureFailureDiagnosis {
+  const source = object(value, 'failureDiagnosis');
+  const keys = ['status', 'component', 'errorMessage', 'cause', 'evidence', 'nextStep'];
+  if (Object.keys(source).length !== keys.length || Object.keys(source).some(key => !keys.includes(key))
+    || !['diagnosed', 'inconclusive', 'unavailable'].includes(String(source.status))
+    || (source.cause !== null && typeof source.cause !== 'string')
+    || !Array.isArray(source.evidence) || source.evidence.length > 16) {
+    throw new Error('KUBERNETES_FIXTURE_DIAGNOSIS_INVALID');
+  }
+  const bounded = (input: unknown, maximum: number): string => {
+    if (typeof input !== 'string' || !input.trim() || input.length > maximum || input.includes('\0')) {
+      throw new Error('KUBERNETES_FIXTURE_DIAGNOSIS_INVALID');
+    }
+    return input;
+  };
+  if (source.status === 'diagnosed' && source.cause === null) throw new Error('KUBERNETES_FIXTURE_DIAGNOSIS_INVALID');
+  const result: FixtureFailureDiagnosis = {
+    status: source.status as FixtureFailureDiagnosis['status'], component: bounded(source.component, 256),
+    errorMessage: bounded(source.errorMessage, 4096), cause: source.cause === null ? null : bounded(source.cause, 4096),
+    evidence: Object.freeze(source.evidence.map(item => bounded(item, 1024))), nextStep: bounded(source.nextStep, 2048),
+  };
+  if (Buffer.byteLength(JSON.stringify(result), 'utf8') > 16384) throw new Error('KUBERNETES_FIXTURE_DIAGNOSIS_INVALID');
+  return Object.freeze(result);
+}
+
 export interface KubernetesFixtureCapabilityInvokerOptions {
+  readonly failureDiagnosis?: FixtureFailureDiagnosisOptions;
   readonly workspaceRoot: string;
   readonly kubectlExecutable: string;
   readonly controllerNamespace: string;
@@ -299,7 +353,7 @@ function validatePodSecurity(spec: JsonObject): void {
 
 function inspectManifest(bytes: Buffer, immutableImage: string, maximumResources: number,
   allowedRegistryPrefixes: readonly string[], serviceName: string, servicePort: number,
-  expectedServiceTargetPort: number | null, persistentVolumePolicy: PersistentVolumePolicy):
+  expectedServiceTargetPort: number | null, persistentVolumePolicy: PersistentVolumePolicy, verifiedImages?: readonly string[]):
   { resources: number; workloads: number; serviceTargetPort: number } {
   const loaded = boundedManifestDocuments(bytes);
   const documents = flattenDocuments(loaded, maximumResources);
@@ -317,7 +371,7 @@ function inspectManifest(bytes: Buffer, immutableImage: string, maximumResources
     const metadata = object(document.metadata, 'metadata');
     text(metadata.name, 'metadata.name', 253);
     if (CLUSTER_SCOPED_KINDS.has(kind)) throw new Error(`KUBERNETES_FIXTURE_CLUSTER_SCOPE_DENIED:${kind}`);
-    if (!ALLOWED_NAMESPACED_KINDS.has(kind)) throw new Error(`KUBERNETES_FIXTURE_RESOURCE_KIND_DENIED:${kind}`);
+    if (!(kind === 'NetworkPolicy' && verifiedImages) && !ALLOWED_NAMESPACED_KINDS.has(kind)) throw new Error(`KUBERNETES_FIXTURE_RESOURCE_KIND_DENIED:${kind}`);
     if (metadata.namespace !== undefined) throw new Error(`KUBERNETES_FIXTURE_NAMESPACE_FIELD_DENIED:${kind}`);
     if (!apiVersion.includes('/') && apiVersion !== 'v1') throw new Error('KUBERNETES_FIXTURE_API_VERSION_INVALID');
     for (const claim of persistentVolumeClaims(document)) {
@@ -326,6 +380,10 @@ function inspectManifest(bytes: Buffer, immutableImage: string, maximumResources
       if (persistentVolumeTotalBytes > persistentVolumePolicy.maximumTotalBytes) {
         throw new Error('KUBERNETES_FIXTURE_PVC_TOTAL_SIZE_DENIED');
       }
+    }
+    if (kind === 'NetworkPolicy') {
+      if (apiVersion !== 'networking.k8s.io/v1') throw new Error('KUBERNETES_FIXTURE_NETWORK_POLICY_INVALID');
+      validateFixtureNetworkPolicy(document.spec);
     }
     if (kind === 'Service') {
       const spec = object(document.spec, 'service.spec');
@@ -368,6 +426,7 @@ function inspectManifest(bytes: Buffer, immutableImage: string, maximumResources
           if (!allowedRegistryPrefixes.some((prefix) => parsed[1] === prefix || parsed[1]!.startsWith(`${prefix}/`))) {
             throw new Error(`KUBERNETES_FIXTURE_IMAGE_REGISTRY_DENIED:${image}`);
           }
+          if (verifiedImages && !verifiedImages.includes(image)) throw new Error(`KUBERNETES_FIXTURE_UNVERIFIED_IMAGE:${image}`);
           if (image === immutableImage) matchedImage = true;
           for (const rawPort of Array.isArray(containerObject.ports) ? containerObject.ports : []) {
             const port = object(rawPort, 'container.port');
@@ -422,6 +481,12 @@ function waitForPoll(milliseconds: number, signal: AbortSignal): Promise<void> {
 }
 
 export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilityInvoker {
+  readonly #preparing = new Map<string, Readonly<{ namespace: string; leaseName: string }>>();
+
+  preparingNamespaces(): readonly Readonly<{ namespace: string; leaseName: string }>[] {
+    return [...this.#preparing.values()];
+  }
+
   readonly #root: string;
   readonly #kubectl: string;
   readonly #controllerNamespace: string;
@@ -441,6 +506,7 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
   readonly #maximumRetentionSeconds: number;
   readonly #maximumExecutionMs: number;
   readonly #pollIntervalMs: number;
+  readonly #failureDiagnosis: FixtureFailureDiagnosisOptions | undefined;
   readonly #execute: Execute;
   readonly #now: () => Date;
 
@@ -502,6 +568,15 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
     if (!Number.isSafeInteger(this.#pollIntervalMs) || this.#pollIntervalMs < 50 || this.#pollIntervalMs > 10_000) {
       throw new Error('KUBERNETES_FIXTURE_POLL_INTERVAL_INVALID');
     }
+    if (options.failureDiagnosis && (!Number.isSafeInteger(options.failureDiagnosis.timeoutMs)
+      || options.failureDiagnosis.timeoutMs < 1 || options.failureDiagnosis.timeoutMs > 300_000
+      || typeof options.failureDiagnosis.diagnose !== 'function'
+      || (options.failureDiagnosis.cancellationGraceMs !== undefined
+        && (!Number.isSafeInteger(options.failureDiagnosis.cancellationGraceMs)
+          || options.failureDiagnosis.cancellationGraceMs < 0 || options.failureDiagnosis.cancellationGraceMs > 10_000)))) {
+      throw new Error('KUBERNETES_FIXTURE_DIAGNOSIS_CONFIG_INVALID');
+    }
+    this.#failureDiagnosis = options.failureDiagnosis;
     this.#execute = options.execute ?? executeProcess;
     this.#now = options.now ?? (() => new Date());
   }
@@ -541,12 +616,26 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
     throw new Error(`KUBERNETES_FIXTURE_LEASE_TIMEOUT:${last}`);
   }
 
+  async #readinessQuery(args: readonly string[], signal: AbortSignal, timeout: number): Promise<string> {
+    try {
+      return await this.#kubectlRun(args, null, signal, timeout);
+    } catch (error) {
+      // A timed-out API read is not proof that the workload itself is unhealthy.
+      // Preserve its diagnostic snapshot without reclassifying auth/cancellation.
+      if (!signal.aborted && error instanceof Error &&
+          error.message === 'KUBERNETES_FIXTURE_KUBECTL_FAILED:KUBERNETES_FIXTURE_KUBECTL_TIMEOUT') {
+        throw new Error('KUBERNETES_FIXTURE_READINESS_QUERY_TIMEOUT', { cause: error });
+      }
+      throw error;
+    }
+  }
+
   async #waitPods(namespace: string, signal: AbortSignal, timeoutMs: number): Promise<number> {
     const deadline = Date.now() + timeoutMs;
     let last = 'No pods found.';
     while (Date.now() < deadline) {
       const requestTimeoutMs = Math.max(1, Math.min(15_000, deadline - Date.now()));
-      const raw = await this.#kubectlRun(['get', 'pods', '-n', namespace, '-o', 'json'], null, signal, requestTimeoutMs);
+      const raw = await this.#readinessQuery(['get', 'pods', '-n', namespace, '-o', 'json'], signal, requestTimeoutMs);
       const value = object(JSON.parse(raw), 'pods');
       const items = Array.isArray(value.items) ? value.items : [];
       if (items.length > 0) {
@@ -555,11 +644,7 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
           const pod = object(rawPod, 'pod');
           const metadata = object(pod.metadata, 'pod.metadata');
           const status = object(pod.status ?? {}, 'pod.status');
-          const conditions = Array.isArray(status.conditions) ? status.conditions : [];
-          const ready = conditions.some((condition) => {
-            const item = condition && typeof condition === 'object' && !Array.isArray(condition) ? condition as JsonObject : {};
-            return item.type === 'Ready' && item.status === 'True';
-          });
+          const ready = fixturePodIsReady({ ...pod, status });
           if (!ready) pending.push(String(metadata.name ?? 'unknown'));
         }
         if (pending.length === 0) return items.length;
@@ -577,7 +662,7 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
     let last = 'Service endpoints not ready.';
     while (Date.now() < deadline) {
       const serviceTimeoutMs = Math.max(1, Math.min(15_000, deadline - Date.now()));
-      const serviceRaw = await this.#kubectlRun(['get', 'service', serviceName, '-n', namespace, '-o', 'json'], null, signal, serviceTimeoutMs);
+      const serviceRaw = await this.#readinessQuery(['get', 'service', serviceName, '-n', namespace, '-o', 'json'], signal, serviceTimeoutMs);
       const service = object(JSON.parse(serviceRaw), 'service');
       const spec = object(service.spec, 'service.spec');
       const ports = Array.isArray(spec.ports) ? spec.ports : [];
@@ -589,7 +674,7 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
       if (Date.now() >= deadline) break;
       try {
         const endpointsTimeoutMs = Math.max(1, Math.min(15_000, deadline - Date.now()));
-        const endpointsRaw = await this.#kubectlRun(['get', 'endpoints', serviceName, '-n', namespace, '-o', 'json'], null, signal, endpointsTimeoutMs);
+        const endpointsRaw = await this.#readinessQuery(['get', 'endpoints', serviceName, '-n', namespace, '-o', 'json'], signal, endpointsTimeoutMs);
         const endpoints = object(JSON.parse(endpointsRaw), 'endpoints');
         const subsets = Array.isArray(endpoints.subsets) ? endpoints.subsets : [];
         const ready = subsets.some((entry) => {
@@ -652,6 +737,22 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
     if (payload.imageDigest !== image[2] || !DIGEST.test(String(payload.imageDigest))) {
       throw new Error('KUBERNETES_FIXTURE_IMAGE_DIGEST_INVALID');
     }
+    let verifiedImages: string[] | undefined;
+    if (payload.fullStack !== undefined) {
+      if (payload.fullStack !== true) throw new Error('KUBERNETES_FIXTURE_FULL_STACK_INVALID');
+      verifiedImages = stringArray(payload.verifiedImages, 'verifiedImages', 32);
+      if (!verifiedImages.length || !verifiedImages.includes(immutableImage) || verifiedImages.some((ref) => {
+        const parsed = IMMUTABLE_IMAGE.exec(ref);
+        return !parsed || !this.#registryPrefixes.some((prefix) => parsed[1] === prefix || parsed[1]!.startsWith(`${prefix}/`));
+      })) throw new Error('KUBERNETES_FIXTURE_IMAGE_INVENTORY_INVALID');
+      verifiedImages.sort();
+    } else if (payload.verifiedImages !== undefined) throw new Error('KUBERNETES_FIXTURE_FULL_STACK_REQUIRED');
+    const replacementSelectors = payload.podReplacementSelectors ?? [];
+    if (!Array.isArray(replacementSelectors) || replacementSelectors.length > 8 || (replacementSelectors.length > 0 && !verifiedImages)) throw new Error('KUBERNETES_FIXTURE_REPLACEMENT_SELECTORS_INVALID');
+    for (const raw of replacementSelectors) {
+      const labels = object(raw, 'replacementSelector');
+      if (!Object.keys(labels).length || Object.keys(labels).length > 32 || Object.entries(labels).some(([key, value]) => !key || typeof value !== 'string' || value.length > 63)) throw new Error('KUBERNETES_FIXTURE_REPLACEMENT_SELECTORS_INVALID');
+    }
     const manifestDigest = text(payload.manifestDigest, 'manifestDigest', 71);
     if (!DIGEST.test(manifestDigest)) throw new Error('KUBERNETES_FIXTURE_MANIFEST_DIGEST_INVALID');
     const manifestPath = contained(this.#root, payload.manifestPath);
@@ -671,7 +772,7 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
         allowDefaultStorageClass: this.#allowDefaultStorageClass,
         maximumClaimBytes: this.#maximumPersistentVolumeClaimBytes,
         maximumTotalBytes: this.#maximumPersistentVolumeTotalBytes,
-      });
+      }, verifiedImages);
     const retentionSeconds = integer(payload.retentionSeconds, 'retentionSeconds', 60, this.#maximumRetentionSeconds);
     const retentionMode = text(payload.retentionMode, 'retentionMode', 6);
     if (retentionMode !== 'delete' && retentionMode !== 'retain') {
@@ -689,6 +790,15 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
       testCredentials = { mode, secretName, keys: ['username', 'password'],
         readers: [...new Set([this.#credentialReaderSubject, this.#runnerSubject])] };
     }
+    if (Object.hasOwn(payload, 'familyclawBootstrap')) throw new Error('KUBERNETES_FIXTURE_BOOTSTRAP_REMOVED');
+    const testSecrets = testSecretContract(payload.testSecrets);
+    const documents = verifiedImages ? flattenDocuments(boundedManifestDocuments(bytes), this.#maximumResources) : [];
+    validateTestSecretBindings(testSecrets,documents,{fullStack:!!verifiedImages,namespacePrefix,retentionSeconds,secretReferences,testCredentials});
+    const networkPolicies = documents.filter(doc => doc.kind === 'NetworkPolicy').map(doc => ({ name: object(doc.metadata, 'metadata').name, spec: doc.spec }));
+    const endpointService = documents.find(doc => doc.kind === 'Service' && object(doc.metadata, 'metadata').name === serviceName);
+    const endpointSelector = endpointService ? object(object(endpointService.spec, 'service.spec').selector, 'service.selector') : undefined;
+    if (verifiedImages && (!endpointSelector || Object.keys(endpointSelector).length === 0)) throw new Error('KUBERNETES_FIXTURE_SERVICE_SELECTOR_REQUIRED');
+    const applyBytes = verifiedImages ? JSON.stringify({ apiVersion: 'v1', kind: 'List', items: documents.filter(doc => doc.kind !== 'NetworkPolicy') }) : bytes;
     const lease = {
       apiVersion: `${this.#apiGroup}/${this.#apiVersion}`, kind: 'BusterNamespaceLease',
       metadata: { name: leaseName, namespace: this.#controllerNamespace,
@@ -696,8 +806,9 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
       spec: { namespaceName, namespacePrefix, runId: leaseName, project: text(payload.project, 'project', 253),
         purpose: 'gate', serviceName, servicePort, serviceTargetPort: facts.serviceTargetPort, cleanupPolicy: retentionMode,
         verifiedImage: immutableImage, manifestDigest,
+        ...(verifiedImages ? { fullStack: true, verifiedImages, networkPolicies, endpointSelector } : {}),
         ttlSeconds: retentionSeconds, access: [{ subject: this.#runnerSubject, mode: 'deployer' }],
-        secretsToCopy: secretReferences, ...(testCredentials ? { testCredentials } : {}), exposure: { provider: 'off' } },
+        secretsToCopy: secretReferences, ...(testSecrets ? {testSecrets} : {}), ...(testCredentials ? { testCredentials } : {}), exposure: { provider: 'off' } },
     };
     const leaseBytes = `${JSON.stringify(lease)}\n`;
     const resource = `busternamespaceleases.${this.#apiGroup}`;
@@ -712,12 +823,26 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
       status = await this.#waitLease(leaseName, signal, readinessTimeoutMs);
       const actualNamespace = text(status.namespaceName, 'status.namespaceName', 63);
       if (actualNamespace !== namespaceName) throw new Error('KUBERNETES_FIXTURE_NAMESPACE_MISMATCH');
-      await this.#kubectlRun(['apply', '--namespace', namespaceName, '-f', '-'], bytes, signal, readinessTimeoutMs);
+      this.#preparing.set(leaseName, Object.freeze({ namespace: namespaceName, leaseName }));
+      await this.#kubectlRun(['apply', '--namespace', namespaceName, '-f', '-'], applyBytes, signal, readinessTimeoutMs);
       const readinessDeadline = Date.now() + readinessTimeoutMs;
       const podCount = await this.#waitPods(namespaceName, signal, readinessTimeoutMs);
       const serviceReadinessMs = readinessDeadline - Date.now();
       if (serviceReadinessMs <= 0) throw new Error('KUBERNETES_FIXTURE_SERVICE_READINESS_TIMEOUT:Readiness deadline expired.');
       await this.#waitService(namespaceName, serviceName, servicePort, signal, serviceReadinessMs);
+      const podReplacements: Readonly<Record<string, unknown>>[] = [];
+      for (const raw of replacementSelectors) {
+        const selector = object(raw, 'replacementSelector');
+        const list = object(JSON.parse(await this.#kubectlRun(['get', 'pods', '-n', namespaceName, '-o', 'json'], null, signal, 15_000)), 'pods');
+        const candidates = (Array.isArray(list.items) ? list.items : []).map(item => object(item, 'pod')).filter(pod => {
+          const labels = object(object(pod.metadata, 'metadata').labels ?? {}, 'labels');
+          return Object.entries(selector).every(([key, value]) => labels[key] === value);
+        });
+        if (candidates.length !== 1) throw new Error('KUBERNETES_FIXTURE_REPLACEMENT_SELECTOR_NOT_UNIQUE');
+        const fresh = object(JSON.parse(await this.#kubectlRun(['get', resource, leaseName, '-n', this.#controllerNamespace, '-o', 'json'], null, signal, 15_000)), 'lease');
+        const pod = object(candidates[0]!.metadata, 'metadata');
+        podReplacements.push(await this.#replacePod({ leaseName, leaseUID: object(fresh.metadata, 'metadata').uid, namespace: namespaceName, podName: pod.name, podUID: pod.uid, timeoutMs: readinessTimeoutMs }, signal));
+      }
       const createdAt = text(status.createdAt, 'status.createdAt', 64);
       if (!Number.isFinite(Date.parse(createdAt))) throw new Error('KUBERNETES_FIXTURE_CREATED_AT_INVALID');
       const expiresAt = typeof status.expiresAt === 'string' ? status.expiresAt : new Date(Date.parse(createdAt) + retentionSeconds * 1_000).toISOString();
@@ -729,15 +854,156 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
         manifestDigest, immutableImage, secretReferences,
         ...(testCredentials ? { credentialsRef: testCredentials.secretName } : {}),
         ...(generatedCredentials ? { generatedCredentials } : {}),
-        resourceCount: facts.resources, workloadCount: facts.workloads, podCount });
+        resourceCount: facts.resources, workloadCount: facts.workloads, podCount, ...(podReplacements.length ? { podReplacements } : {}) });
     } catch (error) {
-      await this.#releaseAfterPrepareFailure(leaseName).catch(() => undefined);
+      // Keep cancellation semantics; cleanup has its own independent deadline.
+      // Read diagnostics before releasing the lease, bounded by both cancellation
+      // and a dedicated short deadline. Never expose arbitrary kubectl stderr.
+      const errorCode = error instanceof Error ? error.message.split(':', 1)[0] : 'KUBERNETES_FIXTURE_PREPARATION_FAILED';
+      const diagnosable = ['KUBERNETES_FIXTURE_READINESS_TIMEOUT', 'KUBERNETES_FIXTURE_SERVICE_READINESS_TIMEOUT',
+        'KUBERNETES_FIXTURE_REPLACEMENT_LEASE_CHANGED', 'KUBERNETES_FIXTURE_READINESS_QUERY_TIMEOUT'].includes(errorCode!);
+      let failureEvidence: Readonly<Record<string, unknown>> = {};
+      let diagnosis: FixtureFailureDiagnosis | undefined;
+      let cleanupError = false;
+      try {
+        const diagnosticSignal = AbortSignal.any([signal, AbortSignal.timeout(5_000)]);
+        failureEvidence = await collectFixtureFailureEvidence(namespaceName, diagnosticSignal,
+          (args, readSignal) => this.#kubectlRun(args, null, readSignal, 1_000)).catch(() => ({ readErrors: ['diagnostics:unavailable'] }));
+        if (diagnosable && !signal.aborted && this.#failureDiagnosis) {
+          diagnosis = await this.#diagnoseFailure({ namespace: namespaceName, leaseName,
+            errorCode: errorCode!, failureEvidence, signal });
+        }
+      } finally {
+        // Diagnosis timeout, cancellation and malformed output cannot strand the lease.
+        await this.#releaseAfterPrepareFailure(leaseName).catch(() => { cleanupError = true; });
+      }
+      if (signal.aborted) throw error;
+      // Validation, credential and other controller failures still throw.
+      if (!diagnosable) throw error;
+      return Object.freeze({ ok: false, errorCode, namespace: namespaceName, leaseName,
+        failureEvidence: { ...failureEvidence, ...(diagnosis ? { diagnosis } : {}), cleanupError } });
+    } finally {
+      this.#preparing.delete(leaseName);
+    }
+  }
+
+  async #diagnoseFailure(input: FixtureFailureDiagnosisInput): Promise<FixtureFailureDiagnosis> {
+    const configured = this.#failureDiagnosis!;
+    const timeout = new AbortController();
+    const timer = setTimeout(() => timeout.abort(), configured.timeoutMs);
+    const signal = AbortSignal.any([input.signal, timeout.signal]);
+    let onAbort: (() => void) | undefined;
+    const dispatchState = { settled: false, terminationUnconfirmed: false };
+    const operation = Promise.resolve().then(() => {
+      signal.throwIfAborted(); return configured.diagnose({ ...input, signal });
+    });
+    // Observe both resolution and rejection immediately, including late completion.
+    const settlement = operation.then(() => { dispatchState.settled = true; }, error => { dispatchState.settled = true; dispatchState.terminationUnconfirmed = error instanceof Error && error.message.includes('OPENCLAW_SESSION_CLEANUP_UNRESOLVED:'); });
+    try {
+      const aborted = new Promise<never>((_resolve, reject) => {
+        onAbort = () => reject(new Error('KUBERNETES_FIXTURE_DIAGNOSIS_ABORTED'));
+        signal.addEventListener('abort', onAbort, { once: true });
+        if (signal.aborted) onAbort();
+      });
+      const result = await Promise.race([aborted, operation]);
+      return parseFixtureFailureDiagnosis(result);
+    } catch {
+      if (signal.aborted && !dispatchState.settled) {
+        // Give the existing transport a bounded chance to cancel/reconcile its
+        // agent before the namespace is removed. Settlement alone is not proof
+        // that an external agent terminated; the transport owns that assertion.
+        let graceTimer: NodeJS.Timeout | undefined;
+        try {
+          await Promise.race([settlement, new Promise<void>(resolve => {
+            graceTimer = setTimeout(resolve, configured.cancellationGraceMs ?? 10_000);
+          })]);
+        } finally { if (graceTimer) clearTimeout(graceTimer); }
+      }
+      return Object.freeze({ status: 'unavailable', component: 'kubernetes-fixture',
+        errorMessage: 'Failure diagnosis did not produce a valid result before its deadline.', cause: null,
+        evidence: Object.freeze([]), nextStep: !dispatchState.settled || dispatchState.terminationUnconfirmed
+          ? 'Remote diagnosis agent termination is unconfirmed; reconcile its status through the authorized runtime before another diagnostic attempt.'
+          : 'Inspect the original fixture failure evidence through an authorized diagnostic path.' });
+    } finally {
+      clearTimeout(timer);
+      if (onAbort) signal.removeEventListener('abort', onAbort);
+    }
+  }
+
+  async #replacePod(payload: JsonObject, signal: AbortSignal, conflictRetries = 0): Promise<Readonly<Record<string, unknown>>> {
+    const timeoutMs = integer(payload.timeoutMs, 'timeoutMs', 1000, this.#maximumExecutionMs);
+    const deadline = Date.now() + timeoutMs;
+    const leaseName = text(payload.leaseName, 'leaseName', 63);
+    const namespace = text(payload.namespace, 'namespace', 63);
+    const podName = text(payload.podName, 'podName', 63);
+    const podUID = text(payload.podUID, 'podUID', 128);
+    const leaseUID = text(payload.leaseUID, 'leaseUID', 128);
+    if (![leaseName, namespace, podName].every(value => DNS_LABEL.test(value))) throw new Error('KUBERNETES_FIXTURE_REPLACEMENT_NAME_INVALID');
+    const resource = `busternamespaceleases.${this.#apiGroup}`;
+    const lease = object(JSON.parse(await this.#kubectlRun(['get', resource, leaseName, '-n', this.#controllerNamespace, '-o', 'json'], null, signal, 15_000)), 'lease');
+    const metadata = object(lease.metadata, 'lease.metadata');
+    const spec = object(lease.spec, 'lease.spec');
+    const status = object(lease.status, 'lease.status');
+    if (metadata.uid !== leaseUID || metadata.deletionTimestamp || spec.fullStack !== true || spec.purpose !== 'gate'
+      || spec.namespaceName !== namespace || status.namespaceName !== namespace || status.phase !== 'Ready'
+      || !this.#namespacePrefixes.has(String(spec.namespacePrefix)) || !namespace.startsWith(`${String(spec.namespacePrefix)}-`)
+      || !Number.isFinite(Date.parse(String(status.expiresAt))) || Date.parse(String(status.expiresAt)) <= Date.now()) {
+      throw new Error('KUBERNETES_FIXTURE_REPLACEMENT_LEASE_DENIED');
+    }
+    const allowed = (await this.#kubectlRun(['auth', 'can-i', 'patch', resource, '-n', this.#controllerNamespace], null, signal, 15_000)).trim();
+    if (allowed !== 'yes') throw new Error('KUBERNETES_FIXTURE_RBAC_DENIED:patch');
+    const before = object(JSON.parse(await this.#kubectlRun(['get', 'pods', '-n', namespace, '-o', 'json'], null, signal, 15_000)), 'pods');
+    const beforeItems = Array.isArray(before.items) ? before.items.map(value => object(value, 'pod')) : [];
+    const original = beforeItems.find(pod => object(pod.metadata, 'metadata').name === podName && object(pod.metadata, 'metadata').uid === podUID);
+    if (!original) throw new Error('KUBERNETES_FIXTURE_REPLACEMENT_POD_CHANGED');
+    const owner = (object(original.metadata, 'metadata').ownerReferences as JsonObject[] | undefined)?.find(value => value.controller === true && ['ReplicaSet', 'StatefulSet'].includes(String(value.kind)));
+    if (!owner || typeof owner.uid !== 'string') throw new Error('KUBERNETES_FIXTURE_REPLACEMENT_OWNER_REQUIRED');
+    const sameOwner = (pod: JsonObject): boolean => {
+      const owners = object(pod.metadata, 'metadata').ownerReferences;
+      return Array.isArray(owners) && owners.some(value => object(value, 'owner').uid === owner.uid && object(value, 'owner').controller === true);
+    };
+    const originalCount = beforeItems.filter(sameOwner).length;
+    const requestId = crypto.randomUUID();
+    const request = { requestId, leaseUID, namespace, podName, podUID };
+    const patch = JSON.stringify({ metadata: { resourceVersion: metadata.resourceVersion,
+      annotations: { 'kubeclaw.forgestack.ai/replace-pod': JSON.stringify(request) } } });
+    try {
+      await this.#kubectlRun(['patch', resource, leaseName, '-n', this.#controllerNamespace, '--type=merge', '-p', patch], null, signal, 15_000);
+    } catch (error) {
+      const remainingMs = deadline - Date.now();
+      // Controller status writes can race this resourceVersion precondition. Retry
+      // only explicit conflicts, re-reading and revalidating lease AND Pod identity.
+      // Never remove the precondition or retry an ambiguous transport failure.
+      if (!signal.aborted && conflictRetries < 2 && remainingMs >= 1000
+        && error instanceof Error && error.message.includes('KUBERNETES_FIXTURE_KUBECTL_FAILED:')
+        && error.message.includes('Error from server (Conflict):')) {
+        return this.#replacePod({ ...payload, timeoutMs: remainingMs }, signal, conflictRetries + 1);
+      }
       throw error;
     }
+    while (Date.now() < deadline) {
+      const fresh = object(JSON.parse(await this.#kubectlRun(['get', resource, leaseName, '-n', this.#controllerNamespace, '-o', 'json'], null, signal, Math.max(1, Math.min(15_000, deadline - Date.now())))), 'lease');
+      if (object(fresh.metadata, 'metadata').uid !== leaseUID || object(fresh.metadata, 'metadata').deletionTimestamp
+        || object(fresh.status, 'status').phase !== 'Ready' || Date.parse(String(object(fresh.status, 'status').expiresAt)) <= Date.now()) throw new Error('KUBERNETES_FIXTURE_REPLACEMENT_LEASE_CHANGED');
+      const receipt = object(object(fresh.status, 'status').podReplacement ?? {}, 'podReplacement');
+      if (receipt.requestId === requestId && receipt.podUID === podUID && receipt.phase === 'DeletionRequested') {
+        const pods = object(JSON.parse(await this.#kubectlRun(['get', 'pods', '-n', namespace, '-o', 'json'], null, signal, Math.max(1, Math.min(15_000, deadline - Date.now())))), 'pods');
+        const items = Array.isArray(pods.items) ? pods.items.map(value => object(value, 'pod')) : [];
+        if (items.filter(sameOwner).length >= originalCount && items.filter(sameOwner).every(fixturePodIsReady)
+          && !items.some(pod => object(pod.metadata, 'metadata').uid === podUID)) {
+          await this.#waitPods(namespace, signal, Math.max(1, deadline - Date.now()));
+          await this.#waitService(namespace, String(spec.serviceName), Number(spec.servicePort), signal, Math.max(1, deadline - Date.now()));
+          return { ok: true, ...request, phase: 'ReadyAfterReplacement', observedAt: new Date().toISOString() };
+        }
+      }
+      await waitForPoll(Math.min(this.#pollIntervalMs, Math.max(0, deadline - Date.now())), signal);
+    }
+    throw new Error('KUBERNETES_FIXTURE_REPLACEMENT_TIMEOUT');
   }
 
   async #release(leaseName: string, signal: AbortSignal): Promise<Readonly<Record<string, unknown>>> {
     if (!DNS_LABEL.test(leaseName)) throw new Error('KUBERNETES_FIXTURE_LEASE_NAME_INVALID');
+    this.#preparing.delete(leaseName);
     await this.#kubectlRun(['delete', 'busternamespacelease', leaseName, '-n', this.#controllerNamespace,
       '--ignore-not-found=true', '--wait=true', `--timeout=${Math.ceil(this.#maximumExecutionMs / 1_000)}s`], null, signal);
     return Object.freeze({ ok: true, leaseName, released: true });
@@ -748,6 +1014,7 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
       || !/^kubernetes-fixture:attempt:[A-Za-z0-9._:-]+$/u.test(request.resource.canonicalId)) {
       throw new Error('KUBERNETES_FIXTURE_CAPABILITY_REQUEST_INVALID');
     }
+    if (request.operation === 'replace-pod') return this.#replacePod(object(request.payload, 'payload'), signal);
     if (request.operation === 'prepare') return this.#prepare(request, signal);
     if (request.operation === 'release') {
       const payload = object(request.payload, 'payload');

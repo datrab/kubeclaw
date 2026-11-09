@@ -13,6 +13,7 @@ export interface OpenClawTarget {
   readonly agentId: string; readonly agentRole: string; readonly model: string; readonly thinking: string;
   readonly controllerSessionKey?: string;
   readonly collectorMode?: boolean;
+  readonly terminalOnly?: boolean;
   readonly spawnIntervalMs: number;
   readonly cwd: string; readonly repositoryRoot: string; readonly pollMs: number; readonly maxPollMs: number;
   readonly workspaceRoot?: string;
@@ -115,8 +116,8 @@ function sessionIdentity(value: unknown, label: string): OpenClawSessionIdentity
     ...(typeof model === 'string' ? { model } : {}) });
 }
 
-export function buildOpenClawTask(payload: JsonRecord, resultFile: string): string {
-  return buildRuntimeAgentTask(payload, resultFile);
+export function buildOpenClawTask(payload: JsonRecord, resultFile: string, terminalOnly = false): string {
+  return buildRuntimeAgentTask(payload, resultFile, { terminalOnly });
 }
 
 export function assertOpenClawPromptBudget(
@@ -153,7 +154,7 @@ function assertDeclaredPromptBudget(
 
 export function prepareOpenClawTask(payload: JsonRecord, resultFile: string, target: OpenClawTarget): string {
   const prepared = dispatchPayload(payload);
-  const task = buildOpenClawTask(prepared.modelPayload, resultFile);
+  const task = buildOpenClawTask(prepared.modelPayload, resultFile, target.terminalOnly === true);
   assertOpenClawPromptBudget(task, target);
   if (prepared.budget) assertDeclaredPromptBudget(task, target, prepared.budget);
   return task;
@@ -229,6 +230,8 @@ async function spawnSession(context: AdapterActivationContext, target: OpenClawT
   }
   const spawned = await pacedSpawn(context, target, signal, () => gateway(context, target, token, 'sessions_spawn', {
     runtime: target.runtime, mode: 'run', cleanup: 'keep', thread: false,
+    ...(target.terminalOnly ? { collect: false, expectsCompletionMessage: false,
+      runTimeoutSeconds: Math.max(1, Math.ceil(target.sessionTimeoutMs / 1000)) } : {}),
     ...(target.collectorMode ? { collect: true,
       groupId: `nova-${crypto.createHash('sha256').update(dispatchId).digest('hex').slice(0, 24)}` } : {}),
     task,
@@ -244,6 +247,10 @@ function runtimeAttestation(targetId: string, target: OpenClawTarget): Readonly<
   const identity = { targetId, runtime: target.runtime, agentId: target.agentId, model: target.model, thinking: target.thinking };
   return Object.freeze({ schemaVersion: 'runtime-agent-attestation.v1', ...identity,
     identityDigest: `sha256:${crypto.createHash('sha256').update(canonicalJson(identity)).digest('hex')}` });
+}
+
+function openClawTransport(target: OpenClawTarget): string {
+  return target.terminalOnly ? 'terminal-history-v1' : target.collectorMode ? 'collector-v5' : 'session-v1';
 }
 
 export async function dispatchOpenClaw(
@@ -270,7 +277,7 @@ export async function dispatchOpenClaw(
   // be trusted. The generation is intentionally outside modelPayload so it changes only the
   // transport identity: valid review-cache entries remain reusable while poisoned OpenClaw
   // collector completions cannot be reattached after an authenticated package upgrade.
-  const transport = target.collectorMode ? 'collector-v5' : 'session-v1';
+  const transport = openClawTransport(target);
   const identityDomain = selectedProfile ? `${transport}:json-utf16-v1` : transport;
   const attempt = runtimeDispatchAttempt(payload.runtimeDispatchAttempt);
   const serialize = selectedProfile ? portableJson : canonicalJson;
@@ -289,9 +296,9 @@ export async function dispatchOpenClaw(
     const state = await pollSession(context, target, token, identity, dispatchSignal);
     terminal = state.terminal;
     assertOpenClawSessionCompleted(state, target.model);
-    const sessionKey = identity.sessionKey;
+    const { sessionKey, runId } = identity;
     const resolved = await beforeAbort(() => readOpenClawResult(context, target,
-      { payload, relative: result.relative, key: sessionKey, startedAt, state, token }), dispatchSignal);
+      { payload, relative: result.relative, key: sessionKey, runId, startedAt, state, token }), dispatchSignal);
     assertDispatchActive(dispatchSignal);
     assertOpenClawOutputBudget(resolved.outputText, target,
       runtimePromptBudget(payload.runtimePromptBudget)?.maxOutputTokens);

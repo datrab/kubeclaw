@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { runtimeImages } from '../../../scripts/updates/runtime-components.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -6,7 +7,7 @@ import path from 'node:path';
 import { execFileSync, spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import yaml from 'js-yaml';
-import { selectedCode, validateCodeReceipt } from '../../../scripts/updates/code-release.mjs';
+import { selectedCode, compatibleCode, validateCodeReceipt, selectRuntimeCodeReceipt } from '../../../scripts/updates/code-release.mjs';
 import { isImageInput, isDeploymentInput, inputDigest } from '../../../scripts/updates/runtime-inputs.mjs';
 import { selectedRelease, validateRenderedRelease } from '../../../scripts/updates/deployment-release.mjs';
 
@@ -36,12 +37,11 @@ function code(commit) {
       sha256: 'a'.repeat(64), contractVersion: 'v2',
     }])) };
 }
-test('agent changes and manifest changes do not rebuild tools; embedded service code does', () => {
-  for (const file of ['skills/nova/core/execution/engine.ts', 'skills/buster/engine/judge.ts',
-    'skills/common/plugins/artifact-store/src/adapter.ts', 'my-values/nova-values.yaml', 'charts/kubeclaw/values.yaml']) {
+test('configuration-only changes retain images; copied runtime sources rebuild their consumers', () => {
+  for (const file of ['my-values/nova-values.yaml', 'charts/kubeclaw/values.yaml']) {
     assert.equal(isImageInput(file), false, file); assert.equal(isDeploymentInput(file), true, file);
   }
-  for (const file of ['docker/Dockerfile.nova', 'package-lock.json', 'skills/nova/package.json',
+  for (const file of ['skills/nova/core/execution/engine.ts', 'skills/buster/engine/judge.ts', 'skills/common/plugins/artifact-store/src/adapter.ts', 'docker/Dockerfile.nova', 'package-lock.json', 'skills/nova/package.json',
     'skills/prism/server/worker.ts', 'skills/worker/core/worker/native-worker-launcher.c', 'contracts/worker/v1.ts']) {
     assert.equal(isImageInput(file), true, file);
   }
@@ -58,7 +58,7 @@ test('code selection reuses images only across unchanged image inputs, including
     git(['init', '-q']); git(['config', 'core.autocrlf', 'false']);
     write('docker/Dockerfile.nova', 'FROM pinned-base\n'); write('skills/nova/core/engine.ts', 'old');
     const imageCommit = commit();
-    write('skills/nova/core/engine.ts', 'new'); write('charts/kubeclaw/values.yaml', 'replicas: 1\n');
+    write('charts/kubeclaw/values.yaml', 'replicas: 1\n');
     const codeCommit = commit();
     const receipt = code(codeCommit); write('releases/runtime-code.json', JSON.stringify(receipt));
     assert.deepEqual(selectedCode(root, { commit: imageCommit }), receipt);
@@ -66,6 +66,10 @@ test('code selection reuses images only across unchanged image inputs, including
     fs.unlinkSync(path.join(root, 'docker/Dockerfile.nova')); const changed = commit();
     write('releases/runtime-code.json', JSON.stringify(code(changed)));
     assert.throws(() => selectedCode(root, { commit: imageCommit }), /REQUIRES_NEW_IMAGES/);
+    const before = fs.readFileSync(path.join(root, 'releases/runtime-code.json'), 'utf8');
+    assert.deepEqual(compatibleCode(root, { commit: imageCommit }, receipt), receipt);
+    assert.throws(() => compatibleCode(root, { commit: imageCommit }, code(changed)), /REQUIRES_NEW_IMAGES/);
+    assert.equal(fs.readFileSync(path.join(root, 'releases/runtime-code.json'), 'utf8'), before);
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 });
 test('bundle selection rejects missing hashes, mutable URLs and wrong role archives', () => {
@@ -84,15 +88,15 @@ test('push detector rebuilds an environment changed by an earlier unselected bui
     fs.mkdirSync(path.join(root, 'docker')); fs.mkdirSync(path.join(root, 'skills/nova'), { recursive: true });
     fs.writeFileSync(path.join(root, 'docker/Dockerfile.nova'), 'old environment'); const selected = commit();
     fs.writeFileSync(path.join(root, 'docker/Dockerfile.nova'), 'new environment'); const before = commit();
-    fs.writeFileSync(path.join(root, 'skills/nova/engine.ts'), 'new code'); const head = commit();
+    fs.mkdirSync(path.join(root, 'charts/kubeclaw'), { recursive: true }); fs.writeFileSync(path.join(root, 'charts/kubeclaw/values.yaml'), 'new config'); const head = commit();
     fs.mkdirSync(path.join(root, 'releases'));
     const selection = path.join(root, 'releases/runtime-images.json');
     const event = path.join(root, 'event.json'), output = path.join(root, 'output');
     fs.writeFileSync(event, JSON.stringify({ before }));
     const run = imageCommit => {
-      fs.writeFileSync(selection, JSON.stringify({ commit: imageCommit })); fs.writeFileSync(output, '');
+      fs.writeFileSync(selection, JSON.stringify({ commit: imageCommit, images: Object.fromEntries(['nova', 'prism-agent', 'buster-gateway', 'buster-runtime', 'namespace-controller', 'archviewer', 'prism-control', 'prism-studio', 'prism-worker', 'prism-ingestion'].map(name => [name, true])) })); fs.writeFileSync(output, '');
       execFileSync(process.execPath, [path.resolve('scripts/updates/runtime-inputs.mjs')], { cwd: root,
-        env: { ...process.env, GITHUB_EVENT_NAME: 'push', GITHUB_SHA: head, GITHUB_EVENT_PATH: event, GITHUB_OUTPUT: output } });
+        env: { ...process.env, GITOPS_RETAINED_BASELINE: '', GITHUB_EVENT_NAME: 'push', GITHUB_SHA: head, GITHUB_EVENT_PATH: event, GITHUB_OUTPUT: output } });
       return fs.readFileSync(output, 'utf8');
     };
     assert.match(run(selected), /image_inputs=true\ndeployment_inputs=true/);
@@ -139,7 +143,7 @@ test('real materialization and Helm render enable pinned bundles for all three a
     buster.runtimeInfrastructure = { ...buster.runtimeInfrastructure, registry: { endpoint: 'https://registry.example.test', transport: 'https', authSecretName: 'registry-test' } };
     fs.writeFileSync(busterFile, yaml.dump(buster));
     git(['init', '-q']); git(['config', 'core.autocrlf', 'false']); const imageCommit = commit();
-    fs.mkdirSync(path.join(root, 'skills/nova'), { recursive: true }); fs.writeFileSync(path.join(root, 'skills/nova/change.ts'), 'export const changed = true;');
+    fs.appendFileSync(busterFile, '\n# New configuration selection\n');
     const codeCommit = commit(); fs.mkdirSync(path.join(root, 'releases'));
     const names = ['nova', 'prism-agent', 'buster-gateway', 'buster-runtime', 'namespace-controller', 'archviewer', 'prism-control', 'prism-studio', 'prism-worker', 'prism-ingestion'];
     const receipt = { schemaVersion: 1, commit: imageCommit, sourceRunId: 100, sourceRunAttempt: 1,
@@ -166,5 +170,57 @@ test('real materialization and Helm render enable pinned bundles for all three a
     assert.match(materialize(['--check-selected-source']).stderr, /SELECTED_SOURCE_CHECK_ONLY/);
     fs.appendFileSync(path.join(root, 'releases/values/nova.yaml'), '\ntampered: true\n');
     assert.match(materialize(['--check', '--check-selected-source']).stderr, /Release values drift/);
+  } finally { fs.rmSync(root, { recursive: true, force: true }); }
+});
+
+test('Buster code publication retains exact other-role source identity without changing build receipts', () => {
+  const prior = code('a'.repeat(40));
+  const built = code('b'.repeat(40));
+  const before = JSON.stringify({prior,built});
+  const selected = selectRuntimeCodeReceipt(built,prior,'buster');
+  assert.equal(selected.commit,built.commit);
+  assert.deepEqual(selected.bundles.buster,built.bundles.buster);
+  for (const role of ['nova','prism']) {
+    assert.equal(selected.bundles[role].url,prior.bundles[role].url);
+    assert.deepEqual(selected.bundles[role].source,{commit:prior.commit,sourceRunId:123,sourceRunAttempt:2});
+  }
+  assert.equal(before,JSON.stringify({prior,built}));
+  assert.equal(selectRuntimeCodeReceipt(built,undefined,'all'),built);
+  assert.throws(()=>selectRuntimeCodeReceipt(built,undefined,'buster'));
+  assert.throws(()=>selectRuntimeCodeReceipt(built,prior,'invalid'));
+});
+
+test('archviewer retention binds exact baseline digest and producer, never role images', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'arch-retain-'));
+  const git = args => execFileSync('git', ['-C', root, ...args], { encoding: 'utf8' }).trim();
+  const commit = () => { git(['add', '.']); git(['-c', 'user.name=Test', '-c', 'user.email=test@example.invalid', 'commit', '-qm', 'input']); return git(['rev-parse', 'HEAD']); };
+  try {
+    git(['init', '-q']);
+    fs.writeFileSync(path.join(root, 'versions.json'), '{"openclaw":"old"}'); const old = commit();
+    fs.writeFileSync(path.join(root, 'versions.json'), '{"openclaw":"new"}'); const current = commit();
+    const receipt = code(current);
+    const images = { commit: current, images: { archviewer: 'pinned' },
+      imageSources: Object.fromEntries(runtimeImages.map(name => [name, {
+        commit: name === 'archviewer' ? old : current, sourceRunId: 123, sourceRunAttempt: 2,
+      }])) };
+    assert.throws(() => compatibleCode(root, images, receipt), /REQUIRES_NEW_IMAGES/);
+    const baseline = 'releases/gitops/retained-test';
+    fs.mkdirSync(path.join(root, baseline), { recursive: true });
+    fs.writeFileSync(path.join(root, baseline, 'bundle.receipt'), JSON.stringify({
+      schemaVersion: 'kubeclaw-gitops-bundle.v1', receipt: { ...images, commit: old, code: code(old) },
+    }));
+    images.retainedBaseline = baseline;
+    assert.throws(() => compatibleCode(root, images, receipt), /BASELINE_MISMATCH/);
+    receipt.retainedBaseline = baseline;
+    assert.equal(compatibleCode(root, images, receipt), receipt);
+    for (const mutate of [r => { r.images.archviewer = 'other'; },
+      r => { r.imageSources.archviewer.sourceRunId++; },
+      r => { r.imageSources.archviewer.sourceRunAttempt++; },
+      r => { r.imageSources.archviewer.commit = current; }]) {
+      const bad = structuredClone(images); mutate(bad);
+      assert.throws(() => compatibleCode(root, bad, receipt), /ARCHVIEWER_MISMATCH/);
+    }
+    const bad = structuredClone(images); bad.imageSources['buster-gateway'].commit = old;
+    assert.throws(() => compatibleCode(root, bad, receipt), /REQUIRES_NEW_IMAGES/);
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 });

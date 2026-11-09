@@ -1,0 +1,120 @@
+{{- if .Values.mcp.provision.enabled }}
+{{- $name := printf "%s-mcp-provisioner" .Release.Name -}}
+{{- $namespaces := list .Release.Namespace -}}
+{{- $serverSecrets := list .Values.mcp.tlsSecret .Values.mcp.provision.caSecret -}}
+{{- range .Values.mcp.clients -}}
+{{- $namespaces = append $namespaces .namespace -}}
+{{- $serverSecrets = append $serverSecrets .tokenSecret -}}
+{{- end -}}
+{{- $namespaces = uniq $namespaces -}}
+# Deterministic objects only. Credential bytes are generated inside the cluster,
+# never by Helm rendering. Argo ignores /data only for these exact object names.
+{{- range $namespace := $namespaces }}
+{{- $secrets := list -}}
+{{- if eq $namespace $.Release.Namespace -}}
+{{- $secrets = $serverSecrets -}}
+{{- else -}}
+{{- range $.Values.mcp.clients -}}
+{{- if eq .namespace $namespace -}}{{- $secrets = append $secrets .tokenSecret -}}{{- end -}}
+{{- end -}}
+{{- end -}}
+{{- range $secret := uniq $secrets }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ $secret }}
+  namespace: {{ $namespace }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-3"
+    argocd.argoproj.io/sync-options: Prune=false
+    helm.sh/resource-policy: keep
+type: Opaque
+data: {}
+{{- end }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $.Values.mcp.caConfigMap }}
+  namespace: {{ $namespace }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-3"
+    argocd.argoproj.io/sync-options: Prune=false
+    helm.sh/resource-policy: keep
+data: {}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ $name }}
+  namespace: {{ $namespace }}
+  annotations: {argocd.argoproj.io/sync-wave: "-3"}
+rules:
+  - apiGroups: [""]
+    resources: [secrets]
+    resourceNames: {{ uniq $secrets | toJson }}
+    verbs: [get, patch]
+  - apiGroups: [""]
+    resources: [configmaps]
+    resourceNames: [{{ $.Values.mcp.caConfigMap | quote }}]
+    verbs: [get, patch]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ $name }}
+  namespace: {{ $namespace }}
+  annotations: {argocd.argoproj.io/sync-wave: "-3"}
+roleRef: {apiGroup: rbac.authorization.k8s.io, kind: Role, name: {{ $name }}}
+subjects:
+  - {kind: ServiceAccount, name: {{ $name }}, namespace: {{ $.Release.Namespace }}}
+{{- end }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ $name }}
+  annotations: {argocd.argoproj.io/sync-wave: "-3"}
+automountServiceAccountToken: false
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $name }}
+  annotations: {argocd.argoproj.io/sync-wave: "-3"}
+data:
+  config.json: {{ dict "namespace" .Release.Namespace "caSecret" .Values.mcp.provision.caSecret "tlsSecret" .Values.mcp.tlsSecret "caConfigMap" .Values.mcp.caConfigMap "dnsNames" (list (printf "%s-mcp.%s.svc" .Release.Name .Release.Namespace) (printf "%s-mcp.%s.svc.cluster.local" .Release.Name .Release.Namespace)) "clients" .Values.mcp.clients | toJson | quote }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ $name }}
+  annotations:
+    argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/sync-wave: "-1"
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation,HookSucceeded
+    helm.sh/hook: post-install,post-upgrade
+    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
+spec:
+  backoffLimit: 2
+  activeDeadlineSeconds: 180
+  template:
+    {{- include "ops.provisionPod" . | nindent 4 }}
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ $name }}-renew
+spec:
+  schedule: {{ .Values.mcp.provision.schedule | quote }}
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 2
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      activeDeadlineSeconds: 180
+      template:
+        {{- include "ops.provisionPod" . | nindent 8 }}
+{{- end }}
