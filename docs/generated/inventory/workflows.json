@@ -63,6 +63,7 @@
       "commandAndActionRefs": [
         "bash scripts/deploy.sh prism-e2e",
         "bash scripts/prepare-image-build-runner.sh",
+        "bash scripts/scan-runtime-images.sh \"$IMAGE",
         "node scripts/ci/cache-profile.mjs \"$ROLE\" \"$CACHE_PROFILE",
         "node scripts/ci/timings.mjs",
         "node scripts/ci/toolchain.mjs lookup \"$ROLE",
