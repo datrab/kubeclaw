@@ -31,7 +31,7 @@ for (const file of [
   );
 }
 const phaseLedger = JSON.parse(fs.readFileSync(
-  'docs/architecture/plugin-system-phase6-lifecycle.json',
+  'tests/fixtures/runtime-regressions/plugin-system-phase6-lifecycle.json',
   'utf8',
 ));
 assert.equal(phaseLedger.status, 'complete-v2-preparation');

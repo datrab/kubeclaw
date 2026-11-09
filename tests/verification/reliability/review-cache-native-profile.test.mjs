@@ -10,6 +10,9 @@ import {runPipelineV2,recoverPipelineV2} from '../../../skills/nova/core/executi
 import {runRoot} from '../../../skills/nova/core/execution/run-root.ts';
 import {readRunSnapshot} from '../../../skills/nova/core/execution/engine-snapshots.ts';
 
+// This exercises real adapter startup and disk I/O, not 100ms deadlines.
+// Match the sibling legacy-prefix fixture while retaining the 30s child watchdog.
+const ioTimeoutMs=5000,lockTtlMs=10000;
 const source=path.resolve('.'),self=fileURLToPath(import.meta.url),runId='run:cache-profile';
 function configuration(root){
   const roots=[path.join(source,'tests/fixtures/review-cache-stage'),path.join(source,'skills/common/plugins')];
@@ -17,7 +20,7 @@ function configuration(root){
     externalTrust:{allowedSourceDigests:{},verifiedAttestations:{}},providers:{'artifacts.write':'kubeclaw.artifact-store:artifact-store','artifacts.read':'kubeclaw.artifact-store:artifact-store'},
     grants:{'test.review-cache:cache':{'artifacts.write':{allowedNamespaces:['kubeclaw.review']},'artifacts.read':{allowedNamespaces:['kubeclaw.review']}}},
     adapters:{'kubeclaw.artifact-store:artifact-store':{artifactRoot:path.join(root,'artifacts')}},
-    activeAdapters:[],observers:{},storageRoot:path.join(root,'state'),shutdownTimeoutMs:100,effectLockTtlMs:100,
+    activeAdapters:[],observers:{},storageRoot:path.join(root,'state'),shutdownTimeoutMs:ioTimeoutMs,effectLockTtlMs:lockTtlMs,
     orchestratorIssuerId:'nova',administrativeDecisionIssuers:[]};
 }
 const definition={schemaVersion:'pipeline-definition.v2',id:'test:cache-profile',maxConcurrency:1,
@@ -26,7 +29,7 @@ const definition={schemaVersion:'pipeline-definition.v2',id:'test:cache-profile'
 if(process.argv[2]==='--child'){
   const [root,mode]=process.argv.slice(3);
   const result=await(mode==='create'?runPipelineV2:recoverPipelineV2)(configuration(root),definition,runId);
-  process.stdout.write(JSON.stringify({result})+'\n');
+  process.stdout.write(JSON.stringify({result:{...result,stages:Object.fromEntries(result.stages)}})+'\n');
 }else{
   test('genuine v4 StageExecutor checkpoints and retains same-key v2 refs through en/tr/sv interrupted attempts',async t=>{
     const root=fs.mkdtempSync(path.join(os.tmpdir(),'review-cache-native-'));
