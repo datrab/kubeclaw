@@ -13,10 +13,10 @@ const inputs = {
   'namespace-controller': ['go.mod', 'go.sum', 'cmd/buster-namespace-controller/'],
   archviewer: ['docker/archviewer.nginx.conf'],
   'prism-agent': [...observer, ...workspace, 'docker/openclaw-tools/'],
-  'prism-control': [...workspace, 'tests/verification/live/'],
+  'prism-control': [...workspace, 'tests/verification/live/', 'docker/upgrade-debian-snapshot.sh'],
   'prism-studio': workspace,
   'prism-worker': workspace,
-  'prism-ingestion': workspace,
+  'prism-ingestion': [...workspace, 'docker/upgrade-debian-snapshot.sh'],
 };
 const under = (file, source) => source.endsWith('/') ? file.startsWith(source) : file === source;
 export function imageInput(name, file) {
