@@ -163,6 +163,20 @@ jobs:
           docker pull "$IMAGE"
           printf 'IMAGE_PULL seconds=%s\n' "$((SECONDS-start))"
           bash scripts/check-built-runtime-image.sh "$ROLE" "$IMAGE"
+      - name: Scan the exact Buster worker before issuing its receipt
+        if: matrix.name == 'buster-runtime'
+        env:
+          IMAGE: ${{ env.REGISTRY }}/${{ github.repository_owner }}/kubeclaw-${{ matrix.name }}@${{ steps.build.outputs.digest }}
+          TRIVY_USERNAME: ${{ github.actor }}
+          TRIVY_PASSWORD: ${{ github.token }}
+        run: bash scripts/scan-runtime-images.sh "$IMAGE"
+      - name: Preserve Buster worker security evidence
+        if: ${{ !cancelled() && matrix.name == 'buster-runtime' && steps.build.outputs.digest != '' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: image-security-buster-runtime
+          path: dist/trivy/
+          if-no-files-found: error
       - name: Record immutable build receipt
         env:
           IMAGE: ${{ env.REGISTRY }}/${{ github.repository_owner }}/kubeclaw-${{ matrix.name }}@${{ steps.build.outputs.digest }}
