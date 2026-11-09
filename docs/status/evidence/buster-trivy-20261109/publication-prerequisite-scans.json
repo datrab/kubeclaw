@@ -321,5 +321,49 @@
     "versionsCheck": "passed",
     "shellSyntax": "passed",
     "autoreview": "clean; supplied diff and untracked files reviewed, sandbox inspection unavailable"
+  },
+  "followup": {
+    "opsCandidateReports": {
+      "run": "https://github.com/datrab/kubeclaw/actions/runs/42709524225",
+      "artifacts": [
+        13714917894,
+        13714902083
+      ],
+      "blockingFindings": [
+        {
+          "binary": "hubble",
+          "id": "CVE-2026-78661",
+          "package": "golang.org/x/net",
+          "installed": "v0.60.0",
+          "fixed": "v0.62.0"
+        },
+        {
+          "binary": "gh",
+          "id": "CVE-2026-78661",
+          "package": "golang.org/x/net",
+          "installed": "v0.60.0",
+          "fixed": "v0.62.0"
+        },
+        {
+          "binary": "helm",
+          "id": "CVE-2026-78661",
+          "package": "golang.org/x/net",
+          "installed": "v0.60.0",
+          "fixed": "v0.62.0"
+        },
+        {
+          "binary": "kubectl",
+          "id": "CVE-2026-78661",
+          "package": "golang.org/x/net",
+          "installed": "v0.60.0",
+          "fixed": "v0.62.0"
+        }
+      ]
+    },
+    "opsLockVerification": "All four go mod download all and go mod verify passed with local Go1.27.3; binary builds/scans remain CI-owned using their pinned Go1.26.10 base. Seven local version/kubectl drift tests pass.",
+    "snapshotScope": "Nov9 overrides only for Prism control, ingestion and worker; existing Buster override retained. Nova/Prism-agent/Buster-gateway retain the Oct31 snapshot and exact OpenClaw base (96 unchanged upstream findings are already policy-deferred). This avoids unrelated sudo/dnsutils Nov9 archive objects returning repeated HTTP503.",
+    "caBootstrap": "Node slim has no CA bundle. New script bootstraps ca-certificates from the mandatory signature/hash-verified Debian snapshot over HTTP, then changes package URIs to HTTPS before upgrading. No signature or TLS-verification disablement.",
+    "corpusCleanup": "Native PostgreSQL acceptance passed after replacing forced test-DB teardown with an actual zero-session barrier.",
+    "componentInputCoverage": "Both explicit script COPY consumers are declared; full runtime-component tests15/15 passed."
   }
 }
