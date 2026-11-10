@@ -107,6 +107,9 @@ export function provider() {
   };
   const plan: ResolvedTestPlanV1 = { ...planUnsigned, planDigest: resolvedTestPlanDigest(planUnsigned) };
   const busterStore = new FileBusterPlanJobStore(path.join(temporary, 'buster-state'), {
+    // This provider/evidence contract rereads native bytes after Nova's delivery ACK.
+    // Disposable default behavior is covered by buster-run-retention.test.mts.
+    retention: { mode: 'retain_days', days: 14 },
     recordLimits: records, maximumArchiveBytes: 4 * 1024 * 1024,
     maximumResultBytes: 16 * 1024 * 1024, maximumResultStoreBytes: 64 * 1024 * 1024,
     trustedSourceAuthority: 'nova:production', sourceAttestationPublicKey,
