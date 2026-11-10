@@ -1,19 +1,19 @@
 {
   "schemaVersion": 1,
-  "commit": "0342d23d58885e94994bb727ff7b11a19249fe3d",
+  "commit": "d8904dffd79df14ec6694d3562783943a3d964db",
   "images": {
     "nova": "ghcr.io/datrab/kubeclaw-nova@sha256:e95ef1337051f8c886e64359df60e779c8b3b74d864ce9a93e7a01ec79f1f937",
     "prism-agent": "ghcr.io/datrab/kubeclaw-prism-agent@sha256:01dfac6c175a901c20bc8c95a141bfd783ef2da109a352123904580accf3a7f8",
     "buster-gateway": "ghcr.io/datrab/kubeclaw-buster-gateway@sha256:7bc1db84a6f4d00a63612b0e0a85b71933d1e84c7d7f40b35c1855e0fa585ee2",
-    "buster-runtime": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:4568e5c040bd2913e0f391e5fec82074d61345e82122ab66da5760015a860f2d",
+    "buster-runtime": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:fe8a36108a1680af5a00f44a0907c484484f92e4d2dd2b76e64c57a2ebc5d5ca",
     "namespace-controller": "ghcr.io/datrab/kubeclaw-namespace-controller@sha256:a001e3e0c3473d5512e67536b31d6839043b31bd897667e87a4f60e8ab07f535",
-    "archviewer": "ghcr.io/datrab/kubeclaw-archviewer@sha256:ac1aa7e8b0be36ab2cdec2d365078fdf55587b240acf559b362855de8a8d7224",
+    "archviewer": "ghcr.io/datrab/kubeclaw-archviewer@sha256:c04ac73cbe6f9e8bf14702cb6dd5017973d47336a524b37757b4bbc64bf7e7e7",
     "prism-control": "ghcr.io/datrab/kubeclaw-prism-control@sha256:7b8495f1db7e18bc0c4e93557363253a93f9b3a39ae59bc2d41cebd4a829d9d2",
     "prism-studio": "ghcr.io/datrab/kubeclaw-prism-studio@sha256:1c8927bd198aa151125d9870fb2adbcf152e633f28630310611dac03aca3cc54",
     "prism-worker": "ghcr.io/datrab/kubeclaw-prism-worker@sha256:b89e509267bade702073dfe3a339fdcff873cb3e3c67587c7d89c0c8adc6bb9e",
     "prism-ingestion": "ghcr.io/datrab/kubeclaw-prism-ingestion@sha256:5553577d6f5effaaee4728891e1f8b0b597078fe5a0022f5d279216d9fab3c96"
   },
-  "sourceRunId": 42718613144,
+  "sourceRunId": 42909475802,
   "sourceRunAttempt": 1,
   "imageSources": {
     "nova": {
@@ -32,8 +32,8 @@
       "sourceRunAttempt": 1
     },
     "buster-runtime": {
-      "commit": "0342d23d58885e94994bb727ff7b11a19249fe3d",
-      "sourceRunId": 42718613144,
+      "commit": "d8904dffd79df14ec6694d3562783943a3d964db",
+      "sourceRunId": 42909475802,
       "sourceRunAttempt": 1
     },
     "namespace-controller": {
@@ -42,8 +42,8 @@
       "sourceRunAttempt": 1
     },
     "archviewer": {
-      "commit": "0342d23d58885e94994bb727ff7b11a19249fe3d",
-      "sourceRunId": 42718613144,
+      "commit": "d8904dffd79df14ec6694d3562783943a3d964db",
+      "sourceRunId": 42909475802,
       "sourceRunAttempt": 1
     },
     "prism-control": {
