@@ -1,6 +1,6 @@
 # Buster disposable run storage
 
-Status: implemented; live cutover pending
+Status: implemented
 Audience: operator, maintainer
 Owner: Buster runtime maintainers
 Evidence: skills/buster/engine/test-gates/run-retention.ts; tests/verification/reliability/buster-run-retention.test.mts
