@@ -200,7 +200,9 @@ test('original completed import projects duplicate bytes with real quotas and ex
   assert.equal(terminal.state, 'completed'); assert.equal(f.posts(), posts); assert.equal(f.requests(), requests);
   assert.deepEqual(await new FileNovaGateImportStore(f.scope.intent.importRoot, importOptions).readExecutionGraphs(), graphBefore);
   assert.deepEqual(json(recordsFile(f.scope.intent.importRoot)).records[0].payload.decision, f.imported.payload.decision);
-  assert.equal((await f.buster.records()).length, 1);
+  assert.equal((await f.buster.records()).length, 0, 'verified delivery removes disposable Buster payloads');
+  assert.equal((await f.buster.header(f.job.jobId)).status.state, 'completed');
+  assert.equal((await f.buster.accept(f.job, now)).state, 'completed', 'replay receipt prevents a fresh admission');
 });
 
 test('original legacy crash repair stays available; projected missing and corrupt authority cannot be repaired from replay input', { timeout: 60000 }, async t => {

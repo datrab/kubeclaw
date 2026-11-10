@@ -144,7 +144,7 @@ export class FileBusterPlanJobStore {
     const retired = await this.#retention.receipt(job.jobId);
     if (retired) { if (retired.requestDigest !== job.requestDigest) throw new Error('BUSTER_REMOTE_JOB_CONFLICT'); return retired.status; }
     const existingRecord = await this.#records.one(job.jobId);
-    const records = await this.#records.headers();
+    const records = await this.headers();
     if (existingRecord) {
       if (existingRecord.payload.job.jobId !== job.jobId
         || existingRecord.payload.job.requestDigest !== job.requestDigest) {

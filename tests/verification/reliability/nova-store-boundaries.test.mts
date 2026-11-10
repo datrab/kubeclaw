@@ -77,6 +77,8 @@ test('real HTTP evidence import cannot mark a second over-quota job complete', a
   const results = jobs.map((job, i) => completed(job, { outcome: 'passed', artifact: artifacts[i]! }));
   const server = http.createServer((request, response) => {
     assert.equal(request.headers.authorization, `Bearer ${'x'.repeat(32)}`);
+    // This evidence-only fixture models a server without delivery acknowledgement.
+    if (request.method !== 'GET') { response.writeHead(404); response.end(); return; }
     const index = jobs.findIndex(job => request.url?.includes(encodeURIComponent(job.jobId)));
     if (index < 0) { response.writeHead(404); response.end(); return; }
     response.end(request.url?.includes('/results/') ? JSON.stringify(results[index]!.result) : bytes[index]);
