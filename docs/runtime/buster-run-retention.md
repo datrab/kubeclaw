@@ -1,5 +1,7 @@
 # Buster disposable run storage
 
+Owner: Buster runtime maintainers
+
 Buster no longer uses one historical JSON journal. Every run has an atomic
 `stateRoot/jobs/<SHA256(jobId)>/run.ndjson`: a bounded first-line status header and
 a second-line, integrity-checked native record/source input. Native result blobs
