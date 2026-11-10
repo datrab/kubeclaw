@@ -57,7 +57,8 @@ test.skip('real skip', () => {});
     scope: { moduleId: 'module', gateId: null }, createdAt: '2026-08-12T20:30:00.000Z', declaration,
     suiteTemplates: [suite], registry, facts: { changedPaths: [], moduleType: 'service', pipelineStage: 'test' }, policy });
 
-  const store = new FileBusterPlanJobStore(path.join(temporary, 'buster-state'), { recordLimits: records,
+  // This acceptance contract inspects native evidence after verified delivery.
+  const store = new FileBusterPlanJobStore(path.join(temporary, 'buster-state'), { retention: { mode: 'retain_days', days: 14 }, recordLimits: records,
     maximumArchiveBytes: 8 * 1024 * 1024, maximumResultBytes: 16 * 1024 * 1024,
     maximumResultStoreBytes: 64 * 1024 * 1024, trustedSourceAuthority: 'nova:production',
     sourceAttestationPublicKey: publicKey });

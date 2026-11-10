@@ -78,7 +78,8 @@ if(mode==='exit-fail') process.exitCode=7;
     suiteTemplates: [suite], registry, facts: { changedPaths: [], moduleType: 'service', pipelineStage: 'test' }, policy });
   assert.deepEqual(plan.nodes.map((node) => node.testIdentity), secondPlan.nodes.map((node) => node.testIdentity));
 
-  const store = new FileBusterPlanJobStore(path.join(temporary, 'buster-state'), { recordLimits: records,
+  // This acceptance contract inspects native evidence after verified delivery.
+  const store = new FileBusterPlanJobStore(path.join(temporary, 'buster-state'), { retention: { mode: 'retain_days', days: 14 }, recordLimits: records,
     maximumArchiveBytes: 8 * 1024 * 1024, maximumResultBytes: 32 * 1024 * 1024,
     maximumResultStoreBytes: 128 * 1024 * 1024, trustedSourceAuthority: 'nova:production',
     sourceAttestationPublicKey: publicKey });

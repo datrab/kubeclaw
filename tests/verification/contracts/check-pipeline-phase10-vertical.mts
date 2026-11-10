@@ -78,7 +78,8 @@ fs.writeFileSync('reports/' + mode + '.xml', '<testsuite name="' + mode + '"><te
     declaration: loaded.declaration, suiteTemplates: [suite], registry,
     facts: { changedPaths: [], moduleType: 'service', pipelineStage: 'test' }, policy });
 
-  const store = new FileBusterPlanJobStore(path.join(temporary, 'buster-state'), { recordLimits: records,
+  // This acceptance contract inspects native evidence after verified delivery.
+  const store = new FileBusterPlanJobStore(path.join(temporary, 'buster-state'), { retention: { mode: 'retain_days', days: 14 }, recordLimits: records,
     maximumArchiveBytes: 8 * 1024 * 1024, maximumResultBytes: 32 * 1024 * 1024,
     maximumResultStoreBytes: 128 * 1024 * 1024, trustedSourceAuthority: 'nova:production',
     sourceAttestationPublicKey: publicKey });
