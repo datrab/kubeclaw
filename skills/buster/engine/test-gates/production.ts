@@ -1,3 +1,5 @@
+import { discardLegacyJournal } from './discard-legacy-journal.ts';
+import { retentionPolicy } from './run-retention.ts';
 import { fixtureDiagnosisAgent } from './fixture-diagnosis-agent.ts';
 import fs from 'node:fs';
 import { validateRegistryHealth } from './registry-health-access.ts';
@@ -211,8 +213,12 @@ export function loadProductionBusterRemotePlanRuntime(
     throw new Error('BUSTER_KUBERNETES_RUNTIME_SECURITY_CONFIG_REQUIRED');
   }
   const stateRoot = path.resolve(directory, value.stateRoot as string);
+  if(value.discardLegacyJournal!==undefined&&typeof value.discardLegacyJournal!=='boolean')throw new Error('BUSTER_RETENTION_INVALID');
+  const prepareStorage=value.discardLegacyJournal===true?async()=>{console.log(JSON.stringify({event:'buster.legacy-discard',...await discardLegacyJournal(stateRoot,{maximumRecordBytes:integer(records.maximumRecordBytes,'recordLimits.maximumRecordBytes'),maximumBytes:integer(records.maximumBytes,'recordLimits.maximumBytes'),maximumRecords:integer(records.maximumRecords,'recordLimits.maximumRecords')},new Date().toISOString())}));}:undefined;
   const service = new BusterRemotePlanService({
     store: new FileBusterPlanJobStore(stateRoot, {
+      retention: retentionPolicy(value.retention),
+      discardLegacyJournal: value.discardLegacyJournal===true,
       recordLimits: {
         maximumRecords: integer(records.maximumRecords, 'recordLimits.maximumRecords'),
         maximumBytes: integer(records.maximumBytes, 'recordLimits.maximumBytes'),
@@ -411,6 +417,7 @@ export function loadProductionBusterRemotePlanRuntime(
   } : undefined;
   const host = value.host as string;
   return new BusterRemotePlanRuntime({
+    ...(prepareStorage?{prepareStorage}:{}),
     service,
     host,
     port: integer(value.port, 'port', 0),

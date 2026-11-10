@@ -137,6 +137,12 @@ export function createBusterRemotePlanHttpServer(options: {
         send(response, status.state === 'accepted' ? 202 : 200, status, options.maximumResponseBytes);
         return;
       }
+      const delivered = request.url?.match(/^\/v1\/plan-jobs\/([^/?#]+)\/delivered$/u);
+      if (delivered?.[1] && request.method === 'POST') {
+        const body=await requestBody(request,4096) as Record<string,unknown>;
+        if(!body||typeof body!=='object'||Array.isArray(body)||Object.keys(body).sort().join(',')!=='requestDigest,resultDigest'||typeof body.requestDigest!=='string'||!/^sha256:[a-f0-9]{64}$/u.test(body.requestDigest)||(body.resultDigest!==null&&(typeof body.resultDigest!=='string'||!/^sha256:[a-f0-9]{64}$/u.test(body.resultDigest))))throw new Error('BUSTER_DELIVERY_INVALID');
+        send(response,200,await options.service.acknowledge(decodeURIComponent(delivered[1]),body as {requestDigest:string;resultDigest:string|null}),options.maximumResponseBytes);return;
+      }
       const evidence = evidenceRoute(request.url);
       if (evidence && request.method === 'GET') {
         const bytes = await options.service.evidence(evidence.jobId, evidence.digest, options.maximumResponseBytes);
@@ -174,7 +180,7 @@ export function createBusterRemotePlanHttpServer(options: {
       send(response, 404, { error: 'not found' }, options.maximumResponseBytes);
     })().catch((error) => {
       const message = error instanceof Error ? error.message : String(error);
-      const status = ['BUSTER_REMOTE_ADMISSION_FULL', 'BUSTER_REMOTE_RESULT_CAPACITY_EXCEEDED'].includes(message) ? 429
+      const status = message === 'BUSTER_REMOTE_DATA_EXPIRED' ? 410 : ['BUSTER_REMOTE_ADMISSION_FULL', 'BUSTER_REMOTE_RESULT_CAPACITY_EXCEEDED'].includes(message) ? 429
         : ['BUSTER_REMOTE_SHUTTING_DOWN', 'BUSTER_DEPENDENCY_UNAVAILABLE'].includes(message) ? 503
         : message.includes('NOT_FOUND') ? 404
         : message.includes('CONFLICT') ? 409

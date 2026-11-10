@@ -11,6 +11,7 @@ export interface FullPlanJobRecord {
   readonly schemaVersion: 'buster-plan-job-record.v1';
   readonly job: RemotePlanJobV1;
   readonly status: RemotePlanStatusV1;
+  readonly quiescent?: true;
 }
 export interface CompactedPlanJobRecord {
   readonly schemaVersion: 'buster-plan-job-compacted-record.v1';
@@ -21,6 +22,7 @@ export interface CompactedPlanJobRecord {
     };
   };
   readonly status: RemotePlanStatusV1;
+  readonly quiescent?: true;
   readonly compaction: CompactionReceipt;
 }
 export type StoredPlanJob = FullPlanJobRecord | CompactedPlanJobRecord;

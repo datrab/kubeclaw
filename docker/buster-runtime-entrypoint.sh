@@ -197,6 +197,11 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
     : { tokenEnvironmentVariable: 'BUSTER_V2_TOKEN' }),
   sourceAttestationPublicKeyEnvironmentVariable: 'BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY',
   trustedSourceAuthority: process.env.BUSTER_PLAN_TRUSTED_SOURCE_AUTHORITY || 'nova:production',
+  discardLegacyJournal: process.env.BUSTER_V2_DISCARD_LEGACY_JOURNAL === '1',
+  retention: process.env.BUSTER_V2_RETENTION_MODE === 'retain_days'
+    ? {mode:'retain_days',days:Number(process.env.BUSTER_V2_RETENTION_DAYS || 14)}
+    : process.env.BUSTER_V2_RETENTION_MODE === undefined || process.env.BUSTER_V2_RETENTION_MODE === 'delete_after_delivery'
+      ? {mode:'delete_after_delivery'} : {mode:process.env.BUSTER_V2_RETENTION_MODE},
   stateRoot: process.env.BUSTER_V2_STATE_DIR,
   runtimeRoot: process.env.BUSTER_V2_RUN_DIR,
   tarExecutable: '/usr/bin/tar',

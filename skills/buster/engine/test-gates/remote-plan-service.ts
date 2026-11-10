@@ -1,3 +1,5 @@
+import { BusterRunRetention, type RunRetentionPolicy } from './run-retention.ts';
+import { BusterRunRecords, runDirectory } from './run-records.ts';
 import { BuildkitReadiness } from './buildkit-readiness.ts';
 import { cleanupTerminalWorkspace } from './terminal-workspace.ts';
 import crypto from 'node:crypto';
@@ -23,7 +25,6 @@ import {
 } from '@kubeclaw/pipeline-observability-contract';
 import {
   FileDurableBlobStore,
-  FileDurableRecordStore,
   type DurableRecord,
   type DurableRecordLimits,
 } from '@kubeclaw/plugin-foundation/observability/durable-records';
@@ -50,6 +51,8 @@ import {
 } from './remote-plan-compaction.ts';
 
 export interface BusterPlanJobStoreOptions {
+  readonly discardLegacyJournal?: boolean;
+  readonly retention?: RunRetentionPolicy;
   readonly recordLimits: DurableRecordLimits;
   readonly maximumArchiveBytes: number;
   readonly maximumResultBytes: number;
@@ -59,8 +62,8 @@ export interface BusterPlanJobStoreOptions {
 }
 
 export class FileBusterPlanJobStore {
-  readonly #records: FileDurableRecordStore;
-  readonly #results: FileDurableBlobStore;
+  readonly #records: BusterRunRecords;
+  readonly #retention: BusterRunRetention;
   readonly #maximumArchiveBytes: number;
   readonly #maximumResultBytes: number;
   readonly #maximumResultStoreBytes: number;
@@ -78,10 +81,11 @@ export class FileBusterPlanJobStore {
       throw new Error('BUSTER_REMOTE_RESULT_LIMIT_INVALID');
     }
     this.#admissionLock = path.join(path.resolve(root), 'job-admission');
+    if(!Number.isSafeInteger(options.maximumResultStoreBytes)||options.maximumResultStoreBytes<1)throw new Error('BUSTER_REMOTE_RESULT_LIMIT_INVALID');
     this.#maximumResultStoreBytes = options.maximumResultStoreBytes;
-    this.#resultBlobRoot = path.join(path.resolve(root), 'results', 'blobs');
-    this.#records = new FileDurableRecordStore(root, options.recordLimits);
-    this.#results = new FileDurableBlobStore(path.join(root, 'results'), options.maximumResultBytes, options.maximumResultStoreBytes);
+    this.#resultBlobRoot = path.join(path.resolve(root), 'jobs');
+    this.#records = new BusterRunRecords(root, options.recordLimits, options.discardLegacyJournal===true);
+    this.#retention = new BusterRunRetention(root, options.retention, options.recordLimits.maximumRecords);
     this.#maximumArchiveBytes = options.maximumArchiveBytes;
     this.#maximumResultBytes = options.maximumResultBytes;
     let sourcePublicKey: crypto.KeyObject;
@@ -137,8 +141,10 @@ export class FileBusterPlanJobStore {
   }
 
   async #accept(job: RemotePlanJobV1, now: string): Promise<RemotePlanStatusV1> {
-    const records = await this.records();
-    const existingRecord = records.find((item) => item.idempotencyKey === job.idempotencyKey);
+    const retired = await this.#retention.receipt(job.jobId);
+    if (retired) { if (retired.requestDigest !== job.requestDigest) throw new Error('BUSTER_REMOTE_JOB_CONFLICT'); return retired.status; }
+    const existingRecord = await this.#records.one(job.jobId);
+    const records = await this.#records.headers();
     if (existingRecord) {
       if (existingRecord.payload.job.jobId !== job.jobId
         || existingRecord.payload.job.requestDigest !== job.requestDigest) {
@@ -146,10 +152,11 @@ export class FileBusterPlanJobStore {
       }
       return structuredClone(existingRecord.payload.status);
     }
+    if(!await this.#retention.admissionAvailable())throw new Error('BUSTER_REMOTE_ADMISSION_FULL');
     // Completed and orphaned immutable blobs consume real bytes. Only active jobs
     // can still create a result; failed/cancelled jobs cannot complete later.
-    const reservedBytes = this.#storedResultBytes(this.#resultBlobRoot) + records.reduce((sum, record) =>
-      sum + (['accepted', 'running', 'cancelling'].includes(record.payload.status.state) ? this.#maximumResultBytes : 0), 0);
+    const reservedBytes = records.reduce((sum,h) => sum + this.#storedResultBytes(path.join(runDirectory(this.#resultBlobRoot,h.jobId),'results','blobs')),0) + records.reduce((sum, record) =>
+      sum + (['accepted', 'running', 'cancelling'].includes(record.status.state) ? this.#maximumResultBytes : 0), 0);
     if (!Number.isSafeInteger(reservedBytes) || reservedBytes + this.#maximumResultBytes > this.#maximumResultStoreBytes) {
       throw new Error('BUSTER_REMOTE_RESULT_CAPACITY_EXCEEDED');
     }
@@ -160,12 +167,12 @@ export class FileBusterPlanJobStore {
     };
     validatePipelineTestGateContract('remotePlanStatus', status);
     const payload: StoredPlanJob = { schemaVersion: 'buster-plan-job-record.v1', job, status };
-    let stored: Awaited<ReturnType<FileDurableRecordStore['append']>>;
+    let stored: Awaited<ReturnType<BusterRunRecords['append']>>;
     try {
       stored = await this.#records.append('buster-plan-jobs', job.idempotencyKey, payload);
     } catch (error) {
       if (error instanceof Error && error.message === 'DURABLE_RECORD_IDEMPOTENCY_CONFLICT') {
-        const winner = (await this.records()).find((record) => record.idempotencyKey === job.idempotencyKey)?.payload;
+        const winner = (await this.#records.one(job.jobId))?.payload;
         if (winner?.job.jobId === job.jobId && winner.job.requestDigest === job.requestDigest) {
           return structuredClone(winner.status);
         }
@@ -198,6 +205,21 @@ export class FileBusterPlanJobStore {
     return bytes;
   }
 
+  async headers() { return this.#records.headers(); }
+  async header(jobId: string) { return await this.#retention.receipt(jobId) ?? this.#records.header(jobId); }
+  async acknowledge(jobId: string, input: {requestDigest:string;resultDigest:string|null}, now:string) { return this.#withAdmission(async()=> { const h=await this.header(jobId);if(!h)throw new Error('BUSTER_REMOTE_JOB_NOT_FOUND');await this.#records.one(jobId);return this.#retention.confirm(h,input,now); }); }
+  async collectRetention(now:string,runtimeRoot:string,protectedJobs:ReadonlySet<string>) { return this.#withAdmission(async()=>{
+    const headers=await this.headers();
+    for(const h of headers){
+      if(!['completed','failed','cancelled'].includes(h.status.state)||protectedJobs.has(h.jobId))continue;
+      const age=Date.parse(now)-Date.parse(h.status.updatedAt),policy=this.#retention.policy;
+      const due=age>=(policy.mode==='retain_days'?policy.days*86400000:14*86400000)||(policy.mode==='delete_after_delivery'&&(await this.#retention.receipt(h.jobId))?.deliveredAt!=null);
+      if(due)await this.#records.one(h.jobId); // Verify the entire candidate before irreversible removal, not every retained archive.
+    }
+    return this.#retention.sweep(headers,now,runtimeRoot,protectedJobs);
+  }); }
+  #results(jobId:string) { return new FileDurableBlobStore(path.join(runDirectory(this.#resultBlobRoot,jobId),'results'),this.#maximumResultBytes,this.#maximumResultBytes); }
+
   async records(): Promise<ReadonlyArray<DurableRecord<StoredPlanJob>>> {
     const records = await this.#records.read<StoredPlanJob>('buster-plan-jobs');
     for (const { payload } of records) {
@@ -212,7 +234,7 @@ export class FileBusterPlanJobStore {
   }
 
   async get(jobId: string): Promise<Readonly<{ record: DurableRecord<StoredPlanJob>; payload: StoredPlanJob }>> {
-    const record = (await this.records()).find((item) => item.payload.job.jobId === jobId);
+    const record = await this.#records.one(jobId);
     if (!record) throw new Error('BUSTER_REMOTE_JOB_NOT_FOUND');
     return { record, payload: structuredClone(record.payload) };
   }
@@ -222,7 +244,17 @@ export class FileBusterPlanJobStore {
     expected: readonly RemotePlanStatusV1['state'][],
     state: RemotePlanStatusV1['state'],
     now: string,
-    terminal?: { readonly error?: string },
+    terminal?: { readonly error?: string; readonly quiescent?: true },
+  ): Promise<RemotePlanStatusV1> {
+    return this.#withAdmission(()=>this.#transition(jobId,expected,state,now,terminal));
+  }
+
+  async #transition(
+    jobId: string,
+    expected: readonly RemotePlanStatusV1['state'][],
+    state: RemotePlanStatusV1['state'],
+    now: string,
+    terminal?: { readonly error?: string; readonly quiescent?: true },
   ): Promise<RemotePlanStatusV1> {
     const current = await this.get(jobId);
     if (current.payload.status.state === 'completed') {
@@ -241,7 +273,7 @@ export class FileBusterPlanJobStore {
       error: terminal?.error ?? null,
     };
     validatePipelineTestGateContract('remotePlanStatus', status);
-    const next: StoredPlanJob = { ...current.payload, status };
+    const next: StoredPlanJob = { ...current.payload, status, ...(terminal?.quiescent ? {quiescent:true} : {}) };
     const stored = await this.#records.transition(
       'buster-plan-jobs', current.record.idempotencyKey, current.record.payloadDigest, next,
     );
@@ -271,7 +303,7 @@ export class FileBusterPlanJobStore {
     if (current.payload.status.state !== 'running') {
       throw new Error(`BUSTER_REMOTE_JOB_STATE_CONFLICT:${current.payload.status.state}`);
     }
-    const storedResult = await this.#results.put(bytes);
+    const storedResult = await this.#results(jobId).put(bytes);
     const status: RemotePlanStatusV1 = {
       ...current.payload.status,
       state: 'completed',
@@ -285,7 +317,7 @@ export class FileBusterPlanJobStore {
       error: null,
     };
     validatePipelineTestGateContract('remotePlanStatus', status);
-    const next: StoredPlanJob = { ...current.payload, status };
+    const next: StoredPlanJob = { ...current.payload, status, ...(result.cleanupErrors.length===0 && result.attempts.every(a=>a.executionState==='completed') ? {quiescent:true} : {}) };
     const stored = await this.#records.transition(
       'buster-plan-jobs', current.record.idempotencyKey, current.record.payloadDigest, next,
     );
@@ -329,7 +361,7 @@ export class FileBusterPlanJobStore {
         archiveDigest: archive.contentDigest, archiveBytes: archive.sizeBytes, releasedMetadataBytes: 0,
       };
       let next: CompactedPlanJobRecord = {
-        schemaVersion: 'buster-plan-job-compacted-record.v1', job: { ...job, schemaVersion: 'buster-plan-job-header.v1', repositoryArchive: archive }, status, compaction: receipt,
+        schemaVersion: 'buster-plan-job-compacted-record.v1', job: { ...job, schemaVersion: 'buster-plan-job-header.v1', repositoryArchive: archive }, status, compaction: receipt, ...(current.payload.quiescent ? {quiescent:true} : {}),
       };
       // Canonical record envelopes have fixed-size digests and ISO timestamps.
       // Include the receipt itself in the net metadata byte saving.
@@ -351,13 +383,13 @@ export class FileBusterPlanJobStore {
 
   async result(jobId: string, contentDigest: string, maximumBytes: number): Promise<Buffer> {
     if (!Number.isSafeInteger(maximumBytes) || maximumBytes < 1) throw new Error('BUSTER_REMOTE_RESULT_LIMIT_INVALID');
-    const status = (await this.get(jobId)).payload.status;
+    const h=await this.#records.header(jobId);if(!h){if(await this.#retention.receipt(jobId))throw new Error('BUSTER_REMOTE_DATA_EXPIRED');throw new Error('BUSTER_REMOTE_JOB_NOT_FOUND');}const status=h.status;
     if (status.state !== 'completed' || !status.result) throw new Error('BUSTER_REMOTE_RESULT_NOT_READY');
     if (status.result.contentDigest !== contentDigest) throw new Error('BUSTER_REMOTE_RESULT_NOT_FOUND');
     if (status.result.sizeBytes > maximumBytes || status.result.sizeBytes > this.#maximumResultBytes) {
       throw new Error('BUSTER_REMOTE_RESULT_SIZE_EXCEEDED');
     }
-    const bytes = await this.#results.get(contentDigest);
+    const bytes = await this.#results(jobId).get(contentDigest);
     if (bytes.byteLength !== status.result.sizeBytes) throw new Error('BUSTER_REMOTE_RESULT_SIZE_MISMATCH');
     const parsed = JSON.parse(bytes.toString('utf8')) as RemotePlanResultV1;
     validatePipelineTestGateContract('remotePlanResult', parsed);
@@ -569,12 +601,12 @@ export class BusterRemotePlanService {
     await prior;
     try {
       if (this.#stopping) throw new Error('BUSTER_REMOTE_SHUTTING_DOWN');
-      const known = (await this.#options.store.records()).find((record) => record.payload.job.jobId === job.jobId);
+      const known = await this.#options.store.header(job.jobId);
       if (!known) {
         if (job.maximumConcurrency > this.#maximumConcurrentAttempts) throw new Error('BUSTER_REMOTE_CONCURRENCY_EXCEEDS_SERVICE_LIMIT');
         if (this.#queue.size >= this.#maximumQueuedJobs) throw new Error('BUSTER_REMOTE_ADMISSION_FULL');
       }
-      if (!known || (known.payload.status.state === 'accepted' && !this.#active.has(job.jobId))) await this.#assertDependencies();
+      if (!known || (known.status.state === 'accepted' && !this.#active.has(job.jobId))) await this.#assertDependencies();
       if (this.#stopping) throw new Error('BUSTER_REMOTE_SHUTTING_DOWN');
       const status = await this.#options.store.accept(job, this.#now().toISOString());
       if (status.state === 'accepted' && !this.#active.has(job.jobId)) this.#start(job);
@@ -586,9 +618,9 @@ export class BusterRemotePlanService {
     const counts: Record<RemotePlanStatusV1['state'], number> = {
       accepted: 0, running: 0, cancelling: 0, completed: 0, failed: 0, cancelled: 0,
     };
-    const records = await this.#options.store.records();
-    for (const { payload } of records) {
-      const state = payload.status.state;
+    const records = await this.#options.store.headers();
+    for (const { status } of records) {
+      const state = status.state;
       if (!Object.hasOwn(counts, state)) throw new Error('BUSTER_JOB_RECORD_INVALID');
       counts[state] += 1;
     }
@@ -604,7 +636,7 @@ export class BusterRemotePlanService {
   }
 
   async status(jobId: string): Promise<RemotePlanStatusV1> {
-    return (await this.#options.store.get(jobId)).payload.status;
+    const h=await this.#options.store.header(jobId);if(!h)throw new Error('BUSTER_REMOTE_JOB_NOT_FOUND');return h.status;
   }
 
   async evidence(jobId: string, contentDigest: string, maximumBytes: number): Promise<Buffer> {
@@ -626,6 +658,9 @@ export class BusterRemotePlanService {
     return this.#options.store.result(jobId, contentDigest, maximumBytes);
   }
 
+  async acknowledge(jobId:string,input:{requestDigest:string;resultDigest:string|null}) { const r=await this.#options.store.acknowledge(jobId,input,this.#now().toISOString());await this.collectRetention();return {schemaVersion:'buster-delivery-ack.v1',jobId:r.jobId,requestDigest:r.requestDigest}; }
+  async collectRetention() { return this.#options.store.collectRetention(this.#now().toISOString(),this.#options.runtimeRoot,new Set(this.#active.keys())); }
+
   async cancel(jobId: string): Promise<RemotePlanStatusV1> {
     const current = await this.status(jobId);
     if (['completed', 'failed', 'cancelled'].includes(current.state)) return current;
@@ -636,7 +671,7 @@ export class BusterRemotePlanService {
     this.#active.get(jobId)?.abort(new Error('BUSTER_REMOTE_CANCELLED'));
     if (!this.#active.has(jobId)) {
       return this.#options.store.transition(
-        jobId, ['cancelling'], 'cancelled', this.#now().toISOString(), { error: 'cancelled before execution' },
+        jobId, ['cancelling'], 'cancelled', this.#now().toISOString(), { error: 'cancelled before execution',quiescent:true },
       );
     }
     return status;
@@ -644,7 +679,9 @@ export class BusterRemotePlanService {
 
   async recover(): Promise<void> {
     this.#recovered = false;
-    for (const record of await this.#options.store.records()) {
+    for (const header of await this.#options.store.headers()) {
+      if (['completed','failed','cancelled'].includes(header.status.state)) continue;
+      const { record } = await this.#options.store.get(header.jobId);
       if (record.payload.schemaVersion === 'buster-plan-job-compacted-record.v1') continue;
       const { job, status } = record.payload;
       if (status.state === 'accepted') {
@@ -655,7 +692,7 @@ export class BusterRemotePlanService {
           this.#start(job);
         } catch (error) {
           await this.#options.store.transition(job.jobId, ['accepted'], 'failed', this.#now().toISOString(), {
-            error: error instanceof Error ? error.message : String(error),
+            error: error instanceof Error ? error.message : String(error),quiescent:true,
           });
         }
       }
@@ -728,6 +765,7 @@ export class BusterRemotePlanService {
   }
 
   async #execute(job: RemotePlanJobV1, controller: AbortController): Promise<void> {
+    let quiescent=true; // No provider has been invoked; tar extraction is joined on close.
     try {
       await this.#options.store.transition(job.jobId, ['accepted'], 'running', this.#now().toISOString());
       const jobRoot = jobDirectory(path.resolve(this.#options.runtimeRoot), job.jobId);
@@ -817,6 +855,7 @@ export class BusterRemotePlanService {
       if (securityScan) routes.set('security.scan', securityScan);
       if (kubernetesRuntimeSecurity) routes.set('kubernetes.runtime-security', kubernetesRuntimeSecurity);
       const capabilities = routes.size ? new CompositeTestProviderCapabilityInvoker(routes) : null;
+      quiescent=false;
       const run = this.#options.execute
         ? await this.#options.execute(job, paths, controller.signal)
         : await new TestPlanRunner({
@@ -831,12 +870,13 @@ export class BusterRemotePlanService {
           ...(capabilities ? { capabilityInvoker: capabilities } : {}),
           signal: controller.signal,
         }).run().finally(() => directCommand?.shutdown());
+      quiescent=run.cleanupErrors.length===0 && run.attempts.every(attempt=>attempt.executionState==='completed');
       if (run.cleanupErrors.length === 0 && run.attempts.every((attempt) => attempt.executionState === 'completed')) {
         await cleanupTerminalWorkspace(jobRoot);
       }
       if (controller.signal.aborted) {
         await this.#options.store.transition(job.jobId, ['running', 'cancelling'], 'cancelled',
-          this.#now().toISOString(), { error: 'cancelled by Nova' });
+          this.#now().toISOString(), { error: 'cancelled by Nova', ...(quiescent?{quiescent:true}:{}) });
         return;
       }
       const unsigned = {
@@ -866,7 +906,7 @@ export class BusterRemotePlanService {
         [current.state],
         cancelled ? 'cancelled' : 'failed',
         this.#now().toISOString(),
-        { error: error instanceof Error ? error.message : String(error) },
+        { error: error instanceof Error ? error.message : String(error), ...(quiescent?{quiescent:true}:{}) },
       );
     }
   }

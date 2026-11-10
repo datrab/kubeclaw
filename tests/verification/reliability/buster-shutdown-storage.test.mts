@@ -55,7 +55,7 @@ for (const timing of ['during', 'after', 'queued', 'admission', 'read-failure', 
     assert.equal(service.bootstrapReady(), true);
     if (timing === 'read-failure') {
       assert.equal((await service.submit(first)).state, 'accepted');
-      const recordFile = path.join(root, 'limited-state', 'records', 'store.json');
+      const recordFile = path.join(root, 'limited-state', 'jobs', crypto.createHash('sha256').update(first.jobId).digest('hex'), 'run.ndjson');
       const fd = fs.openSync(recordFile, 'w');
       try { fs.writeSync(fd, '{"broken":'); fs.fsyncSync(fd); } finally { fs.closeSync(fd); }
       await assert.rejects(() => limited.get(first.jobId), SyntaxError);
