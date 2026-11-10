@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { assertDurableRecordReplay } from '../../skills/common/plugin-runtime/foundation/observability/durable-records.ts';
 import { assertAdmissionReplay } from '../../skills/common/plugin-runtime/foundation/observability/replay-validation.ts';
 import { decodeAttemptState } from '../../skills/common/plugin-runtime/foundation/observability/attempt-projection.ts';
+import { runDirectory } from '../../skills/buster/engine/test-gates/run-records.ts';
 import { identityHash } from './files.mjs';
 import { assertCompactedPlanJobRecord } from '../../skills/buster/engine/test-gates/remote-plan-compaction.ts';
 import { remotePlanJobId } from '../../contracts/pipeline-test-gate/v1/src/index.ts';
@@ -140,6 +141,7 @@ function validJobRecord(record) {
 }
 
 function inspectJobResult(inventory, root, status) {
+  if(inventory.files.has(path.join(runDirectory(path.join(root,'jobs'),status.jobId),'run.ndjson'))) root=runDirectory(path.join(root,'jobs'),status.jobId);
   if (status.result) {
     const target = blobPath(path.join(root, 'results'), status.result.contentDigest ?? status.result.digest);
     if (inventory.files.get(target)?.hash !== (status.result.contentDigest ?? status.result.digest) || inventory.files.get(target)?.bytes !== status.result.sizeBytes) inventory.block('JOB_RESULT_REFERENCE_UNKNOWN', target);
@@ -147,7 +149,12 @@ function inspectJobResult(inventory, root, status) {
 }
 
 export function inspectJobs(inventory, root, runtimeRoot, runId) {
-  const records = recordSnapshot(inventory, root);
+  const files=[...inventory.files.keys()].filter(file=>file.startsWith(path.join(root,'jobs')+path.sep)&&file.endsWith(path.sep+'run.ndjson'));
+  const records=files.length?files.map(file=>{
+    const bytes=inventory.text(file);const line=bytes.indexOf('\n');const header=JSON.parse(bytes.slice(0,line));const record=JSON.parse(bytes.slice(line+1));
+    assertDurableRecordReplay({schemaVersion:'pipeline-durable-record-store.v1',records:[record]});
+    if(header.jobId!==record.payload.job.jobId||header.requestDigest!==record.payload.job.requestDigest||path.join(runDirectory(path.join(root,'jobs'),header.jobId),'run.ndjson')!==file)throw new Error('JOB_IDENTITY_UNKNOWN');return record;
+  }):inventory.files.has(path.join(root,'records/store.json'))?recordSnapshot(inventory,root):inventory.directories.has(path.join(root,'jobs'))?[]:(inventory.block('JOB_STORAGE_LAYOUT_UNKNOWN',root),[]);
   const jobs = [];
   for (const record of records) {
     if (record.stream !== 'buster-plan-jobs') { inventory.block('JOB_STREAM_UNKNOWN', identityHash(record.stream)); continue; }

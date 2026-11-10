@@ -93,6 +93,10 @@ extraContainers:
     image: ghcr.io/datrab/kubeclaw-buster-runtime:latest
     imagePullPolicy: Always
     env:
+      - name: BUSTER_V2_RETENTION_MODE
+        value: delete_after_delivery
+      - name: BUSTER_V2_DISCARD_LEGACY_JOURNAL
+        value: '1'
       - name: BUSTER_DIAGNOSIS_GATEWAY_TOKEN
         valueFrom:
           secretKeyRef:

@@ -60,6 +60,7 @@ export interface RemotePlanTransport {
 }
 
 export interface RemotePlanEvidenceTransport {
+  acknowledge?(jobId:string,requestDigest:string,resultDigest:string|null,signal?:AbortSignal):Promise<void>;
   evidence(jobId: string, contentDigest: string, maximumBytes: number, signal?: AbortSignal): Promise<Buffer>;
 }
 
@@ -172,6 +173,15 @@ export class HttpRemotePlanTransport implements RemotePlanTransport {
 
   cancel(jobId: string, signal?: AbortSignal): Promise<RemotePlanStatusV1> {
     return this.#request('DELETE', `/v1/plan-jobs/${encodeURIComponent(jobId)}`, undefined, signal);
+  }
+
+  async acknowledge(jobId:string,requestDigest:string,resultDigest:string|null,signal?:AbortSignal):Promise<void> {
+    const {response,bytes}=await remoteBytes(`${this.#endpoint}/v1/plan-jobs/${encodeURIComponent(jobId)}/delivered`,{method:'POST',headers:{'content-type':'application/json',...(this.#token?{authorization:`Bearer ${this.#token}`}:{})},body:JSON.stringify({requestDigest,resultDigest}),redirect:'error',...(signal?{signal}:{})},16384,'NOVA_REMOTE_DELIVERY',true);
+    // Older Buster versions have no acknowledgement endpoint; never pretend it
+    // deleted data, but retain compatibility until both sides are upgraded.
+    if(response.status===404||response.status===405)return;
+    if(!response.ok)throw new RemotePlanTransportError('NOVA_REMOTE_DELIVERY_HTTP_'+response.status,retryableStatus(response.status));
+    const receipt=JSON.parse(bytes.toString());if(receipt.schemaVersion!=='buster-delivery-ack.v1'||receipt.jobId!==jobId||receipt.requestDigest!==requestDigest)throw new Error('NOVA_REMOTE_DELIVERY_INVALID');
   }
 
   async evidence(jobId: string, contentDigest: string, maximumBytes: number, signal?: AbortSignal): Promise<Buffer> {

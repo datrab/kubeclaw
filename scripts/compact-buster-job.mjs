@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import {runDirectory} from '../skills/buster/engine/test-gates/run-records.ts';
 import { FileBusterPlanJobStore } from '../skills/buster/engine/test-gates/remote-plan-service.ts';
 import { assertCompactionIntent } from '../skills/buster/engine/test-gates/remote-plan-compaction.ts';
 
@@ -35,12 +36,12 @@ async function main() {
     || input.schemaVersion !== 'buster-job-compaction-scope.v1'
     || !Number.isSafeInteger(input.maximumSourcePublicKeyBytes) || input.maximumSourcePublicKeyBytes < 1
     || ![input.storeRoot, input.runtimeRoot, input.sourcePublicKeyFile].every(value => typeof value === 'string' && path.isAbsolute(value))
-    || !input.storeOptions || Object.keys(input.storeOptions).sort().join(',') !== 'maximumArchiveBytes,maximumResultBytes,maximumResultStoreBytes,recordLimits,trustedSourceAuthority') {
+    || !input.storeOptions || Object.keys(input.storeOptions).filter(key=>key!=='retention').sort().join(',') !== 'maximumArchiveBytes,maximumResultBytes,maximumResultStoreBytes,recordLimits,trustedSourceAuthority') {
     throw new Error('BUSTER_COMPACTION_SCOPE_INVALID');
   }
   assertCompactionIntent(input.intent);
   // Refuse a typo that would otherwise create an empty record store.
-  if (!fs.statSync(path.join(input.storeRoot, 'records/store.json')).isFile()) throw new Error('BUSTER_COMPACTION_STORE_REQUIRED');
+  if (!fs.statSync(path.join(runDirectory(path.join(input.storeRoot,'jobs'),input.intent.jobId),'run.ndjson')).isFile()) throw new Error('BUSTER_COMPACTION_STORE_REQUIRED');
   const publicKey = readRegularFile(input.sourcePublicKeyFile, input.maximumSourcePublicKeyBytes, 'PUBLIC_KEY');
   const store = new FileBusterPlanJobStore(input.storeRoot, { ...input.storeOptions, sourceAttestationPublicKey: publicKey });
   const result = await store.compactCompletedArchive(input.intent, input.runtimeRoot);

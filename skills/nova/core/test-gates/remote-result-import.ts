@@ -102,6 +102,15 @@ export class FileNovaGateImportStore {
     // store quota, and the third argument enforces that quota across all jobs.
     this.#blobs = new FileDurableBlobStore(root, options.maximumEvidenceStoreBytes, options.maximumEvidenceStoreBytes);
   }
+  async completed(job:RemotePlanJobV1,status:RemotePlanStatusV1):Promise<GateDecisionV1|null> {
+    const record=(await this.#records.read<StoredGateImportV2>('remote-gate-imports')).find(r=>r.idempotencyKey===job.jobId)?.payload;
+    if(!record||record.state!=='complete')return null;
+    if(record.requestDigest!==job.requestDigest||!same(record.source,importSource(job))||record.remoteResultDigest!==(status.result?.resultDigest??null))throw new Error('NOVA_REMOTE_IMPORT_CONFLICT');
+    const decision=decide(job,status,record.remoteResult);if(!same(decision,record.decision))throw new Error('NOVA_REMOTE_IMPORT_CONFLICT');
+    for(const artifact of artifacts(record.remoteResult)){const bytes=await this.#blobs.get(artifact.contentDigest);if(bytes.length!==artifact.sizeBytes)throw new Error('NOVA_REMOTE_EVIDENCE_STORE_MISMATCH');}
+    return structuredClone(decision);
+  }
+
   /** Read only a completed import under an exact caller-independent execution binding. */
   async readVerifiedResult(binding: { readonly jobId: string; readonly runId: string; readonly pipelineStageId: string;
     readonly sourceRevision: string; readonly decisionDigest: string; readonly resultDigest: string }) {
@@ -216,6 +225,8 @@ export class NovaRemoteGateImporter {
     validatePipelineTestGateContract('remotePlanStatus', status);
     if (status.jobId !== job.jobId || status.requestDigest !== job.requestDigest
       || !['completed', 'failed', 'cancelled'].includes(status.state)) throw new Error('NOVA_REMOTE_IMPORT_STATUS_INVALID');
+    const completed=await this.#store.completed(job,status);
+    if(completed){await this.#evidence.acknowledge?.(job.jobId,job.requestDigest,status.result?.resultDigest??null,signal);return completed;}
     const result = status.state === 'completed' && status.result
       ? await this.#results.result(job.jobId, status.result.contentDigest,
         Math.min(status.result.sizeBytes, this.#maximumResultBytes), signal)
@@ -244,7 +255,10 @@ export class NovaRemoteGateImporter {
       evidence.push({ artifact, bytes });
     }
     checkGateSignal(signal);
-    return this.#store.record(job, status, result, decision, evidence, signal);
+    const stored=await this.#store.record(job, status, result, decision, evidence, signal);
+    // Delivery means durable, verified import of every artifact, not HTTP send.
+    await this.#evidence.acknowledge?.(job.jobId,job.requestDigest,status.result?.resultDigest??null,signal);
+    return stored;
   }
 }
 

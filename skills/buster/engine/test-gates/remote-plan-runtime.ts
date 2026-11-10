@@ -5,6 +5,7 @@ import type { BusterRemotePlanService } from './remote-plan-service.ts';
 
 export interface BusterRemotePlanRuntimeOptions {
   readonly service: BusterRemotePlanService;
+  readonly prepareStorage?:()=>Promise<void>;
   readonly host: string;
   readonly port: number;
   readonly token?: string;
@@ -20,6 +21,8 @@ export class BusterRemotePlanRuntime {
   readonly #options: BusterRemotePlanRuntimeOptions;
   readonly #server: Server;
   #started = false;
+  #retentionTimer: NodeJS.Timeout | undefined;
+  #retention: Promise<unknown> | undefined;
 
   constructor(options: BusterRemotePlanRuntimeOptions) {
     if (options.host.length === 0) throw new Error('BUSTER_REMOTE_HOST_INVALID');
@@ -35,6 +38,7 @@ export class BusterRemotePlanRuntime {
 
   async start(): Promise<AddressInfo> {
     if (this.#started) throw new Error('BUSTER_REMOTE_RUNTIME_ALREADY_STARTED');
+    await this.#options.prepareStorage?.();
     await this.#options.service.recover();
     await new Promise<void>((resolve, reject) => {
       const onError = (error: Error): void => reject(error);
@@ -45,6 +49,8 @@ export class BusterRemotePlanRuntime {
       });
     });
     this.#started = true;
+    const collect=()=>{if(!this.#retention)this.#retention=this.#options.service.collectRetention().then(report=>{if(report.deleted.length||report.held.length)console.log(JSON.stringify({event:'buster.retention',deleted:report.deleted.length,held:report.held.length}));}).catch(error=>console.error(JSON.stringify({event:'buster.retention.failed',error:error instanceof Error?error.message:String(error)}))).finally(()=>{this.#retention=undefined;});};
+    collect();this.#retentionTimer=setInterval(collect,60000);this.#retentionTimer.unref();
     const address = this.#server.address();
     if (!address || typeof address === 'string') throw new Error('BUSTER_REMOTE_ADDRESS_INVALID');
     return address;
@@ -53,13 +59,14 @@ export class BusterRemotePlanRuntime {
   async stop(): Promise<void> {
     if (!this.#started) return;
     this.#started = false;
+    if(this.#retentionTimer)clearInterval(this.#retentionTimer);
     const close = new Promise<void>((resolve, reject) => {
       this.#server.close((error) => error ? reject(error) : resolve());
     });
     let timer: NodeJS.Timeout | undefined;
     try {
       await Promise.race([
-        close,
+        Promise.all([close,this.#retention]),
         new Promise<void>((resolve) => {
           timer = setTimeout(() => {
             this.#server.closeAllConnections();

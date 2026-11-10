@@ -10,7 +10,7 @@ import { buildRegistry, discoverPackages, resolveTestPlan, createProductionNovaT
 import { BusterRemotePlanRuntime, BusterRemotePlanService, FileBusterPlanJobStore } from '@kubeclaw/buster-engine';
 import { remotePlanJobDigest, remotePlanJobId, type RemotePlanJobV1, type RemotePlanResultV1 } from '@kubeclaw/pipeline-test-gate-contract';
 import { type CompactionIntent } from '../../../skills/buster/engine/test-gates/remote-plan-compaction.ts';
-import { FileDurableRecordStore } from '@kubeclaw/plugin-foundation/observability/durable-records';
+import { BusterRunRecords } from '../../../skills/buster/engine/test-gates/run-records.ts';
 import { completed } from '../../fixtures/test-gate/remote-plan.mts';
 
 const now = '2026-09-09T00:00:00.000Z';
@@ -34,11 +34,11 @@ test('manual compaction reclaims genuine completed-job metadata bytes, preservin
   const publicKey = keys.publicKey.export({ type: 'spki', format: 'pem' });
   const privateKey = keys.privateKey.export({ type: 'pkcs8', format: 'pem' });
   const records = { maximumRecords: 100, maximumBytes: 16 * 1024 * 1024, maximumRecordBytes: 1024 * 1024 };
-  const options = { recordLimits: records, maximumArchiveBytes: 1024 * 1024, maximumResultBytes: 1024 * 1024,
+  const options = { retention: { mode: 'retain_days' as const, days: 14 }, recordLimits: records, maximumArchiveBytes: 1024 * 1024, maximumResultBytes: 1024 * 1024,
     maximumResultStoreBytes: 16 * 1024 * 1024, trustedSourceAuthority: 'nova:compaction', sourceAttestationPublicKey: publicKey };
   const storeRoot = path.join(temporary, 'original-state'); const runtimeRoot = path.join(temporary, 'runtime');
   const store = new FileBusterPlanJobStore(storeRoot, options);
-  const serviceFor = (jobStore: FileBusterPlanJobStore) => new BusterRemotePlanService({ store: jobStore, registry,
+  const serviceFor = (jobStore: FileBusterPlanJobStore) => new BusterRemotePlanService({ store: jobStore, registry, now: () => new Date(now),
     workerRevision: 'a'.repeat(40), runtimeRoot, tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 1024 * 1024, allowedCapabilities: new Set() });
   const runtimeFor = (service: BusterRemotePlanService) => new BusterRemotePlanRuntime({ service, host: '127.0.0.1', port: 0, token,
     maximumRequestBytes: 2 * 1024 * 1024, maximumResponseBytes: 1024 * 1024, maximumResultBytes: 1024 * 1024, shutdownTimeoutMs: 5000 });
@@ -77,7 +77,7 @@ test('manual compaction reclaims genuine completed-job metadata bytes, preservin
     };
 
     await t.test('real metadata byte quota is released; record count and completed status remain', async () => {
-      const root = copy('quota'); const file = path.join(root, 'records/store.json'); const before = fs.statSync(file).size;
+      const root = copy('quota'); const file = path.join(root, 'jobs', crypto.createHash('sha256').update(job.jobId).digest('hex'), 'run.ndjson'); const before = fs.statSync(file).size;
       const limited = new FileBusterPlanJobStore(root, { ...options, recordLimits: { ...records, maximumBytes: before + 8192, maximumRecords: 2 } });
       const second = changedJob('compaction:second');
       await assert.rejects(limited.accept(second, now), /DURABLE_RECORD_STORE_FULL/);
@@ -102,7 +102,7 @@ test('manual compaction reclaims genuine completed-job metadata bytes, preservin
       const root = copy('replay'); const first = new FileBusterPlanJobStore(root, options);
       await first.compactCompletedArchive(intent, runtimeRoot);
       const reopened = new FileBusterPlanJobStore(root, options); const service = serviceFor(reopened); const server = runtimeFor(service);
-      const before = fs.readFileSync(path.join(root, 'records/store.json'));
+      const before = fs.readFileSync(path.join(root, 'jobs', crypto.createHash('sha256').update(job.jobId).digest('hex'), 'run.ndjson'));
       const endpoint = `http://127.0.0.1:${(await server.start()).port}/v1/plan-jobs`;
       try {
         const post = async (value: unknown) => fetch(endpoint, { method: 'POST', headers: { authorization: `Bearer ${token}`, 'content-type': 'application/json' }, body: JSON.stringify(value) });
@@ -115,12 +115,12 @@ test('manual compaction reclaims genuine completed-job metadata bytes, preservin
         const changed = { ...job, submittedAt: '2026-09-10T00:00:00.000Z' }; changed.requestDigest = remotePlanJobDigest(changed);
         assert.notEqual((await post(changed)).status, 200);
         assert.notEqual((await post({ ...job, repositoryArchive: { ...job.repositoryArchive, data: 'AAAA' } })).status, 200);
-        assert.deepEqual(fs.readFileSync(path.join(root, 'records/store.json')), before, 'no enqueue, revival or duplicate result write');
+        assert.deepEqual(fs.readFileSync(path.join(root, 'jobs', crypto.createHash('sha256').update(job.jobId).digest('hex'), 'run.ndjson')), before, 'no enqueue, revival or duplicate result write');
       } finally { await server.stop(); }
     });
 
     await t.test('stale scope, unknown identity, movable branch and missing retained tag reject unchanged', async () => {
-      const root = copy('reject'); const target = new FileBusterPlanJobStore(root, options); const before = fs.readFileSync(path.join(root, 'records/store.json'));
+      const root = copy('reject'); const target = new FileBusterPlanJobStore(root, options); const before = fs.readFileSync(path.join(root, 'jobs', crypto.createHash('sha256').update(job.jobId).digest('hex'), 'run.ndjson'));
       for (const bad of [
         { ...intent, expectedPayloadDigest: `sha256:${'0'.repeat(64)}` },
         { ...intent, source: { ...intent.source, repositoryId: 'another' } },
@@ -131,7 +131,7 @@ test('manual compaction reclaims genuine completed-job metadata bytes, preservin
       git(repository, '-c', 'user.name=Test', '-c', 'user.email=test@example.invalid', 'commit', '-qm', 'later');
       git(repository, 'update-ref', 'refs/tags/other-candidate', 'HEAD');
       await assert.rejects(target.compactCompletedArchive({ ...intent, source: { ...intent.source, retainedRef: 'refs/tags/other-candidate' } }, runtimeRoot), /SOURCE_REVISION_MISMATCH/);
-      assert.deepEqual(fs.readFileSync(path.join(root, 'records/store.json')), before);
+      assert.deepEqual(fs.readFileSync(path.join(root, 'jobs', crypto.createHash('sha256').update(job.jobId).digest('hex'), 'run.ndjson')), before);
       fs.writeFileSync(path.join(repository, '.git/info/attributes'), 'retained-source.bin export-ignore\n');
       await assert.rejects(target.compactCompletedArchive(intent, runtimeRoot), /SOURCE_BYTES_MISMATCH/);
       fs.unlinkSync(path.join(repository, '.git/info/attributes'));
@@ -142,7 +142,7 @@ test('manual compaction reclaims genuine completed-job metadata bytes, preservin
     await t.test('missing or changed real result blocks compaction', async () => {
       for (const operation of ['missing', 'changed']) {
         const root = copy(`result-${operation}`); const target = new FileBusterPlanJobStore(root, options);
-        const file = path.join(root, 'results/blobs/sha256', resultRef.contentDigest.slice(7, 9), resultRef.contentDigest.slice(9));
+        const file = path.join(root, 'jobs', crypto.createHash('sha256').update(job.jobId).digest('hex'), 'results/blobs/sha256', resultRef.contentDigest.slice(7, 9), resultRef.contentDigest.slice(9));
         if (operation === 'missing') fs.unlinkSync(file); else fs.writeFileSync(file, 'damaged result');
         await assert.rejects(target.compactCompletedArchive(intent, runtimeRoot));
         assert.equal((await target.get(job.jobId)).payload.schemaVersion, 'buster-plan-job-record.v1');
@@ -184,7 +184,7 @@ test('manual compaction reclaims genuine completed-job metadata bytes, preservin
       await artifactTest.test('FIFO evidence rejects before read in original compactor and HTTP route', () => {
         const scope = path.join(temporary, 'fifo-scope.json');
         fs.writeFileSync(scope, JSON.stringify({ storeRoot: path.join(temporary, 'artifact-state'), options, runtimeRoot,
-          intent: artifactIntent, pluginRoot, digest: artifact.contentDigest, token }));
+          intent: artifactIntent, pluginRoot, digest: artifact.contentDigest, token, now }));
         const code = `import fs from 'node:fs';
           import { buildRegistry, discoverPackages } from '@kubeclaw/nova-core';
           import { FileBusterPlanJobStore, BusterRemotePlanService, BusterRemotePlanRuntime } from '@kubeclaw/buster-engine';
@@ -196,7 +196,7 @@ test('manual compaction reclaims genuine completed-job metadata bytes, preservin
           } else {
             const registry = buildRegistry(discoverPackages({ installationRoots: [input.pluginRoot], trustPolicy: {
               trustedBuiltinRoots: [input.pluginRoot], allowedSourceDigests: new Map(), verifiedAttestations: new Map(), verifierId: 'fifo-test' } }));
-            const service = new BusterRemotePlanService({ store, registry, runtimeRoot: input.runtimeRoot, workerRevision: 'a'.repeat(40),
+            const service = new BusterRemotePlanService({ store, registry, now: () => new Date(input.now), runtimeRoot: input.runtimeRoot, workerRevision: 'a'.repeat(40),
               tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 1048576, allowedCapabilities: new Set() });
             const server = new BusterRemotePlanRuntime({ service, host: '127.0.0.1', port: 0, token: input.token,
               maximumRequestBytes: 2097152, maximumResponseBytes: 1048576, maximumResultBytes: 1048576, shutdownTimeoutMs: 5000 });
@@ -210,7 +210,7 @@ test('manual compaction reclaims genuine completed-job metadata bytes, preservin
           }
           process.stdout.write('FIFO_REJECTED');`;
         fs.unlinkSync(log); execFileSync('mkfifo', [log]);
-        const before = fs.readFileSync(path.join(temporary, 'artifact-state/records/store.json'));
+        const before = fs.readFileSync(path.join(temporary, 'artifact-state/jobs', crypto.createHash('sha256').update(artifactJob.jobId).digest('hex'), 'run.ndjson'));
         try {
           for (const mode of ['compaction', 'http']) {
             // Bound the regression process so a reverted blocking open fails instead of hanging the suite.
@@ -218,7 +218,7 @@ test('manual compaction reclaims genuine completed-job metadata bytes, preservin
             assert.equal(child.status, 0, `${mode}: ${child.error?.message ?? child.stderr}`);
             assert.equal(child.stdout, 'FIFO_REJECTED');
           }
-          assert.deepEqual(fs.readFileSync(path.join(temporary, 'artifact-state/records/store.json')), before);
+          assert.deepEqual(fs.readFileSync(path.join(temporary, 'artifact-state/jobs', crypto.createHash('sha256').update(artifactJob.jobId).digest('hex'), 'run.ndjson')), before);
         } finally { fs.unlinkSync(log); fs.writeFileSync(log, bytes); }
       });
       await assert.rejects(target.compactCompletedArchive({ ...artifactIntent, maximumEvidenceBytes: 1 }, runtimeRoot), /EVIDENCE_BUDGET_EXCEEDED/);
@@ -269,7 +269,7 @@ test('manual compaction reclaims genuine completed-job metadata bytes, preservin
       assert.equal(inspected.report.jobs.length, 1); assert.equal(inspected.report.jobs[0].disposition, 'retain');
       assert.equal(inspected.report.jobs[0].state, 'completed');
       assert.ok(!inspected.blockers.some((blocker: { code: string }) => blocker.code === 'JOB_IDENTITY_UNKNOWN'));
-      const raw = new FileDurableRecordStore(root, records);
+      const raw = new BusterRunRecords(root, records);
       await assert.rejects(raw.transition('buster-plan-jobs', original.idempotencyKey, original.payloadDigest, original.payload), /TRANSITION_CONFLICT/);
       assert.equal((await targets[0]!.get(job.jobId)).payload.schemaVersion, 'buster-plan-job-compacted-record.v1');
     });
@@ -284,16 +284,16 @@ test('manual compaction reclaims genuine completed-job metadata bytes, preservin
         const input = JSON.parse(fs.readFileSync(process.argv[1], 'utf8'));
         if (process.argv[2] === 'before') await withDurableStoreLock(input.root + '/job-admission', async () => { process.kill(process.pid, 'SIGKILL'); });
         else { await new FileBusterPlanJobStore(input.root, input.options).compactCompletedArchive(input.intent, input.runtimeRoot); process.kill(process.pid, 'SIGKILL'); }`;
-      const beforeBytes = fs.readFileSync(path.join(root, 'records/store.json'));
+      const beforeBytes = fs.readFileSync(path.join(root, 'jobs', crypto.createHash('sha256').update(job.jobId).digest('hex'), 'run.ndjson'));
       const before = spawnSync(process.execPath, ['--input-type=module', '-e', code, scope, 'before'], { encoding: 'utf8' });
       assert.equal(before.signal, 'SIGKILL', before.stderr);
-      assert.deepEqual(fs.readFileSync(path.join(root, 'records/store.json')), beforeBytes);
+      assert.deepEqual(fs.readFileSync(path.join(root, 'jobs', crypto.createHash('sha256').update(job.jobId).digest('hex'), 'run.ndjson')), beforeBytes);
       const after = spawnSync(process.execPath, ['--input-type=module', '-e', code, scope, 'after'], { encoding: 'utf8' });
       assert.equal(after.signal, 'SIGKILL', after.stderr);
       const reopened = new FileBusterPlanJobStore(root, options);
       const replay = await reopened.compactCompletedArchive(intent, runtimeRoot);
       assert.equal(replay.releasedMetadataBytes, 0);
-      assert.equal(replay.receipt.releasedMetadataBytes, beforeBytes.byteLength - fs.statSync(path.join(root, 'records/store.json')).size);
+      assert.equal(replay.receipt.releasedMetadataBytes, beforeBytes.byteLength - fs.statSync(path.join(root, 'jobs', crypto.createHash('sha256').update(job.jobId).digest('hex'), 'run.ndjson')).size);
       assert.deepEqual(await reopened.accept(job, now), original.payload.status);
     });
 
@@ -305,7 +305,7 @@ test('manual compaction reclaims genuine completed-job metadata bytes, preservin
         storeRoot: root, runtimeRoot, sourcePublicKeyFile: key, maximumSourcePublicKeyBytes: Buffer.byteLength(publicKey), storeOptions, intent }));
       const run = () => spawnSync(process.execPath, ['scripts/compact-buster-job.mjs', '--apply', scope], { encoding: 'utf8', timeout: 10000, killSignal: 'SIGKILL' });
       const scopeBytes = fs.readFileSync(scope);
-      const before = fs.readFileSync(path.join(root, 'records/store.json'));
+      const before = fs.readFileSync(path.join(root, 'jobs', crypto.createHash('sha256').update(job.jobId).digest('hex'), 'run.ndjson'));
       fs.unlinkSync(scope); execFileSync('mkfifo', [scope]);
       const fifoScope = run(); assert.equal(fifoScope.status, 1, fifoScope.error?.message ?? fifoScope.stderr);
       assert.match(fifoScope.stderr, /SCOPE_FILE_INVALID/);
@@ -317,7 +317,7 @@ test('manual compaction reclaims genuine completed-job metadata bytes, preservin
       const tooSmall = JSON.parse(scopeBytes.toString()); tooSmall.maximumSourcePublicKeyBytes = Buffer.byteLength(publicKey) - 1;
       fs.writeFileSync(scope, JSON.stringify(tooSmall));
       const overBudget = run(); assert.equal(overBudget.status, 1, overBudget.stderr); assert.match(overBudget.stderr, /PUBLIC_KEY_SIZE_INVALID/);
-      assert.deepEqual(fs.readFileSync(path.join(root, 'records/store.json')), before);
+      assert.deepEqual(fs.readFileSync(path.join(root, 'jobs', crypto.createHash('sha256').update(job.jobId).digest('hex'), 'run.ndjson')), before);
       fs.writeFileSync(scope, scopeBytes);
       const first = run(); assert.equal(first.status, 0, first.stderr); const firstResult = JSON.parse(first.stdout);
       const second = run(); assert.equal(second.status, 0, second.stderr); assert.deepEqual(JSON.parse(second.stdout), { receipt: firstResult.receipt, releasedMetadataBytes: 0 });
