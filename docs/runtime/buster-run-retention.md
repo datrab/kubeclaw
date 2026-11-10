@@ -1,6 +1,11 @@
 # Buster disposable run storage
 
+Status: implemented; live cutover pending
+Audience: operator, maintainer
 Owner: Buster runtime maintainers
+Evidence: skills/buster/engine/test-gates/run-retention.ts; tests/verification/reliability/buster-run-retention.test.mts
+Applies to: Buster remote plan runtime and Nova verified import
+Last verified: generated during publication
 
 Buster no longer uses one historical JSON journal. Every run has an atomic
 `stateRoot/jobs/<SHA256(jobId)>/run.ndjson`: a bounded first-line status header and
