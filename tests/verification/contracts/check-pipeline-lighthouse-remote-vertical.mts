@@ -46,7 +46,8 @@ try {
       maximumRetryCount: 1, maximumMatrixSize: 1, maximumNodes: 2, defaultConcurrencyLimit: 1,
       maximumConcurrencyLimits: { lighthouse: 1 } } });
   const records = { maximumRecords: 100, maximumBytes: 128 * 1024 * 1024, maximumRecordBytes: 64 * 1024 * 1024 };
-  const store = new FileBusterPlanJobStore(path.join(root, 'buster-state'), { recordLimits: records,
+  // This acceptance contract inspects native evidence after verified delivery.
+  const store = new FileBusterPlanJobStore(path.join(root, 'buster-state'), { retention: { mode: 'retain_days', days: 14 }, recordLimits: records,
     maximumArchiveBytes: 8 * 1024 * 1024, maximumResultBytes: 64 * 1024 * 1024,
     maximumResultStoreBytes: 128 * 1024 * 1024, trustedSourceAuthority: 'nova:production', sourceAttestationPublicKey: publicKey });
   const chromeExecutable = '/ms-playwright/chromium_headless_shell-1228/chrome-headless-shell-linux64/chrome-headless-shell';
