@@ -18,7 +18,8 @@ import tempfile
 import zipfile
 
 
-def patch_semgrep(wheel, replacement):
+def patch_semgrep(wheel, patch):
+    replacement = patch["replacementRequirement"]
     source_hash = hashlib.sha256(wheel.read_bytes()).hexdigest()
     with zipfile.ZipFile(wheel) as archive:
         files = {name: archive.read(name) for name in archive.namelist()}
@@ -26,10 +27,10 @@ def patch_semgrep(wheel, replacement):
     metadata_path, = [name for name in files if name.endswith('.dist-info/METADATA')]
     metadata = files[metadata_path].decode()
     version, = re.findall(r'^Version: ([^\n]+)$', metadata, re.M)
-    expected = 'Requires-Dist: mcp==1.29.0\n'
+    expected = 'Requires-Dist: ' + patch['originalRequirement'] + '\n'
     if metadata.count(expected) != 1 or '+kubeclaw' in version:
         raise ValueError('Semgrep metadata changed: review/remove the downstream security patch')
-    patched_version = version + '+kubeclaw.1'
+    patched_version = version + '+' + patch['versionSuffix']
     metadata = metadata.replace(expected, f'Requires-Dist: {replacement}\n').replace(
         f'Version: {version}\n', f'Version: {patched_version}\n', 1)
     old_info = metadata_path.rsplit('/', 1)[0]
@@ -39,8 +40,8 @@ def patch_semgrep(wheel, replacement):
              for name, data in files.items() if name != old_info + '/RECORD'}
     files[new_info + '/kubeclaw-security-patch.json'] = (json.dumps({
         'sourceWheel': wheel.name, 'sourceSha256': source_hash,
-        'originalRequirement': 'mcp==1.29.0', 'patchedRequirement': replacement,
-        'advisory': 'GHSA-qx49-fqc8-xw99'}, sort_keys=True) + '\n').encode()
+        'originalRequirement': patch['originalRequirement'], 'patchedRequirement': replacement,
+        'advisory': patch['advisory']}, sort_keys=True) + '\n').encode()
     record = io.StringIO(newline='')
     writer = csv.writer(record, lineterminator='\n')
     for name, data in sorted(files.items()):
@@ -69,7 +70,8 @@ def main():
         raise ValueError('Unsupported installer flags')
     overrides = [line.strip() for line in Path(__file__).with_name('security-overrides.txt')
                  .read_text().splitlines() if line.strip() and not line.startswith('#')]
-    if overrides != ['mcp==1.30.0']:
+    patch = json.loads(Path(__file__).with_name('security-patch.json').read_text())
+    if overrides != [patch['replacementRequirement']]:
         raise ValueError('Review the security patch before changing its dependency')
     pip = [sys.executable, '-m', 'pip']
     with tempfile.TemporaryDirectory(prefix='kubeclaw-verified-wheels-') as directory:
@@ -78,7 +80,7 @@ def main():
         subprocess.run(pip + ['download', '--no-cache-dir', '--no-deps', '--require-hashes',
                               '--only-binary=:all:', '-r', str(lock), '-d', directory], check=True)
         wheel, = Path(directory).glob('semgrep-*.whl')
-        patch_semgrep(wheel, overrides[0])
+        patch_semgrep(wheel, patch)
         subprocess.run(pip + ['install', '--no-index', '--no-cache-dir', *flags,
                               *map(str, sorted(Path(directory).glob('*.whl')))], check=True)
         subprocess.run(pip + ['check'], check=True)

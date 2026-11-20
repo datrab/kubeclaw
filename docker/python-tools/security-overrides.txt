@@ -1,4 +1,2 @@
-# Downstream Semgrep packaging patch: upstream 1.186.0 pins mcp==1.29.0.
-# GHSA-qx49-fqc8-xw99 is fixed in the compatible 1.30.0 release.
-# install-patched.py rebuilds only that exact dependency declaration.
+# Generated from versions.json; security overrides for our runtime tools.
 mcp==1.30.0

@@ -96,7 +96,7 @@ ARG PIP_AUDIT_VERSION=2.10.1
 ARG SEMGREP_VERSION=1.186.0
 # Retain Debian's security-maintained pip for pip-api, not the build wheel's
 # independent (and otherwise unpatched) vendored dependency copies.
-COPY docker/python-tools/install-patched.py docker/python-tools/security-overrides.txt /opt/kubeclaw-python-locks/
+COPY docker/python-tools/install-patched.py docker/python-tools/security-overrides.txt docker/python-tools/security-patch.json /opt/kubeclaw-python-locks/
 COPY docker/python-tools/buster.txt /opt/kubeclaw-python-locks/buster.txt
 RUN grep -F "ruff==${RUFF_VERSION} " /opt/kubeclaw-python-locks/buster.txt \
     && grep -F "mypy==${MYPY_VERSION} " /opt/kubeclaw-python-locks/buster.txt \

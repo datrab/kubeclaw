@@ -17,10 +17,15 @@ with tempfile.TemporaryDirectory(prefix='semgrep-security-proof-') as temporary:
     os.environ.update(SEMGREP_ENABLE_VERSION_CHECK='0', SEMGREP_SEND_METRICS='off',
                       SEMGREP_SETTINGS_FILE=temporary + '/settings.yml',
                       SEMGREP_LOG_FILE=temporary + '/semgrep.log')
-    assert importlib.metadata.version('mcp') == '1.30.0'
-    assert importlib.metadata.version('semgrep').endswith('+kubeclaw.1')
+    patch_file = Path('/opt/kubeclaw-python-locks/security-patch.json')
+    if not patch_file.is_file():
+        patch_file = Path(__file__).resolve().parents[3] / 'docker/python-tools/security-patch.json'
+    patch = json.loads(patch_file.read_text())
+    dependency, version = patch['replacementRequirement'].split('==')
+    assert importlib.metadata.version(dependency) == version
+    assert importlib.metadata.version('semgrep').endswith('+' + patch['versionSuffix'])
     requirements = importlib.metadata.requires('semgrep')
-    assert 'mcp==1.30.0' in requirements
+    assert patch['replacementRequirement'] in requirements
     rule = Path(temporary, 'rule.yml')
     rule.write_text('rules:\n- id: unsafe-eval\n  pattern: eval(...)\n  languages: [python]\n  severity: ERROR\n  message: unsafe eval\n')
     target = Path(temporary, 'unsafe.py')

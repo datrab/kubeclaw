@@ -22,6 +22,13 @@ assert.ok(deps.some(dep => dep.depName === 'openclaw/openclaw'));
 const codex = deps.filter(dep => dep.depName === '@openai/codex');
 assert.equal(codex.length, 1, 'Expected exactly one central Codex pin');
 assert.equal(codex[0].currentValue, manifest.codex.version);
+for (const pin of manifest.runtimePackages.npm) {
+  assert.ok(deps.some(dep => dep.datasource === 'npm' && dep.depName === pin.packageName && dep.currentValue === pin.version), `Undiscovered central npm pin: ${pin.packageName}@${pin.version}`);
+}
+assert.ok(deps.some(dep => dep.datasource === 'pypi' && dep.depName === 'mcp' && dep.currentValue === manifest.runtimePackages.pythonOverrides.mcp));
+for (const pin of manifest.runtimePackages.goOverrides) {
+  assert.ok(deps.some(dep => dep.datasource === 'go' && dep.depName === pin.goModule && dep.currentValue === pin.version));
+}
 for (const [key, image] of Object.entries(manifest.automation)) {
   const matches = deps.filter(dep => dep.replaceString?.includes(`"${key}"`));
   assert.equal(matches.length, 1, `Expected exactly one discovered automation pin: ${key}`);

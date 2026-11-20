@@ -5,6 +5,7 @@ export function openclawReference(root = process.cwd()) {
   const { openclaw } = JSON.parse(fs.readFileSync(`${root}/versions.json`, 'utf8'));
   return `ghcr.io/openclaw/openclaw:${openclaw.version}@${openclaw.digest}`;
 }
+export const usesOpenclawRole = role => ['nova', 'prism-agent', 'buster-gateway'].includes(role);
 export function usesOpenclaw(reference) {
   return /^ghcr\.io\/datrab\/kubeclaw-(?:nova|prism-agent|buster-gateway)@sha256:[a-f0-9]{64}$/u.test(reference);
 }
@@ -27,7 +28,7 @@ export function readReleaseScan(item, directory, exitCode, root = process.cwd())
   const reference = openclawReference(root);
   if (item.reference === reference) return { ...image, findings: image.findings.map(finding => ({ ...finding,
     deferredReason: 'retained-openclaw-upstream', upstreamReference: reference })) };
-  if (!usesOpenclaw(item.reference)) return image;
+  if (!usesOpenclaw(item.reference) && !(item.localImageId && usesOpenclawRole(item.role))) return image;
   // The shell validates the upstream scanner exit before scanning consumers.
   // Re-validate artifact identity/schema here; a missing baseline fails closed.
   return deferInheritedOpenclaw(image, readScan({ reference, sources: [], categories: [] }, directory, 0));

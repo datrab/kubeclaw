@@ -25,7 +25,7 @@ export function imageInput(name, file) {
     || file === 'scripts/check-built-runtime-image.sh'
     || (['nova', 'buster-runtime'].includes(name) && file === 'tests/verification/deployment/semgrep-security-smoke.py')
     || (['nova', 'prism-agent', 'buster-gateway'].includes(name) && file === 'scripts/check-role-image.sh')
-    || file === 'scripts/versions.mjs'
+    || file === 'scripts/versions.mjs' || file === 'scripts/central-packages.mjs'
     || inputs[name].some(source => under(file, source))
     || (name.startsWith('prism-') && /^skills\/.*\/package(?:-lock)?\.json$/u.test(file));
 }

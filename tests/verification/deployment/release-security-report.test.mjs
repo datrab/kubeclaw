@@ -19,6 +19,17 @@ function fixture(t, overrides = {}) {
 const findings = [{ VulnerabilityID: 'CVE-test', Severity: 'CRITICAL', PkgName: 'pkg', InstalledVersion: '1.0', FixedVersion: '1.1' },
   { VulnerabilityID: 'CVE-unfixed', Severity: 'HIGH', PkgName: 'pkg2', InstalledVersion: '2.0', Status: 'affected' }];
 
+test('local acceptance binds the report to the inspected image ID and rejects missing or mismatched identity', t => {
+  const localImageId = `sha256:${'a'.repeat(64)}`;
+  const local = { ...item, reference: 'pr-image:local', localImageId, role: 'archviewer' };
+  const { dir, file } = fixture(t, { Metadata: { ImageID: localImageId } });
+  assert.equal(readScan(local, dir, 0).status, 'clean');
+  for (const Metadata of [{}, { ImageID: `sha256:${'b'.repeat(64)}` }, { RepoDigests: [reference] }]) {
+    fs.writeFileSync(file, JSON.stringify({ SchemaVersion: 2, ArtifactType: 'container_image', Metadata, Results: [] }));
+    assert.equal(readScan(local, dir, 0).status, 'error');
+  }
+});
+
 test('real inventory includes production overrides and deduplicates shared images without losing owners', () => {
   const inventory = scanInventory(process.cwd());
   assert.deepEqual(inventory.errors, []);

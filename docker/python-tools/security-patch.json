@@ -1,0 +1,6 @@
+{
+  "originalRequirement": "mcp==1.29.0",
+  "versionSuffix": "kubeclaw.1",
+  "advisory": "GHSA-qx49-fqc8-xw99",
+  "replacementRequirement": "mcp==1.30.0"
+}

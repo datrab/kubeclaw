@@ -629,6 +629,37 @@
       "datasourceTemplate": "github-releases",
       "extractVersionTemplate": "^v?(?<version>.+)$",
       "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"packageName\": \"(?<depName>[^\"\\n]+)\",\\s*\"version\": \"(?<currentValue>[^\"\\n]+)\""
+      ],
+      "datasourceTemplate": "npm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"pythonOverrides\": \\{\\s*\"mcp\": \"(?<currentValue>[^\"\\n]+)\""
+      ],
+      "depNameTemplate": "mcp",
+      "datasourceTemplate": "pypi"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"goModule\": \"(?<depName>[^\"\\n]+)\",\\s*\"version\": \"(?<currentValue>[^\"\\n]+)\""
+      ],
+      "datasourceTemplate": "go"
     }
   ],
   "timezone": "Etc/UTC",
@@ -751,7 +782,12 @@
           "gitops/platform/bootstrap/spire.yaml",
           "gitops/platform/bootstrap/spire-crds.yaml",
           "gitops/platform/bootstrap/csi-driver-smb.yaml",
-          "gitops/platform/litellm/resources.yaml"
+          "gitops/platform/litellm/resources.yaml",
+          "**/package.json",
+          "**/package-lock.json",
+          "package.json",
+          "package-lock.json",
+          "scripts/central-packages.mjs"
         ],
         "executionMode": "branch"
       }
@@ -802,6 +838,23 @@
         "k8s.io/metrics"
       ],
       "allowedVersions": "0.34.11"
+    },
+    {
+      "matchManagers": [
+        "npm"
+      ],
+      "rangeStrategy": "in-range-only",
+      "description": "Manifest version decisions are generated from versions.json; npm may maintain derived lockfiles only."
+    },
+    {
+      "matchFileNames": [
+        "versions.json"
+      ],
+      "matchPackageNames": [
+        "mcp"
+      ],
+      "allowedVersions": "<2",
+      "description": "Semgrep uses the compatible patched MCP 1.x SDK."
     }
   ],
   "vulnerabilityAlerts": {
@@ -814,6 +867,7 @@
     "automerge": false,
     "labels": [
       "security"
-    ]
+    ],
+    "rangeStrategy": "in-range-only"
   }
 }
