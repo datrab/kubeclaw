@@ -23,6 +23,7 @@ export function imageInput(name, file) {
   if (!inputs[name]) throw new Error(`UNKNOWN_RUNTIME_IMAGE:${name}`);
   return file === `docker/Dockerfile.${name}` || file === '.dockerignore' || file === 'versions.json'
     || file === 'scripts/check-built-runtime-image.sh'
+    || (['nova', 'buster-gateway'].includes(name) && file === 'scripts/check-root-state-image.sh')
     || (['nova', 'buster-runtime'].includes(name) && file === 'tests/verification/deployment/semgrep-security-smoke.py')
     || (['nova', 'prism-agent', 'buster-gateway'].includes(name) && file === 'scripts/check-role-image.sh')
     || file === 'scripts/versions.mjs' || file === 'scripts/central-packages.mjs'

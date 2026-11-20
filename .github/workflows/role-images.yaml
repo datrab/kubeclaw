@@ -52,7 +52,9 @@ jobs:
           build-args: |
             KUBECLAW_BUILD_REVISION=${{ github.sha }}
             TRIVY_DATABASE_REFRESH=${{ github.run_id }}.${{ github.run_attempt }}
-          cache-from: type=gha,scope=runtime-acceptance-${{ matrix.name }}
+          cache-from: |
+            type=gha,scope=runtime-acceptance-${{ matrix.name }}
+            type=gha,scope=toolchain-${{ matrix.name }}
           cache-to: type=gha,scope=runtime-acceptance-${{ matrix.name }},mode=min,ignore-error=true
       - name: Verify the built artifact
         env:
@@ -64,6 +66,12 @@ jobs:
           ROLE: ${{ matrix.name }}
           IMAGE: kubeclaw-${{ matrix.name }}:proof
         run: bash scripts/scan-runtime-images.sh --local "$ROLE" "$IMAGE"
+      - name: Verify private mounted state in root mode without capabilities
+        if: contains(fromJSON('["nova","buster-gateway"]'), matrix.name)
+        env:
+          ROLE: ${{ matrix.name }}
+          IMAGE: kubeclaw-${{ matrix.name }}:proof
+        run: bash scripts/check-root-state-image.sh "$ROLE" "$IMAGE"
       - name: Preserve PR image security evidence
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
