@@ -735,12 +735,12 @@ assert.doesNotMatch(
 );
 assert.ok(
   chart.indexOf('name: openclaw-state-permissions') < chart.indexOf('name: openclaw-state-migration'),
-  'legacy state ownership must be repaired before the non-root OpenClaw migration',
+  'legacy state ownership must be repaired before OpenClaw migration',
 );
 assert.match(
   chart,
-  /if and \.Values\.gateway\.startupDoctor\.enabled \(not \.Values\.runAsRoot\)[\s\S]*name: openclaw-state-permissions[\s\S]*find \/home\/node\/\.openclaw -xdev -exec chown -h 1000:1000 \{\} \+[\s\S]*runAsNonRoot: false[\s\S]*add:[\s\S]*- CHOWN[\s\S]*- DAC_READ_SEARCH[\s\S]*name: config[\s\S]*mountPath: \/home\/node\/\.openclaw/,
-  'non-root agents must repair only their persistent config ownership with bounded traversal and ownership capabilities',
+  /name: openclaw-state-permissions[\s\S]*state_owner=\{\{ ternary "0:0" "1000:1000" \.Values\.runAsRoot \| quote \}\}[\s\S]*find \/home\/node\/\.openclaw -xdev -exec chown -h "\$state_owner" \{\} \+[\s\S]*runAsNonRoot: false[\s\S]*add:[\s\S]*- CHOWN[\s\S]*- DAC_READ_SEARCH[\s\S]*name: config[\s\S]*mountPath: \/home\/node\/\.openclaw/,
+  'all agents must repair persistent config ownership to their actual runtime UID before protected CLI writes',
 );
 assert.ok(
   chart.indexOf('name: openclaw-state-migration') < chart.indexOf('name: init-setup'),
@@ -926,6 +926,19 @@ const helm = spawnSync(
 );
 if (helm.error?.code !== 'ENOENT') {
   assert.equal(helm.status, 0, `helm template failed:\n${helm.stderr}`);
+  for (const root of [true, false]) for (const doctor of [true, false]) {
+    const rendered = spawnSync('helm', ['template', 'ownership', path.join(sourceRoot, 'charts/kubeclaw'),
+      '--set', `runAsRoot=${root}`, '--set', `gateway.startupDoctor.enabled=${doctor}`], { cwd: sourceRoot, encoding: 'utf8' });
+    assert.equal(rendered.status, 0, rendered.stderr);
+    const deployment = loadAll(rendered.stdout).find(object => object?.kind === 'Deployment'
+      && object.spec.template.spec.initContainers?.some(container => container.name === 'openclaw-state-permissions'));
+    assert.ok(deployment, 'ownership repair is required even when Doctor is disabled');
+    const init = deployment.spec.template.spec.initContainers;
+    const repair = init.find(container => container.name === 'openclaw-state-permissions');
+    assert.ok(init.indexOf(repair) < init.findIndex(container => container.name === 'init-setup'));
+    assert.ok(repair.command[2].includes(`state_owner="${root ? '0:0' : '1000:1000'}"`));
+    assert.deepEqual(repair.volumeMounts, [{ name: 'config', mountPath: '/home/node/.openclaw' }]);
+  }
   const assertManagedModels = rendered => {
     const configMap = loadAll(rendered).find(object => object?.kind === 'ConfigMap' && object.data?.['openclaw.json']);
     assert.ok(configMap, 'the rendered gateway configuration must be present');
