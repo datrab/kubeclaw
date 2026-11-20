@@ -135,7 +135,7 @@ function bindApplicationVersions(manifest, args, replaceOne) {
   replaceOne('.github/workflows/update-checks.yaml', /^          version: v\d+\.\d+\.\d+$/m,
     `          version: v${args.HELM_VERSION}`);
   replaceOne('.github/workflows/pipeline-reliability.yaml', /^          version: v\d+\.\d+\.\d+$/m,
-    `          version: v${args.HELM_VERSION}`);
+    `          version: v${args.HELM_VERSION}`, 2);
   for (const [shellKey, key] of [['TRIVY_VERSION', 'TRIVY_VERSION'], ['TRIVY_AMD64_SHA256', 'TRIVY_SHA256_AMD64'], ['TRIVY_ARM64_SHA256', 'TRIVY_SHA256_ARM64']])
     replaceOne('scripts/scan-runtime-images.sh', new RegExp(`^readonly ${shellKey}="[^"]+"$`, 'm'), `readonly ${shellKey}="${args[key]}"`);
 }
