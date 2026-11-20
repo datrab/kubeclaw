@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "commit": "4e35299a4cc55550c8156b627e95d924029b7e5c",
+  "commit": "446326629d4f80ee7d3adcb514d062c23a6e1854",
   "images": {
-    "nova": "ghcr.io/datrab/kubeclaw-nova@sha256:f60274b67109f5adbe601f8d5dcb5264e0abc072f53a2f931fe970956ad185a4",
+    "nova": "ghcr.io/datrab/kubeclaw-nova@sha256:3c29cb5a6cd89bc9f7682e838a99401694a4d44ac93e048352448bb6fb8b457e",
     "prism-agent": "ghcr.io/datrab/kubeclaw-prism-agent@sha256:219c3d70e30d1870b0a49b4fb5dec5ee40ba5e023e12fb7ca59103acb6186e57",
-    "buster-gateway": "ghcr.io/datrab/kubeclaw-buster-gateway@sha256:ee74f308010a95e17f2af01cf5721bae8dab3187361682f386282549f6ecb841",
+    "buster-gateway": "ghcr.io/datrab/kubeclaw-buster-gateway@sha256:e7042d05a157beb3aecaaa49b30dfc2e47ae3142bbf36f44de18c0f3f676cd40",
     "buster-runtime": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:c15aedc1e99df3f8be444415226a931bb8f821209a1d0d40238493a73dd3bbd2",
     "namespace-controller": "ghcr.io/datrab/kubeclaw-namespace-controller@sha256:3e76c49f71940e123f9ace1ef23aa774ae810a32a5959b7e5a4ded9b6183a71d",
     "archviewer": "ghcr.io/datrab/kubeclaw-archviewer@sha256:11d5f179d1b9225d61226ac17be01f251d692ba8ff9af5e819d12efa4d9c161a",
@@ -13,12 +13,12 @@
     "prism-worker": "ghcr.io/datrab/kubeclaw-prism-worker@sha256:ce3c98628a9448d91e10045e1eebb22dbdf526ac37973cda22090fb66a76e5c7",
     "prism-ingestion": "ghcr.io/datrab/kubeclaw-prism-ingestion@sha256:aa2d598aacc9a2f5754c9dca806f5d244d966417c4f37616b7d49c0219405f69"
   },
-  "sourceRunId": 44820049210,
+  "sourceRunId": 44829933998,
   "sourceRunAttempt": 1,
   "imageSources": {
     "nova": {
-      "commit": "4e35299a4cc55550c8156b627e95d924029b7e5c",
-      "sourceRunId": 44820049210,
+      "commit": "446326629d4f80ee7d3adcb514d062c23a6e1854",
+      "sourceRunId": 44829933998,
       "sourceRunAttempt": 1
     },
     "prism-agent": {
@@ -27,8 +27,8 @@
       "sourceRunAttempt": 1
     },
     "buster-gateway": {
-      "commit": "4e35299a4cc55550c8156b627e95d924029b7e5c",
-      "sourceRunId": 44820049210,
+      "commit": "446326629d4f80ee7d3adcb514d062c23a6e1854",
+      "sourceRunId": 44829933998,
       "sourceRunAttempt": 1
     },
     "buster-runtime": {
