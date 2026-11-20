@@ -57,20 +57,20 @@ test('rendered MCP scope, dynamic backend, admission guard and network edge agre
 test('production Ops retains its platform read scopes and all clients receive test access', () => {
   const values = parse(readFileSync(root + 'gitops/platform/values/codex-ops.yaml', 'utf8'));
   const clients = parsePolicy(JSON.stringify({clients: values.mcp.clients.map(c => ({...c, tokenFile: '/token/'+c.id}))}), values.rbac.namespaces, ['test'], values.rbac.readAllNamespaces, values.rbac.execAllNonSystemNamespaces);
-  assert.deepEqual(clients[0].namespaces, values.rbac.namespaces);
+  assert.deepEqual(clients[0].namespaces, ['kubeclaw-ops', 'kubeclaw', 'argocd', 'kube-system', 'tailscale', 'spire-server', 'spire-system']);
   assert.ok(clients[0].tools.includes('list_argocd_applications'));
   assert.deepEqual(clients.find(c => c.id === 'buster').namespaces, []);
   assert.ok(clients.every(c => c.namespacePrefixes.includes('test')));
   const nova = clients.find(c => c.id === 'nova');
   const pod = { spec: { containers: [{ name: 'arbitrary-sidecar' }] } };
-  for (const namespace of ['kubeclaw', 'test', 'testing', 'test-future']) {
+  for (const namespace of ['kubeclaw', 'familyclaw', 'test', 'testing', 'test-future']) {
     for (const tool of ['namespace_overview', 'get_pod', 'get_events', 'get_pod_logs', 'get_hubble_flows', 'get_pod_metrics', 'get_resource_inventory', 'exec_pod']) {
       assert.doesNotThrow(() => authorizeTool(nova, tool, { namespace }, 'argocd'));
     }
     const args = { namespace, container: 'arbitrary-sidecar', timeoutSeconds: 120, maxOutputBytes: 999999 };
     assert.deepEqual(authorizeExec(nova, args, pod), { ...args, timeoutSeconds: 30, maxOutputBytes: 65536 });
   }
-  for (const namespace of ['kubeclaw-ops', 'kubeclaw-other', 'argocd', 'prod-test']) {
+  for (const namespace of ['kubeclaw-ops', 'kubeclaw-other', 'argocd', 'prod-test', 'familyclaw-other']) {
     assert.throws(() => authorizeExec(nova, { namespace, container: 'arbitrary-sidecar' }, pod), /TARGET_FORBIDDEN/);
   }
   assert.throws(() => authorizeTool(nova, 'platform_cluster_state', { resource: 'namespaces' }, 'argocd'), /TOOL_FORBIDDEN/);

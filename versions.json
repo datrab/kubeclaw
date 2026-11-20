@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "openclaw": {
-    "version": "2026.10.9",
-    "digest": "sha256:1a2a3ce113e435039dbeac5ae261759bb4759908563d91c81059e896b38c5d98"
+    "version": "2026.11.6",
+    "digest": "sha256:65e229536a2698f0ab211c8a3d1c5c8e2685d19379d153e95f93ff76f22779cf"
   },
   "codex": {
     "version": "0.162.0"
@@ -85,6 +85,15 @@
     },
     "prism-worker": {
       "DEBIAN_SNAPSHOT": "20261109T000000Z"
+    },
+    "nova": {
+      "DEBIAN_SNAPSHOT": "20261120T000000Z"
+    },
+    "buster-gateway": {
+      "DEBIAN_SNAPSHOT": "20261120T000000Z"
+    },
+    "prism-agent": {
+      "DEBIAN_SNAPSHOT": "20261120T000000Z"
     }
   },
   "infrastructure": {
