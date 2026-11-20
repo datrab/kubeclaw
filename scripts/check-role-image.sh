@@ -55,6 +55,7 @@ if [[ "$role" == nova ]]; then
   ruff --version
   # Version reporting is offline; advisory freshness is checked elsewhere.
   SEMGREP_SEND_METRICS=off SEMGREP_ENABLE_VERSION_CHECK=0 semgrep --version
+  /opt/semgrep/bin/python /semgrep-security-smoke.py
   for executable in buildctl buildkitd playwright lighthouse k6; do
     if command -v "$executable" >/dev/null; then
       echo "Unexpected Buster execution tool in Nova: $executable" >&2

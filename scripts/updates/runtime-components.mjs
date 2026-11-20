@@ -7,9 +7,9 @@ const workspace = ['package.json', 'package-lock.json', 'tsconfig.base.json', 'c
 // Include source used by build/acceptance stages as well as the final image.
 // COPY . in Prism stages installs workspaces; all workspace manifests affect npm ci.
 const inputs = {
-  nova: ['docker/runtime-binaries/', ...observer, 'docker/nova-tools/', 'docker/python-tools/common.txt', 'docker/python-tools/semgrep-nova.txt', 'docker/go-tools/'],
+  nova: ['docker/runtime-binaries/', ...observer, 'docker/nova-tools/', 'docker/python-tools/', 'docker/go-tools/'],
   'buster-gateway': [...observer, 'docker/openclaw-tools/'],
-  'buster-runtime': ['docker/runtime-binaries/', 'docker/npm-tools/', 'package.json', 'package-lock.json', 'contracts/', 'skills/', 'scripts/build-plugin-sandbox.mjs', 'scripts/registry-client-config.mjs', 'docker/python-tools/buster.txt', 'docker/buster-runtime-entrypoint.sh', 'tests/verification/deployment/buster-buildkit-state.mjs', 'tests/verification/contracts/check-pipeline-container-build-production.mts', 'tests/verification/contracts/check-pipeline-container-build-recovery.mts'],
+  'buster-runtime': ['docker/runtime-binaries/', 'docker/npm-tools/', 'package.json', 'package-lock.json', 'contracts/', 'skills/', 'scripts/build-plugin-sandbox.mjs', 'scripts/registry-client-config.mjs', 'docker/python-tools/', 'docker/buster-runtime-entrypoint.sh', 'tests/verification/deployment/buster-buildkit-state.mjs', 'tests/verification/contracts/check-pipeline-container-build-production.mts', 'tests/verification/contracts/check-pipeline-container-build-recovery.mts'],
   'namespace-controller': ['go.mod', 'go.sum', 'cmd/buster-namespace-controller/'],
   archviewer: ['docker/archviewer.nginx.conf'],
   'prism-agent': [...observer, ...workspace, 'docker/openclaw-tools/'],
@@ -23,6 +23,7 @@ export function imageInput(name, file) {
   if (!inputs[name]) throw new Error(`UNKNOWN_RUNTIME_IMAGE:${name}`);
   return file === `docker/Dockerfile.${name}` || file === '.dockerignore' || file === 'versions.json'
     || file === 'scripts/check-built-runtime-image.sh'
+    || (['nova', 'buster-runtime'].includes(name) && file === 'tests/verification/deployment/semgrep-security-smoke.py')
     || (['nova', 'prism-agent', 'buster-gateway'].includes(name) && file === 'scripts/check-role-image.sh')
     || file === 'scripts/versions.mjs'
     || inputs[name].some(source => under(file, source))

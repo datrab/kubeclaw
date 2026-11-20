@@ -12,10 +12,14 @@ const run = (command, args, options = {}) => execFileSync(command, args,
   { encoding: 'utf8', timeout: 180000, maxBuffer: 8388608, ...options });
 
 function install(directory, group) {
-  run('uv', ['venv', '--python', python, directory]);
+  run('uv', ['venv', '--seed', '--python', python, directory]);
   const executable = path.join(directory, 'bin/python');
-  run('uv', ['pip', 'install', '--python', executable, '--require-hashes', '--only-binary', ':all:',
-    '-r', path.join(root, `docker/python-tools/${group}.txt`)]);
+  if (group === 'common') {
+    run('uv', ['pip', 'install', '--python', executable, '--require-hashes', '--only-binary', ':all:',
+      '-r', path.join(root, `docker/python-tools/${group}.txt`)]);
+  } else {
+    run(executable, [path.join(root, 'docker/python-tools/install-patched.py'), path.join(root, `docker/python-tools/${group}.txt`)]);
+  }
   run('uv', ['pip', 'check', '--python', executable]);
   return executable;
 }
@@ -33,6 +37,11 @@ test('actual Python wheel installs repeat the complete inventory and execute ins
       const second = install(path.join(temporary, `${group}-second`), group);
       assert.equal(inventory(first), inventory(second));
       t.diagnostic(`${group}: two isolated actual installs; ${JSON.parse(inventory(first)).length} identical package versions and metadata hashes`);
+    }
+    for (const group of ['semgrep-nova', 'buster']) {
+      const bin = path.join(temporary, `${group}-first/bin`);
+      run(path.join(bin, 'python'), [path.join(root, 'tests/verification/deployment/semgrep-security-smoke.py')],
+        { env: { ...process.env, PATH: `${bin}:${process.env.PATH}` } });
     }
     const bin = path.join(temporary, 'buster-first/bin');
     assert.match(run(path.join(bin, 'ruff'), ['--version']), /^ruff /);

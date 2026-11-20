@@ -12,7 +12,7 @@ ARG ROOTLESSKIT_VERSION=3.3.0
 ARG RUNC_VERSION=1.5.2
 WORKDIR /src
 COPY docker/runtime-binaries/ /src/
-ARG DEBIAN_SNAPSHOT=20261109T000000Z
+ARG DEBIAN_SNAPSHOT=20261120T000000Z
 RUN sh /src/install-seccomp.sh "$DEBIAN_SNAPSHOT"
 RUN --mount=type=cache,target=/go/pkg/mod --mount=type=cache,target=/root/.cache/go-build \
     sh /src/build.sh kubectl trivy buildctl buildkitd buildkit-runc rootlesskit
@@ -29,7 +29,7 @@ RUN sh /opt/kubeclaw-npm/install.sh \
     && cp -a /opt/kubeclaw-npm/node_modules/npm /usr/local/lib/node_modules/npm \
     && npm --version
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-ARG DEBIAN_SNAPSHOT=20261109T000000Z
+ARG DEBIAN_SNAPSHOT=20261120T000000Z
 ARG TARGETARCH
 ARG KUBECTL_VERSION=1.35.10
 ARG KUBECTL_SHA256_AMD64=c49a28f1f4efc4d475ed05f47f2ce8e563bf7bef69ed77fe1b924ea6d83b6327
@@ -93,16 +93,16 @@ COPY --from=runtime-binaries /out/trivy /usr/local/bin/trivy
 ARG RUFF_VERSION=0.15.22
 ARG MYPY_VERSION=2.3.0
 ARG PIP_AUDIT_VERSION=2.10.1
-ARG SEMGREP_VERSION=1.183.0
+ARG SEMGREP_VERSION=1.186.0
 # Retain Debian's security-maintained pip for pip-api, not the build wheel's
 # independent (and otherwise unpatched) vendored dependency copies.
+COPY docker/python-tools/install-patched.py docker/python-tools/security-overrides.txt /opt/kubeclaw-python-locks/
 COPY docker/python-tools/buster.txt /opt/kubeclaw-python-locks/buster.txt
 RUN grep -F "ruff==${RUFF_VERSION} " /opt/kubeclaw-python-locks/buster.txt \
     && grep -F "mypy==${MYPY_VERSION} " /opt/kubeclaw-python-locks/buster.txt \
     && grep -F "pip-audit==${PIP_AUDIT_VERSION} " /opt/kubeclaw-python-locks/buster.txt \
     && grep -F "semgrep==${SEMGREP_VERSION} " /opt/kubeclaw-python-locks/buster.txt \
-    && pip install --break-system-packages --no-cache-dir --require-hashes --only-binary=:all: \
-      -r /opt/kubeclaw-python-locks/buster.txt \
+    && python3 /opt/kubeclaw-python-locks/install-patched.py /opt/kubeclaw-python-locks/buster.txt --break-system-packages \
     && python3 -m pip uninstall --break-system-packages --yes pip \
     && python3 -c 'import pip; assert pip.__file__.startswith("/usr/lib/python3/dist-packages/pip/"), pip.__file__'
 

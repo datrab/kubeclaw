@@ -4,6 +4,12 @@ set -euo pipefail
 # CI host checks shared by PR images and immutable published candidates.
 role="${1:?role required}"
 image="${2:?image reference required}"
+# Validate our downstream packaging patch against the actual runtime artifacts.
+if [[ "$role" == buster-runtime ]]; then
+  docker run --rm --network none --user 0 --entrypoint python3 \
+    -v "$PWD/tests/verification/deployment/semgrep-security-smoke.py:/semgrep-security-smoke.py:ro" \
+    "$image" /semgrep-security-smoke.py
+fi
 case "$role" in
   nova|prism-agent|buster-gateway)
     version="$(node -p 'require("./versions.json").openclaw.version')"
@@ -29,6 +35,7 @@ case "$role" in
         status=0
         docker run --rm --pull never --name "$container" --network none "${user[@]}" --entrypoint bash \
           -v "$PWD/scripts/check-role-image.sh:/check-role-image.sh:ro" \
+          -v "$PWD/tests/verification/deployment/semgrep-security-smoke.py:/semgrep-security-smoke.py:ro" \
           "$image" /check-role-image.sh "$role" "$version" "$mode" >"$logs/$mode.log" 2>&1 || status=$?
         printf 'IMAGE_PROOF role=%s mode=%s seconds=%s status=%s\n' "$role" "$mode" "$((SECONDS-start))" "$status" >>"$logs/$mode.log"
         exit "$status"
