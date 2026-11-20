@@ -27,6 +27,8 @@ spec:
       namespace: spire-server
     - server: https://kubernetes.default.svc
       namespace: spire-system
+    - server: https://kubernetes.default.svc
+      namespace: familyclaw
   clusterResourceWhitelist:
     - group: rbac.authorization.k8s.io
       kind: ClusterRole

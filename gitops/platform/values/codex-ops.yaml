@@ -17,6 +17,10 @@ rbac:
     - tailscale
     - spire-server
     - spire-system
+    - familyclaw
+  execNamespaces:
+    - kubeclaw
+    - familyclaw
 mcp:
   monitoring:
     enabled: true
@@ -66,6 +70,7 @@ mcp:
       namespaces:
         - kubeclaw
         - argocd
+        - familyclaw
       namespacePrefixes:
         - test
       tools:
@@ -85,6 +90,11 @@ mcp:
           timeoutSeconds: 30
           maxOutputBytes: 65536
         - namespace: kubeclaw
+          allPods: true
+          allContainers: true
+          timeoutSeconds: 30
+          maxOutputBytes: 65536
+        - namespace: familyclaw
           allPods: true
           allContainers: true
           timeoutSeconds: 30
