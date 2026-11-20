@@ -63,19 +63,19 @@ FROM ${OPENCLAW_BASE}
 USER root
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-ARG DEBIAN_SNAPSHOT=20261031T000000Z
+ARG DEBIAN_SNAPSHOT=20261120T000000Z
 
 RUN test -s /etc/ssl/certs/ca-certificates.crt \
 && printf '%s\n' \
 'Types: deb' \
 "URIs: https://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT}" \
-'Suites: bookworm bookworm-updates' \
+'Suites: trixie trixie-updates' \
 'Components: main' \
 'Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg' \
 '' \
 'Types: deb' \
 "URIs: https://snapshot.debian.org/archive/debian-security/${DEBIAN_SNAPSHOT}" \
-'Suites: bookworm-security' \
+'Suites: trixie-security' \
 'Components: main' \
 'Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg' \
 > /etc/apt/sources.list.d/debian.sources \

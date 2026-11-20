@@ -85,6 +85,15 @@
     },
     "prism-worker": {
       "DEBIAN_SNAPSHOT": "20261109T000000Z"
+    },
+    "nova": {
+      "DEBIAN_SNAPSHOT": "20261120T000000Z"
+    },
+    "buster-gateway": {
+      "DEBIAN_SNAPSHOT": "20261120T000000Z"
+    },
+    "prism-agent": {
+      "DEBIAN_SNAPSHOT": "20261120T000000Z"
     }
   },
   "infrastructure": {
