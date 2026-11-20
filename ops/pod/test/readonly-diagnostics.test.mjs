@@ -16,7 +16,7 @@ const docs = parseAllDocuments(execFileSync('helm', args, { encoding: 'utf8' }))
 
 test('production Codex can exec in workload namespaces and retains internal monitoring egress', () => {
   const policy = docs.find(d => d.kind === 'ConfigMap' && d.data['policy.json']);
-  const clients = parsePolicy(policy.data['policy.json'], ['kubeclaw-ops', 'kubeclaw', 'argocd', 'kube-system', 'tailscale', 'spire-server', 'spire-system'], ['test'], true, true);
+  const clients = parsePolicy(policy.data['policy.json'], ['kubeclaw-ops', 'kubeclaw', 'argocd', 'kube-system', 'tailscale', 'spire-server', 'spire-system', 'familyclaw'], ['test'], true, true);
   const codex = clients.find(c => c.id === 'codex');
   assert.equal(codex.readOnly, false);
   assert.ok(codex.tools.includes('exec_pod'));
