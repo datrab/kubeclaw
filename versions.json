@@ -32,7 +32,7 @@
     "OPS_NODE_BASE": "node:24.21.0-alpine3.24@sha256:be80f76cf40ec8e42b9bec49f60a55e0660f30af58d3e5a25530785b30ea67e2",
     "PIP_AUDIT_VERSION": "2.10.1",
     "RUFF_VERSION": "0.15.22",
-    "SEMGREP_VERSION": "1.183.0",
+    "SEMGREP_VERSION": "1.186.0",
     "SHFMT_SHA256_AMD64": "76e77641faa025814b77f153b29796b8e6fa2fca03e0c76a691608b86c7ea7bf",
     "SHFMT_SHA256_ARM64": "5f2db09dae91fca848f7adbdd014632e921a383863a2ad7e0450ad3aba0c6489",
     "SHFMT_VERSION": "3.14.1",
@@ -71,7 +71,7 @@
   "imageOverrides": {
     "buster-runtime": {
       "DEBIAN_SNAPSHOT": "20261120T000000Z",
-      "SEMGREP_VERSION": "1.183.0"
+      "SEMGREP_VERSION": "1.186.0"
     },
     "ops-pod": {
       "KUBECTL_VERSION": "v1.34.11",

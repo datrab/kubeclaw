@@ -14,9 +14,9 @@ test('runtime locks reject changed source, transitive wheels and Go sums without
     for (const item of ['python-tools', 'go-tools', 'runtime-tool-locks.json']) {
       fs.cpSync(path.join(root, 'docker', item), path.join(temporary, 'docker', item), { recursive: true });
     }
-    assert.deepEqual(checkRuntimeToolLocks(temporary), { inputs: 4, locks: 5 });
-    assert.deepEqual(updateRuntimeToolLocks(temporary), { inputs: 4, locks: 5 });
-    for (const name of ['python-tools/buster.in', 'python-tools/buster.txt', 'go-tools/go.mod', 'go-tools/go.sum', 'go-tools/requirements.json']) {
+    assert.deepEqual(checkRuntimeToolLocks(temporary), { inputs: 6, locks: 5 });
+    assert.deepEqual(updateRuntimeToolLocks(temporary), { inputs: 6, locks: 5 });
+    for (const name of ['python-tools/security-overrides.txt', 'python-tools/install-patched.py', 'python-tools/buster.in', 'python-tools/buster.txt', 'go-tools/go.mod', 'go-tools/go.sum', 'go-tools/requirements.json']) {
       const file = path.join(temporary, 'docker', name);
       const original = fs.readFileSync(file);
       fs.appendFileSync(file, '\nchanged dependency input\n');
@@ -25,6 +25,6 @@ test('runtime locks reject changed source, transitive wheels and Go sums without
       assert.deepEqual(fs.readFileSync(file), altered);
       fs.writeFileSync(file, original);
     }
-    assert.deepEqual(checkRuntimeToolLocks(temporary), { inputs: 4, locks: 5 });
+    assert.deepEqual(checkRuntimeToolLocks(temporary), { inputs: 6, locks: 5 });
   } finally { fs.rmSync(temporary, { recursive: true, force: true }); }
 });

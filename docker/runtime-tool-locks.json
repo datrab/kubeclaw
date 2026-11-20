@@ -2,14 +2,16 @@
   "schemaVersion": "runtime-tool-locks.v1",
   "inputs": {
     "docker/python-tools/common.in": "6fa6f7f60fa49beebfe2c6987b7ff88ed5e9f7ac0164a850029bfb6b7bd29ff9",
-    "docker/python-tools/semgrep-nova.in": "1b45bee6b2f3389e6ec16c5ac92b631742c813ffdf26844416775a3457f14378",
-    "docker/python-tools/buster.in": "927da8fa1fcb28a342acd112d75409dc7a5de30fac1fbd8c237d2075d9ffebf5",
-    "docker/go-tools/requirements.json": "806e3bfe32fd0ef6c111dacd507e28713cc7cd4468a5ab17b4fd2b2882279bc7"
+    "docker/python-tools/semgrep-nova.in": "36370e944a646c97543c589c03b2233b75f54ad684ec64831878fb0c2db2a75e",
+    "docker/python-tools/buster.in": "6ed1eb0b46522cd81a1242ded3777d76cca8493f14c19e5d829ced43d29bb915",
+    "docker/go-tools/requirements.json": "806e3bfe32fd0ef6c111dacd507e28713cc7cd4468a5ab17b4fd2b2882279bc7",
+    "docker/python-tools/security-overrides.txt": "9270b9f9793a30bb175ca0fc0402fb3848c369d22496c61f202af97e835d6a1e",
+    "docker/python-tools/install-patched.py": "7194ef6b089f3868733fbd5cffe2686749d00892dc84ba7925a211c9a52daf71"
   },
   "outputs": {
     "docker/python-tools/common.txt": "c10e02ab47ca474d6faf95a129b562e5c029ab9624eef96aacedea2459c337bb",
-    "docker/python-tools/semgrep-nova.txt": "182c9c365099c3d23a011f8d216d74913d045d0451889d699d88f46b5c7644dd",
-    "docker/python-tools/buster.txt": "8e8a17d17f816e943b711cb1bc52cc482321402408911dda5c8d53aa6844d11c",
+    "docker/python-tools/semgrep-nova.txt": "aabf03d8380288745bfdfbd72152302a16e2a61e83865320b87e8ef457f901cb",
+    "docker/python-tools/buster.txt": "fef8a56d79a8b7f5aefaee4873595656ee0d17727c861de58d5b59966f2ebf6b",
     "docker/go-tools/go.mod": "9b3c545353dab4f49e1a01aa40cdf6c8e4c30d84e891ac873e87840c934ad23f",
     "docker/go-tools/go.sum": "053f242b923aefb4dc9cd615298c627cde0a926fc57a2817ffc578be458c387b"
   }

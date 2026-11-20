@@ -4,6 +4,14 @@ set -euo pipefail
 # CI host checks shared by PR images and immutable published candidates.
 role="${1:?role required}"
 image="${2:?image reference required}"
+# Validate our downstream packaging patch against the actual runtime artifacts.
+if [[ "$role" == nova || "$role" == buster-runtime ]]; then
+  python=python3
+  if [[ "$role" == nova ]]; then python=/opt/semgrep/bin/python; fi
+  docker run --rm --network none --user 0 --entrypoint "$python" \
+    -v "$PWD/tests/verification/deployment/semgrep-security-smoke.py:/semgrep-security-smoke.py:ro" \
+    "$image" /semgrep-security-smoke.py
+fi
 case "$role" in
   nova|prism-agent|buster-gateway)
     version="$(node -p 'require("./versions.json").openclaw.version')"
