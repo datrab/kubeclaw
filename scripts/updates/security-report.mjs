@@ -37,14 +37,16 @@ export function scanInventory(root) {
 }
 
 export function readScan(item, reportDir, exitCode) {
-  const report = `${item.reference.split('@sha256:')[1]}.json`;
+  const report = `${item.localImageId?.slice('sha256:'.length) ?? item.reference.split('@sha256:')[1]}.json`;
   const entry = { ...item, report, exitCode, findings: [] };
   try {
     const data = JSON.parse(fs.readFileSync(path.join(reportDir, report), 'utf8'));
     // An empty Results array is valid for an image with no detected packages.
     if (data.SchemaVersion !== 2 || data.ArtifactType !== 'container_image' || !Array.isArray(data.Results)) throw new Error('invalid Trivy image report');
     const expected = item.reference.split('@')[1];
-    if (!data.Metadata?.RepoDigests?.some(digest => digest.endsWith(`@${expected}`))) throw new Error('report does not identify the requested digest');
+    if (item.localImageId) {
+      if (!/^sha256:[a-f0-9]{64}$/u.test(item.localImageId) || data.Metadata?.ImageID !== item.localImageId) throw new Error('report does not identify the requested local image');
+    } else if (!data.Metadata?.RepoDigests?.some(digest => digest.endsWith(`@${expected}`))) throw new Error('report does not identify the requested digest');
     for (const result of data.Results) for (const v of result.Vulnerabilities ?? []) {
       if (!['HIGH', 'CRITICAL'].includes(v.Severity)) continue;
       if (!v.VulnerabilityID || !v.PkgName || !v.InstalledVersion) throw new Error('incomplete vulnerability record');

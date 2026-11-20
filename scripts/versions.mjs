@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { validateInfrastructureChartLock } from './infrastructure-chart-lock.mjs';
+import { bindCentralPackages, syncCentralPackageLocks } from './central-packages.mjs';
 import { checkRuntimeToolLocks } from './runtime-tool-locks.mjs';
 
 function validateVersionEntries(entries) {
@@ -173,6 +174,7 @@ export function versionOutputs(root) {
     + ['GO_VERSION', 'HELM_VERSION', 'SHFMT_VERSION', 'KUBECONFORM_VERSION', 'KUBECTL_VERSION', 'TFLINT_VERSION', 'TRIVY_VERSION', 'BUILDKIT_VERSION', 'ROOTLESSKIT_VERSION', 'RUNC_VERSION']
       .map(key => `${key}=${args[key]}\n`).join(''));
   bindRuntimeToolInputs(manifest, args, outputs);
+  bindCentralPackages(root, manifest, read, outputs);
   outputs.set('scripts/generated/ops-tool-versions.json', JSON.stringify({
     schemaVersion: 1, authority: 'versions.json', codex: { version: manifest.codex.version },
   }, null, 2) + '\n');
@@ -189,6 +191,9 @@ export function syncVersions(root, check = true) {
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   if (process.argv.length !== 3 || !['--check', '--write'].includes(process.argv[2])) throw new Error('Usage: node scripts/versions.mjs --check|--write');
-  console.log(JSON.stringify(syncVersions(fileURLToPath(new URL('../', import.meta.url)), process.argv[2] === '--check')));
+  const root = fileURLToPath(new URL('../', import.meta.url));
+  const result = syncVersions(root, process.argv[2] === '--check');
+  if (process.argv[2] === '--write') syncCentralPackageLocks(root, result.changed);
+  console.log(JSON.stringify(result));
   if (process.argv[2] === '--check') console.log(JSON.stringify(checkRuntimeToolLocks()));
 }

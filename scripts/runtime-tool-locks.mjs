@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const groups = ['common', 'semgrep-nova', 'buster'];
-const inputs = [...groups.map(group => `docker/python-tools/${group}.in`), 'docker/go-tools/requirements.json', 'docker/python-tools/security-overrides.txt', 'docker/python-tools/install-patched.py'];
+const inputs = [...groups.map(group => `docker/python-tools/${group}.in`), 'docker/go-tools/requirements.json', 'docker/python-tools/security-overrides.txt', 'docker/python-tools/install-patched.py', 'docker/python-tools/security-patch.json'];
 const outputs = [...groups.map(group => `docker/python-tools/${group}.txt`), 'docker/go-tools/go.mod', 'docker/go-tools/go.sum'];
 const receiptFile = 'docker/runtime-tool-locks.json';
 const digest = bytes => createHash('sha256').update(bytes).digest('hex');

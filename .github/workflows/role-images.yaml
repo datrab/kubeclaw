@@ -59,6 +59,18 @@ jobs:
           ROLE: ${{ matrix.name }}
           IMAGE: kubeclaw-${{ matrix.name }}:proof
         run: bash scripts/check-built-runtime-image.sh "$ROLE" "$IMAGE"
+      - name: Scan every built PR image before acceptance
+        env:
+          ROLE: ${{ matrix.name }}
+          IMAGE: kubeclaw-${{ matrix.name }}:proof
+        run: bash scripts/scan-runtime-images.sh --local "$ROLE" "$IMAGE"
+      - name: Preserve PR image security evidence
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: pr-image-security-${{ matrix.name }}
+          path: dist/trivy/
+          if-no-files-found: warn
 concurrency:
   group: ${{ github.workflow }}-ci-role-images-${{ github.event_name == 'pull_request' && github.event.pull_request.number || github.run_id }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}

@@ -59,7 +59,7 @@ test('each runtime is built once per event and PR builds cannot publish', () => 
   const proof = pr.jobs.image.steps.find(step => step.uses?.startsWith('docker/build-push-action@'));
   assert.equal(proof.with.push, false);
   assert.equal(proof.with.load, true);
-  assert.doesNotMatch(JSON.stringify(pr), /login-action|secrets\.|github\.token|upload-artifact/u);
+  assert.doesNotMatch(JSON.stringify(pr), /login-action|secrets\.|github\.token/u);
 });
 
 test('immutable candidate checks precede release receipts and share PR acceptance', () => {
@@ -81,19 +81,22 @@ test('immutable candidate checks precede release receipts and share PR acceptanc
   for (const service of ['control', 'studio', 'worker', 'ingestion']) assert(main.jobs['prism-live-acceptance'].if.includes(`'prism-${service}'`));
 });
 
-test('Buster requires a digest-bound security gate before its receipt and retains failed-scan evidence', () => {
+test('every runtime image requires a digest-bound security gate before its receipt and retains failed-scan evidence', () => {
   const steps = main.jobs.build.steps;
-  const scan = steps.findIndex(step => step.name === 'Scan the exact Buster worker before issuing its receipt');
+  const scan = steps.findIndex(step => step.name === 'Scan every exact runtime image before issuing its receipt');
   const receipt = steps.findIndex(step => step.name === 'Record immutable build receipt');
   assert.ok(scan > steps.findIndex(step => step.name === 'Verify the exact published artifact') && scan < receipt);
-  assert.equal(steps[scan].if, "matrix.name == 'buster-runtime'");
+  assert.equal(steps[scan].if, undefined);
   assert.match(steps[scan].env.IMAGE, /@\$\{\{ steps\.build\.outputs\.digest \}\}$/u);
   assert.equal(steps[scan].run, 'bash scripts/scan-runtime-images.sh "$IMAGE"');
   assert.equal(steps[scan].env.TRIVY_PASSWORD, '${{ github.token }}');
   assert.equal(steps[scan]['continue-on-error'], undefined);
-  const evidence = steps.find(step => step.with?.name === 'image-security-buster-runtime');
+  const evidence = steps.find(step => step.with?.name === 'image-security-${{ matrix.name }}');
   assert.match(evidence.if, /!cancelled\(\)/u);
-  assert.match(evidence.if, /matrix.name == 'buster-runtime'/u);
+  assert.ok(!evidence.if.includes('matrix.name =='));
+  const prScan = pr.jobs.image.steps.find(step => step.name === 'Scan every built PR image before acceptance');
+  assert.equal(prScan.if, undefined);
+  assert.equal(prScan.run, 'bash scripts/scan-runtime-images.sh --local \"$ROLE\" \"$IMAGE\"');
   assert.equal(evidence.with.path, 'dist/trivy/');
   assert.equal(evidence.with['if-no-files-found'], 'error');
 });

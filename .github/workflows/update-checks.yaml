@@ -44,7 +44,7 @@ jobs:
           node scripts/check-platform-services.mjs
           python3 tests/verification/deployment/data-plane-inventory_test.py
           python3 tests/verification/deployment/semgrep-security-patch_test.py
-          node --test tests/verification/deployment/runtime-tool-locks.test.mjs tests/verification/deployment/release-security-report.test.mjs
+          node --test tests/verification/deployment/runtime-tool-locks.test.mjs tests/verification/deployment/release-security-report.test.mjs tests/verification/deployment/runtime-scan-parallel.test.mjs
           node --test tests/verification/deployment/node-registry-inventory.test.mjs
           node --test tests/verification/deployment/ax41-buster-overlay.test.mjs
           node --test tests/verification/deployment/archviewer-policy-provider.test.mjs

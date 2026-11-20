@@ -5,6 +5,7 @@ import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { syncVersions } from '../versions.mjs';
 import { updateRuntimeToolLocks } from '../runtime-tool-locks.mjs';
+import { syncCentralPackageLocks } from '../central-packages.mjs';
 import { syncCodexLock } from '../sync-codex-lock.mjs';
 
 // Mounted read-only from the trusted default-branch checkout, never from a bot PR.
@@ -149,7 +150,9 @@ if (next.buildArgs.GH_VERSION !== before.buildArgs.GH_VERSION) {
 }
 try {
   fs.writeFileSync(file, `${JSON.stringify(next, null, 2)}\n`);
-  console.log(JSON.stringify(syncVersions(root, false)));
+  const projection = syncVersions(root, false);
+  console.log(JSON.stringify(projection));
+  console.log(JSON.stringify(syncCentralPackageLocks(root, projection.changed)));
   console.log(JSON.stringify(syncCodexLock(root, codexChanged)));
   console.log(JSON.stringify(updateRuntimeToolLocks(root)));
 } catch (error) { fs.writeFileSync(file, original); throw error; }

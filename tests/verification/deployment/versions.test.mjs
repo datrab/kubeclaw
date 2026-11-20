@@ -36,11 +36,30 @@ test('central versions update actual build/deployment files and reject drift wit
     manifest.buildArgs.KUBECTL_VERSION = '1.99.9';
     manifest.buildArgs.BUILDKIT_BASE = `moby/buildkit:v99.0.0-rootless@sha256:${'c'.repeat(64)}`;
     manifest.imageOverrides['ops-pod'].HELM_VERSION = 'v3.99.9';
+    const npmPin = manifest.runtimePackages.npm.find(item => item.packageFile === 'package.json');
+    npmPin.version = '99.2.3';
+    manifest.runtimePackages.alpine.archviewer.curl = '99.2.3-r0';
+    manifest.runtimePackages.pythonOverrides.mcp = '1.99.3';
+    manifest.runtimePackages.goOverrides[0].version = 'v2.99.3';
     fs.writeFileSync(path.join(copy, 'versions.json'), JSON.stringify(manifest));
     const before = fs.readFileSync(path.join(copy, 'docker/Dockerfile.prism-agent'), 'utf8');
     assert.throws(() => syncVersions(copy), /Version drift/);
     assert.equal(fs.readFileSync(path.join(copy, 'docker/Dockerfile.prism-agent'), 'utf8'), before);
     assert.ok(syncVersions(copy, false).changed.includes('charts/kubeclaw/values.yaml'));
+    assert.equal(JSON.parse(fs.readFileSync(path.join(copy, npmPin.packageFile), 'utf8'))[npmPin.path[0]][npmPin.path[1]], '99.2.3');
+    assert.match(fs.readFileSync(path.join(copy, 'docker/Dockerfile.archviewer'), 'utf8'), /curl=99\.2\.3-r0/);
+    assert.match(fs.readFileSync(path.join(copy, 'docker/python-tools/security-overrides.txt'), 'utf8'), /mcp==1\.99\.3/);
+    assert.equal(JSON.parse(fs.readFileSync(path.join(copy, 'docker/python-tools/security-patch.json'), 'utf8')).replacementRequirement, 'mcp==1.99.3');
+    for (const directory of manifest.runtimePackages.goOverrides[0].lockDirectories) {
+      assert.match(fs.readFileSync(path.join(copy, `docker/runtime-binaries/${directory}/go.mod`), 'utf8'), /containerd\/containerd\/v2 v2\.99\.3/);
+    }
+    const packagePath = path.join(copy, 'package.json');
+    const packageSource = fs.readFileSync(packagePath, 'utf8');
+    const unmanaged = JSON.parse(packageSource);
+    unmanaged.dependencies = { ...unmanaged.dependencies, 'unmanaged-security-fixture': '1.0.0' };
+    fs.writeFileSync(packagePath, JSON.stringify(unmanaged));
+    assert.throws(() => syncVersions(copy, false), /UNMANAGED_NPM_PACKAGE/);
+    fs.writeFileSync(packagePath, packageSource);
     assert.match(fs.readFileSync(path.join(copy, 'gitops/platform/bootstrap/redis.yaml'), 'utf8'), /targetRevision: 25\.99\.1/);
     assert.ok(fs.readFileSync(path.join(copy, 'gitops/platform/values/redis.yaml'), 'utf8').includes(`digest: sha256:${'a'.repeat(64)}`));
     assert.equal(JSON.parse(fs.readFileSync(path.join(copy, 'versions.json'), 'utf8')).infrastructureCharts.redis.version, manifest.infrastructureCharts.redis.version);

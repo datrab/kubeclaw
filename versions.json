@@ -8,7 +8,7 @@
     "version": "0.162.0"
   },
   "buildArgs": {
-    "ARCHVIEWER_BASE": "docker.io/library/nginx:1.30-alpine@sha256:0e52bd054126cdc040b1276c0af347aeb02a41b9cfe305d6094767ac30e97949",
+    "ARCHVIEWER_BASE": "docker.io/library/nginx:1.30.7-alpine@sha256:caf4e1e032a20f9c3c5e28fc7f25ffd768ad8677b4975c54193075997b3a97e3",
     "BUILDKIT_BASE": "moby/buildkit:v0.34.1-rootless@sha256:f68752a5a94acfcdad2d07867b7075601a421638e17fc5f28efc1c814d0c4f89",
     "BUSTER_NODE_BASE": "node:24.22.2-bookworm-slim@sha256:c86ecead9e55a5210ac1727de38a4ca840bf03dcaf34dc9749addbf383b1920c",
     "CONTROLLER_GO_BASE": "golang:1.26.10-alpine3.24@sha256:a2012b4a1d1f9f7e9f44e0d39b805a901e856b1dd80b4e6ee4338db547050308",
@@ -166,5 +166,1137 @@
   },
   "litellmProduction": {
     "image": "ghcr.io/berriai/litellm:main-latest@sha256:a79320760af8df488074ab3fbc830883856c7f952976aad00f039d3a43ffe4b2"
+  },
+  "runtimePackages": {
+    "alpine": {
+      "archviewer": {
+        "brotli-libs": "1.2.1-r0",
+        "curl": "8.23.0-r0",
+        "libcurl": "8.23.0-r0",
+        "libexpat": "2.10.0-r0",
+        "libxslt": "1.1.43-r4"
+      }
+    },
+    "pythonOverrides": {
+      "mcp": "1.30.0"
+    },
+    "semgrepPatch": {
+      "originalRequirement": "mcp==1.29.0",
+      "versionSuffix": "kubeclaw.1",
+      "advisory": "GHSA-qx49-fqc8-xw99"
+    },
+    "goOverrides": [
+      {
+        "lockDirectories": [
+          "buildkit",
+          "trivy"
+        ],
+        "goModule": "github.com/containerd/containerd/v2",
+        "version": "v2.4.2"
+      }
+    ],
+    "npm": [
+      {
+        "packageFile": "contracts/pipeline-observability/v1/package.json",
+        "path": [
+          "dependencies",
+          "ajv"
+        ],
+        "packageName": "ajv",
+        "version": "^8.20.0"
+      },
+      {
+        "packageFile": "contracts/pipeline-observability/v1/package.json",
+        "path": [
+          "dependencies",
+          "ajv-formats"
+        ],
+        "packageName": "ajv-formats",
+        "version": "^3.0.1"
+      },
+      {
+        "packageFile": "contracts/pipeline-test-gate/v1/package.json",
+        "path": [
+          "dependencies",
+          "ajv"
+        ],
+        "packageName": "ajv",
+        "version": "^8.20.0"
+      },
+      {
+        "packageFile": "contracts/pipeline-test-gate/v1/package.json",
+        "path": [
+          "dependencies",
+          "ajv-formats"
+        ],
+        "packageName": "ajv-formats",
+        "version": "^3.0.1"
+      },
+      {
+        "packageFile": "contracts/pipeline-worker-core/v1/package.json",
+        "path": [
+          "dependencies",
+          "ajv"
+        ],
+        "packageName": "ajv",
+        "version": "^8.20.0"
+      },
+      {
+        "packageFile": "contracts/pipeline-worker-core/v1/package.json",
+        "path": [
+          "dependencies",
+          "ajv-formats"
+        ],
+        "packageName": "ajv-formats",
+        "version": "^3.0.1"
+      },
+      {
+        "packageFile": "contracts/prism/v1/package.json",
+        "path": [
+          "dependencies",
+          "ajv"
+        ],
+        "packageName": "ajv",
+        "version": "^8.20.0"
+      },
+      {
+        "packageFile": "contracts/prism/v1/package.json",
+        "path": [
+          "dependencies",
+          "ajv-formats"
+        ],
+        "packageName": "ajv-formats",
+        "version": "^3.0.1"
+      },
+      {
+        "packageFile": "docker/nova-tools/package.json",
+        "path": [
+          "dependencies",
+          "ajv"
+        ],
+        "packageName": "ajv",
+        "version": "8.20.0"
+      },
+      {
+        "packageFile": "docker/nova-tools/package.json",
+        "path": [
+          "dependencies",
+          "ajv-formats"
+        ],
+        "packageName": "ajv-formats",
+        "version": "3.0.1"
+      },
+      {
+        "packageFile": "docker/nova-tools/package.json",
+        "path": [
+          "dependencies",
+          "dependency-cruiser"
+        ],
+        "packageName": "dependency-cruiser",
+        "version": "18.1.0"
+      },
+      {
+        "packageFile": "docker/nova-tools/package.json",
+        "path": [
+          "dependencies",
+          "eslint"
+        ],
+        "packageName": "eslint",
+        "version": "10.7.0"
+      },
+      {
+        "packageFile": "docker/nova-tools/package.json",
+        "path": [
+          "dependencies",
+          "ioredis"
+        ],
+        "packageName": "ioredis",
+        "version": "5.11.1"
+      },
+      {
+        "packageFile": "docker/nova-tools/package.json",
+        "path": [
+          "dependencies",
+          "js-yaml"
+        ],
+        "packageName": "js-yaml",
+        "version": "5.2.2"
+      },
+      {
+        "packageFile": "docker/nova-tools/package.json",
+        "path": [
+          "dependencies",
+          "jscpd"
+        ],
+        "packageName": "jscpd",
+        "version": "5.0.12"
+      },
+      {
+        "packageFile": "docker/nova-tools/package.json",
+        "path": [
+          "dependencies",
+          "knip"
+        ],
+        "packageName": "knip",
+        "version": "6.27.0"
+      },
+      {
+        "packageFile": "docker/nova-tools/package.json",
+        "path": [
+          "dependencies",
+          "typescript"
+        ],
+        "packageName": "typescript",
+        "version": "5.9.3"
+      },
+      {
+        "packageFile": "docker/nova-tools/package.json",
+        "path": [
+          "dependencies",
+          "typescript-eslint"
+        ],
+        "packageName": "typescript-eslint",
+        "version": "8.64.0"
+      },
+      {
+        "packageFile": "docker/nova-tools/package.json",
+        "path": [
+          "dependencies",
+          "uuid"
+        ],
+        "packageName": "uuid",
+        "version": "14.0.1"
+      },
+      {
+        "packageFile": "docker/nova-tools/package.json",
+        "path": [
+          "dependencies",
+          "ws"
+        ],
+        "packageName": "ws",
+        "version": "8.21.1"
+      },
+      {
+        "packageFile": "docker/npm-tools/package.json",
+        "path": [
+          "dependencies",
+          "npm"
+        ],
+        "packageName": "npm",
+        "version": "12.2.1"
+      },
+      {
+        "packageFile": "docker/npm-tools/package.json",
+        "path": [
+          "dependencies",
+          "undici"
+        ],
+        "packageName": "undici",
+        "version": "6.29.1"
+      },
+      {
+        "packageFile": "docker/openclaw-tools/package.json",
+        "path": [
+          "dependencies",
+          "ioredis"
+        ],
+        "packageName": "ioredis",
+        "version": "5.11.1"
+      },
+      {
+        "packageFile": "ops/pod/package.json",
+        "path": [
+          "devDependencies",
+          "yaml"
+        ],
+        "packageName": "yaml",
+        "version": "2.8.1"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "dependencies",
+          "entities"
+        ],
+        "packageName": "entities",
+        "version": "7.0.1"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "devDependencies",
+          "@playwright/test"
+        ],
+        "packageName": "@playwright/test",
+        "version": "1.62.1"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "devDependencies",
+          "@types/js-yaml"
+        ],
+        "packageName": "@types/js-yaml",
+        "version": "^4.0.9"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "devDependencies",
+          "ajv"
+        ],
+        "packageName": "ajv",
+        "version": "^8.20.0"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "devDependencies",
+          "ajv-formats"
+        ],
+        "packageName": "ajv-formats",
+        "version": "^3.0.1"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "devDependencies",
+          "eslint"
+        ],
+        "packageName": "eslint",
+        "version": "10.7.0"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "devDependencies",
+          "json-schema-to-typescript"
+        ],
+        "packageName": "json-schema-to-typescript",
+        "version": "^15.0.4"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "devDependencies",
+          "knip"
+        ],
+        "packageName": "knip",
+        "version": "6.27.0"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "devDependencies",
+          "parse5"
+        ],
+        "packageName": "parse5",
+        "version": "^7.2.1"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "devDependencies",
+          "typescript"
+        ],
+        "packageName": "typescript",
+        "version": "5.9.3"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "devDependencies",
+          "typescript-eslint"
+        ],
+        "packageName": "typescript-eslint",
+        "version": "8.64.0"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "devDependencies",
+          "yaml"
+        ],
+        "packageName": "yaml",
+        "version": "2.9.0"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "overrides",
+          "fast-uri"
+        ],
+        "packageName": "fast-uri",
+        "version": "3.1.9"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "overrides",
+          "js-yaml"
+        ],
+        "packageName": "js-yaml",
+        "version": "4.3.2"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "overrides",
+          "@puckeditor/core",
+          "happy-dom"
+        ],
+        "packageName": "happy-dom",
+        "version": "21.0.4"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "overrides",
+          "@tiptap/html",
+          "."
+        ],
+        "packageName": "@tiptap/html",
+        "version": "3.32.0"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "overrides",
+          "@tiptap/html",
+          "happy-dom"
+        ],
+        "packageName": "happy-dom",
+        "version": "21.0.4"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "overrides",
+          "@tiptap/core"
+        ],
+        "packageName": "@tiptap/core",
+        "version": "3.32.0"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "overrides",
+          "@tiptap/extension-blockquote"
+        ],
+        "packageName": "@tiptap/extension-blockquote",
+        "version": "3.32.0"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "overrides",
+          "@tiptap/extension-bold"
+        ],
+        "packageName": "@tiptap/extension-bold",
+        "version": "3.32.0"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "overrides",
+          "@tiptap/extension-bubble-menu"
+        ],
+        "packageName": "@tiptap/extension-bubble-menu",
+        "version": "3.32.0"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "overrides",
+          "@tiptap/extension-code"
+        ],
+        "packageName": "@tiptap/extension-code",
+        "version": "3.32.0"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "overrides",
+          "@tiptap/extension-code-block"
+        ],
+        "packageName": "@tiptap/extension-code-block",
+        "version": "3.32.0"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "overrides",
+          "@tiptap/extension-document"
+        ],
+        "packageName": "@tiptap/extension-document",
+        "version": "3.32.0"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "overrides",
+          "@tiptap/extension-floating-menu"
+        ],
+        "packageName": "@tiptap/extension-floating-menu",
+        "version": "3.32.0"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "overrides",
+          "@tiptap/extension-hard-break"
+        ],
+        "packageName": "@tiptap/extension-hard-break",
+        "version": "3.32.0"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "overrides",
+          "@tiptap/extension-heading"
+        ],
+        "packageName": "@tiptap/extension-heading",
+        "version": "3.32.0"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "overrides",
+          "@tiptap/extension-horizontal-rule"
+        ],
+        "packageName": "@tiptap/extension-horizontal-rule",
+        "version": "3.32.0"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "overrides",
+          "@tiptap/extension-italic"
+        ],
+        "packageName": "@tiptap/extension-italic",
+        "version": "3.32.0"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "overrides",
+          "@tiptap/extension-link"
+        ],
+        "packageName": "@tiptap/extension-link",
+        "version": "3.32.0"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "overrides",
+          "@tiptap/extension-list"
+        ],
+        "packageName": "@tiptap/extension-list",
+        "version": "3.32.0"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "overrides",
+          "@tiptap/extension-paragraph"
+        ],
+        "packageName": "@tiptap/extension-paragraph",
+        "version": "3.32.0"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "overrides",
+          "@tiptap/extension-strike"
+        ],
+        "packageName": "@tiptap/extension-strike",
+        "version": "3.32.0"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "overrides",
+          "@tiptap/extension-text"
+        ],
+        "packageName": "@tiptap/extension-text",
+        "version": "3.32.0"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "overrides",
+          "@tiptap/extension-text-align"
+        ],
+        "packageName": "@tiptap/extension-text-align",
+        "version": "3.32.0"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "overrides",
+          "@tiptap/extension-underline"
+        ],
+        "packageName": "@tiptap/extension-underline",
+        "version": "3.32.0"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "overrides",
+          "@tiptap/pm"
+        ],
+        "packageName": "@tiptap/pm",
+        "version": "3.32.0"
+      },
+      {
+        "packageFile": "package.json",
+        "path": [
+          "overrides",
+          "@tiptap/react"
+        ],
+        "packageName": "@tiptap/react",
+        "version": "3.32.0"
+      },
+      {
+        "packageFile": "scripts/docs-reader/package.json",
+        "path": [
+          "dependencies",
+          "markdown-it"
+        ],
+        "packageName": "markdown-it",
+        "version": "15.0.3"
+      },
+      {
+        "packageFile": "scripts/docs-reader/package.json",
+        "path": [
+          "dependencies",
+          "mermaid"
+        ],
+        "packageName": "mermaid",
+        "version": "12.2.0"
+      },
+      {
+        "packageFile": "scripts/docs-reader/package.json",
+        "path": [
+          "dependencies",
+          "sanitize-html"
+        ],
+        "packageName": "sanitize-html",
+        "version": "2.18.1"
+      },
+      {
+        "packageFile": "skills/buster/engine/package.json",
+        "path": [
+          "dependencies",
+          "@axe-core/playwright"
+        ],
+        "packageName": "@axe-core/playwright",
+        "version": "^4.13.0"
+      },
+      {
+        "packageFile": "skills/buster/engine/package.json",
+        "path": [
+          "dependencies",
+          "js-yaml"
+        ],
+        "packageName": "js-yaml",
+        "version": "^4.3.1"
+      },
+      {
+        "packageFile": "skills/buster/engine/package.json",
+        "path": [
+          "dependencies",
+          "lighthouse"
+        ],
+        "packageName": "lighthouse",
+        "version": "13.4.1"
+      },
+      {
+        "packageFile": "skills/buster/engine/package.json",
+        "path": [
+          "dependencies",
+          "playwright"
+        ],
+        "packageName": "playwright",
+        "version": "1.62.1"
+      },
+      {
+        "packageFile": "skills/buster/engine/package.json",
+        "path": [
+          "dependencies",
+          "pixelmatch"
+        ],
+        "packageName": "pixelmatch",
+        "version": "^7.1.0"
+      },
+      {
+        "packageFile": "skills/buster/engine/package.json",
+        "path": [
+          "dependencies",
+          "pngjs"
+        ],
+        "packageName": "pngjs",
+        "version": "^7.0.0"
+      },
+      {
+        "packageFile": "skills/buster/engine/package.json",
+        "path": [
+          "dependencies",
+          "ws"
+        ],
+        "packageName": "ws",
+        "version": "^8.18.3"
+      },
+      {
+        "packageFile": "skills/buster/engine/package.json",
+        "path": [
+          "dependencies",
+          "chrome-launcher"
+        ],
+        "packageName": "chrome-launcher",
+        "version": "1.2.1"
+      },
+      {
+        "packageFile": "skills/buster/plugins/api-flow/package.json",
+        "path": [
+          "devDependencies",
+          "ws"
+        ],
+        "packageName": "ws",
+        "version": "^8.18.3"
+      },
+      {
+        "packageFile": "skills/buster/plugins/playwright/package.json",
+        "path": [
+          "devDependencies",
+          "@playwright/test"
+        ],
+        "packageName": "@playwright/test",
+        "version": "1.62.1"
+      },
+      {
+        "packageFile": "skills/common/plugin-runtime/foundation/package.json",
+        "path": [
+          "dependencies",
+          "ajv"
+        ],
+        "packageName": "ajv",
+        "version": "^8.20.0"
+      },
+      {
+        "packageFile": "skills/common/plugin-runtime/foundation/package.json",
+        "path": [
+          "dependencies",
+          "ajv-formats"
+        ],
+        "packageName": "ajv-formats",
+        "version": "^3.0.1"
+      },
+      {
+        "packageFile": "skills/common/plugins/openclaw-agent-observer/package.json",
+        "path": [
+          "devDependencies",
+          "@types/node"
+        ],
+        "packageName": "@types/node",
+        "version": "24.13.3"
+      },
+      {
+        "packageFile": "skills/common/plugins/openclaw-agent-observer/package.json",
+        "path": [
+          "devDependencies",
+          "typescript"
+        ],
+        "packageName": "typescript",
+        "version": "5.9.3"
+      },
+      {
+        "packageFile": "skills/common/plugins/runtime-dispatch/package.json",
+        "path": [
+          "dependencies",
+          "tiktoken"
+        ],
+        "packageName": "tiktoken",
+        "version": "^1.0.22"
+      },
+      {
+        "packageFile": "skills/nova/plugins/lint/package.json",
+        "path": [
+          "dependencies",
+          "yaml"
+        ],
+        "packageName": "yaml",
+        "version": "2.9.0"
+      },
+      {
+        "packageFile": "skills/nova/plugins/review/package.json",
+        "path": [
+          "dependencies",
+          "js-tiktoken"
+        ],
+        "packageName": "js-tiktoken",
+        "version": "1.0.21"
+      },
+      {
+        "packageFile": "skills/nova/plugins/review/package.json",
+        "path": [
+          "devDependencies",
+          "tiktoken"
+        ],
+        "packageName": "tiktoken",
+        "version": "1.0.22"
+      },
+      {
+        "packageFile": "skills/prism/package.json",
+        "path": [
+          "dependencies",
+          "@puckeditor/core"
+        ],
+        "packageName": "@puckeditor/core",
+        "version": "0.23.0"
+      },
+      {
+        "packageFile": "skills/prism/package.json",
+        "path": [
+          "dependencies",
+          "pg"
+        ],
+        "packageName": "pg",
+        "version": "8.16.3"
+      },
+      {
+        "packageFile": "skills/prism/package.json",
+        "path": [
+          "dependencies",
+          "playwright"
+        ],
+        "packageName": "playwright",
+        "version": "1.62.1"
+      },
+      {
+        "packageFile": "skills/prism/package.json",
+        "path": [
+          "dependencies",
+          "react"
+        ],
+        "packageName": "react",
+        "version": "19.2.8"
+      },
+      {
+        "packageFile": "skills/prism/package.json",
+        "path": [
+          "dependencies",
+          "react-dom"
+        ],
+        "packageName": "react-dom",
+        "version": "19.2.8"
+      },
+      {
+        "packageFile": "skills/prism/package.json",
+        "path": [
+          "devDependencies",
+          "@electric-sql/pglite"
+        ],
+        "packageName": "@electric-sql/pglite",
+        "version": "0.5.5"
+      },
+      {
+        "packageFile": "skills/prism/package.json",
+        "path": [
+          "devDependencies",
+          "@electric-sql/pglite-pgvector"
+        ],
+        "packageName": "@electric-sql/pglite-pgvector",
+        "version": "0.0.6"
+      },
+      {
+        "packageFile": "skills/prism/package.json",
+        "path": [
+          "devDependencies",
+          "@playwright/test"
+        ],
+        "packageName": "@playwright/test",
+        "version": "1.62.1"
+      },
+      {
+        "packageFile": "skills/prism/package.json",
+        "path": [
+          "devDependencies",
+          "@types/pg"
+        ],
+        "packageName": "@types/pg",
+        "version": "^8.15.5"
+      },
+      {
+        "packageFile": "skills/prism/package.json",
+        "path": [
+          "devDependencies",
+          "@types/react"
+        ],
+        "packageName": "@types/react",
+        "version": "19.2.14"
+      },
+      {
+        "packageFile": "skills/prism/package.json",
+        "path": [
+          "devDependencies",
+          "@types/react-dom"
+        ],
+        "packageName": "@types/react-dom",
+        "version": "19.2.3"
+      },
+      {
+        "packageFile": "skills/prism/package.json",
+        "path": [
+          "devDependencies",
+          "@vitejs/plugin-react"
+        ],
+        "packageName": "@vitejs/plugin-react",
+        "version": "5.1.4"
+      },
+      {
+        "packageFile": "skills/prism/package.json",
+        "path": [
+          "devDependencies",
+          "vite"
+        ],
+        "packageName": "vite",
+        "version": "7.3.7"
+      },
+      {
+        "packageFile": "spikes/prism/mobile-editor/package.json",
+        "path": [
+          "dependencies",
+          "@puckeditor/core"
+        ],
+        "packageName": "@puckeditor/core",
+        "version": "0.23.0"
+      },
+      {
+        "packageFile": "spikes/prism/mobile-editor/package.json",
+        "path": [
+          "dependencies",
+          "@vitejs/plugin-react"
+        ],
+        "packageName": "@vitejs/plugin-react",
+        "version": "5.1.4"
+      },
+      {
+        "packageFile": "spikes/prism/mobile-editor/package.json",
+        "path": [
+          "dependencies",
+          "react"
+        ],
+        "packageName": "react",
+        "version": "19.2.8"
+      },
+      {
+        "packageFile": "spikes/prism/mobile-editor/package.json",
+        "path": [
+          "dependencies",
+          "react-dom"
+        ],
+        "packageName": "react-dom",
+        "version": "19.2.8"
+      },
+      {
+        "packageFile": "spikes/prism/mobile-editor/package.json",
+        "path": [
+          "dependencies",
+          "vite"
+        ],
+        "packageName": "vite",
+        "version": "7.3.6"
+      },
+      {
+        "packageFile": "spikes/prism/mobile-editor/package.json",
+        "path": [
+          "devDependencies",
+          "@playwright/test"
+        ],
+        "packageName": "@playwright/test",
+        "version": "1.55.0"
+      },
+      {
+        "packageFile": "spikes/prism/mobile-editor/package.json",
+        "path": [
+          "devDependencies",
+          "@types/react"
+        ],
+        "packageName": "@types/react",
+        "version": "19.2.14"
+      },
+      {
+        "packageFile": "spikes/prism/mobile-editor/package.json",
+        "path": [
+          "devDependencies",
+          "@types/react-dom"
+        ],
+        "packageName": "@types/react-dom",
+        "version": "19.2.3"
+      },
+      {
+        "packageFile": "spikes/prism/mobile-editor/package.json",
+        "path": [
+          "devDependencies",
+          "typescript"
+        ],
+        "packageName": "typescript",
+        "version": "5.9.3"
+      },
+      {
+        "packageFile": "spikes/prism/postgres-retrieval/package.json",
+        "path": [
+          "dependencies",
+          "pg"
+        ],
+        "packageName": "pg",
+        "version": "8.16.3"
+      },
+      {
+        "packageFile": "spikes/prism/postgres-retrieval/package.json",
+        "path": [
+          "devDependencies",
+          "@electric-sql/pglite"
+        ],
+        "packageName": "@electric-sql/pglite",
+        "version": "^0.5.5"
+      },
+      {
+        "packageFile": "spikes/prism/postgres-retrieval/package.json",
+        "path": [
+          "devDependencies",
+          "@electric-sql/pglite-pgvector"
+        ],
+        "packageName": "@electric-sql/pglite-pgvector",
+        "version": "^0.0.6"
+      },
+      {
+        "packageFile": "spikes/prism/preview-isolation/package.json",
+        "path": [
+          "devDependencies",
+          "@playwright/test"
+        ],
+        "packageName": "@playwright/test",
+        "version": "1.55.0"
+      },
+      {
+        "packageFile": "spikes/prism/puck-adapter/package.json",
+        "path": [
+          "dependencies",
+          "@puckeditor/core"
+        ],
+        "packageName": "@puckeditor/core",
+        "version": "0.23.0"
+      },
+      {
+        "packageFile": "spikes/prism/puck-adapter/package.json",
+        "path": [
+          "dependencies",
+          "react"
+        ],
+        "packageName": "react",
+        "version": "19.2.8"
+      },
+      {
+        "packageFile": "spikes/prism/puck-adapter/package.json",
+        "path": [
+          "dependencies",
+          "react-dom"
+        ],
+        "packageName": "react-dom",
+        "version": "19.2.8"
+      },
+      {
+        "packageFile": "spikes/prism/puck-adapter/package.json",
+        "path": [
+          "devDependencies",
+          "@types/react"
+        ],
+        "packageName": "@types/react",
+        "version": "19.2.14"
+      },
+      {
+        "packageFile": "spikes/prism/puck-adapter/package.json",
+        "path": [
+          "devDependencies",
+          "@types/react-dom"
+        ],
+        "packageName": "@types/react-dom",
+        "version": "19.2.3"
+      },
+      {
+        "packageFile": "spikes/prism/puck-adapter/package.json",
+        "path": [
+          "devDependencies",
+          "typescript"
+        ],
+        "packageName": "typescript",
+        "version": "5.9.3"
+      },
+      {
+        "packageFile": "spikes/prism/puck-adapter/package.json",
+        "path": [
+          "devDependencies",
+          "vitest"
+        ],
+        "packageName": "vitest",
+        "version": "4.0.18"
+      },
+      {
+        "packageFile": "tools/ops-mcp/package.json",
+        "path": [
+          "dependencies",
+          "@modelcontextprotocol/node"
+        ],
+        "packageName": "@modelcontextprotocol/node",
+        "version": "2.1.1"
+      },
+      {
+        "packageFile": "tools/ops-mcp/package.json",
+        "path": [
+          "dependencies",
+          "@modelcontextprotocol/server"
+        ],
+        "packageName": "@modelcontextprotocol/server",
+        "version": "2.3.0"
+      },
+      {
+        "packageFile": "tools/ops-mcp/package.json",
+        "path": [
+          "dependencies",
+          "ws"
+        ],
+        "packageName": "ws",
+        "version": "8.21.3"
+      },
+      {
+        "packageFile": "tools/ops-mcp/package.json",
+        "path": [
+          "dependencies",
+          "zod"
+        ],
+        "packageName": "zod",
+        "version": "4.6.7"
+      },
+      {
+        "packageFile": "tools/ops-mcp/package.json",
+        "path": [
+          "overrides",
+          "@hono/node-server"
+        ],
+        "packageName": "@hono/node-server",
+        "version": "2.0.12"
+      },
+      {
+        "packageFile": "tools/ops-mcp/package.json",
+        "path": [
+          "overrides",
+          "hono"
+        ],
+        "packageName": "hono",
+        "version": "4.13.11"
+      }
+    ]
   }
 }

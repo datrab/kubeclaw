@@ -3,6 +3,7 @@ import csv
 import hashlib
 import importlib.util
 import io
+import json
 from pathlib import Path
 import tempfile
 import unittest
@@ -11,6 +12,7 @@ import zipfile
 spec = importlib.util.spec_from_file_location('patch', Path(__file__).resolve().parents[3] / 'docker/python-tools/install-patched.py')
 patch = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(patch)
+configuration = json.loads((Path(__file__).resolve().parents[3] / 'docker/python-tools/security-patch.json').read_text())
 
 
 class SemgrepSecurityPatchTest(unittest.TestCase):
@@ -31,7 +33,7 @@ class SemgrepSecurityPatchTest(unittest.TestCase):
             for index in range(2):
                 directory = Path(temporary, str(index))
                 directory.mkdir()
-                outputs.append(patch.patch_semgrep(self.source(directory), 'mcp==1.30.0'))
+                outputs.append(patch.patch_semgrep(self.source(directory), configuration))
             self.assertEqual(outputs[0].read_bytes(), outputs[1].read_bytes())
             with zipfile.ZipFile(outputs[0]) as archive:
                 self.assertEqual(archive.read('semgrep/bin/semgrep-core'), b'unchanged upstream analyzer')
@@ -50,7 +52,7 @@ class SemgrepSecurityPatchTest(unittest.TestCase):
     def test_upstream_dependency_changes_require_review(self):
         with tempfile.TemporaryDirectory() as directory:
             with self.assertRaisesRegex(ValueError, 'metadata changed'):
-                patch.patch_semgrep(self.source(directory, 'mcp==1.30.0'), 'mcp==1.30.0')
+                patch.patch_semgrep(self.source(directory, 'mcp==1.30.0'), configuration)
 
 
 if __name__ == '__main__':
