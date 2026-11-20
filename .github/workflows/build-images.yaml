@@ -163,6 +163,12 @@ jobs:
           docker pull "$IMAGE"
           printf 'IMAGE_PULL seconds=%s\n' "$((SECONDS-start))"
           bash scripts/check-built-runtime-image.sh "$ROLE" "$IMAGE"
+      - name: Verify private mounted state in root mode without capabilities
+        if: contains(fromJSON('["nova","buster-gateway"]'), matrix.name)
+        env:
+          ROLE: ${{ matrix.name }}
+          IMAGE: ${{ env.REGISTRY }}/${{ github.repository_owner }}/kubeclaw-${{ matrix.name }}@${{ steps.build.outputs.digest }}
+        run: bash scripts/check-root-state-image.sh "$ROLE" "$IMAGE"
       - name: Scan every exact runtime image before issuing its receipt
         env:
           IMAGE: ${{ env.REGISTRY }}/${{ github.repository_owner }}/kubeclaw-${{ matrix.name }}@${{ steps.build.outputs.digest }}

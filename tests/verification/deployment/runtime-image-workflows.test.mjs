@@ -74,6 +74,15 @@ test('immutable candidate checks precede release receipts and share PR acceptanc
   const shared = 'bash scripts/check-built-runtime-image.sh "$ROLE" "$IMAGE"';
   assert(steps[verify].run.includes(shared));
   assert(pr.jobs.image.steps.some(step => step.run === shared));
+  for (const job of [main.jobs.build, pr.jobs.image]) {
+    const root = job.steps.find(step => step.run === 'bash scripts/check-root-state-image.sh "$ROLE" "$IMAGE"');
+    assert.ok(root, 'root state proof must run for both PR and production images');
+    assert.ok(root.if.includes('"nova"') && root.if.includes('"buster-gateway"'));
+  }
+  const rootProof = fs.readFileSync('scripts/check-root-state-image.sh', 'utf8');
+  assert.match(rootProof, /--read-only --user 0 --cap-drop ALL/);
+  assert.match(rootProof, /--tmpfs \/home\/node\/\.openclaw:rw,mode=0700,uid=0,gid=0/);
+  assert.match(rootProof, /\["config", "get", "gateway\.mode"\]/);
   assert.equal(steps[receipt].if, undefined);
   assert.equal(steps[upload].if, undefined);
   assert.deepEqual(main.jobs['preserve-receipts'].needs, ['build', 'reliability', 'update-policy']);

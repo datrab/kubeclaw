@@ -106,6 +106,10 @@ ENV NODE_PATH=/opt/kubeclaw-tools/node_modules:/app/node_modules \
 NPM_CONFIG_CACHE=/root/.npm \
 HOME=/home/node
 
+# Root-mode Kubernetes setup drops DAC override capabilities. The upstream
+# node home is 0700; make its parent traversable while PVC state stays private.
+RUN chmod 0755 /home/node
+
 USER node
 
 LABEL org.opencontainers.image.title="KubeClaw Buster Gateway"

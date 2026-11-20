@@ -252,6 +252,10 @@ FROM ${KUBECLAW_TOOLCHAIN} AS runtime
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG TARGETARCH
 
+# Root-mode setup has no DAC override. Only the home parent is shared; the
+# mounted OpenClaw state retains its private permissions and runtime owner.
+RUN chmod 0755 /home/node
+
 # The observer is self-contained and must not import from /app/skills.
 
 COPY tsconfig.base.json /tmp/tsconfig.base.json
