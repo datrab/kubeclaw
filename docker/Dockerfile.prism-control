@@ -10,7 +10,7 @@ RUN npm ci --include=dev --ignore-scripts --no-audit --no-fund \
 
 FROM ${NODE_BASE}
 USER root
-ARG DEBIAN_SNAPSHOT=20261109T000000Z
+ARG DEBIAN_SNAPSHOT=20261120T000000Z
 COPY docker/upgrade-debian-snapshot.sh /tmp/upgrade-debian-snapshot.sh
 RUN sh /tmp/upgrade-debian-snapshot.sh "$DEBIAN_SNAPSHOT" \
  && rm /tmp/upgrade-debian-snapshot.sh
